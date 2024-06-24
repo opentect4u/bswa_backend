@@ -1,0 +1,879 @@
+[EVENT]   : [17-May-24 13:04:53] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:04:53] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:06:55] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:06:55] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:07:08] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:07:08] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:07:18] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:07:18] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:11:19] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:11:19] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:11:32] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:11:32] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:18:20] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:18:20] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:18:49] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:18:49] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:18:52] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:18:52] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:26:48] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:26:48] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:26:57] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:26:57] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:27:39] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:27:39] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:30:26] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:30:26] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:30:43] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:30:43] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:32:06] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:32:06] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-May-24 13:40:49] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [17-May-24 13:40:49] : {"code":"ER_NO_DB_ERROR","errno":1046,"sqlMessage":"No database selected","sqlState":"3D000","index":0,"sql":"SELECT * FROM md_user WHERE user_type = 'A' AND user_status = 'A' AND user_email = 'admin@gmail.com' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-May-24 20:19:17] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [19-May-24 20:19:17] : Error: ER_DUP_ENTRY: Duplicate entry '2024-05-19 00:00:00-G' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-May-24 21:22:52] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [19-May-24 21:22:52] : Error: ER_DUP_ENTRY: Duplicate entry '2024-05-19 00:00:00-G' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-May-24 22:17:07] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [19-May-24 22:17:07] : Error: ER_DUP_ENTRY: Duplicate entry '0000-00-00 00:00:00-G' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 10:26:27] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 10:26:27] : Error: ER_BAD_FIELD_ERROR: Unknown column 'subscription_1' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 10:26:30] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 10:26:30] : Error: ER_BAD_FIELD_ERROR: Unknown column 'subscription_1' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 17:53:04] : Exicuting Select Statement from table md_member_fees 
+[MESSAGE] : [20-May-24 17:53:04] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'undefined' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT count(memb_type) tot_row FROM md_member_fees WHERE memb_type = undefined "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 17:53:04] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 17:53:04] : Error: ER_DUP_ENTRY: Duplicate entry '2024-05-20 00:00:00-AI' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 17:55:45] : Exicuting Select Statement from table md_member_fees 
+[MESSAGE] : [20-May-24 17:55:45] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'undefined' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT memb_type FROM md_member_fees WHERE memb_type = undefined "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 17:55:45] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 17:55:45] : Error: ER_DUP_ENTRY: Duplicate entry '2024-05-20 00:00:00-AI' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 18:00:44] : Exicuting Update Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 18:00:44] : Error: ER_BAD_FIELD_ERROR: Unknown column 'modified_dt' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 18:00:54] : Exicuting Update Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 18:00:54] : Error: ER_BAD_FIELD_ERROR: Unknown column 'modified_dt' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 18:17:57] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 18:17:57] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'effective_dt='2024-05-20',subscription_1='105', subscription_2='40000',modifi...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 18:18:37] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 18:18:37] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'effective_dt='2024-05-20',subscription_1=105, subscription_2=40000,modified_b...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-May-24 18:25:23] : Exicuting Update Statement for table md_member_fees 
+[MESSAGE] : [20-May-24 18:25:23] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '20',modified_by='Sail',modified_at='2024-05-20 18:25:23' WHERE memb_type='G'' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-May-24 12:13:47] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [21-May-24 12:13:47] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect double value: '' for column `sail`.`md_member_fees`.`subscription_2` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-May-24 12:17:40] : Exicuting Insert Statement for table md_member_fees 
+[MESSAGE] : [21-May-24 12:17:40] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect double value: '' for column `sail`.`md_member_fees`.`subscription_2` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:04:15] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:04:15] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '',undefined'undefined'undefined'undefined'undefined'undefined'undefined'undef...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:07:03] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:07:03] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'undefined','undefined','undefined','undefined','undefined','undefined','undef...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:08:12] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:08:12] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'undefined','undefined','undefined','undefined','undefined','undefined','undef...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:11:58] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:11:58] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'mem_type' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:18:22] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:18:22] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'mem_type' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:22:48] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:22:48] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'mem_type' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:25:15] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:25:15] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Objec...' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:27:56] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:27:56] : Error: ER_DATA_TOO_LONG: Data too long for column 'unit_id' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:36:16] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:36:16] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: 'NaN' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:38:03] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:38:03] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: 'NaN' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:39:40] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:39:40] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: 'NaN' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:41:25] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:41:25] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Objec...' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:43:34] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:43:34] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '"[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Obje...' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:49:49] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:49:49] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '"undefined"' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:51:24] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:51:24] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: 'undefined' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:54:38] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:54:38] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: 'undefined' for column `sail`.`md_member`.`unit_id` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 15:56:44] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 15:56:44] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'marital_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 16:00:52] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 16:00:52] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'caste' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 16:01:41] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 16:01:41] : Error: ER_WARN_DATA_OUT_OF_RANGE: Out of range value for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 16:04:16] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 16:04:16] : Error: ER_WARN_DATA_OUT_OF_RANGE: Out of range value for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 16:04:45] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 16:04:45] : Error: ER_WARN_DATA_OUT_OF_RANGE: Out of range value for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 16:06:58] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 16:06:58] : Error: ER_DUP_ENTRY: Duplicate entry 'G202400001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 16:51:28] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 16:51:28] : Error: ER_DUP_ENTRY: Duplicate entry 'G202400001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 17:14:59] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 17:14:59] : Error: ER_DUP_ENTRY: Duplicate entry 'G202400001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [31-May-24 17:15:17] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [31-May-24 17:15:17] : Error: ER_DUP_ENTRY: Duplicate entry 'G202400001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 13:18:48] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 13:18:48] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 14:52:06] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 14:52:06] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 14:53:19] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 14:53:19] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 14:55:24] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 14:55:24] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 14:56:01] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 14:56:01] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 14:57:08] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 14:57:08] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 17:17:34] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [01-Jun-24 17:17:34] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'member_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,member_name FROM md_member WHERE from_no = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 17:17:45] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [01-Jun-24 17:17:45] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'member_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,member_name FROM md_member WHERE from_no = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 17:19:41] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [01-Jun-24 17:19:41] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'from_no' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name FROM md_member WHERE from_no = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 17:19:47] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [01-Jun-24 17:19:47] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'from_no' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name FROM md_member WHERE from_no = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 22:02:15] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 22:02:15] : Error: ER_DUP_ENTRY: Duplicate entry 'undefined2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 22:06:06] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 22:06:06] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 22:08:33] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [01-Jun-24 22:08:33] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 23:01:49] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [01-Jun-24 23:01:49] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 23:13:11] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [01-Jun-24 23:13:11] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 23:54:14] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [01-Jun-24 23:54:14] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jun-24 23:58:33] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [01-Jun-24 23:58:33] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jun-24 16:41:52] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [02-Jun-24 16:41:52] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'G2024000003' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name FROM md_member WHERE form_no=G2024000003 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jun-24 23:23:59] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [02-Jun-24 23:23:59] : Error: ER_DUP_ENTRY: Duplicate entry 'undefined2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:17:43] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [03-Jun-24 11:17:43] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'marital_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:19:17] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [03-Jun-24 11:19:17] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'marital_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:22:56] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [03-Jun-24 11:22:56] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'marital_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:24:53] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [03-Jun-24 11:24:53] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'marital_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:26:37] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [03-Jun-24 11:26:37] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'marital_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:28:14] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [03-Jun-24 11:28:14] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'caste' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:30:22] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:30:22] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_dependent`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:33:28] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:33:28] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_dependent`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:35:04] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:35:04] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_dependent`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:36:02] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:36:02] : Error: ER_WARN_DATA_OUT_OF_RANGE: Out of range value for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:38:24] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:38:24] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_dependent`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:39:15] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:39:15] : Error: ER_WARN_DATA_OUT_OF_RANGE: Out of range value for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:42:35] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:42:35] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_dependent`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:52:24] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:52:24] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '0000' for column `sail`.`md_dependent`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:53:22] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:53:22] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '' for column `sail`.`md_dependent`.`phone_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jun-24 11:54:52] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jun-24 11:54:52] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '' for column `sail`.`md_dependent`.`pin_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 13:03:59] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [05-Jun-24 13:03:59] : Error: ER_TRUNCATED_WRONG_VALUE: Truncated incorrect DECIMAL value: 'undefined' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 13:08:10] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [05-Jun-24 13:08:10] : Error: ER_TRUNCATED_WRONG_VALUE: Truncated incorrect DECIMAL value: 'M' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 13:09:15] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [05-Jun-24 13:09:15] : Error: ER_TRUNCATED_WRONG_VALUE: Truncated incorrect DECIMAL value: 'M' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 13:10:44] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [05-Jun-24 13:10:44] : Error: ER_TRUNCATED_WRONG_VALUE: Truncated incorrect DECIMAL value: 'M' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 13:35:38] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [05-Jun-24 13:35:38] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000006-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 17:58:29] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 17:58:29] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'form_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 17:59:14] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 17:59:14] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'form_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:02:07] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:02:07] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'form_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:03:57] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:03:57] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'form_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:05:35] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:05:35] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'form_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:08:24] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:08:24] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'form_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:11:51] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:11:51] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(memb_status,resolution_no, resolution_dt,remarks,rejected_by,rejected_dt) WH...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:13:44] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:13:44] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(memb_status,resolution_no, resolution_dt,remarks,rejected_by,rejected_dt) WH...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:21:26] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:21:26] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') WHERE form_no = 'G2024000007'' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:22:42] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:22:42] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'memb_status = 'R',resolution_no ='57227525',resolution_dt = '57227525',remark...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:23:35] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:23:35] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'memb_status = 'R',resolution_no ='5252572572',resolution_dt = '2024-06-05',re...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:23:43] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:23:43] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'memb_status = 'R',resolution_no ='5252572572',resolution_dt = '2024-06-05',re...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:25:33] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:25:33] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'memb_status = 'R',resolution_no ='75252572572',resolution_dt = '2024-06-05',r...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:26:48] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:26:48] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(memb_status = 'R',resolution_no ='5252452542',resolution_dt = '2024-06-05',r...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jun-24 18:29:30] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [05-Jun-24 18:29:30] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(memb_status = 'R',resolution_no ='54257252542',resolution_dt = '2024-06-05',...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 11:51:01] : Exicuting Select Statement from table ('undefined','2024-06-06 11:51:01','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:51:01') 
+[MESSAGE] : [06-Jun-24 11:51:01] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''undefined','2024-06-06 11:51:01','2024000001','240','50','1000','0','1290','...' at line 1","sqlState":"42000","index":0,"sql":"SELECT (form_no,trn_dt,trn_id,sub_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,created_by,created_at) FROM ('undefined','2024-06-06 11:51:01','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:51:01') WHERE td_transactions "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 11:51:41] : Exicuting Select Statement from table ('G2024000007','2024-06-06 11:51:41','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:51:41') 
+[MESSAGE] : [06-Jun-24 11:51:41] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''G2024000007','2024-06-06 11:51:41','2024000001','240','50','1000','0','1290'...' at line 1","sqlState":"42000","index":0,"sql":"SELECT (form_no,trn_dt,trn_id,sub_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,created_by,created_at) FROM ('G2024000007','2024-06-06 11:51:41','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:51:41') WHERE td_transactions "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 11:57:48] : Exicuting Select Statement from table ('G2024000007','2024-06-06 11:57:48','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:57:48') 
+[MESSAGE] : [06-Jun-24 11:57:48] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''G2024000007','2024-06-06 11:57:48','2024000001','240','50','1000','0','1290'...' at line 1","sqlState":"42000","index":0,"sql":"SELECT (form_no,trn_dt,trn_id,sub_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,created_by,created_at) FROM ('G2024000007','2024-06-06 11:57:48','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:57:48') WHERE td_transactions "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 11:58:57] : Exicuting Select Statement from table ('G2024000007','2024-06-06 11:58:57','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:58:57') 
+[MESSAGE] : [06-Jun-24 11:58:57] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''G2024000007','2024-06-06 11:58:57','2024000001','240','50','1000','0','1290'...' at line 1","sqlState":"42000","index":0,"sql":"SELECT (form_no,trn_dt,trn_id,sub_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,created_by,created_at) FROM ('G2024000007','2024-06-06 11:58:57','2024000001','240','50','1000','0','1290','C','Sail','2024-06-06 11:58:57') WHERE td_transactions "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 11:59:27] : Exicuting Insert Statement for table (form_no,trn_dt,trn_id,sub_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,created_by,created_at) 
+[MESSAGE] : [06-Jun-24 11:59:27] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(form_no,trn_dt,trn_id,sub_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 12:02:51] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [06-Jun-24 12:02:51] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'chq_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 12:03:54] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [06-Jun-24 12:03:54] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '0' for column `sail`.`td_transactions`.`chq_dt` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 12:04:11] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [06-Jun-24 12:04:11] : Error: WARN_DATA_TRUNCATED: Data truncated for column 'memb_status' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 15:14:22] : Exicuting Select Statement from table td_transaction 
+[MESSAGE] : [06-Jun-24 15:14:22] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.td_transaction' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT * FROM td_transaction  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 15:22:25] : Exicuting Select Statement from table td_transactions a, md_member b 
+[MESSAGE] : [06-Jun-24 15:22:25] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.memb_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT a.*,b.mem_type FROM td_transactions a, md_member b WHERE a.form_no = b.form_no AND a.memb_status = 'T' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 18:17:31] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [06-Jun-24 18:17:31] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(member_id = 'G1', modified_by = 'Sail',modified_at = '2024-06-06 18:17:31' W...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 18:19:31] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [06-Jun-24 18:19:31] : Error: ER_DUP_ENTRY: Duplicate entry 'G-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 18:20:11] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [06-Jun-24 18:20:11] : Error: ER_DUP_ENTRY: Duplicate entry 'G-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jun-24 18:22:37] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [06-Jun-24 18:22:37] : Error: ER_DUP_ENTRY: Duplicate entry 'G-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jun-24 10:16:56] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [07-Jun-24 10:16:56] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: 'cdscdsc' for column `sail`.`md_dependent`.`phone_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jun-24 10:27:12] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [07-Jun-24 10:27:12] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000009-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jun-24 22:39:35] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [07-Jun-24 22:39:35] : Error: ER_DUP_ENTRY: Duplicate entry 'G2024000012-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jun-24 10:33:50] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [08-Jun-24 10:33:50] : Error: ER_DUP_ENTRY: Duplicate entry 'L2024000001-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jun-24 10:52:11] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [08-Jun-24 10:52:11] : Error: ER_DUP_ENTRY: Duplicate entry 'L2024000002-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jun-24 12:45:17] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [08-Jun-24 12:45:17] : Error: ER_DUP_ENTRY: Duplicate entry 'L2024000003-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jun-24 16:15:52] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [08-Jun-24 16:15:52] : Error: ER_DUP_ENTRY: Duplicate entry 'L2024000009-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jun-24 11:11:03] : Exicuting Select Statement from table md_member_fees 
+[MESSAGE] : [09-Jun-24 11:11:03] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'G''' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_member_fees WHERE memb_type = ''G'' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jun-24 11:12:13] : Exicuting Select Statement from table md_member_fees 
+[MESSAGE] : [09-Jun-24 11:12:13] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'G''' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_member_fees WHERE memb_type = ''G'' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 01:12:39] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 01:12:39] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 01:19:36] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 01:19:36] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 07:50:12] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 07:50:12] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 07:50:52] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 07:50:52] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 08:08:51] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 08:08:51] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 08:13:30] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 08:13:30] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 12:09:04] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 12:09:04] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 12:09:17] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 12:09:17] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 12:16:50] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 12:16:50] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 12:19:29] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 12:19:29] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-24 12:21:16] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [10-Jun-24 12:21:16] : Error: ER_DUP_ENTRY: Duplicate entry 'AI2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:54:01] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:54:01] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:54:01] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:54:01] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:56:50] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:56:50] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:56:51] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:56:51] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:56:53] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:56:53] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:56:53] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:56:53] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:59:46] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:59:46] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id NOT IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:59:46] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:59:46] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:59:46] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:59:46] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id NOT IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 00:59:46] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 00:59:46] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:00:19] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:00:19] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:00:20] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:00:20] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:03:21] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:03:21] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:03:21] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:03:21] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id\n    AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:05:12] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:05:12] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_dependent WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:05:12] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:05:12] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_dependent WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:06:26] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:06:26] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_dependent WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:06:26] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:06:26] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_dependent WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:09:13] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:09:13] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_dependent WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:09:13] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:09:13] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM md_dependent WHERE form_no = 'AI2024000001' AND intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:10:52] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:10:52] : {"code":"ER_BAD_TABLE_ERROR","errno":1051,"sqlMessage":"Unknown table 'sail.a'","sqlState":"42S02","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent WHERE a.relation = b.id AND a.form_no = 'AI2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:10:52] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 01:10:52] : {"code":"ER_BAD_TABLE_ERROR","errno":1051,"sqlMessage":"Unknown table 'sail.a'","sqlState":"42S02","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent WHERE a.relation = b.id AND a.form_no = 'AI2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:16:27] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:16:27] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:16:27] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:16:27] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:18:16] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:18:16] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:18:16] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:18:16] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:21:07] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:21:07] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:21:07] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:21:07] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:22:44] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:22:44] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:22:44] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:22:44] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:26:58] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:26:58] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:26:58] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:26:58] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:28:12] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:28:12] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:28:13] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:28:13] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:29:00] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:29:00] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 01:29:01] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [11-Jun-24 01:29:01] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.*,b.relation_name FROM md_dependent a, md_relationship b WHERE a.relation = b.id AND a.form_no = 'AI2024000001' AND a.intro_member_id IN null "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 02:30:17] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 02:30:17] : {"errno":-4077,"code":"ECONNRESET","syscall":"read","fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 02:30:17] : Exicuting Select Statement from table md_dependent 
+[MESSAGE] : [11-Jun-24 02:30:17] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 02:30:17] : Exicuting Select Statement from table md_member a, md_member_fees c, md_unit d 
+[MESSAGE] : [11-Jun-24 02:30:17] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 12:43:23] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [11-Jun-24 12:43:23] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'undefined' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,member_id,mem_type,memb_name,gurdian_name,gender,marital_status,dob FROM md_member WHERE member_id =undefined "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 13:38:15] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [11-Jun-24 13:38:15] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_no' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.gurdian_name,a.gender,a.marital_status,a.dob FROM md_member WHERE member_id ='AI-1' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 13:38:16] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [11-Jun-24 13:38:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_no' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.gurdian_name,a.gender,a.marital_status,a.dob FROM md_member WHERE member_id ='AI-1' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 13:38:16] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [11-Jun-24 13:38:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_no' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.gurdian_name,a.gender,a.marital_status,a.dob FROM md_member WHERE member_id ='AI-1' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 13:38:17] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [11-Jun-24 13:38:17] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_no' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.gurdian_name,a.gender,a.marital_status,a.dob FROM md_member WHERE member_id ='AI-1' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 17:39:32] : Exicuting Select Statement from table td_gen_ins 
+[MESSAGE] : [11-Jun-24 17:39:32] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '0'), '000001') max_form'' at line 1","sqlState":"42000","index":0,"sql":"SELECT IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form FROM td_gen_ins WHERE SUBSTRING(form_no, 1, 1) = 'IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 17:39:32] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 17:39:32] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 17:41:54] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [11-Jun-24 17:41:54] : Error: ER_DUP_ENTRY: Duplicate entry 'AI-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 17:43:20] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [11-Jun-24 17:43:20] : Error: ER_DUP_ENTRY: Duplicate entry 'AI-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 17:44:33] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 17:44:33] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 17:55:22] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 17:55:22] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:01:59] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:01:59] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:03:10] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:03:10] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:09:52] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:09:52] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:22:36] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [11-Jun-24 18:22:36] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:23:37] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:23:37] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:26:37] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:26:37] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:29:00] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:29:00] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:31:42] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:31:42] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:36:36] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:36:36] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:40:40] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:40:40] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:44:33] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:44:33] : Error: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:48:59] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:48:59] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:50:44] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:50:44] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:54:32] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:54:32] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:55:50] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:55:50] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect integer value: '[object Object]' for column `sail`.`td_gen_ins_depend`.`sl_no` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:57:10] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [11-Jun-24 18:57:10] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 18:57:51] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 18:57:51] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '1989' for column `sail`.`td_gen_ins_depend`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 19:01:02] : Exicuting Insert Statement for table td_gen_ins_depend 
+[MESSAGE] : [11-Jun-24 19:01:02] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect date value: '2014' for column `sail`.`td_gen_ins_depend`.`dob` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jun-24 19:01:55] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [11-Jun-24 19:01:55] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 00:44:55] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [12-Jun-24 00:44:55] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 01:19:01] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [12-Jun-24 01:19:01] : Error: ER_DUP_ENTRY: Duplicate entry 'AI-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 01:25:16] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [12-Jun-24 01:25:16] : Error: ER_DUP_ENTRY: Duplicate entry 'AI-1' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:09:09] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [12-Jun-24 18:09:09] : Error: ER_BAD_FIELD_ERROR: Unknown column 'fin_yr' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:19:06] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 18:19:06] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: 'undefined' for column `sail`.`td_stp_dtls`.`fin_year` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:19:06] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 18:19:06] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: 'undefined' for column `sail`.`td_stp_dtls`.`fin_year` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:21:06] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [12-Jun-24 18:21:06] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:22:29] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 18:22:29] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: 'undefined' for column `sail`.`td_stp_dtls`.`fin_year` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:22:29] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 18:22:29] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: 'undefined' for column `sail`.`td_stp_dtls`.`fin_year` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 18:24:09] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 18:24:09] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 19:09:59] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 19:09:59] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect date value: 'undefined' for column `sail`.`td_stp_dtls`.`fin_year` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jun-24 19:09:59] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [12-Jun-24 19:09:59] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect date value: 'undefined' for column `sail`.`td_stp_dtls`.`fin_year` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:16:13] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [13-Jun-24 11:16:13] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_member`.`resolution_dt` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:16:39] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [13-Jun-24 11:16:39] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`md_member`.`resolution_dt` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:22:57] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [13-Jun-24 11:22:57] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'min_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:23:08] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [13-Jun-24 11:23:08] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'min_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:25:01] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [13-Jun-24 11:25:01] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect date value: '0' for column `sail`.`td_transactions`.`chq_dt` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:25:27] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [13-Jun-24 11:25:27] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect date value: '0' for column `sail`.`td_transactions`.`chq_dt` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:28:08] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [13-Jun-24 11:28:08] : Error: ER_NO_DEFAULT_FOR_FIELD: Field 'chq_no' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 11:49:01] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [13-Jun-24 11:49:01] : Error: ER_TRUNCATED_WRONG_VALUE: Incorrect datetime value: '' for column `sail`.`td_stp_ins`.`fin_yr` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 12:13:20] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [13-Jun-24 12:13:20] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect double value: 'null' for column `sail`.`td_stp_dtls`.`amount` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 15:42:16] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [13-Jun-24 15:42:16] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 16:01:37] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [13-Jun-24 16:01:37] : Error: ER_TRUNCATED_WRONG_VALUE_FOR_FIELD: Incorrect double value: 'null' for column `sail`.`td_stp_dtls`.`amount` at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 18:17:21] : Exicuting Select Statement from table td_stp_ins a, md_member b 
+[MESSAGE] : [13-Jun-24 18:17:21] : {"code":"ER_NON_UNIQ_ERROR","errno":1052,"sqlMessage":"Column 'form_no' in where clause is ambiguous","sqlState":"23000","index":0,"sql":"SELECT a.form_no,a.form_dt,b.memb_name FROM td_stp_ins a, md_member b WHERE form_no = 'STP2024000001' OR memb_name = 'STP2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [13-Jun-24 18:18:34] : Exicuting Select Statement from table td_stp_ins a, md_member b 
+[MESSAGE] : [13-Jun-24 18:18:34] : {"code":"ER_NON_UNIQ_ERROR","errno":1052,"sqlMessage":"Column 'form_no' in where clause is ambiguous","sqlState":"23000","index":0,"sql":"SELECT a.form_no,a.form_dt,b.memb_name FROM td_stp_ins a, md_member b WHERE form_no = 'STP2024000001' OR memb_name = 'STP2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 16:52:30] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 16:52:30] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'STP2024000001' OR memb_name = 'STP2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 16:52:38] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 16:52:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'G2024000001' OR memb_name = 'G2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 17:58:19] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 17:58:19] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'G2024000001' OR memb_name = 'G2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 17:58:44] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 17:58:44] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'G2024000001' OR memb_name = 'G2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 18:17:26] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 18:17:26] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'STP2024000001' OR memb_name = 'STP2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 18:17:35] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 18:17:35] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'STP2024000001' OR memb_name = 'STP2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jun-24 18:18:00] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [15-Jun-24 18:18:00] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,memb_name,gender,mem_type FROM md_member WHERE form_status = 'T' AND form_no = 'STP2024000001' OR memb_name = 'STP2024000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-24 15:17:01] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [16-Jun-24 15:17:01] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-24 02:23:20] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [17-Jun-24 02:23:20] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-24 08:56:34] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [17-Jun-24 08:56:34] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-24 10:36:02] : Exicuting Select Statement from table td_transactions a, td_gen_ins b 
+[MESSAGE] : [17-Jun-24 10:36:02] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.memb_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,b.ins_period FROM td_transactions a, td_gen_ins b WHERE a.form_no = b.form_no AND b.memb_status = 'T' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-24 10:36:30] : Exicuting Select Statement from table td_transactions a, td_gen_ins b 
+[MESSAGE] : [17-Jun-24 10:36:30] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.memb_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,b.ins_period FROM td_transactions a, td_gen_ins b WHERE a.form_no = b.form_no AND b.memb_status = 'T' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [18-Jun-24 14:02:13] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [18-Jun-24 14:02:13] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [18-Jun-24 14:02:21] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [18-Jun-24 14:02:21] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jun-24 17:08:44] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jun-24 17:08:44] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jun-24 17:08:57] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jun-24 17:08:57] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jun-24 17:42:41] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jun-24 17:42:41] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jun-24 17:42:41] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jun-24 17:42:41] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 12:58:14] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 12:58:14] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''Y','0','0','','45000','0','2024-06-20 12:58:14','Paresh Chandra Das','2024-0...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 13:01:06] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 13:01:06] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 13:01:06] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [20-Jun-24 13:01:06] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 13:02:21] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 13:02:21] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 13:39:28] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 13:39:28] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:22:42] : Exicuting Select Statement from table md_member a, md_unit 
+[MESSAGE] : [20-Jun-24 15:22:42] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit WHERE  a.unit_id = b.unit_id AND a.member_id ='G-1' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:24:36] : Exicuting Select Statement from table md_member a, md_unit 
+[MESSAGE] : [20-Jun-24 15:24:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit WHERE  a.unit_id = b.unit_id AND a.member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:24:37] : Exicuting Select Statement from table md_member a, md_unit 
+[MESSAGE] : [20-Jun-24 15:24:37] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit WHERE  a.unit_id = b.unit_id AND a.member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:25:09] : Exicuting Select Statement from table md_member a, md_unit 
+[MESSAGE] : [20-Jun-24 15:25:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit WHERE  a.unit_id = b.unit_id AND a.member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:25:10] : Exicuting Select Statement from table md_member a, md_unit 
+[MESSAGE] : [20-Jun-24 15:25:10] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit WHERE  a.unit_id = b.unit_id AND a.member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:48:40] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [20-Jun-24 15:48:40] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 15:49:17] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 15:49:17] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 19:05:49] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 19:05:49] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 19:09:47] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [20-Jun-24 19:09:47] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 20:23:37] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [20-Jun-24 20:23:37] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 20:24:44] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [20-Jun-24 20:24:44] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 20:45:00] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [20-Jun-24 20:45:00] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [20-Jun-24 21:55:51] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [20-Jun-24 21:55:51] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000001-GP' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 11:30:03] : Exicuting Select Statement from table md_member a, md_unit b 
+[MESSAGE] : [21-Jun-24 11:30:03] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.policy_holder_type' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit b WHERE  a.unit_id = b.unit_id AND a.member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 11:30:20] : Exicuting Select Statement from table md_member a, md_unit b 
+[MESSAGE] : [21-Jun-24 11:30:20] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.policy_holder_type' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit b WHERE  a.unit_id = b.unit_id AND a.member_id ='G-1' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 11:30:34] : Exicuting Select Statement from table md_member a, md_unit b 
+[MESSAGE] : [21-Jun-24 11:30:34] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.policy_holder_type' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name FROM md_member a, md_unit b WHERE  a.unit_id = b.unit_id AND a.member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 14:30:23] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [21-Jun-24 14:30:23] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'member_id, memb_type, memb_oprn, memb_name, father_husband_name, sex, marital...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 14:32:39] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [21-Jun-24 14:32:39] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'member_id, memb_type, memb_oprn, memb_name, father_husband_name, sex, marital...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 14:40:22] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [21-Jun-24 14:40:22] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'member_id, memb_type, memb_oprn, memb_name, father_husband_name, sex, marital...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-Jun-24 14:41:42] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [21-Jun-24 14:41:42] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'member_id, memb_type, memb_oprn, memb_name, father_husband_name, sex, marital...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 02:23:36] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [22-Jun-24 02:23:36] : Error: ER_DUP_ENTRY: Duplicate entry 'G-26-GP' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 02:24:27] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [22-Jun-24 02:24:27] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000005' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 02:57:09] : Exicuting Select Statement from table td_gen_ins_depend a, md_relationship b 
+[MESSAGE] : [22-Jun-24 02:57:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.dependent_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.sl_no,a.dependent_name,a.relation,a.dob,a.member_id,b.relation_name FROM td_gen_ins_depend a, md_relationship b WHERE a.relation = b.id\n      AND a.member_id ='G-28' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 07:53:15] : Exicuting Select Statement from table td_gen_ins 
+[MESSAGE] : [22-Jun-24 07:53:15] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_status' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT form_no,form_dt,member_id,memb_name FROM td_gen_ins WHERE a.form_status = 'P'\n    AND a.form_no = 'GP2024000006' OR b.memb_name = 'GP2024000006' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 08:46:17] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [22-Jun-24 08:46:17] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000006' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 13:06:17] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [22-Jun-24 13:06:17] : Error: ER_BAD_FIELD_ERROR: Unknown column 'fin_yr' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 13:07:19] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [22-Jun-24 13:07:19] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-Jun-24 13:08:32] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [22-Jun-24 13:08:32] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000001' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [23-Jun-24 17:27:09] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [23-Jun-24 17:27:09] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [23-Jun-24 17:27:23] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [23-Jun-24 17:27:23] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------

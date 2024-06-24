@@ -1,0 +1,141 @@
+const db = require("../core/db"),
+  { createLogFile } = require("../core/createLog");
+
+const db_Select = (select, table_name, whr, order) => {
+  var tb_whr = whr ? `WHERE ${whr}` : "";
+  var tb_order = order ? order : "";
+  let sql = `SELECT ${select} FROM ${table_name} ${tb_whr} ${tb_order}`;
+  console.log(sql);
+  return new Promise((resolve, reject) => {
+    try {
+      db.query(sql, (err, result) => {
+        if (err) {
+          createLogFile({
+            event: `Exicuting Select Statement from table ${table_name}`,
+            message: JSON.stringify(err),
+          });
+          console.log(err);
+          data = { suc: 0, msg: JSON.stringify(err) };
+        } else {
+          data = { suc: 1, msg: result, sql };
+        }
+        resolve(data);
+      });
+    } catch (err) {
+      createLogFile({
+        event: `Exicuting Select Statement from table ${table_name}`,
+        message: err,
+      });
+      reject({ suc: 0, msg: err, sql: sql });
+    }
+  });
+};
+
+const db_Insert = (table_name, fields, values, whr, flag) => {
+  var sql = "",
+    msg = "",
+    tb_whr = whr ? `WHERE ${whr}` : "";
+  // 0 -> INSERT; 1 -> UPDATE
+  // IN INSERT flieds ARE TABLE COLOUMN NAME ONLY || IN UPDATE fields ARE TABLE NAME = VALUES
+  if (flag > 0) {
+    sql = `UPDATE ${table_name} SET ${fields} ${tb_whr}`;
+    msg = "Updated Successfully !!";
+  } else {
+    sql = `INSERT INTO ${table_name} ${fields} VALUES ${values}`;
+    msg = "Inserted Successfully !!";
+  }
+
+  return new Promise((resolve, reject) => {
+    try {
+      db.query(sql, (err, lastId) => {
+        if (err) {
+          console.log(err);
+          createLogFile({
+            event: `Exicuting ${
+              flag > 0 ? "Update" : "Insert"
+            } Statement for table ${table_name}`,
+            message: err,
+          });
+          data = { suc: 0, msg: JSON.stringify(err) };
+        } else {
+          data = { suc: 1, msg: msg, lastId };
+        }
+        resolve(data);
+      });
+    } catch (err) {
+      createLogFile({
+        event: `Exicuting ${
+          flag > 0 ? "Update" : "Insert"
+        } Statement for table ${table_name}`,
+        message: err,
+      });
+      reject({ suc: 0, msg: err });
+    }
+  });
+};
+
+const db_Delete = (table_name, whr) => {
+  whr = whr ? `WHERE ${whr}` : "";
+  var sql = `DELETE FROM ${table_name} ${whr}`;
+  return new Promise((resolve, reject) => {
+    try {
+      db.query(sql, (err, lastId) => {
+        if (err) {
+          createLogFile({
+            event: `Exicuting Delete Statement for table ${table_name}`,
+            message: JSON.stringify(err),
+          });
+          console.log(err);
+          data = { suc: 0, msg: JSON.stringify(err) };
+        } else {
+          data = { suc: 1, msg: "Deleted Successfully !!" };
+        }
+        resolve(data);
+      });
+    } catch (err) {
+      createLogFile({
+        event: `Exicuting Delete Statement for table ${table_name}`,
+        message: err,
+      });
+      reject({ suc: 0, msg: err });
+    }
+  });
+};
+
+const generateDBValue = ({
+  data = Object,
+  erase = Array[null],
+  flag = Number,
+}) => {
+  return new Promise(async (resolve, reject) => {
+    var values = "",
+      fields = "";
+    if (Array.isArray(erase) && erase.length > 0) {
+      for (let dt of erase) {
+        if (data[dt]) delete data[dt];
+      }
+    }
+    // 0 -> INSERT; 1 -> UPDATE
+    if (flag > 0) {
+      data["modified_by"] = data.created_by;
+      delete data["created_by"];
+      var result = [];
+      for (let [key, value] of Object.entries(data)) {
+        result.push(`${key}='${value}'`);
+      }
+      fields = result.join(",");
+    } else {
+      fields = Object.keys(data).join(",");
+      values = Object.values(data)
+        .map((dt) => (dt ? `'${dt}'` : "''"))
+        .join(",");
+    }
+    resolve({ fields, values });
+  });
+};
+
+const HUSBAND_ID = 15,
+  WIFE_ID = 3;
+
+
+  module.exports = { db_Select, db_Insert, db_Delete, generateDBValue, HUSBAND_ID, WIFE_ID };
