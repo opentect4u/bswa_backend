@@ -184,11 +184,13 @@ group_policyRouter.get("/transaction_dt_group", async (req, res) => {
   var data = req.query;
   console.log(data);
   var select =
-      "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.ins_period,c.premium_dt",
-    table_name = "td_transactions a, td_gen_ins b, td_premium_dtls c",
-    whr = ` a.form_no = b.form_no
+      "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.ins_period,c.premium_dt,b.association,b.memb_name,b.resolution_no,b.resolution_dt,d.unit_name",
+    table_name =
+      "td_transactions a, td_gen_ins b, td_premium_dtls c, md_unit d",
+    whr = `a.form_no = b.form_no
     AND a.form_no = c.form_no
-    AND b.form_status = 'T';`,
+    AND b.association = d.unit_id
+    AND b.form_status = 'T'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "mini");

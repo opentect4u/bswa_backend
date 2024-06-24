@@ -1,4 +1,9 @@
-const { db_Insert, db_Select, generateDBValue } = require("./MasterModule");
+const {
+  db_Insert,
+  db_Select,
+  generateDBValue,
+  GenPassword,
+} = require("./MasterModule");
 var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs");
@@ -277,9 +282,7 @@ module.exports = {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
 
-      const no = await getMaxTrnId();
-      let trn_id = `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
       var tot_amt = data.admissionFee + data.donationFee + data.subscriptionFee;
 
       var table_name = "td_transactions",
@@ -314,19 +317,53 @@ module.exports = {
       const no = await getMember(data.flag);
       let member_id = `${data.flag}-${no.msg[0].member_id}`;
       console.log(member_id);
-      pwd = `$2b$10$xkkGaJkZcSzuGhVyirp2zOQ3QWs9gtxfEJ/sGJbRAkYHyNKclin0.`;
+      // pwd = `$2b$10$xkkGaJkZcSzuGhVyirp2zOQ3QWs9gtxfEJ/sGJbRAkYHyNKclin0.`;
+      var pwd = await GenPassword();
+
+      // let year = dateFormat(new Date(), "yyyy");
+      // const trnno = await getMaxTrnId();
+      // let trn_id = `${year}${trnno.msg[0].max_trn_id}`;
+      // console.log(trn_id);
+
+      var select = "memb_name,phone_no,email_id",
+        table_name = "md_member",
+        whr = `form_no = '${data.formNo}'`,
+        order = null;
+      var res_dt = await db_Select(select, table_name, whr, order);
+
+      var select = "trn_id",
+        table_name = "td_transactions",
+        whr = `form_no = '${data.formNo}'`,
+        order = null;
+      var trn_dt = await db_Select(select, table_name, whr, order);
 
       var table_name = "md_user",
-        fields = `(user_id,user_type,password,user_status,created_by,created_at)`,
-        values = `('${member_id}','M','${pwd}','A','${data.user}','${datetime}')`,
+        fields = `(user_id,user_type,password,user_name,user_email,user_phone,user_status,created_by,created_at)`,
+        values = `('${member_id}','M','${pwd}','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
       if (res_dt.suc > 0) {
+        var select = "subscription_1",
+          table_name = "md_member_fees",
+          whr = `memb_type = '${data.flag}'`,
+          order = `ORDER BY effective_dt DESC LIMIT 1`;
+        var sub_mas_dt = await db_Select(select, table_name, whr, order);
+        var tot_sub_amt =
+          sub_mas_dt.suc > 0 && sub_mas_dt.msg.length > 0
+            ? sub_mas_dt.msg[0].subscription_1
+            : 0;
+        var tot_tenure = tot_sub_amt > 0 ? data.sub_amt / tot_sub_amt : 0;
+        var sub_upto = new Date(data.trn_dt);
+        sub_upto.setMonth(sub_upto.getMonth() + tot_tenure + 1);
         var table_name = "td_memb_subscription",
-          fields = `(member_id,sub_dt,amount,created_by,created_at)`,
-          values = `('${member_id}','${data.trn_dt}','${data.tot_amt}','${data.user}','${datetime}')`;
+          fields = `(member_id,sub_dt,amount,subscription_upto,created_by,created_at)`,
+          values = `('${member_id}','${data.trn_dt}','${
+            data.sub_amt
+          }', '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}','${
+            data.user
+          }','${datetime}')`;
         (whr = null), (flag = 0);
         var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
@@ -343,7 +380,21 @@ module.exports = {
           whr = `form_no = '${data.formNo}'`,
           flag = 1;
         var depend_dt = await db_Insert(table_name, fields, values, whr, flag);
-        resolve(depend_dt);
+
+        var table_name = "td_transactions",
+          fields = `approval_status = 'A', approved_by = '${data.user}',approved_dt = '${datetime}'`,
+          values = null,
+          whr = `form_no = '${data.formNo}'`,
+          flag = 1;
+        var approval_dt = await db_Insert(
+          table_name,
+          fields,
+          values,
+          whr,
+          flag
+        );
+        approval_dt["trn_id"] = trn_dt.suc > 0 ? trn_dt.msg[0].trn_id : 0;
+        resolve(approval_dt);
       }
     });
   },

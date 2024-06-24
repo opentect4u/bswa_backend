@@ -55,7 +55,7 @@ generalRouter.get("/frm_list", async (req, res) => {
   console.log(data, "bbb");
   var select = "form_no,form_dt,memb_name,gender,mem_type",
     table_name = "md_member",
-    whr = `form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
+    whr = `memb_status = 'P' AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
@@ -129,9 +129,12 @@ generalRouter.post("/payment_accept_cheque", async (req, res) => {
 generalRouter.get("/transaction_dt", async (req, res) => {
   var data = req.query;
   console.log(data);
-  var select = "a.*,b.mem_type",
-    table_name = "td_transactions a, md_member b",
-    whr = `a.form_no = b.form_no AND b.memb_status = 'T'`,
+  var select =
+      "a.*,b.mem_type,b.memb_oprn,b.memb_name,b.unit_id,b.phone_no,b.email_id,b.resolution_no,b.resolution_dt,b.staff_nos,b.pers_no,b.min_no,c.unit_name",
+    table_name = "td_transactions a, md_member b, md_unit c",
+    whr = `a.form_no = b.form_no 
+    AND b.unit_id = c.unit_id
+    AND b.memb_status = 'T'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "mini");

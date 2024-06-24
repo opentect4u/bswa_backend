@@ -877,3 +877,33 @@
 [EVENT]   : [23-Jun-24 17:27:23] : Exicuting Insert Statement for table td_stp_ins 
 [MESSAGE] : [23-Jun-24 17:27:23] : Error: ER_WRONG_VALUE_COUNT_ON_ROW: Column count doesn't match value count at row 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 17:07:56] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [24-Jun-24 17:07:56] : Error: ER_DUP_ENTRY: Duplicate entry 'G-3' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 17:15:42] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [24-Jun-24 17:15:42] : Error: ER_DUP_ENTRY: Duplicate entry 'G-4' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 19:48:21] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [24-Jun-24 19:48:21] : Error: ER_DUP_ENTRY: Duplicate entry 'G-6' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 20:31:58] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [24-Jun-24 20:31:58] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 20:34:35] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [24-Jun-24 20:34:35] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 21:19:48] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [24-Jun-24 21:19:48] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'undefined VALUES undefined' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 21:20:53] : Exicuting Select Statement from table undefined 
+[MESSAGE] : [24-Jun-24 21:20:53] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '= 'G2024000010'' at line 1","sqlState":"42000","index":0,"sql":"SELECT td_transactions FROM undefined  form_no = 'G2024000010'"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 21:22:03] : Exicuting Select Statement from table undefined 
+[MESSAGE] : [24-Jun-24 21:22:03] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '= 'G2024000010'' at line 1","sqlState":"42000","index":0,"sql":"SELECT td_transactions FROM undefined  form_no = 'G2024000010'"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 22:40:42] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [24-Jun-24 22:40:42] : Error: ER_DUP_ENTRY: Duplicate entry 'G-7' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-24 22:48:32] : Exicuting Update Statement for table md_transactions 
+[MESSAGE] : [24-Jun-24 22:48:32] : Error: ER_NO_SUCH_TABLE: Table 'sail.md_transactions' doesn't exist 
+------------------------------------------------------------------------------------------------------------
