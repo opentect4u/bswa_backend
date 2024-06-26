@@ -202,15 +202,15 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
       console.log(trn_id, "pppp");
-      var tot_amt =
-        data.admissionFee_life +
-        data.donationFee_life +
-        data.subscriptionFee_2 +
-        data.subscriptionFee_1;
+      // var tot_amt =
+      //   data.admissionFee_life +
+      //   data.donationFee_life +
+      //   data.subscriptionFee_2 +
+      //   data.subscriptionFee_1;
 
       var table_name = "td_transactions",
-        fields = `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,chq_no,chq_dt,chq_bank,created_by,created_at)`,
-        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee_life}','${data.donationFee_life}','0','${tot_amt}','${data.payment}','0','0','0','${data.user}','${datetime}')`,
+        fields = `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,created_by,created_at)`,
+        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee_life}','${data.donationFee_life}','0','${data.totalAmount_life}','${data.payment}','${data.receipt_no}','0','0','0','${data.user}','${datetime}')`,
         where = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, where, flag);
@@ -249,7 +249,7 @@ module.exports = {
 
       var table_name = "td_transactions",
         fields = `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,chq_no,chq_dt,chq_bank,created_by,created_at)`,
-        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee}','${data.donationFee}','0','${tot_amt}','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','${data.user}','${datetime}')`,
+        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee}','${data.donationFee}','0','${data.totalAmount_life}','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','${data.user}','${datetime}')`,
         where = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, where, flag);
@@ -313,7 +313,7 @@ module.exports = {
             : 0;
         var tot_tenure = tot_sub_amt > 0 ? data.sub_amt / tot_sub_amt : 0;
         var sub_upto = new Date(data.trn_dt);
-        sub_upto.setMonth(sub_upto.getMonth() + tot_tenure + 1);
+        sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
         var table_name = "td_memb_subscription",
           fields = `(member_id,sub_dt,amount,subscription_upto,created_by,created_at)`,
           values = `('${member_id}','${data.trn_dt}','${
