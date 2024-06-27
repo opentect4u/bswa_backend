@@ -907,3 +907,6 @@
 [EVENT]   : [24-Jun-24 22:48:32] : Exicuting Update Statement for table md_transactions 
 [MESSAGE] : [24-Jun-24 22:48:32] : Error: ER_NO_SUCH_TABLE: Table 'sail.md_transactions' doesn't exist 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-24 14:30:23] : Exicuting Select Statement from table md_member a 
+[MESSAGE] : [27-Jun-24 14:30:23] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM md_member a WHERE a.member_id = 'G-10'' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.member_id, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, (SELECT MAX(DATE(subscription_upto)) FROM td_memb_subscription b FROM md_member a WHERE a.member_id = 'G-10' "} 
+------------------------------------------------------------------------------------------------------------
