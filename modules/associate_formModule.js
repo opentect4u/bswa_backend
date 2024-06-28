@@ -26,12 +26,29 @@ const getMaxFormNo = (flag) => {
   });
 };
 
+// const getMember = (flag) => {
+//   return new Promise(async (resolve, reject) => {
+//     var select =
+//         flag != "AI"
+//           ? "IF(MAX(SUBSTRING(member_id, 3)) > 0, MAX(SUBSTRING(member_id, 3))+1, '1') member_id"
+//           : "IF(MAX(SUBSTRING(member_id, 4)) > 0, MAX(SUBSTRING(member_id, 4))+1, '1') member_id",
+//       table_name = "md_member",
+//       whr =
+//         flag != "AI"
+//           ? `SUBSTRING(member_id, 1, 1) = '${flag}'`
+//           : `SUBSTRING(member_id, 1, 2) = '${flag}'`,
+//       order = null;
+//     var res_dt = await db_Select(select, table_name, whr, order);
+//     resolve(res_dt);
+//   });
+// };
+
 const getMember = (flag) => {
   return new Promise(async (resolve, reject) => {
     var select =
         flag != "AI"
-          ? "IF(MAX(SUBSTRING(member_id, 3)) > 0, MAX(SUBSTRING(member_id, 3))+1, '1') member_id"
-          : "IF(MAX(SUBSTRING(member_id, 4)) > 0, MAX(SUBSTRING(member_id, 4))+1, '1') member_id",
+          ? "IF(MAX(SUBSTRING(member_id, 3)) > 0, MAX(cast(SUBSTRING(member_id, 3) as unsigned))+1, '1') member_id"
+          : "IF(MAX(SUBSTRING(member_id, 4)) > 0, MAX(cast(SUBSTRING(member_id, 4) as unsigned))+1, '1') member_id",
       table_name = "md_member",
       whr =
         flag != "AI"

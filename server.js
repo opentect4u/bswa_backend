@@ -29,6 +29,7 @@ const { associateRouter } = require("./routes/api/associate_formRouter");
 const { group_policyRouter } = require("./routes/api/group_policyRouter");
 const { super_policyRouter } = require("./routes/api/super_policyRouter");
 const { SubsDepoRouter } = require("./routes/api/subs_depo_router");
+const { reportRouter } = require("./routes/api/reportRouter");
 
 app.use(LoginRouter);
 app.use("/fee", admin_fee_typeRouter);
@@ -39,6 +40,7 @@ app.use(associateRouter);
 app.use(group_policyRouter);
 app.use(super_policyRouter);
 app.use(SubsDepoRouter)
+app.use(reportRouter);
 
 app.listen(port, (err) => {
   if (err) throw new Error(err);
