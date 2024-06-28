@@ -910,3 +910,6 @@
 [EVENT]   : [27-Jun-24 14:30:23] : Exicuting Select Statement from table md_member a 
 [MESSAGE] : [27-Jun-24 14:30:23] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM md_member a WHERE a.member_id = 'G-10'' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.member_id, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, (SELECT MAX(DATE(subscription_upto)) FROM td_memb_subscription b FROM md_member a WHERE a.member_id = 'G-10' "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 12:28:16] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [28-Jun-24 12:28:16] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'approval_status = 'A', approved_by = 'Sail', approved_dt = '2024-06-28 12:28:16'' at line 1 
+------------------------------------------------------------------------------------------------------------
