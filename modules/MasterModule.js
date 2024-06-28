@@ -215,6 +215,19 @@ const GenPassword = () => {
   });
 };
 
+const getMaxTrnId = () => {
+  return new Promise(async (resolve, reject) => {
+    var now_year = dateFormat(new Date(), "yyyy");
+    var select =
+        "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
+      table_name = "td_transactions",
+      whr = `SUBSTRING(trn_id, 1, 4) = ${now_year}`,
+      order = null;
+    var res_dt = await db_Select(select, table_name, whr, order);
+    resolve(res_dt);
+  });
+};
+
 module.exports = {
   db_Select,
   db_Insert,
@@ -223,4 +236,5 @@ module.exports = {
   HUSBAND_ID,
   WIFE_ID,
   GenPassword,
+  getMaxTrnId,
 };
