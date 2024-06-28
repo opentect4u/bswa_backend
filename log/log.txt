@@ -949,3 +949,21 @@
 [EVENT]   : [27-Jun-24 16:26:25] : Exicuting Select Statement from table td_transactions a,md_member b 
 [MESSAGE] : [27-Jun-24 16:26:25] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Order By trn_dt, trn_id' at line 3","sqlState":"42000","index":0,"sql":"SELECT date(a.trn_dt)trn_dt,a.trn_id,b.memb_name,b.member_id,a.sub_amt,a.onetime_amt,a.adm_fee,a.donation,a.pay_mode,a.receipt_no,a.chq_no,date(a.chq_dt)chq_dt,if(a.sub_amt+a.onetime_amt+a.adm_fee+a.donation>0,'O','R')trans_mode FROM td_transactions a,md_member b WHERE a.form_no = b.form_no\n             AND a.approval_status = 'A'\n             AND DATE(a.trn_dt) between '2024-06-19' and '2024-06-27'; Order By trn_dt, trn_id"} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 14:11:39] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [28-Jun-24 14:11:39] : Error: ER_DUP_ENTRY: Duplicate entry 'L-1' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 15:27:15] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [28-Jun-24 15:27:15] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 's / Husband Name:*  ','M','U','1983-02-05','S','Member Address:*  ','12313213...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 15:27:37] : Exicuting Insert Statement for table md_member 
+[MESSAGE] : [28-Jun-24 15:27:37] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 's / Husband Name:*  ','M','U','1983-02-05','S','Member Address:*  ','12313213...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 15:40:44] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [28-Jun-24 15:40:44] : Error: ER_DUP_ENTRY: Duplicate entry 'G-10' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 15:48:37] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [28-Jun-24 15:48:37] : Error: ER_DUP_ENTRY: Duplicate entry 'G-10' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-24 15:53:03] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [28-Jun-24 15:53:03] : Error: ER_DUP_ENTRY: Duplicate entry 'G-10' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
