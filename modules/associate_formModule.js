@@ -350,22 +350,22 @@ module.exports = {
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
       if (res_dt.suc > 0) {
-        var select = "subscription_1",
-          table_name = "md_member_fees",
-          whr = `memb_type = '${data.flag}'`,
-          order = `ORDER BY effective_dt DESC LIMIT 1`;
-        var sub_mas_dt = await db_Select(select, table_name, whr, order);
-        var tot_sub_amt =
-          sub_mas_dt.suc > 0 && sub_mas_dt.msg.length > 0
-            ? sub_mas_dt.msg[0].subscription_1
-            : 0;
-        var tot_tenure = tot_sub_amt > 0 ? data.sub_amt / tot_sub_amt : 0;
+        // var select = "subscription_1",
+        //   table_name = "md_member_fees",
+        //   whr = `memb_type = '${data.flag}'`,
+        //   order = `ORDER BY effective_dt DESC LIMIT 1`;
+        // var sub_mas_dt = await db_Select(select, table_name, whr, order);
+        // var tot_sub_amt =
+        //   sub_mas_dt.suc > 0 && sub_mas_dt.msg.length > 0
+        //     ? sub_mas_dt.msg[0].subscription_1
+        //     : 0;
+        // var tot_tenure = tot_sub_amt > 0 ? data.sub_amt / tot_sub_amt : 0;
         var sub_upto = new Date(data.trn_dt);
-        sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+        sub_upto.setFullYear(sub_upto.getFullYear() + 1);
         var table_name = "td_memb_subscription",
           fields = `(member_id,sub_dt,amount,subscription_upto,created_by,created_at)`,
           values = `('${member_id}','${data.trn_dt}','${
-            data.sub_amt
+            data.tot_asso_amt
           }','${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}','${
             data.user
           }','${datetime}')`;

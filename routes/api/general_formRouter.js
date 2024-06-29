@@ -156,10 +156,9 @@ generalRouter.get("/transaction_dt", async (req, res) => {
   console.log(data);
   var select =
       "a.*,b.mem_type,b.memb_oprn,b.memb_name,b.unit_id,b.phone_no,b.email_id,b.resolution_no,b.resolution_dt,b.staff_nos,b.pers_no,b.min_no,c.unit_name",
-    table_name = "td_transactions a, md_member b, md_unit c",
-    whr = `a.form_no = b.form_no 
-    AND b.unit_id = c.unit_id
-    AND b.memb_status = 'T'
+    table_name =
+      "td_transactions a JOIN md_member b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.unit_id = c.unit_id",
+    whr = `b.memb_status = 'T'
     ${data.form_no ? `AND a.form_no = '${data.form_no}'` : ""}`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
