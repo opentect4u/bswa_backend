@@ -12,7 +12,7 @@ reportRouter.get("/member_list_report", async (req, res) => {
     whr = `mem_dt <= now()
            and  mem_type = '${data.member_type}'
            and  memb_status = 'A';`;
-  order = null;
+  order = "order by cast(substr(member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
   res.send(res_dt);
