@@ -87,6 +87,7 @@ const dynamicFileUpload = (filePath, fileName, file) => {
 };
 
 module.exports = {
+  dynamicFileUpload,
   general_form_save: (data) => {
     // console.log(data, "FormData");
     return new Promise(async (resolve, reject) => {

@@ -68,7 +68,7 @@ generalRouter.get("/frm_list_2", async (req, res) => {
   console.log(data, "bbb");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
-    whr = `form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
+    whr = `memb_status = 'P' OR memb_status = 'R' OR memb_status = 'T' AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
