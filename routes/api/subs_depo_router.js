@@ -43,9 +43,25 @@ SubsDepoRouter.post('/get_tnx_details', async (req, res) => {
 SubsDepoRouter.post('/mem_subs_dtls_save', async (req, res) => {
     const data = req.body,
     trn_dt = dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss')
-    var tot_tenure = data.sub_fee > 0 ? data.sub_amt / data.sub_fee : 0;
     var sub_upto = new Date(data.last_subs);
-    sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+    switch (data.sub_type) {
+        case 'Y':
+            sub_upto.setFullYear(sub_upto.getFullYear()+1)
+            break;
+        case 'O':
+            sub_upto.setFullYear(sub_upto.getFullYear()+1)
+            break;
+        case 'M':
+            var tot_tenure = data.sub_fee > 0 ? data.sub_amt / data.sub_fee : 0;
+            sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+            break;
+    
+        default:
+            var tot_tenure = data.sub_fee > 0 ? data.sub_amt / data.sub_fee : 0;
+            sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+            break;
+    }
+    
     var table_name = 'td_memb_subscription',
     fields = '(member_id, sub_dt, amount, subscription_upto, created_by, created_at)',
     values = `('${data.memb_id}', '${trn_dt}', '${data.sub_amt}', '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${data.user}', '${trn_dt}')`,
