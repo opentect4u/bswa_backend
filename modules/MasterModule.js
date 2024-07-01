@@ -228,6 +228,12 @@ const getMaxTrnId = () => {
   });
 };
 
+const formStatus = {
+  'P': 'Pending',
+  'T': 'Accept',
+  'R': 'Reject'
+};
+
 module.exports = {
   db_Select,
   db_Insert,
@@ -237,4 +243,5 @@ module.exports = {
   WIFE_ID,
   GenPassword,
   getMaxTrnId,
+  formStatus
 };

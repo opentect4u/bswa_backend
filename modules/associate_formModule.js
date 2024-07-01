@@ -1,12 +1,15 @@
 var dateFormat = require("dateformat"),
   path = require("path"),
-  fs = require("fs");
+  fs = require("fs"),
+  bcrypt = require("bcrypt");
 const {
   db_Select,
   db_Insert,
   generateDBValue,
   GenPassword,
+  formStatus,
 } = require("./MasterModule");
+const { sendWappMsg } = require("./whatsappModule");
 
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
@@ -122,7 +125,25 @@ module.exports = {
       var mem_dt = await db_Insert(table_name, fields, values, whr, order);
       mem_dt["form_no"] = form_no;
       mem_dt["mem_type"] = data.flag;
-      console.log(mem_dt, "gggg");
+      mem_dt["form_no"] = form_no;
+
+      // WHATSAPP MESSAGE //
+      try{
+        var select = "msg, domain",
+          table_name = "md_whatsapp_msg",
+          whr = `msg_for = 'Submit'`,
+          order = null;
+        var msg_dt = await db_Select(select, table_name, whr, order);
+        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+        domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+        wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_id}', form_no).replace('{url}', `${domain}/#/home/associate_form_print/${encodeURIComponent(new Buffer.from(form_no).toString('base64'))}`)
+        var wpRes = await sendWappMsg(data.phone, wpMsg)
+      }catch(err){
+        console.log(err);
+      }
+      // END //
+
+      // console.log(mem_dt, "gggg");
       resolve(mem_dt);
     });
   },
@@ -277,6 +298,23 @@ module.exports = {
           whr1,
           flag1
         );
+
+        // WHATSAPP MESSAGE //
+        try{
+          var select = "msg, domain",
+            table_name = "md_whatsapp_msg",
+            whr = `msg_for = 'Accept'`,
+            order = null;
+          var msg_dt = await db_Select(select, table_name, whr, order);
+          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+          wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{status}', formStatus[data.status])
+          var wpRes = await sendWappMsg(data.phone_no, wpMsg)
+        }catch(err){
+          console.log(err);
+        }
+        // END //
+
         resolve(accept_dt);
       }
     });
@@ -316,6 +354,23 @@ module.exports = {
           whr1,
           flag1
         );
+
+        // WHATSAPP MESSAGE //
+        try{
+          var select = "msg, domain",
+            table_name = "md_whatsapp_msg",
+            whr = `msg_for = 'Accept'`,
+            order = null;
+          var msg_dt = await db_Select(select, table_name, whr, order);
+          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+          wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{status}', formStatus[data.status])
+          var wpRes = await sendWappMsg(data.phone_no, wpMsg)
+        }catch(err){
+          console.log(err);
+        }
+        // END //
+
         resolve(accept_dt);
       }
     });
@@ -329,6 +384,7 @@ module.exports = {
       console.log(member_id);
       // pwd = `$2b$10$xkkGaJkZcSzuGhVyirp2zOQ3QWs9gtxfEJ/sGJbRAkYHyNKclin0.`;
       var pwd = await GenPassword();
+      var pass = bcrypt.hashSync(pwd.toString(), 10)
 
       var select = "memb_name,phone_no,email_id",
         table_name = "md_member",
@@ -344,7 +400,7 @@ module.exports = {
 
       var table_name = "md_user",
         fields = `(user_id,user_type,password,user_name,user_email,user_phone,user_status,created_by,created_at)`,
-        values = `('${member_id}','M','${pwd}','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
+        values = `('${member_id}','M','${pass}','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -399,6 +455,23 @@ module.exports = {
           flag
         );
         approval_dt["trn_id"] = trn_dt.suc > 0 ? trn_dt.msg[0].trn_id : 0;
+
+        // WHATSAPP MESSAGE //
+        try{
+          var select = "msg, domain",
+            table_name = "md_whatsapp_msg",
+            whr = `msg_for = 'Approve'`,
+            order = null;
+          var msg_dt = await db_Select(select, table_name, whr, order);
+          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+          wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{url}', `${domain}/#/auth/member_login`).replace('{user_name}', member_id).replace('{password}', pwd)
+          var wpRes = await sendWappMsg(data.phone_no, wpMsg)
+        }catch(err){
+          console.log(err);
+        }
+        // END //
+
         resolve(approval_dt);
       }
     });
