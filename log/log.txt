@@ -906,4 +906,12 @@
 ------------------------------------------------------------------------------------------------------------
 [EVENT]   : [24-Jun-24 22:48:32] : Exicuting Update Statement for table md_transactions 
 [MESSAGE] : [24-Jun-24 22:48:32] : Error: ER_NO_SUCH_TABLE: Table 'sail.md_transactions' doesn't exist 
+------------------------------------------------------------------------------------------------------------[EVENT]   : [01-Jul-24 12:40:00] : Exicuting Update Statement for table md_user 
+[MESSAGE] : [01-Jul-24 12:40:00] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '@gmail.com' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jul-24 18:07:52] : Exicuting Update Statement for table md_user 
+[MESSAGE] : [01-Jul-24 18:07:52] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '@gmail.com' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-Jul-24 18:08:38] : Exicuting Update Statement for table md_user 
+[MESSAGE] : [01-Jul-24 18:08:38] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '@gmail.com' at line 1 
 ------------------------------------------------------------------------------------------------------------
