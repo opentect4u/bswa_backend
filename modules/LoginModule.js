@@ -6,7 +6,7 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       var select = "*",
         table_name = "md_user",
-        whr = `user_type = 'A' AND user_status = 'A' AND user_email = '${data.username}'`,
+        whr = `user_type = 'A' AND user_status = 'A' AND user_id = '${data.username}'`,
         order = null;
       var login_dt = await db_Select(select, table_name, whr, order);
       resolve(login_dt);
@@ -28,7 +28,7 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       var select = "*",
         table_name = "md_user",
-        whr = `user_type = 'SA' AND user_status = 'A' AND user_email = '${data.username}'`,
+        whr = `user_type = 'SA' AND user_status = 'A' AND user_id = '${data.username}'`,
         order = null;
       var sup_login_dt = await db_Select(select, table_name, whr, order);
       resolve(sup_login_dt);
