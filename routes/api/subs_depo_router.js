@@ -4,9 +4,9 @@ const dateFormat = require('dateformat')
 
 SubsDepoRouter.post('/get_mem_subs_dtls', async (req, res) => {
     const data = req.body
-    var select = 'a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, (SELECT MAX(DATE(subscription_upto)) FROM td_memb_subscription b WHERE a.member_id=b.member_id) subscription_upto',
-    table_name = 'md_member a',
-    whr = `a.member_id = '${data.memb_id}'`,
+    var select = 'a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto',
+    table_name = 'md_member a, td_memb_subscription b',
+    whr = `a.member_id=b.member_id AND a.member_id = '${data.memb_id}' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id)`,
     order = null;
     var res_dt = await db_Select(select, table_name, whr, order)
     res.send(res_dt)
@@ -20,9 +20,9 @@ SubsDepoRouter.post('/get_tnx_details', async (req, res) => {
     order = `ORDER BY trn_dt, trn_id`;
     var res_dt = await db_Select(select, table_name, whr, order)
     if(res_dt.suc > 0 && data.trn_id > 0){
-        var select = 'a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, (SELECT MAX(DATE(subscription_upto)) FROM td_memb_subscription b WHERE a.member_id=b.member_id) subscription_upto',
-            table_name = 'md_member a',
-            whr = `a.form_no = '${data.frm_no}'`,
+        var select = 'a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto',
+            table_name = 'md_member a, td_memb_subscription b',
+            whr = `a.member_id=b.member_id AND a.form_no = '${data.frm_no}' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id)`,
             order = null;
         var mem_dt = await db_Select(select, table_name, whr, order)
 
@@ -43,7 +43,7 @@ SubsDepoRouter.post('/get_tnx_details', async (req, res) => {
 SubsDepoRouter.post('/mem_subs_dtls_save', async (req, res) => {
     const data = req.body,
     trn_dt = dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss')
-    var sub_upto = new Date(data.last_subs);
+    var sub_upto = new Date(data.calc_upto);
     switch (data.sub_type) {
         case 'Y':
             sub_upto.setFullYear(sub_upto.getFullYear()+1)
@@ -52,19 +52,19 @@ SubsDepoRouter.post('/mem_subs_dtls_save', async (req, res) => {
             sub_upto.setFullYear(sub_upto.getFullYear()+1)
             break;
         case 'M':
-            var tot_tenure = data.sub_fee > 0 ? data.sub_amt / data.sub_fee : 0;
+            var tot_tenure = data.sub_fee > 0 ? data.paid_month_amt / data.sub_fee : 0;
             sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
             break;
     
         default:
-            var tot_tenure = data.sub_fee > 0 ? data.sub_amt / data.sub_fee : 0;
+            var tot_tenure = data.sub_fee > 0 ? data.paid_month_amt / data.sub_fee : 0;
             sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
             break;
     }
     
     var table_name = 'td_memb_subscription',
-    fields = '(member_id, sub_dt, amount, subscription_upto, created_by, created_at)',
-    values = `('${data.memb_id}', '${trn_dt}', '${data.sub_amt}', '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${data.user}', '${trn_dt}')`,
+    fields = '(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)',
+    values = `('${data.memb_id}', '${trn_dt}', '${data.sub_amt}', '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${data.trn_id}', '${data.user}', '${trn_dt}')`,
     whr = null,
     flag = 0;
     var res_dt = await db_Insert(table_name, fields, values, whr, flag)
