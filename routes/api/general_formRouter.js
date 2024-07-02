@@ -80,10 +80,12 @@ generalRouter.get("/get_member_dtls", async (req, res) => {
   // console.log(data, "ooo");
   var select =
       "a.form_no,a.mem_type,a.memb_name,a.unit_id,a.gurdian_name,a.dob,a.blood_grp,a.staff_nos,a.pers_no,a.min_no,a.memb_status,a.remarks,a.memb_address,a.ps,a.phone_no,a.email_id,a.resolution_no,a.resolution_dt,c.adm_fee,c.donation,c.subs_type,c.subscription_1,c.subscription_2,d.unit_name, a.memb_pic",
-    table_name = "md_member a, md_member_fees c, md_unit d",
-    where = `a.mem_type = c.memb_type
-    AND a.unit_id = d.unit_id
-    AND a.form_no = '${data.form_no}'`,
+    table_name = `md_member a 
+    JOIN md_member_fees c ON a.mem_type = c.memb_type AND date(c.effective_dt) = (SELECT max(date(d.effective_dt))
+    FROM md_member_fees d
+    WHERE a.mem_type = d.memb_type)
+    LEFT JOIN md_unit d ON a.unit_id = d.unit_id`,
+    where = `a.form_no = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, where, order);
   console.log(res_dt, "sss");

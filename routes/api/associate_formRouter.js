@@ -49,6 +49,7 @@ associateRouter.get("/get_member_dtls_asso", async (req, res) => {
       "a.form_no,a.mem_type,a.memb_name,a.gender,a.unit_id,a.marital_status,a.caste,a.gurdian_name,a.dob,a.blood_grp,a.staff_nos,a.pers_no,a.min_no,a.memb_address,a.ps,a.phone_no,a.email_id,a.resolution_no,a.resolution_dt,b.adm_fee,b.donation,b.subs_type,b.subscription_1,b.subscription_2,a.memb_pic",
     table_name = "md_member a, md_member_fees b",
     where = `a.mem_type = b.memb_type
+    AND date(b.effective_dt) = (SELECT max(date(c.effective_dt)) FROM md_member_fees c WHERE a.mem_type = c.memb_type)
     AND a.form_no = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, where, order);
