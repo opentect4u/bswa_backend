@@ -51,4 +51,19 @@ masterRouter.get("/subscription_fee_dynamic", async (req, res) => {
   res.send(res_dt);
 });
 
+masterRouter.get("/subscription_fee_dynamic_life", async (req, res) => {
+  var data = req.query;
+  var select = "*",
+    table_name = "md_member_fees",
+    whr = `memb_type = '${data.memb_type}'
+           AND effective_dt = (select max(effective_dt)
+                      from md_member_fees
+                      where memb_type = '${data.memb_type}'
+                      AND  effective_dt <= now())`;
+  order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "iiii");
+  res.send(res_dt);
+});
+
 module.exports = { masterRouter };
