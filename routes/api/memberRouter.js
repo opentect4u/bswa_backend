@@ -10,7 +10,7 @@ memberRouter.post('/member_dtls', async (req, res) => {
     var select =
         "form_no, form_dt, member_id, mem_dt, mem_type, memb_oprn, memb_name, unit_id, gurdian_name, gender, marital_status, dob, blood_grp, caste, staff_nos, pers_no, min_no, memb_address, ps, city_town_dist, pin_no, phone_no, email_id, memb_pic, memb_status, remarks, resolution_no, resolution_dt",
       table_name = "md_member",
-      whr = data.flag ? `form_no = '${data.form_no}'` : null,
+      whr = data.flag ? `form_no = '${data.form_no}'` : (data.mem_id ? `member_id = '${data.mem_id}'` : null),
       order = 'order by cast(substr(member_id,3) as unsigned)';
     var res_dt = await db_Select(select, table_name, whr, order);
     if(data.flag){
