@@ -17,8 +17,8 @@ const getMaxFormNo = (flag) => {
     //     "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form",
     var select =
         flag != "AI"
-          ? "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form"
-          : "IF(MAX(SUBSTRING(form_no, -7)) > 0, LPAD(MAX(SUBSTRING(form_no, -7))+1, 6, '0'), '000001') max_form",
+          ? "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -6) as unsigned))+1, 6, '0'), '000001') max_form"
+          : "IF(MAX(SUBSTRING(form_no, -7)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -7) as unsigned))+1, 6, '0'), '000001') max_form",
       table_name = "md_member",
       // whr = `SUBSTRING(form_no, 1, 1) = '${flag}'`,
       whr =
@@ -450,6 +450,7 @@ module.exports = {
           flag
         );
         approval_dt["trn_id"] = trn_dt.suc > 0 ? trn_dt.msg[0].trn_id : 0;
+        approval_dt["mem_id"] = member_id;
 
         // WHATSAPP MESSAGE //
         try {
@@ -464,7 +465,7 @@ module.exports = {
             .replace("{user_name}", data.member)
             .replace("{form_no}", data.formNo)
             .replace("{url}", `${domain}/#/auth/member_login`)
-            .replace("{user_name}", member_id)
+            .replace("{user_id}", member_id)
             .replace("{password}", pwd);
           var wpRes = await sendWappMsg(data.phone_no, wpMsg);
         } catch (err) {
