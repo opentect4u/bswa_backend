@@ -17,8 +17,8 @@ const getMaxFormNo = (flag) => {
     //     "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form",
     var select =
         flag != "AI"
-          ? "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -6) as unsigned))+1, 6, '0'), '000001') max_form"
-          : "IF(MAX(SUBSTRING(form_no, -7)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -7) as unsigned))+1, 6, '0'), '000001') max_form",
+          ? "IF(MAX(cast(SUBSTRING(form_no, -6) as unsigned)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -6) as unsigned))+1, 6, '0'), '000001') max_form"
+          : "IF(MAX(cast(SUBSTRING(form_no, -7) as unsigned)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -7) as unsigned))+1, 6, '0'), '000001') max_form",
       table_name = "md_member",
       // whr = `SUBSTRING(form_no, 1, 1) = '${flag}'`,
       whr =

@@ -32,8 +32,8 @@ const getMember = (flag) => {
   return new Promise(async (resolve, reject) => {
     var select =
         flag != "AI"
-          ? "IF(MAX(SUBSTRING(member_id, 3)) > 0, MAX(cast(SUBSTRING(member_id, 3) as unsigned))+1, '1') member_id"
-          : "IF(MAX(SUBSTRING(member_id, 4)) > 0, MAX(cast(SUBSTRING(member_id, 4) as unsigned))+1, '1') member_id",
+          ? "IF(MAX(CAST(SUBSTRING(member_id, 3) as unsigned)) > 0, MAX(cast(SUBSTRING(member_id, 3) as unsigned))+1, '1') member_id"
+          : "IF(MAX(CAST(SUBSTRING(member_id, 4) as unsigned)) > 0, MAX(cast(SUBSTRING(member_id, 4) as unsigned))+1, '1') member_id",
       table_name = "md_member",
       whr =
         flag != "AI"
