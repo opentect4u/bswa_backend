@@ -31,7 +31,7 @@ const db_Select = (select, table_name, whr, order) => {
   });
 };
 
-const db_Insert = (table_name, fields, values, whr, flag) => {
+const db_Insert = (table_name, fields, values, whr, flag, sel=false) => {
   var sql = "",
     msg = "",
     tb_whr = whr ? `WHERE ${whr}` : "";
@@ -41,7 +41,7 @@ const db_Insert = (table_name, fields, values, whr, flag) => {
     sql = `UPDATE ${table_name} SET ${fields} ${tb_whr}`;
     msg = "Updated Successfully !!";
   } else {
-    sql = `INSERT INTO ${table_name} ${fields} VALUES ${values}`;
+    sql = `INSERT INTO ${table_name} ${fields} ${!sel ? 'VALUES' : ''} ${values}`;
     msg = "Inserted Successfully !!";
   }
 

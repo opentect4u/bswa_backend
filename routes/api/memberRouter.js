@@ -164,21 +164,13 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
               : `(form_no, sl_no, member_id, mem_type, dependent_name, relation ${
                   dt.dob_dep ? ", dob" : ""
                 } ${dt.phone_no ? ", phone_no" : ""}, created_by, created_at)`,
-          values = `('${
-            data.form_no
-          }', (select count(sl_no)+1 from md_dependent WHERE form_no = '${
-            data.form_no
-          }'), '${data.mem_id}', '${data.mem_type}', '${dt.dependent_name}', '${
-            dt.relation
-          }' ${dt.dob_dep ? `, '${dt.dob_dep}'` : ""} ${
-            dt.phone_no ? `, '${dt.phone_no}'` : ""
-          }, '${data.user}', '${datetime}')`,
+          values = `SELECT '${data.form_no}', count(sl_no)+1, '${data.mem_id}', '${data.mem_type}', '${dt.dependent_name}', '${dt.relation}' ${dt.dob_dep ? `, '${dt.dob_dep}'` : ""} ${dt.phone_no ? `, '${dt.phone_no}'` : ""}, '${data.user}', '${datetime}' from md_dependent WHERE form_no = '${data.form_no}'`,
           whr =
             dt.sl_no > 0
               ? `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`
               : null,
           flag = dt.sl_no > 0 ? 1 : 0;
-        var dep_dt = await db_Insert(table_name, fields, values, whr, flag);
+        var dep_dt = await db_Insert(table_name, fields, values, whr, flag, true);
       }
     }
   }

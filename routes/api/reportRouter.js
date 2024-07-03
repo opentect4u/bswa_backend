@@ -9,9 +9,11 @@ reportRouter.get("/member_list_report", async (req, res) => {
   var select =
       "member_id,memb_name,min_no,memb_address,ps,city_town_dist,pin_no,phone_no,email_id,resolution_no,resolution_dt",
     table_name = "md_member",
-    whr = `mem_dt <= now()
-           and  mem_type = '${data.member_type}'
-           and  memb_status = 'A'`;
+    // whr = `mem_dt <= now()
+    //        and  mem_type = '${data.member_type}'
+    //        and  memb_status = 'A'`;
+    whr = `(DATE(form_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}' OR DATE(mem_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}')
+           and  mem_type = '${data.member_type}'`;
   order = "order by cast(substr(member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
