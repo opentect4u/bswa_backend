@@ -66,4 +66,16 @@ masterRouter.get("/subscription_fee_dynamic_life", async (req, res) => {
   res.send(res_dt);
 });
 
+masterRouter.get('/get_tnx_info', async (req, res) => {
+  var data = req.query
+  var select =
+      "form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status",
+    table_name = "td_transactions",
+    whr = `form_no = '${data.form_no}' AND approval_status = 'U'`;
+  order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "iiii");
+  res.send(res_dt);
+})
+
 module.exports = { masterRouter };

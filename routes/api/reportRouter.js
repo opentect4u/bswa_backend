@@ -7,14 +7,14 @@ reportRouter.get("/member_list_report", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
   var select =
-      "member_id,memb_name,min_no,memb_address,ps,city_town_dist,pin_no,phone_no,email_id,resolution_no,resolution_dt",
-    table_name = "md_member",
+      "a.member_id,a.memb_name,a.min_no,a.memb_address,a.ps,a.city_town_dist,a.pin_no,a.phone_no,a.email_id,a.resolution_no,a.resolution_dt, b.unit_name",
+    table_name = "md_member a LEFT JOIN md_unit b ON a.unit_id = b.unit_id",
     // whr = `mem_dt <= now()
     //        and  mem_type = '${data.member_type}'
     //        and  memb_status = 'A'`;
-    whr = `(DATE(form_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}' OR DATE(mem_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}')
-           and  mem_type = '${data.member_type}'`;
-  order = "order by cast(substr(member_id,3) as unsigned)";
+    whr = `(DATE(a.form_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}' OR DATE(a.mem_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}')
+           and  a.mem_type = '${data.member_type}' and  a.memb_status = 'A'`;
+  order = "order by cast(substr(a.member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
   res.send(res_dt);
@@ -24,14 +24,14 @@ reportRouter.get("/member_trans_report", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
   var select =
-      "date(a.trn_dt)trn_dt,a.trn_id,b.memb_name,b.member_id,a.sub_amt,a.onetime_amt,a.adm_fee,a.donation,a.pay_mode,a.receipt_no,a.chq_no,date(a.chq_dt)chq_dt,if(a.sub_amt+a.onetime_amt+a.adm_fee+a.donation>0,'O','R')trans_mode",
+      "date(a.trn_dt)trn_dt,a.trn_id,b.memb_name,b.member_id,a.sub_amt,a.onetime_amt,a.adm_fee,a.donation,a.pay_mode,a.receipt_no,a.chq_no,date(a.chq_dt)chq_dt, a.premium_amt,if(a.sub_amt+a.onetime_amt+a.adm_fee+a.donation>0,'O','R')trans_mode",
     table_name = "td_transactions a,md_member b",
     whr = `a.form_no = b.form_no
-             AND a.approval_status = 'A'
+             AND a.approval_status = 'A' ${data.pay_mode != 'A' && data.pay_mode != '' ? `AND a.pay_mode='${data.pay_mode}'` : ''}
              AND DATE(a.trn_dt) between '${data.from_dt}' and '${data.to_dt}'`,
-    order = `Order By trn_dt, trn_id`;
+    order = `Order By a.trn_dt, a.trn_id`;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mimi");
+  // console.log(res_dt, "mimi");
   res.send(res_dt);
 });
 
