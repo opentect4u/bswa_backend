@@ -18,10 +18,12 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   console.log(data, "hhhh");
   // if (data.checkedmember) {
   var select =
-      "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name",
-    table_name = "md_member a, md_unit b",
-    whr = `a.unit_id = b.unit_id
-    AND a.member_id ='${data.member_id}'`,
+      // "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name",
+      "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+    table_name = "md_member a",
+    // whr = `a.unit_id = b.unit_id
+    // AND a.member_id ='${data.member_id}'`,
+    whr = `member_id ='${data.member_id}'`,
     order = null;
   res_dt = await db_Select(select, table_name, whr, order);
 
@@ -56,11 +58,11 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
   if (chk_dt.suc > 0 && chk_dt.msg.length > 0) {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
-          "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,b.unit_name",
-        table_name = "md_member a, md_unit b",
-        whr = `a.unit_id = b.unit_id
-        AND a.member_id ='${data.member_id}'`,
-        order = null;
+        // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob";
+      (table_name = "td_gen_ins a"),
+        (whr = `member_id ='${data.member_id}'`),
+        (order = null);
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
       var select =
@@ -140,23 +142,44 @@ group_policyRouter.post("/save_child_group_policy_form", async (req, res) => {
 group_policyRouter.get("/frm_list_policy_group", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
-  if (data.checkedmember) {
-    var select = "a.form_no,a.form_dt, a.member_id,b.memb_name",
-      table_name = "td_gen_ins a, md_member b",
-      whr = `a.member_id = b.member_id  AND a.form_status = 'P'
-      AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
-      order = null;
-    var res_dt = await db_Select(select, table_name, whr, order);
-  } else {
-    var select = "form_no,form_dt,member_id,memb_name",
-      table_name = "td_gen_ins",
-      whr = `form_status = 'P'
-    AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
-      order = null;
-  }
+  // if (data.checkedmember) {
+  var select = "a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status",
+    table_name = "td_gen_ins a",
+    whr = `a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'`;
+  // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
+  order = null;
+  //   var res_dt = await db_Select(select, table_name, whr, order);
+  // } else {
+  //   var select = "form_no,form_dt,member_id,memb_name",
+  //     table_name = "td_gen_ins",
+  //     whr = `form_status = 'P'
+  //   AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
+  //     order = null;
+  // }
   var res_dt_1 = await db_Select(select, table_name, whr, order);
   console.log(res_dt_1, "kiki");
   res.send(res_dt_1);
+});
+
+group_policyRouter.get("/frm_list_policy_group_2", async (req, res) => {
+  var data = req.query;
+  console.log(data, "bbb");
+  // if (data.checkedmember) {
+  var select = "a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status",
+    table_name = "td_gen_ins a",
+    whr = `a.form_no = '${data.form_no}' OR a.memb_name = '${data.form_no}' AND a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'`,
+    order = null;
+  //   var res_dt = await db_Select(select, table_name, whr, order);
+  // } else {
+  //   var select = "form_no,form_dt,member_id,memb_name",
+  //     table_name = "td_gen_ins",
+  //     whr = `form_status = 'P'
+  //   AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
+  //     order = null;
+  // }
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "kiki");
+  res.send(res_dt);
 });
 
 group_policyRouter.post("/reject_group_policy", async (req, res) => {

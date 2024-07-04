@@ -71,8 +71,8 @@ module.exports = {
       var policy_dt = await db_Insert(table_name, fields, values, whr, order);
 
       if (data.checkedmember) {
-        fields = `(form_no,form_dt,member_id,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','${data.member_id}','${data.member_type}','P','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
+        fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
+        values = `('${form_no}','${datetime}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','P','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
         table_name = "td_gen_ins";
         whr = null;
         order = null;
