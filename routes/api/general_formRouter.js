@@ -108,16 +108,16 @@ generalRouter.get("/get_dependent_dtls", async (req, res) => {
   var data = req.query;
   // console.log(data, "ooo");
   var select =
-      "member_id,mem_type,dependent_dt,dependent_name,gurdian_name gurd_name,relation, min_no spou_min,dob spou_dob,blood_grp spou_blood_grp,memb_address spou_memb_address,ps spou_ps,phone_no spou_phone,email_id spou_email,memb_pic spou_pic",
-    table_name = "md_dependent",
-    where = `form_no = '${data.form_no}' AND relation IN (${HUSBAND_ID}, ${WIFE_ID})`,
+      "a.member_id,a.mem_type,a.dependent_dt,a.dependent_name,a.gurdian_name gurd_name,a.relation,a. min_no spou_min,a.dob spou_dob,a.blood_grp spou_blood_grp,a.memb_address spou_memb_address,a.ps spou_ps,a.phone_no spou_phone,a.email_id spou_email,a.memb_pic spou_pic, b.relation_name",
+    table_name = "md_dependent a, md_relationship b",
+    where = `a.relation = b.id AND a.form_no = '${data.form_no}' AND a.relation IN (${HUSBAND_ID}, ${WIFE_ID})`,
     order = null;
   var spouse_dt = await db_Select(select, table_name, where, order);
 
   var dep_dt = await db_Select(
     select,
     table_name,
-    `form_no = '${data.form_no}' AND relation NOT IN (${HUSBAND_ID}, ${WIFE_ID})`,
+    `a.relation = b.id AND a.form_no = '${data.form_no}' AND a.relation NOT IN (${HUSBAND_ID}, ${WIFE_ID})`,
     order
   );
 
@@ -128,7 +128,7 @@ generalRouter.get("/get_dependent_dtls", async (req, res) => {
       dep_dt: dep_dt.suc > 0 ? dep_dt.msg : [],
     },
   };
-  console.log(spouse_dt, "qq");
+  // console.log(spouse_dt, "qq");
   res.send(res_dt);
 });
 

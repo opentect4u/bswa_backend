@@ -56,7 +56,7 @@ lifeRouter.get("/get_member_dtls", async (req, res) => {
   res.send(res_dt);
 });
 
-lifeRouter.get("/get_dependent_dtls", async (req, res) => {
+lifeRouter.get("/get_dependent_dtls_life", async (req, res) => {
   var data = req.query;
   // console.log(data, "ooo");
   var select =
