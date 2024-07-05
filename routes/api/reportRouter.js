@@ -12,7 +12,13 @@ reportRouter.get("/member_list_report", async (req, res) => {
     // whr = `mem_dt <= now()
     //        and  mem_type = '${data.member_type}'
     //        and  memb_status = 'A'`;
-    whr = `(DATE(a.form_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}' OR DATE(a.mem_dt) <= '${dateFormat(new Date(data.period), "yyyy-mm-dd")}')
+    whr = `(DATE(a.form_dt) <= '${dateFormat(
+      new Date(data.period),
+      "yyyy-mm-dd"
+    )}' OR DATE(a.mem_dt) <= '${dateFormat(
+      new Date(data.period),
+      "yyyy-mm-dd"
+    )}')
            and  a.mem_type = '${data.member_type}' and  a.memb_status = 'A'`;
   order = "order by cast(substr(a.member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
@@ -27,7 +33,11 @@ reportRouter.get("/member_trans_report", async (req, res) => {
       "date(a.trn_dt)trn_dt,a.trn_id,b.memb_name,b.member_id,a.sub_amt,a.onetime_amt,a.adm_fee,a.donation,a.pay_mode,a.receipt_no,a.chq_no,date(a.chq_dt)chq_dt, a.premium_amt,if(a.sub_amt+a.onetime_amt+a.adm_fee+a.donation>0,'O','R')trans_mode",
     table_name = "td_transactions a,md_member b",
     whr = `a.form_no = b.form_no
-             AND a.approval_status = 'A' ${data.pay_mode != 'A' && data.pay_mode != '' ? `AND a.pay_mode='${data.pay_mode}'` : ''}
+             AND a.approval_status = 'A' ${
+               data.pay_mode != "A" && data.pay_mode != ""
+                 ? `AND a.pay_mode='${data.pay_mode}'`
+                 : ""
+             }
              AND DATE(a.trn_dt) between '${data.from_dt}' and '${data.to_dt}'`,
     order = `Order By a.trn_dt, a.trn_id`;
   var res_dt = await db_Select(select, table_name, whr, order);
@@ -46,6 +56,26 @@ reportRouter.get("/clearupto_list_report", async (req, res) => {
     order = `group by a.member_id,b.mem_type,b.memb_name;`;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "mimi");
+  res.send(res_dt);
+});
+
+reportRouter.get("/stp_status_report", async (req, res) => {
+  var data = req.query;
+  console.log(data, "bbb");
+  var select =
+    "DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name";
+  (table_name = "td_stp_dtls a, td_stp_ins b, md_unit c"),
+    (whr = `a.form_no = b.form_no
+             ${
+               data.status != "S" ? ` AND b.form_status = '${data.status}'` : ""
+             }
+             AND b.association = c.unit_id
+             AND DATE(b.form_dt) between '${data.from_dt}' and '${
+      data.to_dt
+    }'`),
+    (order = `Order By a.form_no`);
+  var res_dt = await db_Select(select, table_name, whr, order);
+  // console.log(res_dt, "mimi");
   res.send(res_dt);
 });
 

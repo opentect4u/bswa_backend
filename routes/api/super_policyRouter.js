@@ -5,6 +5,7 @@ const {
   super_form_save,
   reject_dt,
   approve_dt,
+  approve_dt_stp,
 } = require("../../modules/super_policyMOdule");
 
 const super_policyRouter = express.Router();
@@ -114,7 +115,7 @@ super_policyRouter.get("/frm_list_policy", async (req, res) => {
   // if (data.checkedmember) {
   var select = "a.form_no,a.form_dt, a.member_id,a.form_status,a.memb_name",
     table_name = "td_stp_ins a",
-    whr = `a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'`;
+    whr = `a.form_status IN('P','R','T')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
   order = null;
   // var res_dt = await db_Select(select, table_name, whr, order);
@@ -136,8 +137,8 @@ super_policyRouter.get("/frm_list_policy_2", async (req, res) => {
   // if (data.checkedmember) {
   var select = "form_no,form_dt, member_id,form_status,memb_name",
     table_name = "td_stp_ins",
-    whr = `form_no = '${data.form_no}' OR memb_name = '${data.form_no}' 
-    AND form_status = 'P' OR form_status = 'R' OR form_status = 'T'`,
+    whr = `(form_no = '${data.form_no}' OR memb_name = '${data.form_no}') 
+    AND form_status IN('P','R','T')`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
@@ -158,12 +159,19 @@ super_policyRouter.post("/approve_super", async (req, res) => {
   res.send(res_dt);
 });
 
+super_policyRouter.post("/approve_stp_data", async (req, res) => {
+  var data = req.body;
+  // console.log(data, "suiper");
+  var res_dt = await approve_dt_stp(data);
+  res.send(res_dt);
+});
+
 super_policyRouter.get("/get_data", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
   var select = "a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name",
     table_name = "td_stp_ins a, md_member b",
-    whr = `a.member_id = b.member_id  AND a.form_status = 'A'`,
+    whr = `a.member_id = b.member_id  AND a.form_status = 'T'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");

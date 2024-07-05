@@ -33,6 +33,7 @@ const { reportRouter } = require("./routes/api/reportRouter");
 const { memberRouter } = require("./routes/api/memberRouter");
 const { password_change } = require("./routes/api/password_change");
 const { add_adminRouter } = require("./routes/api/add_adminRouter");
+const { memberPolicyRouter } = require("./routes/api/memberPolicyRouter");
 
 app.use(LoginRouter);
 app.use("/fee", admin_fee_typeRouter);
@@ -45,6 +46,7 @@ app.use(super_policyRouter);
 app.use(SubsDepoRouter);
 app.use(reportRouter);
 app.use(memberRouter);
+app.use(memberPolicyRouter);
 app.use(password_change);
 app.use(add_adminRouter);
 

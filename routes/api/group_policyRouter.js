@@ -145,7 +145,7 @@ group_policyRouter.get("/frm_list_policy_group", async (req, res) => {
   // if (data.checkedmember) {
   var select = "a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status",
     table_name = "td_gen_ins a",
-    whr = `a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'`;
+    whr = `a.form_status IN('P','R','T')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
   order = null;
   //   var res_dt = await db_Select(select, table_name, whr, order);
@@ -167,7 +167,7 @@ group_policyRouter.get("/frm_list_policy_group_2", async (req, res) => {
   // if (data.checkedmember) {
   var select = "a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status",
     table_name = "td_gen_ins a",
-    whr = `a.form_no = '${data.form_no}' OR a.memb_name = '${data.form_no}' AND a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'`,
+    whr = `(a.form_no = '${data.form_no}' OR a.memb_name = '${data.form_no}') AND a.form_status IN('P','R','T')`,
     order = null;
   //   var res_dt = await db_Select(select, table_name, whr, order);
   // } else {

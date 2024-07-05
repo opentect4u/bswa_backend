@@ -15,6 +15,19 @@ const getMaxFormNo = (flag) => {
   });
 };
 
+const getMaxTrnId = () => {
+  return new Promise(async (resolve, reject) => {
+    var now_year = dateFormat(new Date(), "yyyy");
+    var select =
+        "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
+      table_name = "td_transactions",
+      whr = `SUBSTRING(trn_id, 1, 4) = ${now_year}`,
+      order = null;
+    var res_dt = await db_Select(select, table_name, whr, order);
+    resolve(res_dt);
+  });
+};
+
 module.exports = {
   super_form_save: (data) => {
     return new Promise(async (resolve, reject) => {
@@ -78,22 +91,46 @@ module.exports = {
   approve_dt: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      let year = dateFormat(new Date(), "yyyy");
 
-      var table_name = "td_transactions",
-        fields = `(form_no,premium_amt,tot_amt,pay_mode,created_by,created_at)`,
-        values = `('${data.formNo}','${data.pre_amt}','${data.pre_amt}','O','${data.user}','${datetime}')`;
-      (whr = null), (flag = 0);
-      var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+      const no = await getMaxTrnId();
+      let trn_id =
+        data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
+      console.log(trn_id, "pppp");
 
-      if (res_dt.suc > 0) {
-        var table_name = "td_stp_ins",
-          fields = `form_status = 'A',resolution_no = '${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}', modified_by = '${data.user}',modified_at = '${datetime}'`,
-          values = null,
-          whr = `form_no = '${data.formNo}'`,
-          flag = 1;
-        var depend_dt = await db_Insert(table_name, fields, values, whr, flag);
-        resolve(depend_dt);
-      }
+      // var table_name = "td_transactions",
+      //   fields =
+      //     data.trn_id > 0
+      //       ? `receipt_no = '${data.receipt_no}',modified_by = '${data.user}',modified_at = '${datetime}'`
+      //       : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,created_by,created_at)`,
+      //   values = `('${data.formNo}','${datetime}','${trn_id}','${data.pre_amt}','${data.pre_amt}','O','${data.user}','${datetime}')`;
+      // (whr = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null),
+      //   (flag = data.trn_id > 0 ? 1 : 0);
+      // var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+      // if (res_dt.suc > 0) {
+      var table_name = "td_stp_ins",
+        fields = `form_status = 'T',resolution_no = '${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}', modified_by = '${data.user}',modified_at = '${datetime}'`,
+        values = null,
+        whr = `form_no = '${data.formNo}'`,
+        flag = 1;
+      var depend_dt = await db_Insert(table_name, fields, values, whr, flag);
+      resolve(depend_dt);
+      // }
+    });
+  },
+
+  approve_dt_stp: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+      var table_name = "td_stp_ins",
+        fields = `form_status = 'A',approve_by = '${data.user}',approve_at = '${datetime}', modified_by = '${data.user}',modified_at = '${datetime}'`,
+        values = null,
+        whr = `form_no = '${data.formNo}'`,
+        flag = 1;
+      var approve_dt = await db_Insert(table_name, fields, values, whr, flag);
+      resolve(approve_dt);
     });
   },
 };
