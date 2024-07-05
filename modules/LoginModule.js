@@ -15,7 +15,7 @@ module.exports = {
 
   member_login_data: (data) => {
     return new Promise(async (resolve, reject) => {
-      var select = "a.*, b.mem_type",
+      var select = "a.*, b.mem_type, b.form_no, b.mem_type, b.memb_name, b.member_id",
         table_name = "md_user a, md_member b",
         whr = `a.user_id=b.member_id AND a.user_type = 'M' AND a.user_status = 'A' AND a.user_id = '${data.username}'`,
         order = null;
