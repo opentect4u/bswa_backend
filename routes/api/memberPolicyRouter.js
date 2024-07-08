@@ -125,10 +125,83 @@ memberPolicyRouter.post("/member_gmp_policy_dtls_view", async (req, res) => {
       whr = `form_no = '${data.form_no}'`,
       order = null;
     var premium_dt = await db_Select(select, table_name, whr, order);
-    res_dt.msg[0]["dep_dt"] =
-      dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
+    res_dt.msg[0]["premium_dt"] =
+      premium_dt.suc > 0
+        ? premium_dt.msg.length > 0
+          ? premium_dt.msg
+          : []
+        : [];
   }
+
   // console.log(premium_dt, "iii");
+  res.send(res_dt);
+});
+
+memberPolicyRouter.post("/update_member_gmp_policy_dtls", async (req, res) => {
+  var data = req.body;
+  console.log(data, "bye");
+  // data = JSON.parse(data, "hi");
+  var datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+  var table_name = "td_gen_ins",
+    fields = `association = '${data.unit_nm}', memb_oprn = '${data.memb_oprn}', memb_name = '${data.member}', father_husband_name = '${data.gurdian}',sex = '${data.gen}', marital_status = '${data.marital_status}', dob = '${data.gen_dob}', disease_flag = '${data.type_diseases}',disease_type = '${data.name_diseases}',
+    modified_by = '${data.user}', modified_at = '${datetime}'`,
+    values = null,
+    whr = `form_no = '${data.form_no}'`,
+    flag = 1;
+  var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+  var table_name = "td_premium_dtls",
+    fields = `premium_id = '${data.grp_name}', premium_amt = '${
+      data.pre_amont
+    }', premium_amt2 = '${
+      data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
+        ? `${data.sup_top_up}`
+        : ""
+    }', prm_flag2 = '${
+      data.sup_top_flag == "p2" || data.sup_top_flag == "p3" ? "Y" : "N"
+    }',prm_flag3 = '${
+      data.sup_top_flag == "p3" || data.sup_top_flag == "p2" ? "Y" : "N"
+    }', premium_amt3 = '${
+      data.sup_top_flag == "p3" || data.sup_top_flag == "p2"
+        ? `${data.sup_top_up}`
+        : ""
+    }',
+  modified_by = '${data.user}', modified_at = '${datetime}'`,
+    values = null,
+    whr = `form_no = '${data.form_no}'`,
+    flag = 1;
+  var pre_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+  console.log(pre_dt, "pre_dt");
+
+  if (data.dependent_dt.length > 0) {
+    for (let dt of data.dependent_dt) {
+      var table_name = "td_gen_ins_depend",
+        fields =
+          dt.sl_no > 0
+            ? `dept_name = '${dt.dependent_name}', dob = '${dt.dob}',
+     relation = '${dt.relation}', disease_flag = '${dt.type_diseases}', disease_type = '${dt.name_diseases}',
+     modified_by = '${data.user}', modified_at = '${datetime}'`
+            : `(form_no,sl_no,member_id,dept_name,dob,relation,disease_flag,disease_type,created_by,created_at)`,
+        values = `SELECT '${data.form_no}',max(sl_no)+1,'${data.member_id}','${dt.dependent_name}','${dt.dob}','${dt.relation}','${dt.type_diseases}','${dt.name_diseases}','${data.user}','${datetime}' from td_gen_ins_depend WHERE form_no = '${data.form_no}'`,
+        whr =
+          dt.sl_no > 0
+            ? `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`
+            : null,
+        flag = dt.sl_no > 0 ? 1 : 0;
+      var spou_dt = await db_Insert(
+        table_name,
+        fields,
+        values,
+        whr,
+        flag,
+        true
+      );
+      console.log(spou_dt, "spou_dt");
+    }
+  }
+  console.log(res_dt, "hiii");
   res.send(res_dt);
 });
 
