@@ -46,7 +46,8 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
 super_policyRouter.get("/get_super_mediclaim", async (req, res) => {
   var data = req.query;
   // console.log(data, "hhhh");
-  var select = "form_no,ind_type,fin_year,particulars,amount,treatment_dtls",
+  var select =
+      "form_no,sl_no,ind_type,fin_year,particulars,amount,treatment_dtls",
     table_name = "td_stp_dtls",
     whr = `form_no ='${data.form_no}'`,
     order = null;
@@ -62,6 +63,19 @@ super_policyRouter.get("/get_super_transaction", async (req, res) => {
       "a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
     table_name = "td_stp_ins a, td_transactions b",
     whr = `a.form_no = b.form_no AND a.form_no ='${data.form_no}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "kiki");
+  res.send(res_dt);
+});
+
+super_policyRouter.get("/get_super_transaction_reject", async (req, res) => {
+  var data = req.query;
+  console.log(data, "hhhh");
+  var select =
+      "a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt",
+    table_name = "td_stp_ins a",
+    whr = `a.form_no ='${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
@@ -111,11 +125,11 @@ super_policyRouter.get("/check_member_id", async (req, res) => {
 
 super_policyRouter.get("/frm_list_policy", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  console.log(data, "mimi");
   // if (data.checkedmember) {
-  var select = "a.form_no,a.form_dt, a.member_id,a.form_status,a.memb_name",
-    table_name = "td_stp_ins a",
-    whr = `a.form_status IN('P','R','T')`;
+  var select = "form_no,form_dt,member_id,form_status,memb_name",
+    table_name = "td_stp_ins",
+    whr = `form_status IN('P','R','T')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
   order = null;
   // var res_dt = await db_Select(select, table_name, whr, order);
@@ -127,7 +141,7 @@ super_policyRouter.get("/frm_list_policy", async (req, res) => {
   //     order = null;
   // }
   var res_dt_1 = await db_Select(select, table_name, whr, order);
-  console.log(res_dt_1, "kiki");
+  console.log(res_dt_1, "mistu");
   res.send(res_dt_1);
 });
 

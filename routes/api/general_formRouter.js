@@ -52,7 +52,7 @@ generalRouter.post("/image_form_save", async (req, res) => {
 
 generalRouter.get("/frm_list", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  console.log(data, "ccc");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
     whr = `memb_status IN('P','R','T')`;

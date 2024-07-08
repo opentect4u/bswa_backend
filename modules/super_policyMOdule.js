@@ -55,8 +55,8 @@ module.exports = {
 
       if (stp_dt.suc > 0) {
         for (let dt of data.dependent_dt) {
-          fields = `(form_no,ind_type,fin_year,particulars,amount,treatment_dtls,created_by,created_at)`;
-          values = `('${form_no}','${dt.ind_type}','${dt.fin_year}','${dt.particulars}','${dt.amount}','${dt.treatment_dtls}','${data.member}','${datetime}')`;
+          fields = `(form_no,sl_no,ind_type,fin_year,particulars,amount,treatment_dtls,created_by,created_at)`;
+          values = `('${form_no}','${dt.sl_no}','${dt.ind_type}','${dt.fin_year}','${dt.particulars}','${dt.amount}','${dt.treatment_dtls}','${data.member}','${datetime}')`;
           table_name = "td_stp_dtls";
           whr = null;
           order = null;
