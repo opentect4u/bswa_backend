@@ -5,7 +5,7 @@ const db_Select = (select, table_name, whr, order) => {
   var tb_whr = whr ? `WHERE ${whr}` : "";
   var tb_order = order ? order : "";
   let sql = `SELECT ${select} FROM ${table_name} ${tb_whr} ${tb_order}`;
-  console.log(sql);
+  // console.log(sql);
   return new Promise((resolve, reject) => {
     try {
       db.query(sql, (err, result) => {
