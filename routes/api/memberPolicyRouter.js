@@ -96,4 +96,40 @@ memberPolicyRouter.post("/member_gmp_policy_dtls", async (req, res) => {
   res.send(res_dt);
 });
 
+memberPolicyRouter.post("/member_gmp_policy_dtls_view", async (req, res) => {
+  var data = req.body;
+  var select =
+      "form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,father_husband_name,sex,marital_status,dob,form_type,ins_period,form_status,disease_flag,disease_type",
+    table_name = "td_gen_ins",
+    whr = `form_no = '${data.form_no}'
+      AND member_id = '${data.member_id}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "lolo");
+
+  if (res_dt.suc > 0) {
+    var select =
+        "sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob spou_dob",
+      table_name = "td_gen_ins_depend",
+      whr = `form_no = '${data.form_no}'`,
+      order = null;
+    var dep_dt = await db_Select(select, table_name, whr, order);
+    res_dt.msg[0]["dep_dt"] =
+      dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
+  }
+
+  if (res_dt.suc > 0) {
+    var select =
+        "form_no,premium_dt,premium_id,premium_amt,premium_amt2,prm_flag2,premium_amt3,prm_flag3",
+      table_name = "td_premium_dtls",
+      whr = `form_no = '${data.form_no}'`,
+      order = null;
+    var premium_dt = await db_Select(select, table_name, whr, order);
+    res_dt.msg[0]["dep_dt"] =
+      dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
+  }
+  // console.log(premium_dt, "iii");
+  res.send(res_dt);
+});
+
 module.exports = { memberPolicyRouter };
