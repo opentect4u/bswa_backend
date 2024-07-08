@@ -230,8 +230,9 @@ const getMaxTrnId = () => {
 
 const formStatus = {
   'P': 'Pending',
-  'T': 'Accept',
-  'R': 'Reject'
+  'T': 'Accepted',
+  'R': 'Rejected',
+  'A': 'Approved'
 };
 
 module.exports = {

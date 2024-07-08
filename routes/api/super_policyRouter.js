@@ -127,7 +127,7 @@ super_policyRouter.get("/frm_list_policy", async (req, res) => {
   var data = req.query;
   console.log(data, "mimi");
   // if (data.checkedmember) {
-  var select = "form_no,form_dt,member_id,form_status,memb_name",
+  var select = "form_no,form_dt,member_id,form_status,memb_name, phone_no",
     table_name = "td_stp_ins",
     whr = `form_status IN('P','R','T')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
@@ -183,7 +183,7 @@ super_policyRouter.post("/approve_stp_data", async (req, res) => {
 super_policyRouter.get("/get_data", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
-  var select = "a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name",
+  var select = "a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name, b.phone_no",
     table_name = "td_stp_ins a, md_member b",
     whr = `a.member_id = b.member_id  AND a.form_status = 'T'`,
     order = null;
