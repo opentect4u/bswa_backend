@@ -492,7 +492,7 @@ module.exports = {
           var msg_dt = await db_Select(select, table_name, whr, order);
           var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
           domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
-          wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{url}', `${domain}/#/auth/member_login`).replace('{user_id}', member_id).replace('{password}', pwd)
+          wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{url}', `${domain}/#/auth/member_login`).replace('{user_id}', member_id).replace('{password}', pwd).replace('{month}', dateFormat(sub_upto, "mm" )).replace('{year}', dateFormat(sub_upto, "yyyy" ))
           var wpRes = await sendWappMsg(data.phone_no, wpMsg)
         }catch(err){
           console.log(err);
