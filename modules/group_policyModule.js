@@ -122,6 +122,23 @@ module.exports = {
       }
       //   policy_dependent_dt["form_no"] = form_no;
       console.log(policy_dependent_dt, "gggg");
+      
+      // WHATSAPP MESSAGE //
+      try{
+        var select = "msg, domain",
+          table_name = "md_whatsapp_msg",
+          whr = `msg_for = 'Submit'`,
+          order = null;
+        var msg_dt = await db_Select(select, table_name, whr, order);
+        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+        domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+        wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_id}', form_no).replace('{url}', `${domain}/#/home/print_group_policy/${encodeURIComponent(new Buffer.from(form_no).toString('base64'))}`)
+        var wpRes = await sendWappMsg(data.phone, wpMsg)
+      }catch(err){
+        console.log(err);
+      }
+      // END //
+
       resolve(policy_dependent_dt);
     });
   },
