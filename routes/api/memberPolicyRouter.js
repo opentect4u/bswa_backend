@@ -99,7 +99,7 @@ memberPolicyRouter.post("/member_gmp_policy_dtls", async (req, res) => {
 memberPolicyRouter.post("/member_gmp_policy_dtls_view", async (req, res) => {
   var data = req.body;
   var select =
-      "form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,father_husband_name,sex,marital_status,dob,form_type,ins_period,form_status,disease_flag,disease_type",
+      "form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name,sex,marital_status,dob,form_type,ins_period,form_status,disease_flag,disease_type",
     table_name = "td_gen_ins",
     whr = `form_no = '${data.form_no}'
       AND member_id = '${data.member_id}'`,
@@ -144,7 +144,7 @@ memberPolicyRouter.post("/update_member_gmp_policy_dtls", async (req, res) => {
   var datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
   var table_name = "td_gen_ins",
-    fields = `association = '${data.unit_nm}', memb_oprn = '${data.memb_oprn}', memb_name = '${data.member}', father_husband_name = '${data.gurdian}',sex = '${data.gen}', marital_status = '${data.marital_status}', dob = '${data.gen_dob}', disease_flag = '${data.type_diseases}',disease_type = '${data.name_diseases}',
+    fields = `association = '${data.unit_nm}', memb_oprn = '${data.memb_oprn}', memb_name = '${data.member}', phone = '${data.phone}', father_husband_name = '${data.gurdian}',sex = '${data.gen}', marital_status = '${data.marital_status}', dob = '${data.gen_dob}', disease_flag = '${data.type_diseases}',disease_type = '${data.name_diseases}',
     modified_by = '${data.user}', modified_at = '${datetime}'`,
     values = null,
     whr = `form_no = '${data.form_no}'`,

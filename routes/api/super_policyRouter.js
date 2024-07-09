@@ -183,9 +183,9 @@ super_policyRouter.post("/approve_stp_data", async (req, res) => {
 super_policyRouter.get("/get_data", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
-  var select = "a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name",
-    table_name = "td_stp_ins a, md_member b",
-    whr = `a.member_id = b.member_id  AND a.form_status = 'T'`,
+  var select = "a.form_no,a.form_dt,a.form_status,a.member_id,a.memb_name",
+    table_name = "td_stp_ins a",
+    whr = `a.form_status = 'T'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");

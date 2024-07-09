@@ -64,19 +64,29 @@ reportRouter.get("/stp_status_report", async (req, res) => {
   console.log(data, "bbb");
   var select =
     "DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name";
-  (table_name = "td_stp_dtls a, td_stp_ins b, md_unit c"),
-    (whr = `a.form_no = b.form_no
-             ${
-               data.status != "S" ? ` AND b.form_status = '${data.status}'` : ""
-             }
-             AND b.association = c.unit_id
-             AND DATE(b.form_dt) between '${data.from_dt}' and '${
-      data.to_dt
-    }'`),
+  (table_name =
+    "td_stp_ins b JOIN td_stp_dtls a ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id"),
+    (whr = `DATE(b.form_dt) between '${data.from_dt}' and '${data.to_dt}' ${
+      data.status != "S" ? `AND b.form_status = '${data.status}'` : ""
+    }`),
     (order = `Order By a.form_no`);
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "mimi");
   res.send(res_dt);
 });
+
+// reportRouter.get("/gmp_status_report", async (req, res) => {
+//   var data = req.query;
+//   console.log(data, "bbb");
+//   var select = "";
+//   (table_name = ""),
+//     // whr = `DATE(b.form_dt) between '${data.from_dt}' and '${data.to_dt}' ${
+//     //   data.status != "S" ? `AND b.form_status = '${data.status}'` : ""
+//     // }`,
+//     (order = null);
+//   var res_dt = await db_Select(select, table_name, whr, order);
+//   // console.log(res_dt, "mimi");
+//   res.send(res_dt);
+// });
 
 module.exports = { reportRouter };

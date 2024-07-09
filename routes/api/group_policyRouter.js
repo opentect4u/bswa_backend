@@ -19,7 +19,7 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   // if (data.checkedmember) {
   var select =
       // "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name",
-      "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+      "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
     table_name = "md_member a",
     // whr = `a.unit_id = b.unit_id
     // AND a.member_id ='${data.member_id}'`,
@@ -59,14 +59,14 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
         // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob";
+        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob";
       (table_name = "td_gen_ins a"),
         (whr = `member_id ='${data.member_id}'`),
         (order = null);
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
       var select =
-          "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,b.unit_name",
+          "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,b.unit_name",
         table_name = "td_gen_ins a, md_unit b",
         whr = `a.association = b.unit_id
         AND a.member_id ='${data.member_id}'`,
@@ -207,13 +207,27 @@ group_policyRouter.get("/transaction_dt_group", async (req, res) => {
   var data = req.query;
   console.log(data);
   var select =
-      "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.ins_period,c.premium_dt,b.association,b.memb_name,b.resolution_no,b.resolution_dt,d.unit_name",
-    table_name =
-      "td_transactions a, td_gen_ins b, td_premium_dtls c, md_unit d",
+      "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.ins_period,b.association,b.memb_name,b.member_id,b.resolution_no,b.resolution_dt",
+    // table_name =
+    //   "td_transactions a, td_gen_ins b, td_premium_dtls c, md_unit d",
+    table_name = "td_transactions a, td_gen_ins b",
     whr = `a.form_no = b.form_no
-    AND a.form_no = c.form_no
-    AND b.association = d.unit_id
     AND b.form_status = 'T'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "mini");
+  res.send(res_dt);
+});
+
+group_policyRouter.get("/view_grp_trn_dt", async (req, res) => {
+  var data = req.query;
+  console.log(data);
+  var select =
+      "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.policy_holder_type,b.member_id,b.association,b.memb_type,b.memb_oprn,b.memb_name,b.phone,b.sex,b.dob,b.ins_period,b.form_status,b.remarks,b.resolution_no,b.resolution_dt,c.unit_name",
+    table_name =
+      "td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id",
+    whr = `b.form_status = 'T'
+    ${data.form_no ? `AND a.form_no = '${data.form_no}'` : ""}`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "mini");
@@ -283,4 +297,18 @@ group_policyRouter.get("/get_gen_ins_dt", async (req, res) => {
   var res_dt = await db_Select(select, table_name, where, order);
   res.send(res_dt);
 });
+
+group_policyRouter.get("/get_gmp_transaction", async (req, res) => {
+  var data = req.query;
+  console.log(data, "hhhh");
+  var select =
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
+    table_name = "td_gen_ins a, td_transactions b",
+    whr = `a.form_no = b.form_no AND a.form_no ='${data.form_no}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "kiki");
+  res.send(res_dt);
+});
+
 module.exports = { group_policyRouter };

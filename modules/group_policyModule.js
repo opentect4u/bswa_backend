@@ -71,14 +71,14 @@ module.exports = {
       var policy_dt = await db_Insert(table_name, fields, values, whr, order);
 
       if (data.checkedmember) {
-        fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','P','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
+        fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
+        values = `('${form_no}','${datetime}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','P','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
         table_name = "td_gen_ins";
         whr = null;
         order = null;
       } else {
-        fields = `(form_no,form_dt, policy_holder_type,member_id,association,memb_type, memb_oprn, memb_name, father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','p','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
+        fields = `(form_no,form_dt, policy_holder_type,member_id,association,memb_type, memb_oprn, memb_name,phone,father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
+        values = `('${form_no}','${datetime}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','p','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
         table_name = "td_gen_ins";
         whr = null;
         order = null;
@@ -225,14 +225,14 @@ module.exports = {
           flag1
         );
 
-        var fields = `premium_dt = '${data.pre_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
-          table_name = "td_premium_dtls",
-          values = null,
-          whr = `form_no = '${data.formNo}'`,
-          flag = 1;
-        var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
+        // var fields = `premium_dt = '${data.pre_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        //   table_name = "td_premium_dtls",
+        //   values = null,
+        //   whr = `form_no = '${data.formNo}'`,
+        //   flag = 1;
+        // var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
       }
-      resolve(mem_dt);
+      resolve(accept_dt);
     });
   },
 
@@ -273,14 +273,14 @@ module.exports = {
           flag1
         );
 
-        var fields = `premium_dt = '${data.pre_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
-          table_name = "td_premium_dtls",
-          values = null,
-          whr = `form_no = '${data.formNo}'`,
-          flag = 1;
-        var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
+        // var fields = `premium_dt = '${data.pre_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        //   table_name = "td_premium_dtls",
+        //   values = null,
+        //   whr = `form_no = '${data.formNo}'`,
+        //   flag = 1;
+        // var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
       }
-      resolve(mem_dt);
+      resolve(accept_dt);
     });
   },
 
