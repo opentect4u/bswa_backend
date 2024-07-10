@@ -915,3 +915,222 @@
 [EVENT]   : [01-Jul-24 18:08:38] : Exicuting Update Statement for table md_user 
 [MESSAGE] : [01-Jul-24 18:08:38] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '@gmail.com' at line 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jul-24 15:58:30] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [02-Jul-24 15:58:30] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Accept' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jul-24 17:13:52] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [02-Jul-24 17:13:52] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Accept' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jul-24 17:16:06] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [02-Jul-24 17:16:06] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Approve' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jul-24 17:17:46] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [02-Jul-24 17:17:46] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Approve' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Jul-24 17:19:41] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [02-Jul-24 17:19:41] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Approve' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 02:48:14] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [03-Jul-24 02:48:14] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Submit' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 08:47:01] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [03-Jul-24 08:47:01] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'undefined', relation = '2', dob = '2003-10-25', modified_by = 'Sail', modifie...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 08:47:01] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [03-Jul-24 08:47:01] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null', relation = '2', dob = '1999-05-04', modified_by = 'Sail', modified_at ...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 08:47:01] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [03-Jul-24 08:47:01] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'null', relation = '3', dob = '1974-05-06', modified_by = 'Sail', modified_at ...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 09:25:05] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [03-Jul-24 09:25:05] : Error: ER_UPDATE_TABLE_USED: Table 'md_dependent' is specified twice, both as a target for 'INSERT' and as a separate source for data 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 10:54:53] : Exicuting Select Statement from table md_member a, td_memb_subscription b 
+[MESSAGE] : [03-Jul-24 10:54:53] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.calc_amt' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto FROM md_member a, td_memb_subscription b WHERE a.member_id=b.member_id AND a.member_id = 'G-10' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id) "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Jul-24 10:55:06] : Exicuting Select Statement from table md_member a, td_memb_subscription b 
+[MESSAGE] : [03-Jul-24 10:55:06] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.calc_amt' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto FROM md_member a, td_memb_subscription b WHERE a.member_id=b.member_id AND a.member_id = 'G-11' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id) "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 11:56:33] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [04-Jul-24 11:56:33] : Error: ER_DUP_ENTRY: Duplicate entry 'G-2-GP' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 11:57:35] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [04-Jul-24 11:57:35] : Error: ER_DUP_ENTRY: Duplicate entry 'G-2-GP' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 12:07:44] : Exicuting Select Statement from table md_member a 
+[MESSAGE] : [04-Jul-24 12:07:44] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name FROM md_member a WHERE member_id ='G-12' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 12:07:59] : Exicuting Select Statement from table md_member a 
+[MESSAGE] : [04-Jul-24 12:07:59] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.unit_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name FROM md_member a WHERE member_id ='G-12' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 12:41:22] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [04-Jul-24 12:41:22] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.mem_type' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id FROM td_gen_ins a WHERE member_id ='AI-3' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 12:42:03] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [04-Jul-24 12:42:03] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.gurdian_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id FROM td_gen_ins a WHERE member_id ='AI-3' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 12:42:36] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [04-Jul-24 12:42:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.gurdian_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id FROM td_gen_ins a WHERE member_id ='AI-3' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 17:20:49] : Exicuting Select Statement from table td_stp_ins a, md_member b 
+[MESSAGE] : [04-Jul-24 17:20:49] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/ AND a.form_no = '' OR b.memb_name = ''' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.form_dt, a.member_id,a.form_status,b.memb_name FROM td_stp_ins a, md_member b WHERE a.member_id = b.member_id  AND a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'\n      // AND a.form_no = '' OR b.memb_name = '' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 17:21:09] : Exicuting Select Statement from table td_stp_ins a, md_member b 
+[MESSAGE] : [04-Jul-24 17:21:09] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/ AND a.form_no = '' OR b.memb_name = ''' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.form_dt, a.member_id,a.form_status,b.memb_name FROM td_stp_ins a, md_member b WHERE a.member_id = b.member_id  AND a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T'\n      // AND a.form_no = '' OR b.memb_name = '' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 17:35:44] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [04-Jul-24 17:35:44] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND a.form_no = 'STP2024000007' OR a.memb_name = 'STP2024000007'' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.form_dt, a.member_id,a.form_status,a.memb_name FROM td_stp_ins a WHERE a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T';\n  AND a.form_no = 'STP2024000007' OR a.memb_name = 'STP2024000007' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 17:36:03] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [04-Jul-24 17:36:03] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND a.form_no = 'STP2024000007' OR a.memb_name = 'STP2024000007'' at line 2","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.form_dt, a.member_id,a.form_status,a.memb_name FROM td_stp_ins a WHERE a.form_status = 'P' OR a.form_status = 'R' OR a.form_status = 'T';\n  AND a.form_no = 'STP2024000007' OR a.memb_name = 'STP2024000007' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 21:38:30] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [04-Jul-24 21:38:30] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''T')' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status FROM td_gen_ins a WHERE a.form_status IN('P','R'),'T') "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [04-Jul-24 21:38:34] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [04-Jul-24 21:38:34] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''T')' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status FROM td_gen_ins a WHERE a.form_status IN('P','R'),'T') "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:24:33] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:24:33] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:27:02] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:27:02] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:32:05] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:32:05] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:37:13] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:37:13] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:38:00] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:38:00] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:38:45] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:38:45] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 11:40:50] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [05-Jul-24 11:40:50] : Error: ER_DUP_ENTRY: Duplicate entry '' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 16:22:36] : Exicuting Select Statement from table td_stp_dtls a, td_stp_ins b 
+[MESSAGE] : [05-Jul-24 16:22:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_dt' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no FROM td_stp_dtls a, td_stp_ins b WHERE a.form_no = b.form_no\n             AND b.form_status = 'T'\n             AND DATE(a.form_dt) between '2024-06-30' and '2024-07-05' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 16:25:16] : Exicuting Select Statement from table td_stp_dtls a, td_stp_ins b 
+[MESSAGE] : [05-Jul-24 16:25:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_dt' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no FROM td_stp_dtls a, td_stp_ins b WHERE a.form_no = b.form_no\n             AND b.form_status = 'T'\n             AND DATE(a.form_dt) between '2024-06-30' and '2024-07-05' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 16:25:36] : Exicuting Select Statement from table td_stp_dtls a, td_stp_ins b 
+[MESSAGE] : [05-Jul-24 16:25:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_dt' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no FROM td_stp_dtls a, td_stp_ins b WHERE a.form_no = b.form_no\n             AND b.form_status = 'A'\n             AND DATE(a.form_dt) between '2024-06-30' and '2024-07-05' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 16:25:57] : Exicuting Select Statement from table td_stp_dtls a, td_stp_ins b 
+[MESSAGE] : [05-Jul-24 16:25:57] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.form_dt' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no FROM td_stp_dtls a, td_stp_ins b WHERE a.form_no = b.form_no\n             AND b.form_status = 'T'\n             AND DATE(a.form_dt) between '2024-06-30' and '2024-07-05' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [05-Jul-24 16:43:46] : Exicuting Select Statement from table td_stp_dtls a, td_stp_ins b, md_unit c 
+[MESSAGE] : [05-Jul-24 16:43:46] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND b.association = c.unit_id\n             AND DATE(b.form_dt) between '2024-...' at line 4","sqlState":"42000","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name FROM td_stp_dtls a, td_stp_ins b, md_unit c WHERE a.form_no = b.form_no\n             AND \n             \n             AND b.association = c.unit_id\n             AND DATE(b.form_dt) between '2024-06-30' and '2024-07-05' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jul-24 01:16:37] : Exicuting Select Statement from table td_stp_dtls 
+[MESSAGE] : [06-Jul-24 01:16:37] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'member_id' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT ind_type,fin_year,particulars,amount,treatment_dtls FROM td_stp_dtls WHERE form_no = 'STP2024000009'\n    AND member_id = 'G-10' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jul-24 10:12:32] : Exicuting Update Statement for table td_stp_dtls 
+[MESSAGE] : [06-Jul-24 10:12:32] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000009-S' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jul-24 10:12:33] : Exicuting Update Statement for table td_stp_dtls 
+[MESSAGE] : [06-Jul-24 10:12:33] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000009-P' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jul-24 13:14:02] : Exicuting Update Statement for table td_stp_dtls 
+[MESSAGE] : [06-Jul-24 13:14:02] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000009-S' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jul-24 13:14:02] : Exicuting Update Statement for table td_stp_dtls 
+[MESSAGE] : [06-Jul-24 13:14:02] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000009-P' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [06-Jul-24 13:14:02] : Exicuting Update Statement for table td_stp_dtls 
+[MESSAGE] : [06-Jul-24 13:14:02] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000009-S' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jul-24 00:48:47] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [07-Jul-24 00:48:47] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'fin_year = '2024-25',
+     amount = '80000', particulars = 'trghtrhtrhrth', t...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jul-24 00:48:47] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [07-Jul-24 00:48:47] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'fin_year = '2024-25',
+     amount = '90000', particulars = 'ujyujuyj', treatm...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jul-24 00:48:47] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [07-Jul-24 00:48:47] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'fin_year = '2023-24',
+     amount = '500000', particulars = 'Heart', treatmen...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jul-24 10:44:06] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [07-Jul-24 10:44:06] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Reject' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Jul-24 12:45:05] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [07-Jul-24 12:45:05] : Error: ER_DUP_ENTRY: Duplicate entry 'STP2024000010-S' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 11:05:46] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [08-Jul-24 11:05:46] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 13:24:41] : Exicuting Select Statement from table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 13:24:41] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'premium_amount' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no,premium_dt,premium_id,premium_amount,premium_amt2,prm_flag2,premium_amt3,prm_flag3 FROM td_premium_dtls WHERE form_no = 'GP2024000010' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 13:26:09] : Exicuting Select Statement from table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 13:26:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'premium_amount' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no,premium_dt,premium_id,premium_amount,premium_amt2,prm_flag2,premium_amt3,prm_flag3 FROM td_premium_dtls WHERE form_no = 'GP2024000010' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 13:26:49] : Exicuting Select Statement from table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 13:26:49] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'premium_amount' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no,premium_dt,premium_id,premium_amount,premium_amt2,prm_flag2,premium_amt3,prm_flag3 FROM td_premium_dtls WHERE form_no = 'GP2024000010' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 13:27:56] : Exicuting Select Statement from table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 13:27:56] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'premium_amount' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no,premium_dt,premium_id,premium_amount,premium_amt2,prm_flag2,premium_amt3,prm_flag3 FROM td_premium_dtls WHERE form_no = 'GP2024000010' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 18:18:52] : Exicuting Update Statement for table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 18:18:52] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Y'', prm_flag2 = 'p2',premium_flag3 = 'p2', prm_amt3 = ',45000,'Y'',
+  modifi...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 18:21:01] : Exicuting Update Statement for table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 18:21:01] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Y'', prm_flag2 = 'p2',premium_flag3 = 'p2', prm_amt3 = ',45000,'Y'',
+  modifi...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 18:23:03] : Exicuting Update Statement for table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 18:23:03] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Y'', prm_flag2 = 'p2',premium_flag3 = 'p2', prm_amt3 = '45000,'Y'',
+  modifie...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Jul-24 18:34:05] : Exicuting Update Statement for table td_premium_dtls 
+[MESSAGE] : [08-Jul-24 18:34:05] : Error: ER_BAD_FIELD_ERROR: Unknown column 'premium_flag3' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 00:36:09] : Exicuting Select Statement from table md_member a 
+[MESSAGE] : [09-Jul-24 00:36:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.phone' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id FROM md_member a WHERE member_id ='G-2' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 00:37:46] : Exicuting Select Statement from table md_member a 
+[MESSAGE] : [09-Jul-24 00:37:46] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.phone' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id FROM md_member a WHERE member_id ='G-10' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 00:38:25] : Exicuting Select Statement from table md_member a 
+[MESSAGE] : [09-Jul-24 00:38:25] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.phone' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id FROM md_member a WHERE member_id ='G-10' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 07:49:22] : Exicuting Select Statement from table td_transactions a, td_gen_ins b, md_unit c 
+[MESSAGE] : [09-Jul-24 07:49:22] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'c.premium_dt' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.ins_period,c.premium_dt,b.association,b.memb_name,b.resolution_no,b.resolution_dt,c.unit_name FROM td_transactions a, td_gen_ins b, md_unit c WHERE a.form_no = b.form_no\n    AND b.association = c.unit_id\n    AND b.form_status = 'T' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 11:20:04] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 11:20:04] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.policy_holder_type,b.member_id,b.association,b.memb_type,b.memb_oprn,b.memb_name,b.phone,b.sex,b.dob,b.ins_period,b.remarks,b.resolution_no,b.resolution_dt,c.unit_name FROM td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE b.form_status = 'T',\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 11:20:08] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 11:20:08] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.policy_holder_type,b.member_id,b.association,b.memb_type,b.memb_oprn,b.memb_name,b.phone,b.sex,b.dob,b.ins_period,b.remarks,b.resolution_no,b.resolution_dt,c.unit_name FROM td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE b.form_status = 'T',\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 11:20:09] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 11:20:09] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.policy_holder_type,b.member_id,b.association,b.memb_type,b.memb_oprn,b.memb_name,b.phone,b.sex,b.dob,b.ins_period,b.remarks,b.resolution_no,b.resolution_dt,c.unit_name FROM td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE b.form_status = 'T',\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 11:20:23] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 11:20:23] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.policy_holder_type,b.member_id,b.association,b.memb_type,b.memb_oprn,b.memb_name,b.phone,b.sex,b.dob,b.ins_period,b.remarks,b.resolution_no,b.resolution_dt,c.unit_name FROM td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE b.form_status = 'T',\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 12:05:21] : Exicuting Select Statement from table md_whatsapp_msg 
+[MESSAGE] : [09-Jul-24 12:05:21] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlMessage":"Table 'sail.md_whatsapp_msg' doesn't exist","sqlState":"42S02","index":0,"sql":"SELECT msg, domain FROM md_whatsapp_msg WHERE msg_for = 'Accept' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 15:17:07] : Exicuting Select Statement from table td_stp_dtls a JOIN td_stp_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 15:17:07] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND b.form_status = 'R'\n             AND DATE(b.form_dt) between '2024-06-09'...' at line 1","sqlState":"42000","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name FROM td_stp_dtls a JOIN td_stp_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE  AND b.form_status = 'R'\n             AND DATE(b.form_dt) between '2024-06-09' and '2024-07-09' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 15:37:31] : Exicuting Select Statement from table td_stp_ins a JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 15:37:31] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND b.form_status = 'R'\n             AND DATE(b.form_dt) between '2024-07-01'...' at line 1","sqlState":"42000","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name FROM td_stp_ins a JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE  AND b.form_status = 'R'\n             AND DATE(b.form_dt) between '2024-07-01' and '2024-07-09' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 15:40:20] : Exicuting Select Statement from table td_stp_ins a JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 15:40:20] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND b.form_status = 'R'\n             AND DATE(b.form_dt) between '2024-07-01'...' at line 1","sqlState":"42000","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name FROM td_stp_ins a JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE  AND b.form_status = 'R'\n             AND DATE(b.form_dt) between '2024-07-01' and '2024-07-09' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 15:41:16] : Exicuting Select Statement from table td_stp_ins a JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [09-Jul-24 15:41:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'a.fin_year' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name FROM td_stp_ins a JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id WHERE DATE(b.form_dt) between '2024-07-01' and '2024-07-09' AND b.form_status = 'R' Order By a.form_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [09-Jul-24 21:51:33] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [09-Jul-24 21:51:33] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.memb_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name, a.phone_no FROM td_stp_ins a WHERE a.form_status = 'T' "} 
+------------------------------------------------------------------------------------------------------------

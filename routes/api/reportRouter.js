@@ -75,18 +75,19 @@ reportRouter.get("/stp_status_report", async (req, res) => {
   res.send(res_dt);
 });
 
-// reportRouter.get("/gmp_status_report", async (req, res) => {
-//   var data = req.query;
-//   console.log(data, "bbb");
-//   var select = "";
-//   (table_name = ""),
-//     // whr = `DATE(b.form_dt) between '${data.from_dt}' and '${data.to_dt}' ${
-//     //   data.status != "S" ? `AND b.form_status = '${data.status}'` : ""
-//     // }`,
-//     (order = null);
-//   var res_dt = await db_Select(select, table_name, whr, order);
-//   // console.log(res_dt, "mimi");
-//   res.send(res_dt);
-// });
+reportRouter.get("/gmp_status_report", async (req, res) => {
+  var data = req.query;
+  console.log(data, "bbb");
+  var select =
+    "a.form_no,a.member_id,a.association,a.memb_type,a.memb_name,a.phone,a.father_husband_name,a.dob,c.unit_name";
+  (table_name = "td_gen_ins a JOIN  md_unit c ON a.association = c.unit_id"),
+    (whr = `DATE(a.form_dt) between '${data.from_dt}' and '${data.to_dt}' ${
+      data.status != "S" ? `AND a.form_status = '${data.status}'` : ""
+    }`),
+    (order = null);
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "mimi");
+  res.send(res_dt);
+});
 
 module.exports = { reportRouter };

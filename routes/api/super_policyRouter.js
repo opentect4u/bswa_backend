@@ -184,9 +184,9 @@ super_policyRouter.get("/get_data", async (req, res) => {
   var data = req.query;
   // console.log(data, "bbb");
   var select =
-      "a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name, b.phone_no",
-    table_name = "td_stp_ins a, md_member b",
-    whr = `a.member_id = b.member_id  AND a.form_status = 'T'`,
+      "a.form_no,a.form_dt,a.form_status,a.member_id,a.memb_name, a.phone_no",
+    table_name = "td_stp_ins a",
+    whr = `a.form_status = 'T'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "kiki");
@@ -218,7 +218,7 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
           // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-          "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,b.unit_name",
+          "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
         table_name = "td_stp_ins a, md_unit b",
         whr = `a.association = b.unit_id
       AND a.member_id ='${data.member_id}'`,
@@ -226,7 +226,7 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
       var select =
-          "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,b.unit_name",
+          "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
         table_name = "td_stp_ins a, md_unit b",
         whr = `a.association = b.unit_id
       AND a.member_id ='${data.member_id}'`,
