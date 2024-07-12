@@ -192,14 +192,17 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
   res.send(res_dt);
 });
 
-memberRouter.post('/user_tnx_details', async (req, res) => {
-  var data = req.body
-  var select = '*',
-    table_name = 'td_transactions',
-    whr = `form_no = '${data.form_no}' ${data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ''}`,
-    order = `ORDER BY trn_dt, trn_id`;
-    var res_dt = await db_Select(select, table_name, whr, order)
-    res.send(res_dt)
-})
+memberRouter.post("/user_tnx_details", async (req, res) => {
+  var data = req.body;
+  var select = "*",
+    table_name = "td_transactions",
+    whr = `form_no = '${data.form_no}' ${
+      data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ""
+    }`,
+    // order = `ORDER BY trn_dt, trn_id`;
+    order = `ORDER BY trn_dt DESC`;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  res.send(res_dt);
+});
 
 module.exports = { memberRouter };
