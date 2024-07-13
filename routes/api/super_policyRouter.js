@@ -1,6 +1,6 @@
 const express = require("express");
 const dateFormat = require("dateformat");
-const { db_Select } = require("../../modules/MasterModule");
+const { db_Select, getCurrFinYear } = require("../../modules/MasterModule");
 const {
   super_form_save,
   reject_dt,
@@ -83,25 +83,16 @@ super_policyRouter.get("/get_super_transaction_reject", async (req, res) => {
 });
 
 super_policyRouter.get("/get_date", async (req, res) => {
-  var nowYear = parseInt(dateFormat(new Date(), "yyyy"));
-  var current_year = nowYear - 1,
-    previous_year = nowYear - 2,
-    next_year = nowYear,
-    end_acc_dm = "0331";
-
-  if (dateFormat(new Date(), "yyyymmdd") > nowYear + end_acc_dm) {
-    current_year += 1;
-    previous_year += 1;
-    next_year += 1;
-  }
-
-  var curr_fin_year = `${current_year}-${next_year.toString().substring(4, 2)}`,
-    prev_fin_year = `${previous_year}-${current_year
-      .toString()
-      .substring(4, 2)}`;
+  var finDt = await getCurrFinYear();
 
   // console.log(current_year, previous_year, next_year, curr_fin_year, prev_fin_year);
-  res.send({ suc: 1, msg: { curr_fin_year, prev_fin_year } });
+  res.send({
+    suc: 1,
+    msg: {
+      curr_fin_year: finDt.curr_fin_year,
+      prev_fin_year: finDt.prev_fin_year,
+    },
+  });
 });
 
 super_policyRouter.post("/save_super_policy_form", async (req, res) => {

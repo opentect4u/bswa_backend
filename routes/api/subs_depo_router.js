@@ -3,6 +3,13 @@ const {
   db_Select,
   db_Insert,
   getMaxTrnId,
+  postVoucher,
+  getCurrFinYear,
+  FIN_YEAR_MASTER,
+  BRANCH_MASTER,
+  TRANSFER_TYPE_MASTER,
+  VOUCHER_MODE_MASTER,
+  CR_ACC_MASTER,
 } = require("../../modules/MasterModule");
 const dateFormat = require("dateformat");
 const { sendWappMsg } = require("../../modules/whatsappModule");
@@ -27,7 +34,7 @@ SubsDepoRouter.post("/get_tnx_details", async (req, res) => {
     }`,
     order = `ORDER BY trn_dt, trn_id`;
   var res_dt = await db_Select(select, table_name, whr, order);
-  if (res_dt.suc > 0 && data.trn_id > 0) {
+  if (res_dt.suc > 0 && res_dt.msg.length > 0 && data.trn_id > 0) {
     var select =
         "a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto",
       table_name = "md_member a, td_memb_subscription b",
@@ -78,54 +85,91 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
       break;
   }
 
-  var table_name = "td_memb_subscription",
-    fields =
-      "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
-    values = `('${data.memb_id}', '${trn_dt}', '${data.sub_amt}', '${dateFormat(
-      sub_upto,
-      "yyyy-mm-dd HH:MM:ss"
-    )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${
-      data.trn_id
-    }', '${data.user}', '${trn_dt}')`,
-    whr = null,
-    flag = 0;
-  var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+  var finres = await getCurrFinYear();
+  var curr_fin_year = finres.curr_fin_year;
 
-  if (res_dt.suc > 0) {
-    var table_name = "td_transactions",
-      fields = `approval_status = '${data.approval_status}', approved_by = '${data.user}', approved_dt = '${trn_dt}', modified_by = '${data.user}', modified_at = '${trn_dt}'`,
-      values = null,
-      whr = `trn_id = '${data.trn_id}'`,
-      flag = 1;
-    var chk_dt = await db_Insert(table_name, fields, values, whr, flag);
+  var voucher_res = await postVoucher(
+    FIN_YEAR_MASTER[curr_fin_year],
+    curr_fin_year,
+    2,
+    BRANCH_MASTER[2],
+    data.trn_id,
+    dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+    TRANSFER_TYPE_MASTER[data.pay_mode],
+    VOUCHER_MODE_MASTER[data.pay_mode],
+    data.acc_code,
+    CR_ACC_MASTER[data.memb_type],
+    "DR",
+    data.sub_amt,
+    data.chq_no,
+    data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+    data.remarks,
+    "A",
+    data.user,
+    dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+    data.user,
+    dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+  );
+
+  if (voucher_res.suc > 0) {
+    if (voucher_res.msg > 0) {
+      var table_name = "td_memb_subscription",
+        fields =
+          "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
+        values = `('${data.memb_id}', '${trn_dt}', '${
+          data.sub_amt
+        }', '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', 0, '${dateFormat(
+          sub_upto,
+          "yyyy-mm-dd HH:MM:ss"
+        )}', '${data.trn_id}', '${data.user}', '${trn_dt}')`,
+        whr = null,
+        flag = 0;
+      var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+      if (res_dt.suc > 0) {
+        var table_name = "td_transactions",
+          fields = `approval_status = '${data.approval_status}', approved_by = '${data.user}', approved_dt = '${trn_dt}', modified_by = '${data.user}', modified_at = '${trn_dt}'`,
+          values = null,
+          whr = `trn_id = '${data.trn_id}'`,
+          flag = 1;
+        var chk_dt = await db_Insert(table_name, fields, values, whr, flag);
+      }
+
+      // WHATSAPP MESSAGE //
+      try {
+        var select = "msg, domain",
+          table_name = "md_whatsapp_msg",
+          whr = `msg_for = 'Approve transaction'`,
+          order = null;
+        var msg_dt = await db_Select(select, table_name, whr, order);
+        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+        wpMsg = wpMsg
+          .replace("{user_name}", data.member)
+          //   .replace("{form_id}", form_no)
+          .replace("{trn_id}", data.trn_id)
+          .replace("{total}", data.sub_amt)
+          .replace(
+            "{url}",
+            `${domain}/#/home/money_receipt_member/${data.memb_id}/${data.trn_id}`
+          );
+        var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+      } catch (err) {
+        console.log(err);
+      }
+      // END //
+
+      res.send(res_dt);
+    } else {
+      res.send({ suc: 0, msg: "Voucher Not Saved" });
+    }
+  } else {
+    res.send(voucher_res);
   }
-
-  // WHATSAPP MESSAGE //
-  try {
-    var select = "msg, domain",
-      table_name = "md_whatsapp_msg",
-      whr = `msg_for = 'Approve transaction'`,
-      order = null;
-    var msg_dt = await db_Select(select, table_name, whr, order);
-    var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-      domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-    wpMsg = wpMsg
-      .replace("{user_name}", data.member)
-      //   .replace("{form_id}", form_no)
-      .replace("{trn_id}", data.trn_id)
-      .replace("{total}", data.sub_amt)
-      .replace(
-        "{url}",
-        `${domain}/#/home/money_receipt_member/${data.memb_id}`
-      );
-    var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-  } catch (err) {
-    console.log(err);
-  }
-  // END //
-
-  res.send(res_dt);
 });
+
+var finres = getCurrFinYear();
+console.log(finres);
 
 SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   const data = req.body,
@@ -140,6 +184,8 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
     whr = null,
     flag = 0;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+  res_dt["trn_id"] = tnx_id;
 
   // WHATSAPP MESSAGE //
   // try {
@@ -211,12 +257,14 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   var select =
       "a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name,b.member_id",
     table_name = "td_transactions a, md_member b",
-    whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}'`,
+    whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
     // order = `ORDER BY trn_dt, trn_id`;
     // order = `ORDER BY trn_dt DESC`;
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   res.send(res_dt);
 });
+
+SubsDepoRouter.post("/subscription_voucher", async (req, res) => {});
 
 module.exports = { SubsDepoRouter };

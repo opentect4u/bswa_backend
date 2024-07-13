@@ -154,6 +154,13 @@ generalRouter.post("/payment_accept_cheque", async (req, res) => {
   res.send(res_dt);
 });
 
+// generalRouter.post("/upi_accept", async (req, res) => {
+//   var data = req.body;
+//   console.log(data, "upi");
+//   var res_dt = await upi_dt(data);
+//   res.send(res_dt);
+// });
+
 generalRouter.get("/transaction_dt", async (req, res) => {
   var data = req.query;
   console.log(data);

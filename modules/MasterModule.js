@@ -1,6 +1,7 @@
 const db = require("../core/db"),
   { createLogFile } = require("../core/createLog");
 const fin_db = require("../core/fin_db");
+const axios = require("axios");
 
 const db_Select = (select, table_name, whr, order) => {
   var tb_whr = whr ? `WHERE ${whr}` : "";
@@ -281,6 +282,221 @@ const formStatus = {
   A: "Approved",
 };
 
+const getCurrFinYear = () => {
+  return new Promise((resolve, reject) => {
+    var nowYear = parseInt(dateFormat(new Date(), "yyyy"));
+    var current_year = nowYear - 1,
+      previous_year = nowYear - 2,
+      next_year = nowYear,
+      end_acc_dm = "0331";
+
+    if (dateFormat(new Date(), "yyyymmdd") > nowYear + end_acc_dm) {
+      current_year += 1;
+      previous_year += 1;
+      next_year += 1;
+    }
+
+    var curr_fin_year = `${current_year}-${next_year
+        .toString()
+        .substring(4, 2)}`,
+      prev_fin_year = `${previous_year}-${current_year
+        .toString()
+        .substring(4, 2)}`;
+    resolve({ curr_fin_year, prev_fin_year });
+  });
+};
+
+const FIN_YEAR_MASTER = {
+  "2024-25": 5,
+  "2025-26": 6,
+  "2026-27": 7,
+  "2027-28": 8,
+  "2028-29": 9,
+};
+
+const BRANCH_MASTER = {
+  1: "BOSEC",
+  2: "BSPWA",
+};
+
+const REMARKS_MASTER = {
+  remarks: "Amount deposited for opening of member for member no",
+};
+
+const postVoucher = (
+  fin_year,
+  fin_full_year,
+  br_id,
+  br_nm,
+  trn_id,
+  trn_dt,
+  transfer_type,
+  voucher_mode,
+  acc_code,
+  acc_cd_cr,
+  dr_cr_flag,
+  amount,
+  ins_no,
+  ins_dt,
+  remarks,
+  approval_status,
+  created_by,
+  created_at,
+  approved_by,
+  approved_dt
+) => {
+  return new Promise((resolve, reject) => {
+    let data = JSON.stringify({
+      data: {
+        fin_yr: fin_year,
+        fin_fulyr: fin_full_year,
+        branch_id: br_id,
+        br_nm: br_nm,
+        trans_no: trn_id,
+        trans_dt: trn_dt,
+        transfer_type: transfer_type,
+        voucher_mode: voucher_mode,
+        acc_cd_dr: acc_code,
+        dr_cr_flag: dr_cr_flag,
+        amount: amount,
+        acc_cd_cr: acc_cd_cr,
+        ins_no: ins_no,
+        ins_dt: ins_dt,
+        remarks: remarks,
+        approval_status: approval_status,
+        created_by: created_by,
+        created_dt: created_at,
+        approved_by: approved_by,
+        approved_dt: approved_dt,
+      },
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://bspwa.in/fin/index.php/api_voucher/member_subscription",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        resolve({ suc: 1, msg: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        resolve({ suc: 0, msg: error });
+      });
+  });
+};
+
+const drVoucher = (
+  fin_year,
+  fin_full_year,
+  br_id,
+  br_nm,
+  trn_id,
+  trn_dt,
+  transfer_type,
+  voucher_mode,
+  acc_code,
+  acc_cd_cr,
+  dr_cr_flag,
+  acc_cd_adm_cr,
+  acc_cd_don_cr,
+  memb_type,
+  amount_don_cr,
+  amount_adm_cr,
+  amount,
+  amount_cr,
+  ins_no,
+  ins_dt,
+  remarks,
+  approval_status,
+  created_by,
+  created_at,
+  approved_by,
+  approved_dt
+) => {
+  return new Promise((resolve, reject) => {
+    let data = JSON.stringify({
+      data: {
+        fin_yr: fin_year,
+        fin_fulyr: fin_full_year,
+        branch_id: br_id,
+        br_nm: br_nm,
+        trans_no: trn_id,
+        trans_dt: trn_dt,
+        transfer_type: transfer_type,
+        voucher_mode: voucher_mode,
+        acc_cd_dr: acc_code,
+        dr_cr_flag: dr_cr_flag,
+        amount_dr: amount,
+        amount_cr: amount_cr,
+        acc_cd_cr: acc_cd_cr,
+        acc_cd_don_cr: acc_cd_don_cr,
+        acc_cd_adm_cr: acc_cd_adm_cr,
+        memb_type: memb_type,
+        amount_don_cr: amount_don_cr,
+        amount_adm_cr: amount_adm_cr,
+        ins_no: ins_no,
+        ins_dt: ins_dt,
+        remarks: remarks,
+        approval_status: approval_status,
+        created_by: created_by,
+        created_dt: created_at,
+        approved_by: approved_by,
+        approved_dt: approved_dt,
+      },
+    });
+
+    console.log(data, "data");
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://bspwa.in/fin/index.php/api_voucher/member_opening",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        resolve({ suc: 1, msg: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        resolve({ suc: 0, msg: error });
+      });
+  });
+};
+
+const TRANSFER_TYPE_MASTER = {
+  C: "H",
+  Q: "C",
+  O: "N",
+};
+
+const CR_ACC_MASTER = {
+  G: 67,
+  AI: 68,
+  L: 69,
+};
+
+const VOUCHER_MODE_MASTER = {
+  C: "C",
+  Q: "B",
+  O: "B",
+};
+
 module.exports = {
   db_Select,
   db_Insert,
@@ -292,4 +508,13 @@ module.exports = {
   getMaxTrnId,
   formStatus,
   db_fin_Insert,
+  getCurrFinYear,
+  postVoucher,
+  FIN_YEAR_MASTER,
+  BRANCH_MASTER,
+  TRANSFER_TYPE_MASTER,
+  VOUCHER_MODE_MASTER,
+  CR_ACC_MASTER,
+  // REMARKS_MASTER,
+  drVoucher,
 };
