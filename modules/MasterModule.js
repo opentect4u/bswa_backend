@@ -1,5 +1,6 @@
 const db = require("../core/db"),
   { createLogFile } = require("../core/createLog");
+const fin_db = require("../core/fin_db");
 
 const db_Select = (select, table_name, whr, order) => {
   var tb_whr = whr ? `WHERE ${whr}` : "";
@@ -31,7 +32,7 @@ const db_Select = (select, table_name, whr, order) => {
   });
 };
 
-const db_Insert = (table_name, fields, values, whr, flag, sel=false) => {
+const db_Insert = (table_name, fields, values, whr, flag, sel = false) => {
   var sql = "",
     msg = "",
     tb_whr = whr ? `WHERE ${whr}` : "";
@@ -41,13 +42,58 @@ const db_Insert = (table_name, fields, values, whr, flag, sel=false) => {
     sql = `UPDATE ${table_name} SET ${fields} ${tb_whr}`;
     msg = "Updated Successfully !!";
   } else {
-    sql = `INSERT INTO ${table_name} ${fields} ${!sel ? 'VALUES' : ''} ${values}`;
+    sql = `INSERT INTO ${table_name} ${fields} ${
+      !sel ? "VALUES" : ""
+    } ${values}`;
     msg = "Inserted Successfully !!";
   }
 
   return new Promise((resolve, reject) => {
     try {
       db.query(sql, (err, lastId) => {
+        if (err) {
+          console.log(err);
+          createLogFile({
+            event: `Exicuting ${
+              flag > 0 ? "Update" : "Insert"
+            } Statement for table ${table_name}`,
+            message: err,
+          });
+          data = { suc: 0, msg: JSON.stringify(err) };
+        } else {
+          data = { suc: 1, msg: msg, lastId };
+        }
+        resolve(data);
+      });
+    } catch (err) {
+      createLogFile({
+        event: `Exicuting ${
+          flag > 0 ? "Update" : "Insert"
+        } Statement for table ${table_name}`,
+        message: err,
+      });
+      reject({ suc: 0, msg: err });
+    }
+  });
+};
+
+const db_fin_Insert = (table_name, fields, values, whr, flag) => {
+  var sql = "",
+    msg = "",
+    tb_whr = whr ? `WHERE ${whr}` : "";
+  // 0 -> INSERT; 1 -> UPDATE
+  // IN INSERT flieds ARE TABLE COLOUMN NAME ONLY || IN UPDATE fields ARE TABLE NAME = VALUES
+  if (flag > 0) {
+    sql = `UPDATE ${table_name} SET ${fields} ${tb_whr}`;
+    msg = "Updated Successfully !!";
+  } else {
+    sql = `INSERT INTO ${table_name} ${fields} VALUES ${values}`;
+    msg = "Inserted Successfully !!";
+  }
+
+  return new Promise((resolve, reject) => {
+    try {
+      fin_db.query(sql, (err, lastId) => {
         if (err) {
           console.log(err);
           createLogFile({
@@ -229,10 +275,10 @@ const getMaxTrnId = () => {
 };
 
 const formStatus = {
-  'P': 'Pending',
-  'T': 'Accepted',
-  'R': 'Rejected',
-  'A': 'Approved'
+  P: "Pending",
+  T: "Accepted",
+  R: "Rejected",
+  A: "Approved",
 };
 
 module.exports = {
@@ -244,5 +290,6 @@ module.exports = {
   WIFE_ID,
   GenPassword,
   getMaxTrnId,
-  formStatus
+  formStatus,
+  db_fin_Insert,
 };

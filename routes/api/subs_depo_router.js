@@ -99,6 +99,31 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
       flag = 1;
     var chk_dt = await db_Insert(table_name, fields, values, whr, flag);
   }
+
+  // WHATSAPP MESSAGE //
+  try {
+    var select = "msg, domain",
+      table_name = "md_whatsapp_msg",
+      whr = `msg_for = 'Approve transaction'`,
+      order = null;
+    var msg_dt = await db_Select(select, table_name, whr, order);
+    var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+      domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+    wpMsg = wpMsg
+      .replace("{user_name}", data.member)
+      //   .replace("{form_id}", form_no)
+      .replace("{trn_id}", data.trn_id)
+      .replace("{total}", data.sub_amt)
+      .replace(
+        "{url}",
+        `${domain}/#/home/money_receipt_member/${data.memb_id}`
+      );
+    var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+  } catch (err) {
+    console.log(err);
+  }
+  // END //
+
   res.send(res_dt);
 });
 
@@ -117,24 +142,24 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
   // WHATSAPP MESSAGE //
-  try {
-    var select = "msg, domain",
-      table_name = "md_whatsapp_msg",
-      whr = `msg_for = 'Approve transaction'`,
-      order = null;
-    var msg_dt = await db_Select(select, table_name, whr, order);
-    var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-      domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-    wpMsg = wpMsg
-      .replace("{user_name}", data.member)
-      //   .replace("{form_id}", form_no)
-      .replace("{trn_id}", tnx_id)
-      .replace("{total}", data.sub_amt)
-      .replace("{url}", `${domain}/#/admin/money_receipt/${data.memb_id}`);
-    var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-  } catch (err) {
-    console.log(err);
-  }
+  // try {
+  //   var select = "msg, domain",
+  //     table_name = "md_whatsapp_msg",
+  //     whr = `msg_for = 'Approve transaction'`,
+  //     order = null;
+  //   var msg_dt = await db_Select(select, table_name, whr, order);
+  //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+  //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+  //   wpMsg = wpMsg
+  //     .replace("{user_name}", data.member)
+  //     //   .replace("{form_id}", form_no)
+  //     .replace("{trn_id}", tnx_id)
+  //     .replace("{total}", data.sub_amt)
+  //     .replace("{url}", `${domain}/#/admin/money_receipt/${data.memb_id}`);
+  //   var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+  // } catch (err) {
+  //   console.log(err);
+  // }
   // END //
 
   res.send(res_dt);
@@ -155,27 +180,27 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
   // WHATSAPP MESSAGE //
-  try {
-    var select = "msg, domain",
-      table_name = "md_whatsapp_msg",
-      whr = `msg_for = 'Approve transaction'`,
-      order = null;
-    var msg_dt = await db_Select(select, table_name, whr, order);
-    var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-      domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-    wpMsg = wpMsg
-      .replace("{user_name}", data.member)
-      //   .replace("{form_id}", form_no)
-      .replace("{trn_id}", tnx_id)
-      .replace("{total}", data.sub_amt)
-      .replace(
-        "{url}",
-        `${domain}/#/admin/money_receipt_member/${data.memb_id}`
-      );
-    var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-  } catch (err) {
-    console.log(err);
-  }
+  // try {
+  //   var select = "msg, domain",
+  //     table_name = "md_whatsapp_msg",
+  //     whr = `msg_for = 'Approve transaction'`,
+  //     order = null;
+  //   var msg_dt = await db_Select(select, table_name, whr, order);
+  //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+  //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+  //   wpMsg = wpMsg
+  //     .replace("{user_name}", data.member)
+  //     //   .replace("{form_id}", form_no)
+  //     .replace("{trn_id}", tnx_id)
+  //     .replace("{total}", data.sub_amt)
+  //     .replace(
+  //       "{url}",
+  //       `${domain}/#/admin/money_receipt_member/${data.memb_id}`
+  //     );
+  //   var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+  // } catch (err) {
+  //   console.log(err);
+  // }
   // END //
 
   res.send(res_dt);

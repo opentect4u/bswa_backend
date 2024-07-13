@@ -23,6 +23,18 @@ masterRouter.get("/relationship_list", async (req, res) => {
   res.send(res_dt);
 });
 
+masterRouter.get("/bank_name_list", async (req, res) => {
+  var data = req.query;
+  console.log(data, "data");
+  var select = "id, bank_name,acc_cd,org_flag",
+    table_name = "md_bank",
+    whr = `org_flag = '${data.org_flag}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt);
+  res.send(res_dt);
+});
+
 masterRouter.get("/fee_list", async (req, res) => {
   var data = req.query;
   var select =
@@ -66,8 +78,8 @@ masterRouter.get("/subscription_fee_dynamic_life", async (req, res) => {
   res.send(res_dt);
 });
 
-masterRouter.get('/get_tnx_info', async (req, res) => {
-  var data = req.query
+masterRouter.get("/get_tnx_info", async (req, res) => {
+  var data = req.query;
   var select =
       "form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status",
     table_name = "td_transactions",
@@ -76,6 +88,6 @@ masterRouter.get('/get_tnx_info', async (req, res) => {
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "iiii");
   res.send(res_dt);
-})
+});
 
 module.exports = { masterRouter };
