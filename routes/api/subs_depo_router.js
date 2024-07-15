@@ -46,7 +46,7 @@ SubsDepoRouter.post("/get_tnx_details", async (req, res) => {
         "a.effective_dt, a.memb_type, a.adm_fee, a.donation, a.subs_type, a.subscription_1, a.subscription_2",
       table_name = "md_member_fees a",
       whr = `a.memb_type = '${
-        mem_dt.suc > 0 ? mem_dt.msg[0]?.mem_type : ""
+        mem_dt.suc > 0 ? mem_dt.msg[0].mem_type : ""
       }' AND a.effective_dt = (SELECT MAX(b.effective_dt) FROM md_member_fees b WHERE a.memb_type=b.memb_type AND b.effective_dt <= now())`,
       order = null;
     var fee_dt = await db_Select(select, table_name, whr, order);
