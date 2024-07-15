@@ -1,6 +1,6 @@
 const db = require("../core/db"),
   { createLogFile } = require("../core/createLog");
-const fin_db = require("../core/fin_db");
+// const fin_db = require("../core/fin_db");
 const axios = require("axios");
 
 const db_Select = (select, table_name, whr, order) => {
@@ -78,48 +78,48 @@ const db_Insert = (table_name, fields, values, whr, flag, sel = false) => {
   });
 };
 
-const db_fin_Insert = (table_name, fields, values, whr, flag) => {
-  var sql = "",
-    msg = "",
-    tb_whr = whr ? `WHERE ${whr}` : "";
-  // 0 -> INSERT; 1 -> UPDATE
-  // IN INSERT flieds ARE TABLE COLOUMN NAME ONLY || IN UPDATE fields ARE TABLE NAME = VALUES
-  if (flag > 0) {
-    sql = `UPDATE ${table_name} SET ${fields} ${tb_whr}`;
-    msg = "Updated Successfully !!";
-  } else {
-    sql = `INSERT INTO ${table_name} ${fields} VALUES ${values}`;
-    msg = "Inserted Successfully !!";
-  }
+// const db_fin_Insert = (table_name, fields, values, whr, flag) => {
+//   var sql = "",
+//     msg = "",
+//     tb_whr = whr ? `WHERE ${whr}` : "";
+//   // 0 -> INSERT; 1 -> UPDATE
+//   // IN INSERT flieds ARE TABLE COLOUMN NAME ONLY || IN UPDATE fields ARE TABLE NAME = VALUES
+//   if (flag > 0) {
+//     sql = `UPDATE ${table_name} SET ${fields} ${tb_whr}`;
+//     msg = "Updated Successfully !!";
+//   } else {
+//     sql = `INSERT INTO ${table_name} ${fields} VALUES ${values}`;
+//     msg = "Inserted Successfully !!";
+//   }
 
-  return new Promise((resolve, reject) => {
-    try {
-      fin_db.query(sql, (err, lastId) => {
-        if (err) {
-          console.log(err);
-          createLogFile({
-            event: `Exicuting ${
-              flag > 0 ? "Update" : "Insert"
-            } Statement for table ${table_name}`,
-            message: err,
-          });
-          data = { suc: 0, msg: JSON.stringify(err) };
-        } else {
-          data = { suc: 1, msg: msg, lastId };
-        }
-        resolve(data);
-      });
-    } catch (err) {
-      createLogFile({
-        event: `Exicuting ${
-          flag > 0 ? "Update" : "Insert"
-        } Statement for table ${table_name}`,
-        message: err,
-      });
-      reject({ suc: 0, msg: err });
-    }
-  });
-};
+//   return new Promise((resolve, reject) => {
+//     try {
+//       fin_db.query(sql, (err, lastId) => {
+//         if (err) {
+//           console.log(err);
+//           createLogFile({
+//             event: `Exicuting ${
+//               flag > 0 ? "Update" : "Insert"
+//             } Statement for table ${table_name}`,
+//             message: err,
+//           });
+//           data = { suc: 0, msg: JSON.stringify(err) };
+//         } else {
+//           data = { suc: 1, msg: msg, lastId };
+//         }
+//         resolve(data);
+//       });
+//     } catch (err) {
+//       createLogFile({
+//         event: `Exicuting ${
+//           flag > 0 ? "Update" : "Insert"
+//         } Statement for table ${table_name}`,
+//         message: err,
+//       });
+//       reject({ suc: 0, msg: err });
+//     }
+//   });
+// };
 
 const db_Delete = (table_name, whr) => {
   whr = whr ? `WHERE ${whr}` : "";
@@ -507,7 +507,7 @@ module.exports = {
   GenPassword,
   getMaxTrnId,
   formStatus,
-  db_fin_Insert,
+  // db_fin_Insert,
   getCurrFinYear,
   postVoucher,
   FIN_YEAR_MASTER,
