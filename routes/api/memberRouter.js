@@ -23,25 +23,26 @@ memberRouter.post("/member_dtls", async (req, res) => {
       table_name = "md_dependent",
       whr = `form_no = '${data.form_no}' AND ${
         res_dt.msg[0].mem_type != "AI"
-          ? "relation not in (3, 15)"
+          ? "relation in (3, 15)"
           : `intro_member_id is not null`
       }`,
       order = "order by sl_no";
     var spou_dt = await db_Select(select, table_name, whr, order);
 
     var select =
-        "form_no, sl_no, member_id, mem_type, dependent_dt, dependent_name, gurdian_name, relation, min_no, dob, blood_grp, memb_address, ps, city_town_dist, pin_no, phone_no, email_id, memb_pic, intro_member_id, dept_status, grp_status, grp_no, stp_status, stp_no",
-      table_name = "md_dependent",
-      whr = `form_no = '${data.form_no}' AND ${
+        "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no,b.relation_name",
+      table_name = "md_dependent a, md_relationship b",
+      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${
         res_dt.msg[0].mem_type != "AI"
-          ? "relation not in (3, 15)"
-          : `intro_member_id is null`
+          ? "a.relation not in (3, 15)"
+          : `a.intro_member_id is null`
       }`,
       order = "order by sl_no";
     var dep_dt = await db_Select(select, table_name, whr, order);
 
     res_dt.msg[0]["spou_dt"] =
-      spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg[0] : {}) : {};
+      // spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg[0] : {}) : {};
+      spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : {};
     res_dt.msg[0]["dep_dt"] =
       dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
   }

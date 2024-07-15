@@ -615,7 +615,7 @@ module.exports = {
             );
 
             var table_name = "md_dependent",
-              fields = `member_id = '${member_id}', modified_by = '${data.user}',modified_at = '${datetime}'`,
+              fields = `member_id = '${member_id}', dept_status = 'A', modified_by = '${data.user}',modified_at = '${datetime}'`,
               values = null,
               whr = `form_no = '${data.formNo}'`,
               flag = 1;

@@ -224,7 +224,8 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
     whr = null,
     flag = 0;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
-
+  res_dt["trn_id"] = tnx_id;
+  console.log(res_dt, "res");
   // WHATSAPP MESSAGE //
   // try {
   //   var select = "msg, domain",
