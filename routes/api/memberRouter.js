@@ -8,12 +8,12 @@ const { dynamicFileUpload } = require("../../modules/general_formModule");
 memberRouter.post("/member_dtls", async (req, res) => {
   var data = req.body;
   var select =
-      "form_no, form_dt, member_id, mem_dt, mem_type, memb_oprn, memb_name, unit_id, gurdian_name, gender, marital_status, dob, blood_grp, caste, staff_nos, pers_no, min_no, memb_address, ps, city_town_dist, pin_no, phone_no, email_id, memb_pic, memb_status, remarks, resolution_no, resolution_dt",
-    table_name = "md_member",
+      "a.form_no, a.form_dt, a.member_id, a.mem_dt, a.mem_type, a.memb_oprn, a.memb_name, a.unit_id, a.gurdian_name, a.gender, a.marital_status, a.dob, a.blood_grp, a.caste, a.staff_nos, a.pers_no, a.min_no, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.memb_status, a.remarks, a.resolution_no, a.resolution_dt, b.unit_name",
+    table_name = "md_member a, md_unit b",
     whr = data.flag
-      ? `form_no = '${data.form_no}'`
+      ? `a.unit_id = b.unit_id AND a.form_no = '${data.form_no}'`
       : data.mem_id
-      ? `member_id = '${data.mem_id}'`
+      ? `a.member_id = '${data.mem_id}'`
       : null,
     order = "order by cast(substr(member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
