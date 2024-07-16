@@ -272,7 +272,17 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `sub_amt = '${data.subscriptionFee_1}',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${data.admissionFee_life}',donation = '${data.donationFee_life}',tot_amt = '${data.totalAmount_life}',receipt_no = '${data.receipt_no}', modified_by = '${data.user}',modified_at = '${datetime}'`
+            ? `trn_dt = '${datetime}', sub_amt = '${
+                data.subscriptionFee_1
+              }',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${
+                data.admissionFee_life
+              }',donation = '${data.donationFee_life}',tot_amt = '${
+                data.totalAmount_life
+              }',receipt_no = '${
+                data.receipt_no
+              }',chq_no = null, chq_dt = null, chq_bank = ${
+                data.payment == "C" ? "73" : "75"
+              } , modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,created_by,created_at)`,
         values = `('${data.formNo}','${datetime}','${trn_id}','${
           data.subscriptionFee_1
@@ -300,6 +310,7 @@ module.exports = {
           whr1,
           flag1
         );
+        res_dt["trn_id"] = trn_id;
 
         // WHATSAPP MESSAGE //
         try {
@@ -339,7 +350,7 @@ module.exports = {
         }
         // END //
 
-        resolve(accept_dt);
+        resolve(res_dt);
       }
     });
   },
@@ -362,7 +373,7 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `sub_amt = '${data.subscriptionFee_1}',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${data.admissionFee}',donation = '${data.donationFee}',tot_amt = '${data.totalAmount_life}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+            ? `sub_amt = '${data.subscriptionFee_1}',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${data.admissionFee}',donation = '${data.donationFee}',tot_amt = '${data.totalAmount_life}', pay_mode = '${data.payment}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,chq_no,chq_dt,chq_bank,created_by,created_at)`,
         values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee}','${data.donationFee}','0','${data.totalAmount_life}','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','${data.user}','${datetime}')`,
         where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
@@ -382,6 +393,7 @@ module.exports = {
           whr1,
           flag1
         );
+        res_dt["trn_id"] = trn_id;
 
         // WHATSAPP MESSAGE //
         try {
@@ -402,7 +414,7 @@ module.exports = {
         }
         // END //
 
-        resolve(accept_dt);
+        resolve(res_dt);
       }
     });
   },
