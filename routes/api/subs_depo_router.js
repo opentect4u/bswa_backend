@@ -180,7 +180,7 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var table_name = "td_transactions",
     fields =
       "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
-    values = `('${data.form_no}', '${trn_dt}', '${tnx_id}', '${data.sub_amt}', 0, 0, 0, 0, ${data.sub_amt}, '${data.pay_mode}', '${data.receipt_no}', '${data.chq_no}', '${data.chq_dt}', '${data.chq_bank}', '${data.approval_status}', '${data.user}', '${trn_dt}')`,
+    values = `('${data.form_no}', '${data.form_dt}', '${tnx_id}', '${data.sub_amt}', 0, 0, 0, 0, ${data.sub_amt}, '${data.pay_mode}', '${data.receipt_no}', '${data.chq_no}', '${data.chq_dt}', '${data.chq_bank}', '${data.approval_status}', '${data.user}', '${trn_dt}')`,
     whr = null,
     flag = 0;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);

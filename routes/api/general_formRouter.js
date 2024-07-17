@@ -21,7 +21,7 @@ const generalRouter = express.Router();
 generalRouter.post("/save_genral_form", async (req, res) => {
   //   var user_name = req.user.user_name;
   var data = req.body;
-  //   console.log(data, "hhhh");
+  console.log(data, "hhhh");
   var save_gen = await general_form_save(data);
   //   console.log(save_gen, "mmm");
   res.send(save_gen);

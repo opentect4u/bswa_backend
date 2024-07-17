@@ -101,7 +101,7 @@ module.exports = {
       console.log(form_no, "pppp");
 
       fields = `(form_no,form_dt,mem_type,memb_oprn,memb_name,unit_id,gurdian_name,gender,marital_status,dob,blood_grp,caste,staff_nos,pers_no,min_no,memb_address,ps,city_town_dist,pin_no,phone_no,email_id,memb_status,created_by,created_at)`;
-      values = `('${form_no}','${datetime}','${data.flag}','${data.member_opt}','${data.member}','${data.unit_nm}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','${data.blood}','${data.caste}','${data.staff}','${data.personal}','${data.min}','${data.mem}','${data.police_st}','${data.city}','${data.pin}','${data.phone}','${data.email_id}','P','${data.member}','${datetime}')`;
+      values = `('${form_no}','${data.form_dt}','${data.flag}','${data.member_opt}','${data.member}','${data.unit_nm}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','${data.blood}','${data.caste}','${data.staff}','${data.personal}','${data.min}','${data.mem}','${data.police_st}','${data.city}','${data.pin}','${data.phone}','${data.email_id}','P','${data.member}','${datetime}')`;
       table_name = "md_member";
       whr = null;
       order = null;
@@ -272,7 +272,7 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `trn_dt = '${datetime}', sub_amt = '${
+            ? `trn_dt = '${data.form_dt}', sub_amt = '${
                 data.subscriptionFee_1
               }',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${
                 data.admissionFee_life
@@ -284,7 +284,7 @@ module.exports = {
                 data.payment == "C" ? "73" : "75"
               } , modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,created_by,created_at)`,
-        values = `('${data.formNo}','${datetime}','${trn_id}','${
+        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${
           data.subscriptionFee_1
         }','${data.subscriptionFee_2}','${data.admissionFee_life}','${
           data.donationFee_life
@@ -373,9 +373,9 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `sub_amt = '${data.subscriptionFee_1}',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${data.admissionFee}',donation = '${data.donationFee}',tot_amt = '${data.totalAmount_life}', pay_mode = '${data.payment}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+            ? `trn_dt = '${data.form_dt}', sub_amt = '${data.subscriptionFee_1}',onetime_amt = '${data.subscriptionFee_2}',adm_fee = '${data.admissionFee}',donation = '${data.donationFee}',tot_amt = '${data.totalAmount_life}', pay_mode = '${data.payment}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,chq_no,chq_dt,chq_bank,created_by,created_at)`,
-        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee}','${data.donationFee}','0','${data.totalAmount_life}','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','${data.user}','${datetime}')`,
+        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.subscriptionFee_1}','${data.subscriptionFee_2}','${data.admissionFee}','${data.donationFee}','0','${data.totalAmount_life}','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','${data.user}','${datetime}')`,
         where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
         flag = data.trn_id > 0 ? 1 : 0;
       var res_dt = await db_Insert(table_name, fields, values, where, flag);

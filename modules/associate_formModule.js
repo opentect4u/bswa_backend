@@ -125,7 +125,7 @@ module.exports = {
       console.log(form_no, "pppp");
 
       fields = `(form_no,form_dt,mem_type,memb_name,gurdian_name,gender,marital_status,dob,caste,memb_address,ps,city_town_dist,pin_no,phone_no,email_id,memb_status,created_by,created_at)`;
-      values = `('${form_no}','${datetime}','${data.flag}','${data.member}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','${data.caste}','${data.mem}','${data.police_st}','${data.city}','${data.pin}','${data.phone}','${data.email_id}','P','${data.member}','${datetime}')`;
+      values = `('${form_no}','${data.form_dt}','${data.flag}','${data.member}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','${data.caste}','${data.mem}','${data.police_st}','${data.city}','${data.pin}','${data.phone}','${data.email_id}','P','${data.member}','${datetime}')`;
       table_name = "md_member";
       whr = null;
       order = null;
@@ -297,7 +297,7 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `trn_dt = '${datetime}', sub_amt = '${
+            ? `trn_dt = '${data.form_dt}', sub_amt = '${
                 data.subscriptionFee_associate
               }',onetime_amt = '${
                 data.subscriptionFee_associate_one
@@ -309,7 +309,7 @@ module.exports = {
                 data.payment == "C" ? "73" : "75"
               } ,modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,receipt_no,chq_bank,created_by,created_at)`,
-        values = `('${data.formNo}','${datetime}','${trn_id}','${
+        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${
           data.subscriptionFee_associate
         }','${data.subscriptionFee_associate_one}','${
           data.admissionFee_associate
@@ -398,9 +398,17 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `sub_amt = '${data.subscriptionFee_associate}',onetime_amt = '${data.subscriptionFee_associate_one}',adm_fee = '${data.admissionFee_associate}',donation = '${data.donationFee_associate}',tot_amt = '${data.totalAmount_associate}',pay_mode = '${data.payment}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+            ? `trn_dt = '${data.form_dt}',sub_amt = '${data.subscriptionFee_associate}',onetime_amt = '${data.subscriptionFee_associate_one}',adm_fee = '${data.admissionFee_associate}',donation = '${data.donationFee_associate}',tot_amt = '${data.totalAmount_associate}',pay_mode = '${data.payment}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,chq_no,chq_dt,chq_bank,created_by,created_at)`,
-        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee_associate}','${data.subscriptionFee_associate_one}','${data.admissionFee_associate}','${data.donationFee_associate}','0','${data.totalAmount_associate}','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','${data.user}','${datetime}')`,
+        values = `('${data.formNo}','${(data, form_dt)}','${trn_id}','${
+          data.subscriptionFee_associate
+        }','${data.subscriptionFee_associate_one}','${
+          data.admissionFee_associate
+        }','${data.donationFee_associate}','0','${
+          data.totalAmount_associate
+        }','${data.payment}','${data.cheque_no}','${data.cheque_dt}','${
+          data.bank_name
+        }','${data.user}','${datetime}')`,
         where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
         flag = data.trn_id > 0 ? 1 : 0;
       var res_dt = await db_Insert(table_name, fields, values, where, flag);
