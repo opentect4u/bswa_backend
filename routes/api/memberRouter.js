@@ -9,22 +9,23 @@ memberRouter.post("/member_dtls", async (req, res) => {
   var data = req.body;
   var select =
       "a.form_no, a.form_dt, a.member_id, a.mem_dt, a.mem_type, a.memb_oprn, a.memb_name, a.unit_id, a.gurdian_name, a.gender, a.marital_status, a.dob, a.blood_grp, a.caste, a.staff_nos, a.pers_no, a.min_no, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.memb_status, a.remarks, a.resolution_no, a.resolution_dt, b.unit_name",
-    table_name = "md_member a, md_unit b",
+    table_name = "md_member a LEFT JOIN md_unit b ON a.unit_id = b.unit_id",
     whr = data.flag
-      ? `a.unit_id = b.unit_id AND a.form_no = '${data.form_no}'`
+      ? `a.form_no = '${data.form_no}'`
       : data.mem_id
       ? `a.member_id = '${data.mem_id}'`
       : null,
     order = "order by cast(substr(member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "iiiii");
   if (data.flag) {
     var select =
-        "form_no, sl_no, member_id, mem_type, dependent_dt, dependent_name, gurdian_name, relation, min_no, dob, blood_grp, memb_address, ps, city_town_dist, pin_no, phone_no, email_id, memb_pic, intro_member_id, dept_status, grp_status, grp_no, stp_status, stp_no",
-      table_name = "md_dependent",
-      whr = `form_no = '${data.form_no}' AND ${
+        "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no, b.relation_name",
+      table_name = "md_dependent a, md_relationship b",
+      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${
         res_dt.msg[0].mem_type != "AI"
-          ? "relation in (3, 15)"
-          : `intro_member_id is not null`
+          ? "a.relation in (3, 15)"
+          : `a.intro_member_id is not null`
       }`,
       order = "order by sl_no";
     var spou_dt = await db_Select(select, table_name, whr, order);
