@@ -59,9 +59,10 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
         // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob";
-      (table_name = "td_gen_ins a"),
-        (whr = `member_id ='${data.member_id}'`),
+        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,b.unit_name";
+      (table_name = "td_gen_ins a, md_unit b"),
+        (whr = `a.association = b.unit_id
+        AND a.member_id ='${data.member_id}'`),
         (order = null);
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
@@ -147,7 +148,7 @@ group_policyRouter.get("/frm_list_policy_group", async (req, res) => {
     table_name = "td_gen_ins a",
     whr = `a.form_status IN('P','R','T')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
-  order = null;
+  order = `ORDER BY a.form_no desc`;
   //   var res_dt = await db_Select(select, table_name, whr, order);
   // } else {
   //   var select = "form_no,form_dt,member_id,memb_name",

@@ -35,6 +35,18 @@ masterRouter.get("/bank_name_list", async (req, res) => {
   res.send(res_dt);
 });
 
+masterRouter.get("/bank_name_list_trust", async (req, res) => {
+  var data = req.query;
+  console.log(data, "data");
+  var select = "id, bank_name,acc_cd,org_flag",
+    table_name = "md_bank",
+    whr = `org_flag = '${data.org_flag}'`,
+    order = null;
+  var res_dt_trust = await db_Select(select, table_name, whr, order);
+  console.log(res_dt_trust);
+  res.send(res_dt_trust);
+});
+
 masterRouter.get("/fee_list", async (req, res) => {
   var data = req.query;
   var select =

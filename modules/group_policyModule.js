@@ -54,32 +54,32 @@ module.exports = {
       let sl_no = await getMaxSlNo(form_no);
       sl_no = sl_no.suc > 0 ? sl_no.msg[0].sl_no : 1;
 
-      fields = `(form_no,premium_id,premium_amt ${
-        data.sup_top_flag == "p2"
-          ? `,premium_amt2,prm_flag2`
-          : data.sup_top_flag == "p3"
-          ? ",premium_amt3,prm_flag3"
-          : ""
-      },created_by,created_at)`;
-      values = `('${form_no}','${data.grp_name}','${data.pre_amont}' ${
-        data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
-          ? `,${data.sup_top_up},'Y'`
-          : ""
-      },'${data.member}','${datetime}')`;
-      table_name = "td_premium_dtls";
-      whr = null;
-      order = null;
-      var policy_dt = await db_Insert(table_name, fields, values, whr, order);
+      // fields = `(form_no,premium_id,premium_amt ${
+      //   data.sup_top_flag == "p2"
+      //     ? `,premium_amt2,prm_flag2`
+      //     : data.sup_top_flag == "p3"
+      //     ? ",premium_amt3,prm_flag3"
+      //     : ""
+      // },created_by,created_at)`;
+      // values = `('${form_no}','${data.grp_name}','${data.pre_amont}' ${
+      //   data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
+      //     ? `,${data.sup_top_up},'Y'`
+      //     : ""
+      // },'${data.member}','${datetime}')`;
+      // table_name = "td_premium_dtls";
+      // whr = null;
+      // order = null;
+      // var policy_dt = await db_Insert(table_name, fields, values, whr, order);
 
       if (data.checkedmember) {
         fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','P','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
+        values = `('${form_no}','${data.form_dt}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','P','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
         table_name = "td_gen_ins";
         whr = null;
         order = null;
       } else {
         fields = `(form_no,form_dt, policy_holder_type,member_id,association,memb_type, memb_oprn, memb_name,phone,father_husband_name, sex, marital_status, dob,form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','p','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
+        values = `('${form_no}','${data.form_dt}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','GP','p','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
         table_name = "td_gen_ins";
         whr = null;
         order = null;

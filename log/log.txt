@@ -1134,3 +1134,57 @@
 [EVENT]   : [09-Jul-24 21:51:33] : Exicuting Select Statement from table td_stp_ins a 
 [MESSAGE] : [09-Jul-24 21:51:33] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'b.memb_name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT a.form_no,a.form_dt,a.form_status,a.member_id,b.memb_name, a.phone_no FROM td_stp_ins a WHERE a.form_status = 'T' "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jul-24 15:32:55] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [11-Jul-24 15:32:55] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'trn_dt' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM td_transactions WHERE form_no = 'AI2024000002'  ORDER BY ASEC trn_dt"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jul-24 15:33:20] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [11-Jul-24 15:33:20] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ASEC' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM td_transactions WHERE form_no = 'AI2024000002'  ORDER BY trn_dt ASEC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Jul-24 15:33:21] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [11-Jul-24 15:33:21] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ASEC' at line 1","sqlState":"42000","index":0,"sql":"SELECT * FROM td_transactions WHERE form_no = 'AI2024000002'  ORDER BY trn_dt ASEC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 01:25:28] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [12-Jul-24 01:25:28] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 01:25:33] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [12-Jul-24 01:25:33] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 01:25:54] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [12-Jul-24 01:25:54] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 01:25:57] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [12-Jul-24 01:25:57] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 01:26:03] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [12-Jul-24 01:26:03] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 01:26:11] : Exicuting Select Statement from table md_user 
+[MESSAGE] : [12-Jul-24 01:26:11] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 13:37:19] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [12-Jul-24 13:37:19] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 13:41:08] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [12-Jul-24 13:41:08] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 13:42:12] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [12-Jul-24 13:42:12] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 14:52:48] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [12-Jul-24 14:52:48] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 16:11:35] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [12-Jul-24 16:11:35] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' 'O', '', '', '', '75', 'U', 'ACHIN KUMAR MOITRA', '2024-07-12 16:11:35')' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Jul-24 16:12:07] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [12-Jul-24 16:12:07] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' 'O', '', '', '', '75', 'U', 'ACHIN KUMAR MOITRA', '2024-07-12 16:12:07')' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jul-24 16:42:17] : Exicuting Select Statement from table md_member a, td_memb_subscription b 
+[MESSAGE] : [17-Jul-24 16:42:17] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? a.member_id=b.member_id AND a.member_id = 'AI-225' AND DATE(b.subscription_...' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto FROM md_member a, td_memb_subscription b WHERE a.mem_type != 'AI' ? a.member_id=b.member_id AND a.member_id = 'AI-225' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id) : '' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jul-24 16:42:34] : Exicuting Select Statement from table md_member a, td_memb_subscription b 
+[MESSAGE] : [17-Jul-24 16:42:34] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? a.member_id=b.member_id AND a.member_id = 'G-102' AND DATE(b.subscription_u...' at line 1","sqlState":"42000","index":0,"sql":"SELECT a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto FROM md_member a, td_memb_subscription b WHERE a.mem_type != 'AI' ? a.member_id=b.member_id AND a.member_id = 'G-102' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id) : '' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [18-Jul-24 10:36:44] : Exicuting Insert Statement for table md_user 
+[MESSAGE] : [18-Jul-24 10:36:44] : Error: ER_DUP_ENTRY: Duplicate entry 'G-393' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------

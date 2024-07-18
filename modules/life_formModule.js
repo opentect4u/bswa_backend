@@ -510,7 +510,7 @@ module.exports = {
             //     : 0;
             // var tot_tenure = tot_sub_amt > 0 ? data.tot_amt / tot_sub_amt : 0;
             var sub_upto = new Date(data.trn_dt);
-            sub_upto.setFullYear(sub_upto.getFullYear() + 1);
+            sub_upto.setFullYear(sub_upto.getFullYear() - 1);
             console.log(sub_upto, "oooo");
             var table_name = "td_memb_subscription",
               fields = `(member_id,sub_dt,amount,subscription_upto, calc_amt, calc_upto, trans_id,created_by,created_at)`,

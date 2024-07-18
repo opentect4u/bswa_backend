@@ -600,7 +600,7 @@ module.exports = {
                 : 0;
             var tot_tenure = tot_sub_amt > 0 ? data.sub_amt / tot_sub_amt : 0;
             var sub_upto = new Date(data.trn_dt);
-            sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+            sub_upto.setMonth(sub_upto.getMonth() + tot_tenure - 1);
             var table_name = "td_memb_subscription",
               fields = `(member_id,sub_dt,amount,subscription_upto, calc_amt, calc_upto, trans_id,created_by,created_at)`,
               values = `('${member_id}','${data.trn_dt}','${
