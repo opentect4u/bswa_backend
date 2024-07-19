@@ -448,7 +448,7 @@ module.exports = {
             .replace("{user_name}", data.member)
             .replace("{form_no}", data.formNo)
             .replace("{status}", formStatus[data.status]);
-          var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+          var wpRes = await sendWap(data.phone_no, wpMsg);
         } catch (err) {
           console.log(err);
         }
@@ -541,7 +541,7 @@ module.exports = {
         2,
         BRANCH_MASTER[2],
         data.trn_id,
-        dateFormat(new Date(datetime), "yyyy-mm-dd"),
+        dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
         TRANSFER_TYPE_MASTER[data.pay_mode],
         VOUCHER_MODE_MASTER[data.pay_mode],
         data.acc_code,

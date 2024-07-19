@@ -8,6 +8,7 @@ const {
   accept_dt_cash,
   accept_dt_cheque,
   approve_dt,
+  save_gmp_data,
 } = require("../../modules/group_policyModule");
 
 const group_policyRouter = express.Router();
@@ -204,6 +205,13 @@ group_policyRouter.post("/payment_accept_cheque_group", async (req, res) => {
   res.send(res_dt);
 });
 
+group_policyRouter.post("/save_trn_data_gmp", async (req, res) => {
+  var data = req.body;
+  console.log(data, "trn_data");
+  var res_dt = await save_gmp_data(data);
+  res.send(res_dt);
+});
+
 group_policyRouter.get("/transaction_dt_group", async (req, res) => {
   var data = req.query;
   console.log(data);
@@ -302,13 +310,28 @@ group_policyRouter.get("/get_gen_ins_dt", async (req, res) => {
 group_policyRouter.get("/get_gmp_transaction", async (req, res) => {
   var data = req.query;
   console.log(data, "hhhh");
+  // var select =
+  //     "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
   var select =
-      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.trn_dt,b.premium_amt,b.pay_mode,b.receipt_no,b.chq_no,b.chq_dt,b.chq_bank",
     table_name = "td_gen_ins a, td_transactions b",
-    whr = `a.form_no = b.form_no AND a.form_no ='${data.form_no}'`,
+    whr = `a.form_no = b.form_no 
+    AND a.form_no ='${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt, "kiki");
+  res.send(res_dt);
+});
+
+group_policyRouter.post("/accept_gmp_money_receipt", async (req, res) => {
+  var data = req.body;
+  var select =
+      "a.form_no,a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name",
+    table_name = "td_transactions a, td_gen_ins b",
+    whr = `a.form_no = b.form_no AND a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "lo");
   res.send(res_dt);
 });
 

@@ -464,7 +464,7 @@ module.exports = {
         2,
         BRANCH_MASTER[2],
         data.trn_id,
-        dateFormat(new Date(datetime), "yyyy-mm-dd"),
+        dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
         TRANSFER_TYPE_MASTER[data.pay_mode],
         VOUCHER_MODE_MASTER[data.pay_mode],
         data.acc_code,

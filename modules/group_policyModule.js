@@ -1,8 +1,18 @@
 var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs");
-const { db_Select, db_Insert } = require("./MasterModule");
-const { sendWappMsg } = require("./whatsappModule");
+const {
+  db_Select,
+  db_Insert,
+  formStatus,
+  drVoucher_gmp,
+  getCurrFinYear,
+  FIN_YEAR_MASTER,
+  BRANCH_MASTER,
+  TRANSFER_TYPE_MASTER,
+  VOUCHER_MODE_MASTER,
+} = require("./MasterModule");
+const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
@@ -372,6 +382,99 @@ module.exports = {
     });
   },
 
+  save_gmp_data: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      let year = dateFormat(new Date(), "yyyy");
+
+      const no = await getMaxTrnId();
+      let trn_id = `${year}${no.msg[0].max_trn_id}`;
+      console.log(trn_id, "pppp");
+
+      // var table_name = "td_premium_dtls",
+      //   fields = `(form_no,premium_dt,premium_id,premium_amt,created_by,created_at)`,
+      //   values = `('${data.formNo}','${data.pre_dt}','0','${data.pre_amt}','${data.user}','${datetime}')`,
+      //   where = null,
+      //   flag = 0;
+      // var res_dt = await db_Insert(table_name, fields, values, where, flag);
+
+      var table_name = "td_transactions",
+        fields = `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.pre_amt}','${data.pre_amt}','${data.payment}','${data.receipt_no}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','U','${data.user}','${datetime}')`,
+        where = null,
+        flag = 0;
+      var trn_dt = await db_Insert(table_name, fields, values, where, flag);
+
+      if (trn_dt.suc > 0) {
+        var table_name1 = "td_gen_ins",
+          fields1 = `ins_period = 'Y',form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+          values1 = null,
+          whr1 = `form_no = '${data.formNo}'`,
+          flag1 = 1;
+        var accept_dt = await db_Insert(
+          table_name1,
+          fields1,
+          values1,
+          whr1,
+          flag1
+        );
+        trn_dt["trn_id"] = trn_id;
+      }
+
+      try {
+        if (data.pay_mode == "C") {
+          // var select = "msg, domain",
+          //   table_name = "md_whatsapp_msg",
+          //   whr = `msg_for = 'Accept'`,
+          //   order = null;
+          // var msg_dt = await db_Select(select, table_name, whr, order);
+          // var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+          //   domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+          // wpMsg = wpMsg
+          //   .replace("{user_name}", data.member)
+          //   .replace("{form_no}", data.formNo)
+          //   .replace("{status}", formStatus[data.status]);
+          // var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+          var select = "msg, domain",
+            table_name = "md_whatsapp_msg",
+            whr = `msg_for = 'Accept'`,
+            order = null;
+          var msg_dt = await db_Select(select, table_name, whr, order);
+          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+            domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+          wpMsg = wpMsg
+            .replace("{user_name}", data.member)
+            .replace("{form_no}", data.formNo)
+            .replace("{status}", formStatus[data.status])
+            .replace("{remarks}", data.reject);
+          var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+        } else {
+          var select = "msg, domain",
+            table_name = "md_whatsapp_msg",
+            whr = `msg_for = 'Member Premium accept online'`,
+            order = null;
+          var msg_dt = await db_Select(select, table_name, whr, order);
+          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+            domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+          wpMsg = wpMsg
+            .replace("{user_name}", data.member)
+            .replace("{form_no}", data.form_no);
+          var wpRes = await sendWappMediaMsg(
+            data.phone_no,
+            wpMsg,
+            domain,
+            "BOKAROWELFARE.jpg"
+          );
+        }
+      } catch (err) {
+        console.log(err);
+      }
+      // END //
+
+      resolve(trn_dt);
+    });
+  },
+
   approve_dt: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
@@ -381,75 +484,125 @@ module.exports = {
       nextYear.setFullYear(now.getFullYear() + 1);
       let nextYearDate = dateFormat(nextYear, "yyyy-mm-dd HH:MM:ss");
 
-      var table_name = "td_premium_dtls",
-        fields = `(form_no,premium_dt,created_by,created_at)`,
-        values = `('${data.formNo}','${nextYearDate}','${data.user}','${datetime}')`,
-        where = null,
-        flag = 0;
-      var res_dt = await db_Insert(table_name, fields, values, where, flag);
+      var finres = await getCurrFinYear();
+      var curr_fin_year = finres.curr_fin_year;
 
-      // fields = `(form_no,premium_dt,premium_id,premium_amt ${
-      //   data.sup_top_flag == "p2"
-      //     ? `,premium_amt2,prm_flag2`
-      //     : data.sup_top_flag == "p3"
-      //     ? ",premium_amt3,prm_flag3"
-      //     : ""
-      // },created_by,created_at)`;
-      // values = `('${form_no}','${nextYearDate}','${data.grp_name}','${
-      //   data.pre_amont
-      // }' ${
-      //   data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
-      //     ? `,${data.sup_top_up},'Y'`
-      //     : ""
-      // },'${data.member}','${datetime}')`;
-      // table_name = "td_premium_dtls";
-      // whr = null;
-      // order = null;
-      // var policy_dt = await db_Insert(table_name, fields, values, whr, order);
-
-      if (res_dt.suc > 0) {
-        var table_name = "td_gen_ins",
-          fields = `form_status = 'A',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
-          values = null,
-          whr = `form_no = '${data.formNo}'`,
-          flag = 1;
-        var approve_dt = await db_Insert(table_name, fields, values, whr, flag);
-      }
-
-      var table_name = "td_transactions",
-        fields = `approval_status = 'A', approved_by = '${data.user}',approved_dt = '${datetime}'`,
-        values = null,
-        whr = `form_no = '${data.formNo}'`,
-        flag = 1;
-      var approval_dt_st = await db_Insert(
-        table_name,
-        fields,
-        values,
-        whr,
-        flag
+      var voucher_res = await drVoucher_gmp(
+        FIN_YEAR_MASTER[curr_fin_year],
+        curr_fin_year,
+        1,
+        BRANCH_MASTER[1],
+        data.trn_id,
+        dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
+        TRANSFER_TYPE_MASTER[data.pay_mode],
+        VOUCHER_MODE_MASTER[data.pay_mode],
+        data.acc_code,
+        4,
+        "DR",
+        data.pre_amt,
+        data.pre_amt,
+        data.chq_no,
+        data.chq_dt && new Date(data.chq_dt) != "Invalid Date"
+          ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd")
+          : "",
+        `Amount deposited for premium of - ${data.user_name}`,
+        "A",
+        data.user,
+        datetime,
+        data.user,
+        datetime
       );
 
-      // WHATSAPP MESSAGE //
-      try {
-        var select = "msg, domain",
-          table_name = "md_whatsapp_msg",
-          whr = `msg_for = 'Accept'`,
-          order = null;
-        var msg_dt = await db_Select(select, table_name, whr, order);
-        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-        wpMsg = wpMsg
-          .replace("{user_name}", data.member)
-          .replace("{form_no}", data.formNo)
-          .replace("{status}", formStatus[data.status])
-          .replace("{remarks}", data.reject);
-        var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-      } catch (err) {
-        console.log(err);
-      }
-      // END //
+      if (voucher_res.suc > 0) {
+        if (voucher_res.msg > 0) {
+          var table_name = "td_premium_dtls",
+            fields = `(form_no,premium_amt,created_by,created_at)`,
+            values = `('${data.formNo}','${data.pre_amt}','${data.user}','${datetime}')`,
+            where = null,
+            flag = 0;
+          var res_dt = await db_Insert(table_name, fields, values, where, flag);
 
-      resolve(approval_dt_st);
+          // fields = `(form_no,premium_dt,premium_id,premium_amt ${
+          //   data.sup_top_flag == "p2"
+          //     ? `,premium_amt2,prm_flag2`
+          //     : data.sup_top_flag == "p3"
+          //     ? ",premium_amt3,prm_flag3"
+          //     : ""
+          // },created_by,created_at)`;
+          // values = `('${form_no}','${nextYearDate}','${data.grp_name}','${
+          //   data.pre_amont
+          // }' ${
+          //   data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
+          //     ? `,${data.sup_top_up},'Y'`
+          //     : ""
+          // },'${data.member}','${datetime}')`;
+          // table_name = "td_premium_dtls";
+          // whr = null;
+          // order = null;
+          // var policy_dt = await db_Insert(table_name, fields, values, whr, order);
+
+          // var table_name = "td_premium_dtls",
+          //   fields = `approve_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+          //   values = null,
+          //   whr = `form_no = '${data.formNo}'`,
+          //   flag = 1;
+          // var premium_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+          if (res_dt.suc > 0) {
+            var table_name = "td_gen_ins",
+              fields = `form_status = 'A',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+              values = null,
+              whr = `form_no = '${data.formNo}'`,
+              flag = 1;
+            var approve_dt = await db_Insert(
+              table_name,
+              fields,
+              values,
+              whr,
+              flag
+            );
+
+            var table_name = "td_transactions",
+              fields = `approval_status = 'A', approved_by = '${data.user}',approved_dt = '${datetime}'`,
+              values = null,
+              whr = `form_no = '${data.formNo}'`,
+              flag = 1;
+            var approval_dt_st = await db_Insert(
+              table_name,
+              fields,
+              values,
+              whr,
+              flag
+            );
+
+            // WHATSAPP MESSAGE //
+            try {
+              var select = "msg, domain",
+                table_name = "md_whatsapp_msg",
+                whr = `msg_for = 'Accept'`,
+                order = null;
+              var msg_dt = await db_Select(select, table_name, whr, order);
+              var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+                domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+              wpMsg = wpMsg
+                .replace("{user_name}", data.member)
+                .replace("{form_no}", data.formNo)
+                .replace("{status}", formStatus[data.status])
+                .replace("{remarks}", data.reject);
+              var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+            } catch (err) {
+              console.log(err);
+            }
+            // END //
+
+            resolve(approval_dt_st);
+          } else {
+            resolve({ suc: 0, msg: "Voucher Not Saved" });
+          }
+        } else {
+          resolve(voucher_res);
+        }
+      }
     });
   },
 };
