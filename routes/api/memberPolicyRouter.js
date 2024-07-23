@@ -88,7 +88,7 @@ memberPolicyRouter.post("/update_member_policy_dtls", async (req, res) => {
 memberPolicyRouter.post("/member_gmp_policy_dtls", async (req, res) => {
   var data = req.body;
   var select =
-      "a.form_no,a.member_id,a.association,a.memb_name,a.policy_holder_type,b.unit_name",
+      "a.form_no,a.member_id,a.association,a.memb_oprn,a.memb_name,a.policy_holder_type,b.unit_name",
     table_name = "td_gen_ins a, md_unit b",
     whr = `a.association = b.unit_id`;
   order = null;

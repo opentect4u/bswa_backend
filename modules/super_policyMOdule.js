@@ -41,13 +41,13 @@ module.exports = {
 
       if (data.checkedmember) {
         fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,phone_no,min_no,personel_no,mem_address,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,form_status,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','${data.fin_yr}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
+        values = `('${form_no}','${data.form_dt}','${data.fin_yr}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
         table_name = "td_stp_ins";
         whr = null;
         order = null;
       } else {
         fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,phone_no,min_no,personel_no,mem_address,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,form_status,created_by,created_at)`;
-        values = `('${form_no}','${datetime}','${data.fin_yr}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
+        values = `('${form_no}','${data.form_dt}','${data.fin_yr}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
         table_name = "td_stp_ins";
         whr = null;
         order = null;

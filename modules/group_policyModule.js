@@ -399,13 +399,16 @@ module.exports = {
       // var res_dt = await db_Insert(table_name, fields, values, where, flag);
 
       var table_name = "td_transactions",
-        fields = `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+        fields =
+          data.trn_id > 0
+            ? `trn_dt = '${data.form_dt}',premium_amt = '${data.pre_amt}', tot_amt = '${data.pre_amt}', pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+            : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
         values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.pre_amt}','${data.pre_amt}','${data.payment}','${data.receipt_no}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','U','${data.user}','${datetime}')`,
-        where = null,
-        flag = 0;
-      var trn_dt = await db_Insert(table_name, fields, values, where, flag);
+        where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
+        flag = data.trn_id > 0 ? 1 : 0;
+      var trn_data = await db_Insert(table_name, fields, values, where, flag);
 
-      if (trn_dt.suc > 0) {
+      if (trn_data.suc > 0) {
         var table_name1 = "td_gen_ins",
           fields1 = `ins_period = 'Y',form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
           values1 = null,
@@ -418,7 +421,7 @@ module.exports = {
           whr1,
           flag1
         );
-        trn_dt["trn_id"] = trn_id;
+        trn_data["trn_id"] = trn_id;
       }
 
       try {
@@ -471,7 +474,7 @@ module.exports = {
       }
       // END //
 
-      resolve(trn_dt);
+      resolve(trn_data);
     });
   },
 
