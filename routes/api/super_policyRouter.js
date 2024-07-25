@@ -10,24 +10,38 @@ const {
 
 const super_policyRouter = express.Router();
 
+// super_policyRouter.get("/get_member_policy_super", async (req, res) => {
+//   var data = req.query;
+//   // console.log(data, "hhhh");
+//   var select =
+//       "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
+//     // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no",
+//     table_name = "md_member a, md_dependent b",
+//     // whr = `a.form_no = b.form_no
+//     // AND a.member_id ='${data.member_id}'`,
+//     whr = `a.form_no = b. form_no 
+//     AND a.member_id = b.member_id
+//     AND a.mem_type = b.mem_type
+//     AND a.member_id ='${data.member_id}'`,
+//     order = null;
+//   var res_dt = await db_Select(select, table_name, whr, order);
+//   // console.log(res_dt, "kiki");
+//   res.send(res_dt);
+// });
+
+
 super_policyRouter.get("/get_member_policy_super", async (req, res) => {
-  var data = req.query;
-  // console.log(data, "hhhh");
-  var select =
-      "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-    // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no",
-    table_name = "md_member a, md_dependent b",
-    // whr = `a.form_no = b.form_no
-    // AND a.member_id ='${data.member_id}'`,
-    whr = `a.form_no = b. form_no 
-    AND a.member_id = b.member_id
-    AND a.mem_type = b.mem_type
-    AND a.member_id ='${data.member_id}'`,
-    order = null;
-  var res_dt = await db_Select(select, table_name, whr, order);
-  // console.log(res_dt, "kiki");
-  res.send(res_dt);
-});
+    var data = req.query;
+    // console.log(data, "hhhh");
+    var select =
+        "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
+      table_name = "md_member a LEFT JOIN md_dependent b ON a.form_no = b.form_no AND a.member_id = b.member_id AND a.mem_type = b.mem_type",
+      whr = `a.member_id ='${data.member_id}'`,
+      order = null;
+    var res_dt = await db_Select(select, table_name, whr, order);
+    // console.log(res_dt, "kiki");
+    res.send(res_dt);
+  });
 
 // super_policyRouter.get("/get_super_dependent", async (req, res) => {
 //   var data = req.query;
