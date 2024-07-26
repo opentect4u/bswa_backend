@@ -1,6 +1,10 @@
 const express = require("express");
 const dateFormat = require("dateformat");
-const { db_Select, getCurrFinYear } = require("../../modules/MasterModule");
+const {
+  db_Select,
+  getCurrFinYear,
+  WIFE_ID,
+} = require("../../modules/MasterModule");
 const {
   super_form_save,
   reject_dt,
@@ -19,7 +23,7 @@ const super_policyRouter = express.Router();
 //     table_name = "md_member a, md_dependent b",
 //     // whr = `a.form_no = b.form_no
 //     // AND a.member_id ='${data.member_id}'`,
-//     whr = `a.form_no = b. form_no 
+//     whr = `a.form_no = b. form_no
 //     AND a.member_id = b.member_id
 //     AND a.mem_type = b.mem_type
 //     AND a.member_id ='${data.member_id}'`,
@@ -29,19 +33,48 @@ const super_policyRouter = express.Router();
 //   res.send(res_dt);
 // });
 
-
 super_policyRouter.get("/get_member_policy_super", async (req, res) => {
-    var data = req.query;
-    // console.log(data, "hhhh");
+  var data = req.query;
+  // var select =
+  //     "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
+  //   table_name =
+  //     "md_member a LEFT JOIN md_dependent b ON a.form_no = b.form_no AND a.member_id = b.member_id AND a.mem_type = b.mem_type",
+  //   whr = `a.member_id ='${data.member_id}'`,
+  //   order = null;
+  // var res_dt = await db_Select(select, table_name, whr, order);
+
+  var select = "member_id",
+    table_name = "td_stp_ins",
+    whr = `member_id = '${data.member_id}'`,
+    order = null;
+  var dt = await db_Select(select, table_name, whr, order);
+
+  if (dt.suc > 0 && dt.msg.length == 0) {
     var select =
-        "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-      table_name = "md_member a LEFT JOIN md_dependent b ON a.form_no = b.form_no AND a.member_id = b.member_id AND a.mem_type = b.mem_type",
-      whr = `a.member_id ='${data.member_id}'`,
+        "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no",
+      table_name = "md_member a",
+      whr = `a.member_id = '${data.member_id}'`,
       order = null;
     var res_dt = await db_Select(select, table_name, whr, order);
-    // console.log(res_dt, "kiki");
-    res.send(res_dt);
-  });
+
+    if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+      var select =
+          "b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
+        table_name = "md_dependent b",
+        whr = `b.member_id = '${data.member_id}' AND b.relation IN (${WIFE_ID})`,
+        order = null;
+      var spou_dt = await db_Select(select, table_name, whr, order);
+      res_dt.msg[0]["spou_dt"] =
+        spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : [];
+
+      res.send(res_dt);
+    } else {
+      res.send({ suc: 0, msg: "Member details not found" });
+    }
+  } else {
+    res.send({ suc: 2, msg: "Member already exists" });
+  }
+});
 
 // super_policyRouter.get("/get_super_dependent", async (req, res) => {
 //   var data = req.query;
