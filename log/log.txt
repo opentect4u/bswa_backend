@@ -1188,3 +1188,150 @@
 [EVENT]   : [18-Jul-24 10:36:44] : Exicuting Insert Statement for table md_user 
 [MESSAGE] : [18-Jul-24 10:36:44] : Error: ER_DUP_ENTRY: Duplicate entry 'G-393' for key 'PRIMARY' 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:05:06] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:05:06] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:05:13] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:05:13] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:05:26] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:05:26] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:05:46] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:05:46] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:06:05] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:06:05] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:06:30] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:06:30] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 09:06:38] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 09:06:38] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 10:08:15] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [19-Jul-24 10:08:15] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 10:08:15] : Exicuting Select Statement from table td_transactions a JOIN td_gen_ins b ON a.form_no = b.form_no LEFT JOIN md_unit c ON b.association = c.unit_id 
+[MESSAGE] : [19-Jul-24 10:08:15] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 10:08:16] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [19-Jul-24 10:08:16] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 10:09:15] : Exicuting Select Statement from table td_gen_ins a 
+[MESSAGE] : [19-Jul-24 10:09:15] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 10:32:06] : Exicuting Update Statement for table td_premium_dtls 
+[MESSAGE] : [19-Jul-24 10:32:06] : Error: ER_BAD_FIELD_ERROR: Unknown column 'approval_status' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 11:39:27] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [19-Jul-24 11:39:27] : Error: ER_DUP_ENTRY: Duplicate entry 'GP2024000012-0000-00-00 00:00:00' for key 'PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 16:58:05] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jul-24 16:58:05] : Error: ER_DUP_ENTRY: Duplicate entry 'G-252-GP' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 17:16:57] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [19-Jul-24 17:16:57] : Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'trn_dt = '2024-07-17',premium_amt = '46850',tot_amt = ''46850',pay_mode = 'Q'...' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 17:25:56] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jul-24 17:25:56] : Error: ER_DUP_ENTRY: Duplicate entry 'G-395-GP' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [19-Jul-24 17:26:52] : Exicuting Insert Statement for table td_gen_ins 
+[MESSAGE] : [19-Jul-24 17:26:52] : Error: ER_DUP_ENTRY: Duplicate entry 'G-396-GP' for key 'member_id' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:36:41] : Exicuting Select Statement from table md_bank 
+[MESSAGE] : [24-Jul-24 10:36:41] : {"errno":-4077,"code":"ECONNRESET","syscall":"read","fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:36:41] : Exicuting Select Statement from table md_member_fees 
+[MESSAGE] : [24-Jul-24 10:36:41] : {"errno":-4077,"code":"ECONNRESET","syscall":"read","fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:36:41] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 10:36:41] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:36:41] : Exicuting Select Statement from table md_member_fees 
+[MESSAGE] : [24-Jul-24 10:36:41] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:37:02] : Exicuting Select Statement from table md_member a 
+    JOIN md_member_fees c ON a.mem_type = c.memb_type AND date(c.effective_dt) = (SELECT max(date(d.effective_dt))
+    FROM md_member_fees d
+    WHERE a.mem_type = d.memb_type)
+    LEFT JOIN md_unit d ON a.unit_id = d.unit_id 
+[MESSAGE] : [24-Jul-24 10:37:02] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:37:02] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [24-Jul-24 10:37:02] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:37:02] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [24-Jul-24 10:37:02] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:37:02] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 10:37:02] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:39:50] : Exicuting Select Statement from table md_member a 
+    JOIN md_member_fees c ON a.mem_type = c.memb_type AND date(c.effective_dt) = (SELECT max(date(d.effective_dt))
+    FROM md_member_fees d
+    WHERE a.mem_type = d.memb_type)
+    LEFT JOIN md_unit d ON a.unit_id = d.unit_id 
+[MESSAGE] : [24-Jul-24 10:39:50] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:39:51] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 10:39:51] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:39:51] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [24-Jul-24 10:39:51] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:39:51] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [24-Jul-24 10:39:51] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:40:04] : Exicuting Select Statement from table md_member a 
+    JOIN md_member_fees c ON a.mem_type = c.memb_type AND date(c.effective_dt) = (SELECT max(date(d.effective_dt))
+    FROM md_member_fees d
+    WHERE a.mem_type = d.memb_type)
+    LEFT JOIN md_unit d ON a.unit_id = d.unit_id 
+[MESSAGE] : [24-Jul-24 10:40:04] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:40:04] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [24-Jul-24 10:40:04] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:40:04] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 10:40:04] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:40:04] : Exicuting Select Statement from table md_dependent a, md_relationship b 
+[MESSAGE] : [24-Jul-24 10:40:04] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:42:10] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [24-Jul-24 10:42:10] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:42:14] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [24-Jul-24 10:42:14] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 10:42:27] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [24-Jul-24 10:42:27] : {"errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"::1","port":3306,"fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:18:56] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 18:18:56] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'remarks' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, remarks FROM td_transactions WHERE form_no = 'AI2024000008' AND approval_status = 'U' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:19:38] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 18:19:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'remarks' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, remarks FROM td_transactions WHERE form_no = 'AI2024000008' AND approval_status = 'U' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:19:45] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 18:19:45] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'remarks' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, remarks FROM td_transactions WHERE form_no = 'AI2024000008' AND approval_status = 'U' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:24:36] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 18:24:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'remarks' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, remarks FROM td_transactions WHERE form_no = 'AI2024000008' AND approval_status = 'U' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:24:47] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 18:24:47] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'remarks' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, remarks FROM td_transactions WHERE form_no = 'AI2024000008' AND approval_status = 'U' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:25:06] : Exicuting Select Statement from table td_transactions 
+[MESSAGE] : [24-Jul-24 18:25:06] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'remarks' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, remarks FROM td_transactions WHERE form_no = 'AI2024000008' AND approval_status = 'U' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jul-24 18:34:50] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [24-Jul-24 18:34:50] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-Jul-24 15:22:46] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [25-Jul-24 15:22:46] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlMessage":"FUNCTION sail.default_amt does not exist","sqlState":"42000","index":0,"sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'L' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jul-24 14:51:07] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [27-Jul-24 14:51:07] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'member_type' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT mem_type FROM md_member WHERE member_type = 'AI' "} 
+------------------------------------------------------------------------------------------------------------

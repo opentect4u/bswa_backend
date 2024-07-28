@@ -62,7 +62,7 @@ memberPolicyRouter.post("/update_member_policy_dtls", async (req, res) => {
       var table_name = "td_stp_dtls",
         fields =
           dt.sl_no > 0
-            ? `fin_year = '${dt.fin_year}',
+            ? `ind_type = '${dt.ind_type}',fin_year = '${dt.fin_year}',
      amount = '${dt.amount}', particulars = '${dt.particulars}', treatment_dtls = '${dt.treatment_dtls}',
      modified_by = '${data.user}', modified_at = '${datetime}'`
             : `(form_no,sl_no,ind_type,fin_year,amount,particulars,treatment_dtls,created_by,created_at)`,

@@ -43,6 +43,15 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
   //   order = null;
   // var res_dt = await db_Select(select, table_name, whr, order);
 
+  // var select = "mem_type",
+  //   table_name = "md_member",
+  //   whr = `member_type = 'AI'`,
+  //   order = null;
+  // var member_type = await db_Select(select, table_name, whr, order);
+
+  // if (member_type.suc.length > 0) {
+  //   res.send({ suc: 3, msg: "AI members are not allowed" });
+  // } else {
   var select = "member_id",
     table_name = "td_stp_ins",
     whr = `member_id = '${data.member_id}'`,
@@ -74,6 +83,7 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
   } else {
     res.send({ suc: 2, msg: "Member already exists" });
   }
+  // }
 });
 
 // super_policyRouter.get("/get_super_dependent", async (req, res) => {
