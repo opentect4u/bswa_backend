@@ -388,7 +388,8 @@ module.exports = {
       let year = dateFormat(new Date(), "yyyy");
 
       const no = await getMaxTrnId();
-      let trn_id = `${year}${no.msg[0].max_trn_id}`;
+      let trn_id =
+        data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
       console.log(trn_id, "pppp");
 
       // var table_name = "td_premium_dtls",
@@ -401,10 +402,38 @@ module.exports = {
       var table_name = "td_transactions",
         fields =
           data.trn_id > 0
-            ? `trn_dt = '${data.form_dt}',premium_amt = '${data.pre_amt}', tot_amt = '${data.pre_amt}', pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+            ? `trn_dt = '${data.form_dt}',premium_amt = '${
+                data.pre_amt
+              }', tot_amt = '${data.pre_amt}', pay_mode = '${
+                data.payment
+              }',receipt_no = '${
+                data.payment == "C" ? data.receipt_no : ""
+              }',chq_no = '${
+                data.payment == "Q" ? data.cheque_no : ""
+              }',chq_dt = '${
+                data.payment == "Q" ? data.cheque_dt : ""
+              }',chq_bank = '${
+                data.payment == "Q"
+                  ? data.bank_name
+                  : data.payment == "O"
+                  ? "75"
+                  : "16"
+              }',modified_by = '${data.user}',modified_at = '${datetime}'`
             : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
-        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.pre_amt}','${data.pre_amt}','${data.payment}','${data.receipt_no}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','U','${data.user}','${datetime}')`,
-        where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
+        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${
+          data.pre_amt
+        }','${data.pre_amt}','${data.payment}','${
+          data.payment == "C" ? data.receipt_no : ""
+        }','${data.payment == "Q" ? data.cheque_no : ""}','${
+          data.payment == "Q" ? data.cheque_dt : ""
+        }','${
+          data.payment == "Q"
+            ? data.bank_name
+            : data.payment == "O"
+            ? "75"
+            : "16"
+        }','U','${data.user}','${datetime}')`,
+        where = data.trn_id > 0 ? `form_no = '${data.formNo}'` : null,
         flag = data.trn_id > 0 ? 1 : 0;
       var trn_data = await db_Insert(table_name, fields, values, where, flag);
 
@@ -422,6 +451,7 @@ module.exports = {
           flag1
         );
         trn_data["trn_id"] = trn_id;
+        console.log(accept_dt, "accept");
       }
 
       try {

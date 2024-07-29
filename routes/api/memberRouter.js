@@ -207,4 +207,32 @@ memberRouter.post("/user_tnx_details", async (req, res) => {
   res.send(res_dt);
 });
 
+memberRouter.post("/insurance_dtls", async (req, res) => {
+  var data = req.body;
+  // console.log(data, "log");
+
+  var select = "*",
+    table_name = "td_stp_ins",
+    whr = `member_id = '${data.mem_id}'`,
+    order = `ORDER BY form_dt DESC LIMIT 1`;
+  var stp_dt = await db_Select(select, table_name, whr, order);
+
+  var select = "*",
+    table_name = "td_gen_ins",
+    whr = `member_id = '${data.mem_id}'`,
+    order = `ORDER BY form_dt DESC LIMIT 1`;
+  var gmp_dt = await db_Select(select, table_name, whr, order);
+
+  // stp_dt.suc > 0 ? (stp_dt.msg.length > 0 ? stp_dt.msg : []) : [];
+  // gmp_dt.suc > 0 ? (gmp_dt.msg.length > 0 ? gmp_dt.msg : []) : [];
+
+  if (stp_dt.msg.length > 0) {
+    var ins_dt = stp_dt;
+  } else {
+    var ins_dt = gmp_dt;
+  }
+
+  res.send(ins_dt);
+});
+
 module.exports = { memberRouter };

@@ -18,31 +18,45 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
     res_dt;
   console.log(data, "hhhh");
   // if (data.checkedmember) {
-  var select =
-      // "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name",
-      "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-    table_name = "md_member a",
-    // whr = `a.unit_id = b.unit_id
-    // AND a.member_id ='${data.member_id}'`,
-    whr = `member_id ='${data.member_id}'`,
+
+  var select = "member_id",
+    table_name = "td_stp_ins",
+    whr = `member_id = '${data.member_id}'`,
     order = null;
-  res_dt = await db_Select(select, table_name, whr, order);
+  var exists_dt = await db_Select(select, table_name, whr, order);
 
-  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+  if (exists_dt.suc > 0 && exists_dt.msg.length == 0) {
     var select =
-        "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
-      table_name = "md_premium_type",
-      whr =
-        res_dt.msg[0].mem_type != "AI"
-          ? `family_catg ='${res_dt.msg[0].memb_oprn}'`
-          : null,
+        // "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name",
+        "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+      table_name = "md_member a",
+      // whr = `a.unit_id = b.unit_id
+      // AND a.member_id ='${data.member_id}'`,
+      whr = `a.member_id ='${data.member_id}'`,
       order = null;
-    var pre_dt = await db_Select(select, table_name, whr, order);
-    res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
-  }
+    res_dt = await db_Select(select, table_name, whr, order);
 
-  console.log(res_dt, "kiki");
-  res.send(res_dt);
+    if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+      var select =
+          "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
+        table_name = "md_premium_type",
+        whr =
+          res_dt.msg[0].mem_type != "AI"
+            ? `family_catg ='${res_dt.msg[0].memb_oprn}'`
+            : null,
+        order = null;
+      var pre_dt = await db_Select(select, table_name, whr, order);
+      res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
+
+      res.send(res_dt);
+    } else {
+      res.send({ suc: 0, msg: "Member details not found" });
+    }
+
+    // console.log(res_dt, "kiki");
+  } else {
+    res.send({ suc: 2, msg: "Member already has an Insurance in STP policy" });
+  }
 });
 
 group_policyRouter.get("/get_member_policy_print", async (req, res) => {
@@ -59,19 +73,19 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
   if (chk_dt.suc > 0 && chk_dt.msg.length > 0) {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
-        // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,b.unit_name";
-      (table_name = "td_gen_ins a, md_unit b"),
-        (whr = `a.association = b.unit_id
-        AND a.member_id ='${data.member_id}'`),
-        (order = null);
+          // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+          "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,b.unit_name",
+        table_name =
+          "td_gen_ins a LEFT JOIN md_unit b ON a.association = b.unit_id",
+        whr = `a.member_id ='${data.member_id}'`,
+        order = null;
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
       var select =
           "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,b.unit_name",
-        table_name = "td_gen_ins a, md_unit b",
-        whr = `a.association = b.unit_id
-        AND a.member_id ='${data.member_id}'`,
+        table_name =
+          "td_gen_ins a LEFT JOIN md_unit b ON a.association = b.unit_id",
+        whr = `a.member_id ='${data.member_id}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
     }
@@ -101,7 +115,7 @@ group_policyRouter.get("/get_member_policy_dependent", async (req, res) => {
       "a.sl_no,a.dependent_name,a.relation,a.dob,a.member_id,b.relation_name",
     table_name = "md_dependent a, md_relationship b",
     whr = `a.relation = b.id
-      AND a.member_id ='${data.member_id}'`,
+      AND a.member_id ='${data.member_id}' AND a.intro_member_id IS null`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "mimi");
@@ -313,7 +327,7 @@ group_policyRouter.get("/get_gmp_transaction", async (req, res) => {
   // var select =
   //     "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
   var select =
-      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.trn_dt,b.premium_amt,b.pay_mode,b.receipt_no,b.chq_no,b.chq_dt,b.chq_bank",
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.trn_dt,b.premium_amt,b.pay_mode,b.receipt_no,b.chq_no,b.chq_dt,b.chq_bank,b.trn_id",
     table_name = "td_gen_ins a, td_transactions b",
     whr = `a.form_no = b.form_no 
     AND a.form_no ='${data.form_no}'`,
