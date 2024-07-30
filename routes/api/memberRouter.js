@@ -210,11 +210,12 @@ memberRouter.post("/insurance_dtls", async (req, res) => {
   var data = req.body;
   // console.log(data, "log");
 
-  var select = "a.*,b.unit_name",
+  var select =
+      "a.*,b.sl_no,b.ind_type,b.fin_year,b.particulars,b.amount,b.treatment_dtls,c.unit_name",
     table_name =
-      "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id",
+      "td_stp_ins a LEFT JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON a.association = c.unit_id",
     whr = `a.member_id = '${data.mem_id}'`,
-    order = `ORDER BY form_dt DESC LIMIT 1`;
+    order = `ORDER BY form_dt DESC`;
   var stp_dt = await db_Select(select, table_name, whr, order);
 
   var select = "a.*,b.unit_name",
