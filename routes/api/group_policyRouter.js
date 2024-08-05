@@ -20,8 +20,15 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   // if (data.checkedmember) {
 
   var select = "member_id",
+  table_name = "td_gen_ins",
+  whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
+  order = null;
+  var gmp_exists_dt = await db_Select(select, table_name, whr, order);
+
+  if (gmp_exists_dt.suc > 0 && gmp_exists_dt.msg.length == 0) {
+    var select = "member_id",
     table_name = "td_stp_ins",
-    whr = `member_id = '${data.member_id}'`,
+    whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
     order = null;
   var exists_dt = await db_Select(select, table_name, whr, order);
 
@@ -57,6 +64,48 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   } else {
     res.send({ suc: 2, msg: "Member already has an Insurance in STP policy" });
   }
+  } else {
+    res.send({ suc: 3, msg: "Member already has an Insurance in GMP policy" });
+  }
+
+  // var select = "member_id",
+  //   table_name = "td_stp_ins",
+  //   whr = `member_id = '${data.member_id}'`,
+  //   order = null;
+  // var exists_dt = await db_Select(select, table_name, whr, order);
+
+  // if (exists_dt.suc > 0 && exists_dt.msg.length == 0) {
+  //   var select =
+  //       // "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name",
+  //       "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+  //     table_name = "md_member a",
+  //     // whr = `a.unit_id = b.unit_id
+  //     // AND a.member_id ='${data.member_id}'`,
+  //     whr = `a.member_id ='${data.member_id}'`,
+  //     order = null;
+  //   res_dt = await db_Select(select, table_name, whr, order);
+
+  //   if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+  //     var select =
+  //         "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
+  //       table_name = "md_premium_type",
+  //       whr =
+  //         res_dt.msg[0].mem_type != "AI"
+  //           ? `family_catg ='${res_dt.msg[0].memb_oprn}'`
+  //           : null,
+  //       order = null;
+  //     var pre_dt = await db_Select(select, table_name, whr, order);
+  //     res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
+
+  //     res.send(res_dt);
+  //   } else {
+  //     res.send({ suc: 0, msg: "Member details not found" });
+  //   }
+
+  //   // console.log(res_dt, "kiki");
+  // } else {
+  //   res.send({ suc: 2, msg: "Member already has an Insurance in STP policy" });
+  // }
 });
 
 group_policyRouter.get("/get_member_policy_print", async (req, res) => {
