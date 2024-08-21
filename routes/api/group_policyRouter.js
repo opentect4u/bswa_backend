@@ -16,7 +16,7 @@ const group_policyRouter = express.Router();
 group_policyRouter.get("/get_member_policy", async (req, res) => {
   var data = req.query,
     res_dt;
-  console.log(data, "hhhh");
+  // console.log(data, "hhhh");
   // if (data.checkedmember) {
 
   var select = "member_id",
@@ -111,14 +111,14 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
 group_policyRouter.get("/get_member_policy_print", async (req, res) => {
   var data = req.query,
     res_dt;
-  console.log(data, "hhhh");
+  // console.log(data, "hhhh");
   // if (data.checkedmember) {
   var select = "policy_holder_type",
     table_name = "td_gen_ins",
     where = `member_id = '${data.member_id}'`,
     order = null;
   var chk_dt = await db_Select(select, table_name, where, order);
-  console.log(chk_dt, "chk_dt");
+  // console.log(chk_dt, "chk_dt");
   if (chk_dt.suc > 0 && chk_dt.msg.length > 0) {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
@@ -153,7 +153,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
   }
 
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
@@ -190,23 +190,23 @@ group_policyRouter.get(
 
 group_policyRouter.post("/save_group_policy_form", async (req, res) => {
   var data = req.body;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var save_gen = await group_policy_form_save(data);
-  console.log(save_gen, "aaa");
+  // console.log(save_gen, "aaa");
   res.send(save_gen);
 });
 
 group_policyRouter.post("/save_child_group_policy_form", async (req, res) => {
   var data = req.body;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var save_gen = await group_policy_form_save_child(data);
-  console.log(save_gen, "aaa");
+  // console.log(save_gen, "aaa");
   res.send(save_gen);
 });
 
 group_policyRouter.get("/frm_list_policy_group", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   // if (data.checkedmember) {
   var select = "a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status",
     table_name = "td_gen_ins a",
@@ -222,13 +222,13 @@ group_policyRouter.get("/frm_list_policy_group", async (req, res) => {
   //     order = null;
   // }
   var res_dt_1 = await db_Select(select, table_name, whr, order);
-  console.log(res_dt_1, "kiki");
+  // console.log(res_dt_1, "kiki");
   res.send(res_dt_1);
 });
 
 group_policyRouter.get("/frm_list_policy_group_2", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   // if (data.checkedmember) {
   var select = "a.form_no,a.form_dt, a.member_id,a.memb_name,a.form_status",
     table_name = "td_gen_ins a",
@@ -243,7 +243,7 @@ group_policyRouter.get("/frm_list_policy_group_2", async (req, res) => {
   //     order = null;
   // }
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
@@ -256,28 +256,28 @@ group_policyRouter.post("/reject_group_policy", async (req, res) => {
 
 group_policyRouter.post("/payment_accept_group", async (req, res) => {
   var data = req.body;
-  console.log(data, "accept");
+  // console.log(data, "accept");
   var res_dt = await accept_dt_cash(data);
   res.send(res_dt);
 });
 
 group_policyRouter.post("/payment_accept_cheque_group", async (req, res) => {
   var data = req.body;
-  console.log(data, "accept_cheque");
+  // console.log(data, "accept_cheque");
   var res_dt = await accept_dt_cheque(data);
   res.send(res_dt);
 });
 
 group_policyRouter.post("/save_trn_data_gmp", async (req, res) => {
   var data = req.body;
-  console.log(data, "trn_data");
+  // console.log(data, "trn_data");
   var res_dt = await save_gmp_data(data);
   res.send(res_dt);
 });
 
 group_policyRouter.get("/transaction_dt_group", async (req, res) => {
   var data = req.query;
-  console.log(data);
+  // console.log(data);
   var select =
       "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.ins_period,b.association,b.memb_name,b.member_id,b.resolution_no,b.resolution_dt",
     // table_name =
@@ -287,13 +287,13 @@ group_policyRouter.get("/transaction_dt_group", async (req, res) => {
     AND b.form_status = 'T'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mini");
+  // console.log(res_dt, "mini");
   res.send(res_dt);
 });
 
 group_policyRouter.get("/view_grp_trn_dt", async (req, res) => {
   var data = req.query;
-  console.log(data);
+  // console.log(data);
   var select =
       "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.chq_no,a.chq_dt,a.chq_bank,b.policy_holder_type,b.member_id,b.association,b.memb_type,b.memb_oprn,b.memb_name,b.phone,b.sex,b.dob,b.ins_period,b.form_status,b.remarks,b.resolution_no,b.resolution_dt,c.unit_name",
     table_name =
@@ -302,13 +302,13 @@ group_policyRouter.get("/view_grp_trn_dt", async (req, res) => {
     ${data.form_no ? `AND a.form_no = '${data.form_no}'` : ""}`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mini");
+  // console.log(res_dt, "mini");
   res.send(res_dt);
 });
 
 group_policyRouter.post("/approve_group", async (req, res) => {
   var data = req.body;
-  console.log(data, "1111");
+  // console.log(data, "1111");
   var res_dt = await approve_dt(data);
   res.send(res_dt);
 });
@@ -325,7 +325,7 @@ group_policyRouter.get("/group_name_list", async (req, res) => {
 
 group_policyRouter.get("/premium_dtls", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select =
       "a.form_no,a.premium_amt,a.premium_amt2,a.prm_flag2,a.premium_amt3,a.prm_flag3,b.family_type",
     table_name = "td_premium_dtls a, md_premium_type b",
@@ -333,7 +333,7 @@ group_policyRouter.get("/premium_dtls", async (req, res) => {
           AND a.form_no = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
@@ -372,7 +372,7 @@ group_policyRouter.get("/get_gen_ins_dt", async (req, res) => {
 
 group_policyRouter.get("/get_gmp_transaction", async (req, res) => {
   var data = req.query;
-  console.log(data, "hhhh");
+  // console.log(data, "hhhh");
   // var select =
   //     "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
   var select =
@@ -382,7 +382,7 @@ group_policyRouter.get("/get_gmp_transaction", async (req, res) => {
     AND a.form_no ='${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
@@ -394,7 +394,7 @@ group_policyRouter.post("/accept_gmp_money_receipt", async (req, res) => {
     whr = `a.form_no = b.form_no AND a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "lo");
+  // console.log(res_dt, "lo");
   res.send(res_dt);
 });
 
