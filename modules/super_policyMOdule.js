@@ -103,7 +103,6 @@ module.exports = {
 
   reject_dt: (data) => {
     return new Promise(async (resolve, reject) => {
-      console.log(data);
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
         table_name = "td_stp_ins",

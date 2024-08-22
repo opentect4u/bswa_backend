@@ -54,21 +54,12 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
   // } else {
   var select = "member_id",
     table_name = "td_stp_ins",
-    whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
+    whr = `member_id = '${data.member_id}'`,
     order = null;
   var dt = await db_Select(select, table_name, whr, order);
 
   if (dt.suc > 0 && dt.msg.length == 0) {
-       
-      var select = "member_id",
-      table_name = "td_gen_ins",
-      whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
-      order = null;
-      var existsgmp_dt = await db_Select(select, table_name, whr, order);
-
-      if (existsgmp_dt.suc > 0 && existsgmp_dt.msg.length == 0) {
-
-        var select =
+    var select =
         "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no",
       table_name = "md_member a",
       whr = `a.member_id = '${data.member_id}'`,
@@ -90,10 +81,7 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
       res.send({ suc: 0, msg: "Member details not found" });
     }
   } else {
-    res.send({ suc: 2, msg: "Member already has an Insurance in GMP policy" });
-  } 
-  } else {
-    res.send({ suc: 3, msg: "Member already has an Insurance in STP policy" });
+    res.send({ suc: 2, msg: "Member already exists" });
   }
   // }
 });
@@ -185,7 +173,7 @@ super_policyRouter.get("/check_member_id", async (req, res) => {
 
 super_policyRouter.get("/frm_list_policy", async (req, res) => {
   var data = req.query;
-  console.log(data, "mimi");
+  // console.log(data, "mimi");
   // if (data.checkedmember) {
   var select = "form_no,form_dt,member_id,form_status,memb_name, phone_no",
     table_name = "td_stp_ins",
@@ -221,7 +209,7 @@ super_policyRouter.get("/frm_list_policy_2", async (req, res) => {
 
 super_policyRouter.post("/reject_super_topup", async (req, res) => {
   var data = req.body;
-  console.log(data,'reject');
+  // console.log(data,'reject');
   var res_dt = await reject_dt(data);
   res.send(res_dt);
 });

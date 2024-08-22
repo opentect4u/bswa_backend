@@ -2,6 +2,7 @@ const memberRouter = require("express").Router(),
   { db_Select, db_Insert } = require("../../modules/MasterModule"),
   fs = require("fs"),
   path = require("path");
+
 const { dynamicFileUpload } = require("../../modules/general_formModule");
 
 memberRouter.post("/member_dtls", async (req, res) => {
@@ -204,50 +205,6 @@ memberRouter.post("/user_tnx_details", async (req, res) => {
     order = `ORDER BY trn_dt DESC`;
   var res_dt = await db_Select(select, table_name, whr, order);
   res.send(res_dt);
-});
-
-memberRouter.post("/insurance_dtls", async (req, res) => {
-  var data = req.body;
-  // console.log(data, "log");
-
-  var select =
-      "a.*,b.sl_no,b.ind_type,b.fin_year,b.particulars,b.amount,b.treatment_dtls,c.unit_name",
-    table_name =
-      "td_stp_ins a LEFT JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON a.association = c.unit_id",
-    whr = `a.member_id = '${data.mem_id}'`,
-    order = `ORDER BY form_dt DESC`;
-  var stp_dt = await db_Select(select, table_name, whr, order);
-
-  var select = "a.*,b.unit_name",
-    table_name =
-      "td_gen_ins a LEFT JOIN md_unit b ON a.association = b.unit_id",
-    whr = `a.member_id = '${data.mem_id}'`,
-    order = `ORDER BY form_dt DESC LIMIT 1`;
-  var gmp_dt = await db_Select(select, table_name, whr, order);
-
-  var select = "a.*,b.relation_name",
-    table_name =
-      "td_gen_ins_depend a LEFT JOIN md_relationship b ON a.relation = b.id",
-    whr = `a.member_id = '${data.mem_id}'`,
-    order = null;
-  var gmp_depend_dt = await db_Select(select, table_name, whr, order);
-
-  // stp_dt.suc > 0 ? (stp_dt.msg.length > 0 ? stp_dt.msg : []) : [];
-  // gmp_dt.suc > 0 ? (gmp_dt.msg.length > 0 ? gmp_dt.msg : []) : [];
-
-  if (stp_dt.msg.length > 0) {
-    var ins_dt = stp_dt;
-  } else {
-    var ins_dt = gmp_dt;
-  }
-
-  var response = {
-    suc: ins_dt.suc,
-    msg: ins_dt.msg,
-    dependents: gmp_depend_dt.msg,
-  };
-
-  res.send(response);
 });
 
 module.exports = { memberRouter };

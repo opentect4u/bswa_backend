@@ -115,6 +115,7 @@ const dynamicFileUpload = (filePath, fileName, file) => {
 };
 
 module.exports = {
+  dynamicFileUpload,
   associate_form_save: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");

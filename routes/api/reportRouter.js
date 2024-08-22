@@ -55,7 +55,7 @@ reportRouter.get("/clearupto_list_report", async (req, res) => {
                AND b.mem_type = '${data.member_type}'`,
     order = `group by a.member_id,b.mem_type,b.memb_name;`;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mimi");
+  // console.log(res_dt, "mimi");
   res.send(res_dt);
 });
 
@@ -86,7 +86,7 @@ reportRouter.get("/gmp_status_report", async (req, res) => {
     }`),
     (order = null);
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mimi");
+  // console.log(res_dt, "mimi");
   res.send(res_dt);
 });
 
