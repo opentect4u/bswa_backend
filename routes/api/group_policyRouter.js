@@ -117,10 +117,9 @@ group_policyRouter.get(
     var data = req.query;
     // console.log(data, "jjj");
     var select =
-        "a.sl_no,a.dept_name dependent_name,a.relation,a.dob,a.member_id,b.relation_name",
-      table_name = "td_gen_ins_depend a, md_relationship b",
-      whr = `a.relation = b.id
-      AND a.member_id ='${data.member_id}'`,
+        "a.sl_no,a.dept_name dependent_name,a.relation,a.dob,a.dep_img,a.dep_doc,a.member_id,b.relation_name,c.policy_holder_type",
+      table_name = "td_gen_ins_depend a JOIN md_relationship b ON a.relation = b.id LEFT JOIN td_gen_ins c ON a.member_id = c.member_id AND a.form_no = c.form_no",
+      whr = `a.member_id = '${data.member_id}' AND c.policy_holder_type = 'M'`,
       order = null;
     var res_dt = await db_Select(select, table_name, whr, order);
     // console.log(res_dt, "mimi");
@@ -132,13 +131,8 @@ group_policyRouter.post("/save_group_policy_form", async (req, res) => {
   var data = req.body;
   var data1 = req.files;
 
-  console.log(data, "bbb");
-  var save_gen = await group_policy_form_save(data, req.files ? (req.files.own_file ? req.files.own_file : null) : null, req.files ? (req.files.spouse_file ? req.files.spouse_file : null) : null);
-  // var res_dt = await savegenFiles(
-  //   req.files ? (req.files.own_file ? req.files.own_file : null) : null,
-  //   req.files ? (req.files.spouse_file ? req.files.spouse_file : null) : null,
-  //   data
-  // );
+  console.log(data1, "bbb");
+  var save_gen = await group_policy_form_save(data, req.files ? (req.files.own_file ? req.files.own_file : null) : null, req.files ? (req.files.spouse_file ? req.files.spouse_file : null) : null, req.files ? (req.files.own_files ? req.files.own_files : null) : null, req.files ? (req.files.spouse_files ? req.files.spouse_files : null) : null);
   console.log(save_gen, "log");
   res.send(save_gen);
 });
