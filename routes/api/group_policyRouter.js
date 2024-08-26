@@ -20,15 +20,18 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   var data = req.query,
     res_dt;
   // console.log(data, "hhhh");
-  // if (data.checkedmember) {
-  var select =
-      // "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id,b.unit_name",
-      "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-    table_name = "md_member a",
-    // whr = `a.unit_id = b.unit_id
-    // AND a.member_id ='${data.member_id}'`,
-    whr = `member_id ='${data.member_id}'`,
+  var select = "member_id",
+    table_name = "td_gen_ins",
+    whr = `member_id = '${data.member_id}'`,
     order = null;
+  var dt = await db_Select(select, table_name, whr, order);
+  // if (data.checkedmember) {
+  if(dt.suc > 0 && dt.msg.length == 0){
+    var select =
+    "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+    table_name = "md_member a",
+  whr = `a.member_id ='${data.member_id}'`,
+  order = null;
   res_dt = await db_Select(select, table_name, whr, order);
 
   if (res_dt.suc > 0 && res_dt.msg.length > 0) {
@@ -41,11 +44,16 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
           : null,
       order = null;
     var pre_dt = await db_Select(select, table_name, whr, order);
-    res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
+    res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? (pre_dt.msg.length > 0 ? pre_dt.msg : []) : [];
+    res.send(res_dt);
+  }else{
+    res.send({ suc: 0, msg: "Member details not found" });
   }
-
+  } else {
+    res.send({ suc: 2, msg: "Member already exists" });
+  }
   // console.log(res_dt, "kiki");
-  res.send(res_dt);
+  //
 });
 
 group_policyRouter.get("/get_member_policy_print", async (req, res) => {
