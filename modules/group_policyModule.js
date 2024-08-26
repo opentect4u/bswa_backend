@@ -83,8 +83,11 @@ const savegenFiles= (file, fileType, form_no) => {
 module.exports = {
  
   group_policy_form_save: (data, ownDocFile, ownAadFile, depDocFile, depAadFile) => {
+    console.log(data,'gdata');
     return new Promise(async (resolve, reject) => {
-      var depDocFileName = []
+      var depDocFileName = [];
+      var depAddFileName = [];
+
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy"), ownDocFilePath = '', ownAddFilePath = '', depDocFilePath = '', depAddFilePath = '' ;;
 
@@ -95,6 +98,14 @@ module.exports = {
       let sl_no = await getMaxSlNo(form_no);
       sl_no = sl_no.suc > 0 ? sl_no.msg[0].sl_no : 1;
       // console.log(sl_no,'sl');
+
+      const tr_id = await getMaxTrnId();
+      let trn_id =
+        data.trn_id > 0 ? data.trn_id : `${year}${tr_id.msg[0].max_trn_id}`;
+      console.log(trn_id, "pppp");
+
+      var tot_amt = Number(data.pre_amont) + Number(data.sup_top_up);
+      // console.log(tot_amt,'amt');
 
       if(ownDocFile){
         var fileRes = await savegenFiles(ownDocFile, 'OWN', form_no)
@@ -120,6 +131,19 @@ module.exports = {
         }
       }
 
+      if (depAadFile) {
+    if (Array.isArray(depDocFile)) {
+        for (let dt of depDocFile) {
+            var fileRes = await savegenFiles(dt, 'DEP_AADH', form_no);
+            depAddFilePath = fileRes.suc > 0 ? fileRes.msg : '';
+            depAddFileName.push({fileName: depAddFilePath});
+        }
+    } else {
+        var fileRes = await savegenFiles(depDocFile, 'DEP_AADH', form_no);
+        depAddFilePath = fileRes.suc > 0 ? fileRes.msg : '';
+        depAddFileName.push({fileName: depAddFilePath});
+    }
+}
       // if(depAadFile){
       //   var fileRes = await savegenFiles(depAadFile, 'DEP_AADH', form_no)
       //   depAddFilePath = fileRes.suc > 0 ? fileRes.msg : ''
@@ -132,7 +156,7 @@ module.exports = {
           ? ",premium_amt3,prm_flag3"
           : ""
       },created_by,created_at)`;
-      values = `('${form_no}','0000-00-00','${data.grp_name}','${data.pre_amont}' ${
+      values = `('${form_no}','${datetime}','${data.grp_name}','${data.pre_amont}' ${
         data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
           ? `,${data.sup_top_up},'Y'`
           : ""
@@ -161,8 +185,8 @@ module.exports = {
         // if (data.checkedmember) {
           var i = 0
           for (let dt of JSON.parse(data.dependent_dt)) {
-            fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depDocFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;
-            values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases}','${dt.name_diseases}','${dt.dob}' ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''} ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''},'${data.member}','${datetime}')`;
+            fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depAddFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;
+            values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases}','${dt.name_diseases}','${dt.dob}' ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''} ${depAddFileName.length > i && depAddFileName[i].fileName ? `, '${depAddFileName[i].fileName}'` : ''},'${data.member}','${datetime}')`;
             table_name = "td_gen_ins_depend";
             whr = null;
             order = null;
@@ -178,6 +202,14 @@ module.exports = {
 
             i++
           }
+          var table_name = "td_transactions",
+          fields =`(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,created_by,created_at)`,
+          values = `('${form_no}','${datetime}','${trn_id}','0','0','0','0','${tot_amt}','${
+            tot_amt
+          }','${data.user}','${datetime}')`,
+          where = null,
+          flag = 0;
+        var res_dt = await db_Insert(table_name, fields, values, where, flag);
         // } else {
         //   for (let dt of data.dependent_dt) {
         //     fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depAddFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;
@@ -198,6 +230,10 @@ module.exports = {
       }
         // policy_dependent_dt["form_no"] = form_no;
       // console.log(policy_dependent_dt, "gggg");
+
+      // if(policy_dependent_dt && policy_dependent_dt.suc > 0){
+       
+      // }
 
       // WHATSAPP MESSAGE //
       try {

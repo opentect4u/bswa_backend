@@ -21,37 +21,49 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
     res_dt;
   // console.log(data, "hhhh");
   var select = "member_id",
-    table_name = "td_gen_ins",
-    whr = `member_id = '${data.member_id}'`,
-    order = null;
-  var dt = await db_Select(select, table_name, whr, order);
-  // if (data.checkedmember) {
-  if(dt.suc > 0 && dt.msg.length == 0){
-    var select =
-    "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-    table_name = "md_member a",
-  whr = `a.member_id ='${data.member_id}'`,
+  table_name = "td_gen_ins",
+  whr = `member_id = '${data.member_id}'`,
   order = null;
-  res_dt = await db_Select(select, table_name, whr, order);
+ var gen_dt = await db_Select(select, table_name, whr, order);
 
-  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
-    var select =
-        "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
-      table_name = "md_premium_type",
-      whr =
-        res_dt.msg[0].mem_type != "AI"
-          ? `family_catg ='${res_dt.msg[0].memb_oprn}'`
-          : null,
-      order = null;
-    var pre_dt = await db_Select(select, table_name, whr, order);
-    res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? (pre_dt.msg.length > 0 ? pre_dt.msg : []) : [];
-    res.send(res_dt);
-  }else{
-    res.send({ suc: 0, msg: "Member details not found" });
-  }
-  } else {
-    res.send({ suc: 2, msg: "Member already exists" });
-  }
+ if(gen_dt.suc > 0 && gen_dt.msg.length > 0){
+  var select = "member_id",
+  table_name = "td_stp_ins",
+  whr = `member_id = '${data.member_id}'`,
+  order = null;
+var dt = await db_Select(select, table_name, whr, order);
+// if (data.checkedmember) {
+if(dt.suc > 0 && dt.msg.length == 0){
+  var select =
+  "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
+  table_name = "md_member a",
+whr = `a.member_id ='${data.member_id}'`,
+order = null;
+res_dt = await db_Select(select, table_name, whr, order);
+
+if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+  var select =
+      "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
+    table_name = "md_premium_type",
+    whr =
+      res_dt.msg[0].mem_type != "AI"
+        ? `family_catg ='${res_dt.msg[0].memb_oprn}'`
+        : null,
+    order = null;
+  var pre_dt = await db_Select(select, table_name, whr, order);
+  res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? (pre_dt.msg.length > 0 ? pre_dt.msg : []) : [];
+  res.send(res_dt);
+}else{
+  res.send({ suc: 0, msg: "Member details not found" });
+}
+} else {
+  res.send({ suc: 2, msg: "Member already exists" });
+}
+ }else {
+  res.send({ suc: 3, msg: "Members already exists" })
+ }
+
+  
   // console.log(res_dt, "kiki");
   //
 });
@@ -71,7 +83,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
         // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,b.unit_name";
+        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.disease_flag,a.disease_type,b.unit_name";
       (table_name = "td_gen_ins a, md_unit b"),
         (whr = `a.association = b.unit_id
         AND a.member_id ='${data.member_id}'`),
@@ -88,7 +100,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     }
   }
 
-  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+  if (res_dt > 0 && res_dt.msg.length > 0) {
     var select =
         "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
       table_name = "md_premium_type",
@@ -125,7 +137,7 @@ group_policyRouter.get(
     var data = req.query;
     // console.log(data, "jjj");
     var select =
-        "a.sl_no,a.dept_name dependent_name,a.relation,a.dob,a.dep_img,a.dep_doc,a.member_id,b.relation_name,c.policy_holder_type",
+        "a.sl_no,a.dept_name dependent_name,a.relation,a.dob,a.disease_flag,a.disease_type,a.dep_img,a.dep_doc,a.member_id,b.relation_name,c.policy_holder_type",
       table_name = "td_gen_ins_depend a JOIN md_relationship b ON a.relation = b.id LEFT JOIN td_gen_ins c ON a.member_id = c.member_id AND a.form_no = c.form_no",
       whr = `a.member_id = '${data.member_id}' AND c.policy_holder_type = 'M'`,
       order = null;
@@ -139,9 +151,9 @@ group_policyRouter.post("/save_group_policy_form", async (req, res) => {
   var data = req.body;
   var data1 = req.files;
 
-  console.log(data1, "bbb");
+  // console.log(data1, "bbb");
   var save_gen = await group_policy_form_save(data, req.files ? (req.files.own_file ? req.files.own_file : null) : null, req.files ? (req.files.spouse_file ? req.files.spouse_file : null) : null, req.files ? (req.files.own_files ? req.files.own_files : null) : null, req.files ? (req.files.spouse_files ? req.files.spouse_files : null) : null);
-  console.log(save_gen, "log");
+  // console.log(save_gen, "log");
   res.send(save_gen);
 });
 
