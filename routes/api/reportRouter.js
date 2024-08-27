@@ -79,12 +79,31 @@ reportRouter.get("/gmp_status_report", async (req, res) => {
   var data = req.query;
   console.log(data, "bbb");
   var select =
-    "a.form_no,a.member_id,a.association,a.memb_type,a.memb_name,a.phone,a.father_husband_name,a.dob,c.unit_name";
+    "a.form_no,a.member_id,a.association,a.memb_type,a.memb_name,a.phone,a.father_husband_name,a.dob,a.memb_img,a.doc_img,c.unit_name";
   (table_name = "td_gen_ins a JOIN  md_unit c ON a.association = c.unit_id"),
     (whr = `DATE(a.form_dt) between '${data.from_dt}' and '${data.to_dt}' ${
       data.status != "S" ? `AND a.form_status = '${data.status}'` : ""
     }`),
     (order = null);
+  var res_dt = await db_Select(select, table_name, whr, order);
+  // console.log(res_dt, "mimi");
+  res.send(res_dt);
+});
+
+reportRouter.get("/gmp_trans_report", async (req, res) => {
+  var data = req.query;
+  // console.log(data, "bbb");
+  var select =
+    "a.member_id,a.memb_name,a.association,b.dept_name,c.premium_dt,c.premium_id,c.premium_amt,c.premium_amt2,c.prm_flag2,c.premium_amt3,c.prm_flag3,d.trn_dt,d.trn_id,e.family_type, f.unit_name";
+  table_name = " td_gen_ins a, td_gen_ins_depend b, td_premium_dtls c, td_transactions d, md_premium_type e, md_unit f",
+    whr = `DATE(a.form_dt) between '${data.from_dt}' and '${data.to_dt}'
+           AND  a.form_no = b.form_no
+           AND a.member_id = b.member_id
+           AND a.form_no = c.form_no
+           AND a.form_no = d.form_no
+           AND c.premium_id = e.family_type_id
+           AND a.association = f.unit_id`,
+    order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "mimi");
   res.send(res_dt);

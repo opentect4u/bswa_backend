@@ -54,35 +54,46 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
   // } else {
   var select = "member_id",
     table_name = "td_stp_ins",
-    whr = `member_id = '${data.member_id}'`,
+    whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
     order = null;
   var dt = await db_Select(select, table_name, whr, order);
 
   if (dt.suc > 0 && dt.msg.length == 0) {
-    var select =
-        "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no",
-      table_name = "md_member a",
-      whr = `a.member_id = '${data.member_id}'`,
-      order = null;
-    var res_dt = await db_Select(select, table_name, whr, order);
 
-    if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+    var select = "member_id",
+    table_name = "td_gen_ins",
+    whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
+    order = null;
+    var existsgmp_dt = await db_Select(select, table_name, whr, order);
+
+    if (existsgmp_dt.suc > 0 && existsgmp_dt.msg.length == 0) {
       var select =
-          "b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-        table_name = "md_dependent b",
-        whr = `b.member_id = '${data.member_id}' AND b.relation IN (${WIFE_ID})`,
-        order = null;
-      var spou_dt = await db_Select(select, table_name, whr, order);
-      res_dt.msg[0]["spou_dt"] =
-        spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : [];
+      "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no",
+    table_name = "md_member a",
+    whr = `a.member_id = '${data.member_id}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
 
-      res.send(res_dt);
-    } else {
-      res.send({ suc: 0, msg: "Member details not found" });
-    }
+  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+    var select =
+        "b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
+      table_name = "md_dependent b",
+      whr = `b.member_id = '${data.member_id}' AND b.relation IN (${WIFE_ID})`,
+      order = null;
+    var spou_dt = await db_Select(select, table_name, whr, order);
+    res_dt.msg[0]["spou_dt"] =
+      spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : [];
+
+    res.send(res_dt);
   } else {
-    res.send({ suc: 2, msg: "Member already exists" });
+    res.send({ suc: 0, msg: "Member details not found" });
   }
+} else {
+  res.send({ suc: 2, msg: "Member already has an Insurance in GMP policy" });
+}
+} else {
+  res.send({ suc: 3, msg: "Member already has an Insurance in STP policy" });
+}
   // }
 });
 

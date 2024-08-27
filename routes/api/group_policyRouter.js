@@ -22,18 +22,18 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   // console.log(data, "hhhh");
   var select = "member_id",
   table_name = "td_gen_ins",
-  whr = `member_id = '${data.member_id}'`,
+  whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
   order = null;
- var gen_dt = await db_Select(select, table_name, whr, order);
+ var gmp_exists_dt = await db_Select(select, table_name, whr, order);
 
- if(gen_dt.suc > 0 && gen_dt.msg.length > 0){
+ if(gmp_exists_dt.suc > 0 && gmp_exists_dt.msg.length == 0){
   var select = "member_id",
   table_name = "td_stp_ins",
-  whr = `member_id = '${data.member_id}'`,
+  whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
   order = null;
-var dt = await db_Select(select, table_name, whr, order);
+var exists_dt = await db_Select(select, table_name, whr, order);
 // if (data.checkedmember) {
-if(dt.suc > 0 && dt.msg.length == 0){
+if(exists_dt.suc > 0 && exists_dt.msg.length == 0){
   var select =
   "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
   table_name = "md_member a",
@@ -57,10 +57,10 @@ if (res_dt.suc > 0 && res_dt.msg.length > 0) {
   res.send({ suc: 0, msg: "Member details not found" });
 }
 } else {
-  res.send({ suc: 2, msg: "Member already exists" });
+  res.send({ suc: 2, msg: "Member already has an Insurance in STP policy" });
 }
  }else {
-  res.send({ suc: 3, msg: "Members already exists" })
+  res.send({ suc: 3, msg: "Member already has an Insurance in GMP policy" })
  }
 
   
