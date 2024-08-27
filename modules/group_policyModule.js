@@ -70,7 +70,7 @@ const savegenFiles= (file, fileType, form_no) => {
           fileName,
           file
         );
-        filePath = file_upload.suc > 0 ? path.join(`${form_no}`, fileName) : '';
+        filePath = file_upload.suc > 0 ? `${form_no}/${fileName}` : '';
       }
 
       resolve({suc: 1, msg: filePath});
