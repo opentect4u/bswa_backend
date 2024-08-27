@@ -25,25 +25,25 @@ masterRouter.get("/relationship_list", async (req, res) => {
 
 masterRouter.get("/bank_name_list", async (req, res) => {
   var data = req.query;
-  console.log(data, "data");
+  // console.log(data, "data");
   var select = "id, bank_name,acc_cd,org_flag",
     table_name = "md_bank",
     whr = `org_flag = '${data.org_flag}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt);
+  // console.log(res_dt);
   res.send(res_dt);
 });
 
 masterRouter.get("/bank_name_list_trust", async (req, res) => {
   var data = req.query;
-  console.log(data, "data");
+  // console.log(data, "data");
   var select = "id, bank_name,acc_cd,org_flag",
     table_name = "md_bank",
     whr = `org_flag = '${data.org_flag}'`,
     order = null;
   var res_dt_trust = await db_Select(select, table_name, whr, order);
-  console.log(res_dt_trust);
+  // console.log(res_dt_trust);
   res.send(res_dt_trust);
 });
 
@@ -71,7 +71,7 @@ masterRouter.get("/subscription_fee_dynamic", async (req, res) => {
                       AND  effective_dt <= now())`;
   order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "iiii");
+  // console.log(res_dt, "iiii");
   res.send(res_dt);
 });
 
@@ -86,7 +86,7 @@ masterRouter.get("/subscription_fee_dynamic_life", async (req, res) => {
                       AND  effective_dt <= now())`;
   order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "iiii");
+  // console.log(res_dt, "iiii");
   res.send(res_dt);
 });
 
@@ -98,7 +98,7 @@ masterRouter.get("/get_tnx_info", async (req, res) => {
     whr = `form_no = '${data.form_no}' AND approval_status = 'U'`;
   order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "iiii");
+  // console.log(res_dt, "iiii");
   res.send(res_dt);
 });
 

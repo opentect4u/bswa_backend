@@ -34,7 +34,7 @@ const getMaxSlNo = (form_no) => {
       whr = `form_no = '${form_no}'`,
       order = null;
     var res_dt = await db_Select(select, table_name, whr, order);
-    console.log(res_dt, "sl_no");
+    // console.log(res_dt, "sl_no");
     resolve(res_dt);
   });
 };
@@ -83,7 +83,7 @@ const savegenFiles= (file, fileType, form_no) => {
 module.exports = {
  
   group_policy_form_save: (data, ownDocFile, ownAadFile, depDocFile, depAadFile) => {
-    console.log(data,'gdata');
+    // console.log(data,'gdata');
     return new Promise(async (resolve, reject) => {
       var depDocFileName = [];
       var depAddFileName = [];
@@ -102,7 +102,7 @@ module.exports = {
       const tr_id = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${tr_id.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
 
       var tot_amt = Number(data.pre_amont) + Number(data.sup_top_up);
       // console.log(tot_amt,'amt');
@@ -168,7 +168,7 @@ module.exports = {
 
       // if (data.checkedmember) {
         fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name, sex, marital_status, dob ${ownDocFilePath != '' ? ', memb_img' : ''} ${ownAddFilePath != '' ? ', doc_img' : ''}, form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${data.form_dt}','${data.checkedmember ? "M" : "N"}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}' ${ownDocFilePath != '' ? `, '${ownDocFilePath}'` : ''} ${ownAddFilePath != '' ? `, '${ownAddFilePath}'` : ''},'GP','P',${data.type_diseases ? `'${data.type_diseases}'` : `'N'`},'${data.name_diseases}','${data.member}','${datetime}')`;
+        values = `('${form_no}','${data.form_dt}','${data.checkedmember == 'false' ? "N" : "M"}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}' ${ownDocFilePath != '' ? `, '${ownDocFilePath}'` : ''} ${ownAddFilePath != '' ? `, '${ownAddFilePath}'` : ''},'GP','P',${data.type_diseases ? `'${data.type_diseases}'` : `'N'`},'${data.name_diseases}','${data.member}','${datetime}')`;
         table_name = "td_gen_ins";
         whr = null;
         order = null;
@@ -270,7 +270,7 @@ module.exports = {
 
       const no = await getMaxFormNo();
       let form_no = `C${year}${no.msg[0].max_form}`;
-      console.log(form_no, "pppp");
+      // console.log(form_no, "pppp");
 
       let sl_no = await getMaxSlNo(data.form_no);
       sl_no = sl_no.suc > 0 ? sl_no.msg[0].sl_no : 1;
@@ -300,7 +300,7 @@ module.exports = {
         }
       }
       //   policy_dependent_dt["form_no"] = form_no;
-      console.log(policy_dependent_dt, "gggg");
+      // console.log(policy_dependent_dt, "gggg");
       resolve(policy_dependent_dt);
     });
   },
@@ -346,7 +346,7 @@ module.exports = {
 
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
 
       // var table_name = "td_gen_ins",
       //   fields = `(ins_period,created_by,created_at)`,
@@ -422,7 +422,7 @@ module.exports = {
 
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
 
       // var table_name = "td_premium_dtls",
       //   fields = `(form_no,premium_dt,premium_amt,order_id,trn_dt,created_by,created_at)`,
@@ -490,7 +490,7 @@ module.exports = {
 
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
 
       // var table_name = "td_premium_dtls",
       //   fields = `(form_no,premium_dt,premium_id,premium_amt,created_by,created_at)`,

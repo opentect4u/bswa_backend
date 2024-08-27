@@ -9,7 +9,7 @@ password_change.post("/update_pass", async (req, res) => {
     result;
   //   data = Buffer.from(data.data, "base64").toString();
   //   data = JSON.parse(data);
-  console.log(data);
+  // console.log(data);
   var select = "user_id,user_type,password",
     table_name = "md_user",
     whr = `user_id = '${data.user_email}'`,

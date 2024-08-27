@@ -13,7 +13,7 @@ const lifeRouter = express.Router();
 
 lifeRouter.post("/save_life_form", async (req, res) => {
   var data = req.body;
-  console.log(data, "ttt");
+  // console.log(data, "ttt");
   var save_life = await life_form_save(data);
   res.send(save_life);
 });
@@ -52,7 +52,7 @@ lifeRouter.get("/get_member_dtls", async (req, res) => {
       AND a.form_no = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, where, order);
-  console.log(res_dt, "sss");
+  // console.log(res_dt, "sss");
   res.send(res_dt);
 });
 
@@ -80,27 +80,27 @@ lifeRouter.get("/get_dependent_dtls_life", async (req, res) => {
       dep_dt: dep_dt.suc > 0 ? dep_dt.msg : [],
     },
   };
-  console.log(spouse_dt, "qq");
+  // console.log(spouse_dt, "qq");
   res.send(res_dt);
 });
 
 lifeRouter.post("/payment_accept_life", async (req, res) => {
   var data = req.body;
-  console.log(data, "accept");
+  // console.log(data, "accept");
   var res_dt = await accept_dt_cash(data);
   res.send(res_dt);
 });
 
 lifeRouter.post("/payment_accept_cheque_life", async (req, res) => {
   var data = req.body;
-  console.log(data, "accept_cheque");
+  // console.log(data, "accept_cheque");
   var res_dt = await accept_dt_cheque(data);
   res.send(res_dt);
 });
 
 lifeRouter.post("/approve_life", async (req, res) => {
   var data = req.body;
-  console.log(data, "1111");
+  // console.log(data, "1111");
   var res_dt = await approve_dt(data);
   res.send(res_dt);
 });

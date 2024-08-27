@@ -99,7 +99,7 @@ memberPolicyRouter.post("/member_gmp_policy_dtls", async (req, res) => {
 memberPolicyRouter.post("/member_gmp_policy_dtls_view", async (req, res) => {
   var data = req.body;
   var select =
-      "form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name,sex,marital_status,dob,form_type,ins_period,form_status,disease_flag,disease_type",
+      "form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name,sex,marital_status,dob,form_type,ins_period,form_status,disease_flag,disease_type,memb_img,doc_img",
     table_name = "td_gen_ins",
     whr = `form_no = '${data.form_no}'
       AND member_id = '${data.member_id}'`,

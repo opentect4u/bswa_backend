@@ -21,7 +21,7 @@ const generalRouter = express.Router();
 generalRouter.post("/save_genral_form", async (req, res) => {
   //   var user_name = req.user.user_name;
   var data = req.body;
-  console.log(data, "hhhh");
+  // console.log(data, "hhhh");
   var save_gen = await general_form_save(data);
   //   console.log(save_gen, "mmm");
   res.send(save_gen);
@@ -52,7 +52,7 @@ generalRouter.post("/image_form_save", async (req, res) => {
 
 generalRouter.get("/frm_list", async (req, res) => {
   var data = req.query;
-  console.log(data, "ccc");
+  // console.log(data, "ccc");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
     whr = `memb_status IN('P','R','T')`;
@@ -60,19 +60,19 @@ generalRouter.get("/frm_list", async (req, res) => {
   // AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
   order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
 generalRouter.get("/frm_list_2", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
     whr = `(form_no = '${data.form_no}' OR memb_name = '${data.form_no}') AND memb_status IN('P','R','T')`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
@@ -89,7 +89,7 @@ generalRouter.get("/get_member_dtls", async (req, res) => {
     where = `a.form_no = '${data.form_no}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, where, order);
-  console.log(res_dt, "sss");
+  // console.log(res_dt, "sss");
   res.send(res_dt);
 });
 
@@ -101,7 +101,7 @@ generalRouter.get("/get_total_amount", async (req, res) => {
     where = `form_no = '${data.form_no}'`,
     order = null;
   var tot_dt = await db_Select(select, table_name, where, order);
-  console.log(tot_dt, "sss");
+  // console.log(tot_dt, "sss");
   res.send(tot_dt);
 });
 
@@ -142,14 +142,14 @@ generalRouter.post("/reject", async (req, res) => {
 
 generalRouter.post("/payment_accept", async (req, res) => {
   var data = req.body;
-  console.log(data, "accept");
+  // console.log(data, "accept");
   var res_dt = await accept_dt_cash(data);
   res.send(res_dt);
 });
 
 generalRouter.post("/payment_accept_cheque", async (req, res) => {
   var data = req.body;
-  console.log(data, "accept_cheque");
+  // console.log(data, "accept_cheque");
   var res_dt = await accept_dt_cheque(data);
   res.send(res_dt);
 });
@@ -163,7 +163,7 @@ generalRouter.post("/payment_accept_cheque", async (req, res) => {
 
 generalRouter.get("/transaction_dt", async (req, res) => {
   var data = req.query;
-  console.log(data);
+  // console.log(data);
   var select =
       "a.*,b.mem_type,b.memb_oprn,b.memb_name,b.unit_id,b.phone_no,b.email_id,b.resolution_no,b.resolution_dt,b.staff_nos,b.pers_no,b.min_no,b.memb_status,c.unit_name",
     table_name =
@@ -172,13 +172,13 @@ generalRouter.get("/transaction_dt", async (req, res) => {
     ${data.form_no ? `AND a.form_no = '${data.form_no}'` : ""}`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mini");
+  // console.log(res_dt, "mini");
   res.send(res_dt);
 });
 
 generalRouter.post("/approve", async (req, res) => {
   var data = req.body;
-  console.log(data, "1111");
+  // console.log(data, "1111");
   var res_dt = await approve_dt(data);
   res.send(res_dt);
 });
@@ -191,7 +191,7 @@ generalRouter.post("/accept_money_receipt", async (req, res) => {
     whr = `a.form_no = b.form_no AND a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "lo");
+  // console.log(res_dt, "lo");
   res.send(res_dt);
 });
 

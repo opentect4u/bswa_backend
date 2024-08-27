@@ -19,7 +19,7 @@ add_adminRouter.get("/get_add_admin_data", async (req, res) => {
 
 add_adminRouter.post("/add_admin_data", async (req, res) => {
   var data = req.body;
-  console.log(data, "1111");
+  // console.log(data, "1111");
   var res_dt = await admin_dt(data);
   res.send(res_dt);
 });

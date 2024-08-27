@@ -98,7 +98,7 @@ module.exports = {
 
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      console.log(form_no, "pppp");
+      // console.log(form_no, "pppp");
 
       fields = `(form_no,form_dt,mem_type,memb_oprn,memb_name,unit_id,gurdian_name,gender,marital_status,dob,blood_grp,caste,staff_nos,pers_no,min_no,memb_address,ps,city_town_dist,pin_no,phone_no,email_id,memb_status,created_by,created_at)`;
       values = `('${form_no}','${data.form_dt}','${data.flag}','${data.member_opt}','${data.member}','${data.unit_nm}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','${data.blood}','${data.caste}','${data.staff}','${data.personal}','${data.min}','${data.mem}','${data.police_st}','${data.city}','${data.pin}','${data.phone}','${data.email_id}','P','${data.member}','${datetime}')`;
@@ -262,7 +262,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
       // var tot_amt =
       //   data.admissionFee_life +
       //   data.donationFee_life +
@@ -363,7 +363,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
       var tot_amt =
         data.admissionFee_life +
         data.donationFee_life +
@@ -420,15 +420,15 @@ module.exports = {
   },
 
   approve_dt: (data) => {
-    console.log("From Life");
+    // console.log("From Life");
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
       const no = await getMember(data.flag);
       let member_id = `${data.flag}-${no.msg[0].member_id}`;
-      console.log(member_id);
-      console.log("jlksdlakjsdlkjsdlkl");
-      console.log(data.chq_dt, "date");
+      // console.log(member_id);
+      // console.log("jlksdlakjsdlkjsdlkl");
+      // console.log(data.chq_dt, "date");
       // pwd = `$2b$10$xkkGaJkZcSzuGhVyirp2zOQ3QWs9gtxfEJ/sGJbRAkYHyNKclin0.`;
       var pwd = await GenPassword();
       var pass = bcrypt.hashSync(pwd.toString(), 10);
@@ -511,7 +511,7 @@ module.exports = {
             // var tot_tenure = tot_sub_amt > 0 ? data.tot_amt / tot_sub_amt : 0;
             var sub_upto = new Date(data.trn_dt);
             sub_upto.setFullYear(sub_upto.getFullYear() - 1);
-            console.log(sub_upto, "oooo");
+            // console.log(sub_upto, "oooo");
             var table_name = "td_memb_subscription",
               fields = `(member_id,sub_dt,amount,subscription_upto, calc_amt, calc_upto, trans_id,created_by,created_at)`,
               values = `('${member_id}','${data.trn_dt}','${

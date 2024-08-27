@@ -5,7 +5,7 @@ const reportRouter = express.Router();
 
 reportRouter.get("/member_list_report", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select =
       "a.member_id,a.memb_name,a.min_no,a.memb_address,a.ps,a.city_town_dist,a.pin_no,a.phone_no,a.email_id,a.resolution_no,a.resolution_dt, b.unit_name",
     table_name = "md_member a LEFT JOIN md_unit b ON a.unit_id = b.unit_id",
@@ -22,13 +22,13 @@ reportRouter.get("/member_list_report", async (req, res) => {
            and  a.mem_type = '${data.member_type}' and  a.memb_status = 'A'`;
   order = "order by cast(substr(a.member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
 reportRouter.get("/member_trans_report", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select =
       "date(a.trn_dt)trn_dt,a.trn_id,b.memb_name,b.member_id,a.sub_amt,a.onetime_amt,a.adm_fee,a.donation,a.pay_mode,a.receipt_no,a.chq_no,date(a.chq_dt)chq_dt, a.premium_amt,if(a.sub_amt+a.onetime_amt+a.adm_fee+a.donation>0,'O','R')trans_mode",
     table_name = "td_transactions a,md_member b",
@@ -47,7 +47,7 @@ reportRouter.get("/member_trans_report", async (req, res) => {
 
 reportRouter.get("/clearupto_list_report", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select = `a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),", ", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)"default_amt"`,
     table_name = "td_memb_subscription a,md_member b",
     whr = `a.member_id = b.member_id
@@ -61,7 +61,7 @@ reportRouter.get("/clearupto_list_report", async (req, res) => {
 
 reportRouter.get("/stp_status_report", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select =
     "DISTINCT a.form_no,a.fin_year,b.member_id,b.association,b.memb_name,b.dob,b.min_no,c.unit_name";
   (table_name =
@@ -77,7 +77,7 @@ reportRouter.get("/stp_status_report", async (req, res) => {
 
 reportRouter.get("/gmp_status_report", async (req, res) => {
   var data = req.query;
-  console.log(data, "bbb");
+  // console.log(data, "bbb");
   var select =
     "a.form_no,a.member_id,a.association,a.memb_type,a.memb_name,a.phone,a.father_husband_name,a.dob,a.memb_img,a.doc_img,c.unit_name";
   (table_name = "td_gen_ins a JOIN  md_unit c ON a.association = c.unit_id"),

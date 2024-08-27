@@ -101,7 +101,7 @@ const dynamicFileUpload = (filePath, fileName, file) => {
 module.exports = {
   dynamicFileUpload,
   general_form_save: (data) => {
-    console.log(data, "FormData");
+    // console.log(data, "FormData");
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
@@ -110,7 +110,7 @@ module.exports = {
       // let form_no = `G${year}${paddedSerialNumber}`;
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      console.log(form_no, "pppp");
+      // console.log(form_no, "pppp");
 
       //   console.log(user_name);
 
@@ -309,7 +309,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
       // var tot_amt = data.admissionFee + data.donationFee + data.subscriptionFee;
 
       var table_name = "td_transactions",
@@ -408,7 +408,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
 
       var table_name = "td_transactions",
         fields =
@@ -516,14 +516,14 @@ module.exports = {
   // },
 
   approve_dt: (data) => {
-    console.log("From MEmber");
+    // console.log("From MEmber");
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
       const no = await getMember(data.flag);
       let member_id = `${data.flag}-${no.msg[0].member_id}`;
-      console.log(member_id);
-      console.log(data.chq_dt, "date");
+      // console.log(member_id);
+      // console.log(data.chq_dt, "date");
       // pwd = `$2b$10$xkkGaJkZcSzuGhVyirp2zOQ3QWs9gtxfEJ/sGJbRAkYHyNKclin0.`;
       var pwd = await GenPassword();
       var pass = bcrypt.hashSync(pwd.toString(), 10);

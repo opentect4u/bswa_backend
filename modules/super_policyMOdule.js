@@ -37,21 +37,21 @@ module.exports = {
 
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      console.log(form_no, "pppp");
+      // console.log(form_no, "pppp");
 
-      if (data.checkedmember) {
+      // if (data.checkedmember) {
         fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,phone_no,min_no,personel_no,mem_address,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,form_status,created_by,created_at)`;
-        values = `('${form_no}','${data.form_dt}','${data.fin_yr}','M','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
+        values = `('${form_no}','${data.form_dt}','${data.fin_yr}','${data.checkedmember == false ? "N" : "M"}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}','${data.spou_dob ? data.spou_dob : '0000-00-00'}','${data.spou_mobile ? data.spou_mobile : 0}','${data.spou_mem ? data.spou_mem : null}','P','${data.member}','${datetime}')`;
         table_name = "td_stp_ins";
         whr = null;
         order = null;
-      } else {
-        fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,phone_no,min_no,personel_no,mem_address,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,form_status,created_by,created_at)`;
-        values = `('${form_no}','${data.form_dt}','${data.fin_yr}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
-        table_name = "td_stp_ins";
-        whr = null;
-        order = null;
-      }
+      // } else {
+      //   fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,phone_no,min_no,personel_no,mem_address,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,form_status,created_by,created_at)`;
+      //   values = `('${form_no}','${data.form_dt}','${data.fin_yr}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.mem}','${data.spouse}','${data.spouse_min_no}','${data.spou_dob}','${data.spou_mobile}','${data.spou_mem}','P','${data.member}','${datetime}')`;
+      //   table_name = "td_stp_ins";
+      //   whr = null;
+      //   order = null;
+      // }
       var stp_dt = await db_Insert(table_name, fields, values, whr, order);
 
       if (stp_dt.suc > 0) {
@@ -68,7 +68,8 @@ module.exports = {
             whr,
             order
           );
-          super_dt["form_no"] = form_no;
+          stp_dt["form_no"] = form_no;
+          stp_dt["policy_holder_type"] = `${data.checkedmember}`
         }
       }
 
@@ -97,7 +98,7 @@ module.exports = {
       // END //
 
       // console.log(super_dt, "gggg");
-      resolve(super_dt);
+      resolve(stp_dt);
     });
   },
 
@@ -143,7 +144,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
 
       // var table_name = "td_transactions",
       //   fields =

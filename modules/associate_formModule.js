@@ -123,7 +123,7 @@ module.exports = {
 
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      console.log(form_no, "pppp");
+      // console.log(form_no, "pppp");
 
       fields = `(form_no,form_dt,mem_type,memb_name,gurdian_name,gender,marital_status,dob,caste,memb_address,ps,city_town_dist,pin_no,phone_no,email_id,memb_status,created_by,created_at)`;
       values = `('${form_no}','${data.form_dt}','${data.flag}','${data.member}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}','${data.caste}','${data.mem}','${data.police_st}','${data.city}','${data.pin}','${data.phone}','${data.email_id}','P','${data.member}','${datetime}')`;
@@ -288,7 +288,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
       // var tot_amt =
       //   data.admissionFee_associate +
       //   data.donationFee_associate +
@@ -389,7 +389,7 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id =
         data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id, "pppp");
+      // console.log(trn_id, "pppp");
       // var tot_amt =
       //   data.admissionFee_associate +
       //   data.donationFee_associate +
@@ -451,7 +451,7 @@ module.exports = {
 
       const no = await getMember(data.flag);
       let member_id = `${data.flag}-${no.msg[0].member_id}`;
-      console.log(member_id);
+      // console.log(member_id);
       // pwd = `$2b$10$xkkGaJkZcSzuGhVyirp2zOQ3QWs9gtxfEJ/sGJbRAkYHyNKclin0.`;
       var pwd = await GenPassword();
       var pass = bcrypt.hashSync(pwd.toString(), 10);

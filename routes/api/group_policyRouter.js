@@ -75,7 +75,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
   // if (data.checkedmember) {
   var select = "policy_holder_type",
     table_name = "td_gen_ins",
-    where = `member_id = '${data.member_id}'`,
+    where = `member_id = '${data.member_id}' AND form_no = '${data.form_no}'`,
     order = null;
   var chk_dt = await db_Select(select, table_name, where, order);
   // console.log(chk_dt, "chk_dt");
@@ -86,7 +86,8 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
         "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.disease_flag,a.disease_type,b.unit_name";
       (table_name = "td_gen_ins a, md_unit b"),
         (whr = `a.association = b.unit_id
-        AND a.member_id ='${data.member_id}'`),
+        AND a.member_id ='${data.member_id}'
+        AND a.form_no = '${data.form_no}'`),
         (order = null);
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
@@ -94,7 +95,8 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
           "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,b.unit_name",
         table_name = "td_gen_ins a, md_unit b",
         whr = `a.association = b.unit_id
-        AND a.member_id ='${data.member_id}'`,
+        AND a.member_id ='${data.member_id}'
+        AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
     }
@@ -139,7 +141,7 @@ group_policyRouter.get(
     var select =
         "a.sl_no,a.dept_name dependent_name,a.relation,a.dob,a.disease_flag,a.disease_type,a.dep_img,a.dep_doc,a.member_id,b.relation_name,c.policy_holder_type",
       table_name = "td_gen_ins_depend a JOIN md_relationship b ON a.relation = b.id LEFT JOIN td_gen_ins c ON a.member_id = c.member_id AND a.form_no = c.form_no",
-      whr = `a.member_id = '${data.member_id}' AND c.policy_holder_type = 'M'`,
+      whr = `a.member_id = '${data.member_id}' AND a.form_no = '${data.form_no}'`,
       order = null;
     var res_dt = await db_Select(select, table_name, whr, order);
     // console.log(res_dt, "mimi");

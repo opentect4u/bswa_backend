@@ -15,7 +15,7 @@ LoginRouter.post("/login", async (req, res) => {
   data.pas = new Buffer.from(data.pas, "base64").toString();
   const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
   var log_dt = await admin_login_data(data);
-  console.log(log_dt, "123");
+  // console.log(log_dt, "123");
   // let year = new Date().getFullYear();
   // const serialNumber = 1;
   // const paddedSerialNumber = serialNumber.toString().padStart(5, '0');
@@ -69,7 +69,7 @@ LoginRouter.post("/member_login", async (req, res) => {
   // data.pas = new Buffer.from(data.pas, "base64").toString();
   const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
   var log_dt = await member_login_data(data);
-  console.log(log_dt, "123");
+  // console.log(log_dt, "123");
   if (log_dt.suc > 0) {
     if (log_dt.msg.length > 0) {
       if (await bcrypt.compare(data.pas, log_dt.msg[0].password)) {
@@ -118,7 +118,7 @@ LoginRouter.post("/superadmin_login", async (req, res) => {
   data.pas = new Buffer.from(data.pas, "base64").toString();
   const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
   var log_dt = await superadmin_login_data(data);
-  console.log(log_dt, "123");
+  // console.log(log_dt, "123");
   if (log_dt.suc > 0) {
     if (log_dt.msg.length > 0) {
       if (await bcrypt.compare(data.pas, log_dt.msg[0].password)) {

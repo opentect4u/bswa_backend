@@ -98,7 +98,7 @@ const save_asso = async (req, res) => {
       // subs_ty: Joi.optional(),
     });
     const { error, value } = schema.validate(req.body, { abortEarly: false });
-    console.log(value, "value");
+    // console.log(value, "value");
     if (error) {
       const errors = {};
       error.details.forEach((detail) => {
@@ -136,7 +136,7 @@ const show_data = async (req, res) => {
     flag: Joi.optional()
   });
   const { error, value } = schema.validate(req.query, { abortEarly: false });
-  console.log(value, "uu");
+  // console.log(value, "uu");
   if (error) {
     const errors = {};
     error.details.forEach((detail) => {
@@ -148,7 +148,7 @@ const show_data = async (req, res) => {
     table_name = "md_member_fees",
     whr = value.flag ? `memb_type = '${value.flag}'` : null;
   const save_dt = await db_Select(select, table_name, whr, null);
-  console.log(save_dt,'111');
+  // console.log(save_dt,'111');
   res.send(save_dt);
 };
 

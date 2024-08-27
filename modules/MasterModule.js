@@ -257,7 +257,7 @@ const GenPassword = () => {
     var e = alpha[Math.floor(Math.random() * 62)];
     var sum_id = a + b + c + d + e;
     var sum = sum_id.toUpperCase();
-    console.log(sum);
+    // console.log(sum);
     resolve(sum);
   });
 };
@@ -385,7 +385,7 @@ const postVoucher = (
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         resolve({ suc: 1, msg: response.data });
       })
       .catch((error) => {
@@ -456,7 +456,7 @@ const drVoucher = (
       },
     });
 
-    console.log(data, "data");
+    // console.log(data, "data");
 
     let config = {
       method: "post",
@@ -471,7 +471,7 @@ const drVoucher = (
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         resolve({ suc: 1, msg: response.data });
       })
       .catch((error) => {
@@ -532,7 +532,7 @@ const drVoucher_gmp = (
       },
     });
 
-    console.log(data, "data");
+    // console.log(data, "data");
 
     let config = {
       method: "post",
@@ -547,7 +547,7 @@ const drVoucher_gmp = (
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         resolve({ suc: 1, msg: response.data });
       })
       .catch((error) => {

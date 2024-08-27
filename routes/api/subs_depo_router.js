@@ -51,7 +51,7 @@ SubsDepoRouter.post("/get_tnx_details", async (req, res) => {
       order = null;
     var fee_dt = await db_Select(select, table_name, whr, order);
 
-    console.log(fee_dt);
+    // console.log(fee_dt);
 
     res_dt.msg[0]["mem_dt"] =
       mem_dt.suc > 0 && mem_dt.msg.length > 0 ? mem_dt.msg[0] : {};
@@ -169,7 +169,7 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
 });
 
 var finres = getCurrFinYear();
-console.log(finres);
+// console.log(finres);
 
 SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   const data = req.body,
@@ -225,7 +225,7 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
     flag = 0;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
   res_dt["trn_id"] = tnx_id;
-  console.log(res_dt, "res");
+  // console.log(res_dt, "res");
   // WHATSAPP MESSAGE //
   // try {
   //   var select = "msg, domain",
