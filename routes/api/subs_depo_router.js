@@ -17,7 +17,7 @@ const { sendWappMsg } = require("../../modules/whatsappModule");
 SubsDepoRouter.post("/get_mem_subs_dtls", async (req, res) => {
   const data = req.body;
   var select =
-      "a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.calc_amt, b.calc_upto",
+      "a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.amount, b.calc_amt, b.calc_upto",
     table_name = "md_member a, td_memb_subscription b",
     whr = `a.member_id=b.member_id AND a.member_id = '${data.memb_id}' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id)`,
     order = null;
