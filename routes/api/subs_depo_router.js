@@ -29,7 +29,7 @@ SubsDepoRouter.post("/get_tnx_details", async (req, res) => {
   const data = req.body;
   var select = "*",
     table_name = "td_transactions",
-    whr = `approval_status = 'U' ${
+    whr = `approval_status = 'U' AND delete_flag = 'N' ${
       data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ""
     }`,
     order = `ORDER BY trn_dt, trn_id`;
@@ -46,7 +46,7 @@ SubsDepoRouter.post("/get_tnx_details", async (req, res) => {
         "a.effective_dt, a.memb_type, a.adm_fee, a.donation, a.subs_type, a.subscription_1, a.subscription_2",
       table_name = "md_member_fees a",
       whr = `a.memb_type = '${
-        mem_dt.suc > 0 ? mem_dt.msg[0].mem_type : ""
+        mem_dt.suc > 0 && mem_dt.msg?.[0]?.mem_type ? mem_dt.msg[0].mem_type : ""
       }' AND a.effective_dt = (SELECT MAX(b.effective_dt) FROM md_member_fees b WHERE a.memb_type=b.memb_type AND b.effective_dt <= now())`,
       order = null;
     var fee_dt = await db_Select(select, table_name, whr, order);
@@ -65,6 +65,8 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
   const data = req.body,
     trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
   var sub_upto = new Date(data.calc_upto);
+  console.log(sub_upto,'upto');
+  
   switch (data.sub_type) {
     case "Y":
       sub_upto.setFullYear(sub_upto.getFullYear() + 1);
@@ -74,14 +76,19 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
       break;
     case "M":
       var tot_tenure =
-        data.sub_fee > 0 ? data.paid_month_amt / data.sub_fee : 0;
-      sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+        data.sub_fee > 0 ? (data.paid_month_amt / data.sub_fee) : 0;
+      var sub_year = sub_upto.getFullYear()
+      if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
+      console.log(sub_upto.getMonth()+1, tot_tenure, 'Calculation');
+      sub_upto.setMonth(sub_upto.getMonth()+1 + tot_tenure);
+      console.log(sub_upto);
+      
       break;
 
     default:
       var tot_tenure =
         data.sub_fee > 0 ? data.paid_month_amt / data.sub_fee : 0;
-      sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+      sub_upto.setMonth(sub_upto.getMonth() + tot_tenure-1);
       break;
   }
 
@@ -110,6 +117,8 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
     data.user,
     dateFormat(new Date(trn_dt), "yyyy-mm-dd")
   );
+
+  // var voucher_res = {suc: 1, msg: 1}
 
   if (voucher_res.suc > 0) {
     if (voucher_res.msg > 0) {
@@ -157,6 +166,7 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
       } catch (err) {
         console.log(err);
       }
+
       // END //
 
       res.send(res_dt);
@@ -267,5 +277,20 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
 });
 
 SubsDepoRouter.post("/subscription_voucher", async (req, res) => {});
+
+
+SubsDepoRouter.post("/delete_unapprove_trn", async (req, res) => {
+  var data = req.body;
+  // console.log(data,'juju');
+  let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  
+  var table_name = "td_transactions",
+  fields = `delete_flag = 'Y', deleted_by = '${data.user}', deleted_at = '${datetime}'`,
+  values = null,
+  whr = `form_no = '${data.form_no}' AND trn_id = '${data.trn_id}'`,
+  flag = 1;
+  var delete_dt = await db_Insert(table_name, fields, values, whr, flag);
+  res.send(delete_dt)
+})
 
 module.exports = { SubsDepoRouter };
