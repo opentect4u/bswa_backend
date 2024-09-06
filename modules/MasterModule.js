@@ -557,6 +557,51 @@ const drVoucher_gmp = (
   });
 };
 
+const generateNextSubDate = (calc_upto, sub_type, paid_month_amt, sub_fee) => {
+  return new Promise((resolve, reject) => {
+    var sub_upto = new Date(calc_upto);
+    
+    switch (sub_type) {
+      case "Y":
+        sub_upto.setFullYear(sub_upto.getFullYear() + 1);
+        break;
+      case "O":
+        sub_upto.setFullYear(sub_upto.getFullYear() + 1);
+        break;
+      case "M":
+        var tot_tenure =
+          sub_fee > 0 ? (paid_month_amt / sub_fee) : 0;
+        var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
+        if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
+        if(sub_upto.getFullYear() != sub_year){
+          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
+        }else{
+          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
+        }
+        
+        sub_upto = new Date(sub_year, sub_mon, 0)
+        // console.log(sub_upto);
+        
+        break;
+
+      default:
+        var tot_tenure =
+          sub_fee > 0 ? (paid_month_amt / sub_fee) : 0;
+        var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
+        if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
+        if(sub_upto.getFullYear() != sub_year){
+          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
+        }else{
+          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
+        }
+        
+        sub_upto = new Date(sub_year, sub_mon, 0)
+        break;
+    }
+    resolve(sub_upto)
+  })
+}
+
 const TRANSFER_TYPE_MASTER = {
   C: "H",
   Q: "C",
@@ -596,4 +641,5 @@ module.exports = {
   // REMARKS_MASTER,
   drVoucher_gmp,
   drVoucher,
+  generateNextSubDate
 };

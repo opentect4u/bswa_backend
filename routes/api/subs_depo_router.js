@@ -77,11 +77,21 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
     case "M":
       var tot_tenure =
         data.sub_fee > 0 ? (data.paid_month_amt / data.sub_fee) : 0;
-      var sub_year = sub_upto.getFullYear()
+      var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
       if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
-      console.log(sub_upto.getMonth()+1, tot_tenure, 'Calculation');
-      sub_upto.setMonth(sub_upto.getMonth()+1 + tot_tenure);
+      if(sub_upto.getFullYear() != sub_year){
+        sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
+      }else{
+        sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
+      }
+      
+      sub_upto = new Date(sub_year, sub_mon, 0)
       console.log(sub_upto);
+      
+
+      // console.log(sub_upto.getMonth()+1, tot_tenure, 'Calculation');
+      // sub_upto.setMonth(sub_upto.getMonth()+1 + tot_tenure);
+      // console.log(sub_upto);
       
       break;
 
@@ -95,30 +105,30 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
   var finres = await getCurrFinYear();
   var curr_fin_year = finres.curr_fin_year;
 
-  var voucher_res = await postVoucher(
-    FIN_YEAR_MASTER[curr_fin_year],
-    curr_fin_year,
-    2,
-    BRANCH_MASTER[2],
-    data.trn_id,
-    dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-    TRANSFER_TYPE_MASTER[data.pay_mode],
-    VOUCHER_MODE_MASTER[data.pay_mode],
-    data.acc_code,
-    CR_ACC_MASTER[data.memb_type],
-    "DR",
-    data.sub_amt,
-    data.chq_no,
-    data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
-    data.remarks,
-    "A",
-    data.user,
-    dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-    data.user,
-    dateFormat(new Date(trn_dt), "yyyy-mm-dd")
-  );
+  // var voucher_res = await postVoucher(
+  //   FIN_YEAR_MASTER[curr_fin_year],
+  //   curr_fin_year,
+  //   2,
+  //   BRANCH_MASTER[2],
+  //   data.trn_id,
+  //   dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+  //   TRANSFER_TYPE_MASTER[data.pay_mode],
+  //   VOUCHER_MODE_MASTER[data.pay_mode],
+  //   data.acc_code,
+  //   CR_ACC_MASTER[data.memb_type],
+  //   "DR",
+  //   data.sub_amt,
+  //   data.chq_no,
+  //   data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+  //   data.remarks,
+  //   "A",
+  //   data.user,
+  //   dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+  //   data.user,
+  //   dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+  // );
 
-  // var voucher_res = {suc: 1, msg: 1}
+  var voucher_res = {suc: 1, msg: 1}
 
   if (voucher_res.suc > 0) {
     if (voucher_res.msg > 0) {
@@ -145,27 +155,27 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
       }
 
       // WHATSAPP MESSAGE //
-      try {
-        var select = "msg, domain",
-          table_name = "md_whatsapp_msg",
-          whr = `msg_for = 'Approve transaction'`,
-          order = null;
-        var msg_dt = await db_Select(select, table_name, whr, order);
-        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-        wpMsg = wpMsg
-          .replace("{user_name}", data.member)
-          //   .replace("{form_id}", form_no)
-          .replace("{trn_id}", data.trn_id)
-          .replace("{total}", data.sub_amt)
-          .replace(
-            "{url}",
-            `${domain}/#/home/money_receipt_member/${data.memb_id}/${data.trn_id}`
-          );
-        var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-      } catch (err) {
-        console.log(err);
-      }
+      // try {
+      //   var select = "msg, domain",
+      //     table_name = "md_whatsapp_msg",
+      //     whr = `msg_for = 'Approve transaction'`,
+      //     order = null;
+      //   var msg_dt = await db_Select(select, table_name, whr, order);
+      //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+      //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+      //   wpMsg = wpMsg
+      //     .replace("{user_name}", data.member)
+      //     //   .replace("{form_id}", form_no)
+      //     .replace("{trn_id}", data.trn_id)
+      //     .replace("{total}", data.sub_amt)
+      //     .replace(
+      //       "{url}",
+      //       `${domain}/#/home/money_receipt_member/${data.memb_id}/${data.trn_id}`
+      //     );
+      //   var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+      // } catch (err) {
+      //   console.log(err);
+      // }
 
       // END //
 
