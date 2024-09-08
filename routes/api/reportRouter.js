@@ -59,6 +59,7 @@ reportRouter.get("/clearupto_list_report", async (req, res) => {
   res.send(res_dt);
 });
 
+
 reportRouter.get("/stp_status_report", async (req, res) => {
   var data = req.query;
   // console.log(data, "bbb");
@@ -108,5 +109,33 @@ reportRouter.get("/gmp_trans_report", async (req, res) => {
   // console.log(res_dt, "mimi");
   res.send(res_dt);
 });
+
+
+reportRouter.get("/get_pg_approve_mem", async (req, res) => {
+  var data = req.query;
+  console.log(data, 'data');
+
+  var select = "DISTINCT udf3,udf4";
+  table_name = "td_pg_transaction",
+  whr =   `udf5 = 'A'`,
+  order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  // console.log(res_dt, "mimi");
+  res.send(res_dt);
+})
+
+
+reportRouter.get("/get_pg_approve_dtls", async (req, res) => {
+  var data = req.query;
+  console.log(data, 'data');
+
+  var select = "*";
+  table_name = "td_pg_transaction",
+  whr =`udf4 = '${data.member_id}'`,
+  order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt, "mimi");
+  res.send(res_dt);
+})
 
 module.exports = { reportRouter };
