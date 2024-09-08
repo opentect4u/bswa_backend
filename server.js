@@ -2,7 +2,7 @@ const express = require("express");
 var app = express(),
   fs = require("fs"),
   path = require("path"),
-  port = process.env.PORT || 3000,
+  port = process.env.PORT || 3001,
   dotenv = require("dotenv"),
   cors = require("cors");
 
@@ -35,6 +35,7 @@ const { password_change } = require("./routes/api/password_change");
 const { add_adminRouter } = require("./routes/api/add_adminRouter");
 const { memberPolicyRouter } = require("./routes/api/memberPolicyRouter");
 const { cronRouter } = require("./routes/cronRouter");
+const { payRouter } = require("./routes/api/payRouter");
 
 app.use(LoginRouter);
 app.use("/fee", admin_fee_typeRouter);
@@ -50,6 +51,7 @@ app.use(memberRouter);
 app.use(memberPolicyRouter);
 app.use(password_change);
 app.use(add_adminRouter);
+app.use(payRouter)
 app.use('/cron', cronRouter)
 
 app.listen(port, (err) => {
