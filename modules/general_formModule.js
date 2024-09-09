@@ -19,6 +19,8 @@ var dateFormat = require("dateformat"),
   fs = require("fs"),
   bcrypt = require("bcrypt");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
+dotenv.config({ path: '.env.prod' });
+
 
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {

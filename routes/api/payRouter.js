@@ -4,6 +4,8 @@ const { getepayPortal, saveTrns, saveSubs, payRecordSave } = require('../../modu
 const { decryptEas } = require('../../controller/decryptEas');
 const { getMaxTrnId } = require('../../modules/MasterModule');
 const dateFormat = require('dateformat');
+dotenv.config({ path: '.env.prod' });
+
 
 payRouter.post('/generate_pay_url', async (req, res) => {
     var encData = req.body.encData

@@ -13,6 +13,8 @@ const {
 } = require("../../modules/MasterModule");
 const dateFormat = require("dateformat");
 const { sendWappMsg } = require("../../modules/whatsappModule");
+dotenv.config({ path: '.env.prod' });
+
 
 SubsDepoRouter.post("/get_mem_subs_dtls", async (req, res) => {
   const data = req.body;

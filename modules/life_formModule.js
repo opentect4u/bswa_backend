@@ -17,6 +17,8 @@ const {
   CR_ACC_MASTER,
 } = require("./MasterModule");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
+dotenv.config({ path: '.env.prod' });
+
 
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
