@@ -19,8 +19,21 @@ var dateFormat = require("dateformat"),
   fs = require("fs"),
   dotenv = require("dotenv");
   bcrypt = require("bcrypt");
+const axios = require('axios');
+
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 dotenv.config({ path: '.env.prod' });
+
+async function shortenURL(longUrl) {
+  const apiUrl = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
+  try {
+    const response = await axios.get(apiUrl);
+    return response.data; // This will return the shortened URL
+  } catch (error) {
+    console.error('Error shortening URL:', error);
+    return longUrl; // If the shortening fails, fallback to the long URL
+  }
+}
 
 
 const getMaxFormNo = (flag) => {
@@ -386,10 +399,16 @@ module.exports = {
             var msg_dt = await db_Select(select, table_name, whr, order);
             var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
               domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+
+              const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`;
+    
+              // Shorten the URL
+             const shortUrl = await shortenURL(longUrl);
+
             wpMsg = wpMsg
               .replace("{user_name}", data.member)
               .replace("{form_no}", data.formNo)
-              .replace("{pay_link}", `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`);
+              .replace("{pay_link}", shortUrl);
             var wpRes = await sendWappMsg(
               data.phone_no,
               wpMsg
