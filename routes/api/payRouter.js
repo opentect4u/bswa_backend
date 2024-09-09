@@ -1,5 +1,6 @@
 const payRouter = require('express').Router()
 const CryptoJS = require('crypto-js');
+dotenv = require("dotenv");
 const { getepayPortal, saveTrns, saveSubs, payRecordSave } = require('../../modules/payModule');
 const { decryptEas } = require('../../controller/decryptEas');
 const { getMaxTrnId } = require('../../modules/MasterModule');
