@@ -87,7 +87,7 @@ payRouter.post('/success_payment', async (req, res) => {
     var res_load = await payRecordSave(res_dt)
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrns(res_dt)
-        if(data.udf5 != 'A'){
+        if(data.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }
         res.redirect(`${process.env.CLIENT_URL}/main/money_receipt_member/${res_dt.udf4}/${save_dt.trn_id}`)

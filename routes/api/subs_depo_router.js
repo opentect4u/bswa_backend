@@ -192,8 +192,10 @@ var finres = getCurrFinYear();
 // console.log(finres);
 
 SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
-  const data = req.body,
-    trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  const data = req.body;
+  console.log(data,'dt');
+  
+  trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
   var tnx_data = await getMaxTrnId();
   let year = dateFormat(new Date(), "yyyy");
   var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
@@ -206,6 +208,35 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
   res_dt["trn_id"] = tnx_id;
+
+    // WHATSAPP MESSAGE //
+    try {
+      if(data.pay_mode == 'O') {            
+        const encDtgen = encodeURIComponent(data.pay_enc_data)
+        console.log(encDtgen,'uuu');
+        
+        var select = "msg, domain",
+          table_name = "md_whatsapp_msg",
+          whr = `msg_for = 'Member accept online'`,
+          order = null;
+        var msg_dt = await db_Select(select, table_name, whr, order);
+        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+        wpMsg = wpMsg
+          .replace("{user_name}", data.member)
+          .replace("{form_no}", data.form_no)
+          .replace("{pay_link}", `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`);
+        var wpRes = await sendWappMsg(
+          data.phone_no,
+          wpMsg
+        );
+        console.log(wpRes,'message');
+        
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    // END //
 
   // WHATSAPP MESSAGE //
   // try {

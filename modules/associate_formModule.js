@@ -18,6 +18,8 @@ const {
 } = require("./MasterModule");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 
+const CryptoJS = require('crypto-js');
+
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
     var select =
@@ -353,7 +355,12 @@ module.exports = {
               .replace("{form_no}", data.formNo)
               .replace("{status}", formStatus[data.status]);
             var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-          } else {
+          } 
+          if(data.payment == 'O') {            
+            const encDt = encodeURIComponent(data.pay_enc_data)
+            // console.log(encDt);
+            
+
             var select = "msg, domain",
               table_name = "md_whatsapp_msg",
               whr = `msg_for = 'Member accept online'`,
@@ -363,13 +370,11 @@ module.exports = {
               domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
             wpMsg = wpMsg
               .replace("{user_name}", data.member)
-              .replace("{form_no}", data.form_no);
-            var wpRes = await sendWappMediaMsg(
-              data.phone_no,
-              wpMsg,
-              domain,
-              "BOKAROWELFARE.jpg"
-            );
+              .replace("{form_no}", data.formNo)
+              .replace("{pay_link}", `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDt}`);
+            var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+            console.log(wpRes, 'whatsapp msg res');
+            
           }
         } catch (err) {
           console.log(err);

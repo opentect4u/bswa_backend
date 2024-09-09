@@ -255,6 +255,8 @@ module.exports = {
   },
 
   accept_dt_cash: (data) => {
+    // console.log(data,'data');
+    
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
@@ -327,7 +329,12 @@ module.exports = {
               .replace("{form_no}", data.formNo)
               .replace("{status}", formStatus[data.status]);
             var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-          } else {
+          } 
+          if(data.payment == 'O') {
+            const encDtlife = encodeURIComponent(data.payEncDataLife)
+            // console.log(encDtlife,'oo');
+            
+
             var select = "msg, domain",
               table_name = "md_whatsapp_msg",
               whr = `msg_for = 'Member accept online'`,
@@ -337,13 +344,14 @@ module.exports = {
               domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
             wpMsg = wpMsg
               .replace("{user_name}", data.member)
-              .replace("{form_no}", data.form_no);
-            var wpRes = await sendWappMediaMsg(
+              .replace("{form_no}", data.formNo)
+              .replace("{pay_link}", `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtlife}`);
+            var wpRes = await sendWappMsg(
               data.phone_no,
-              wpMsg,
-              domain,
-              "BOKAROWELFARE.jpg"
+              wpMsg
             );
+            // console.log(wpRes,'mess');
+            
           }
         } catch (err) {
           console.log(err);
