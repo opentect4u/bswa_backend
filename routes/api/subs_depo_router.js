@@ -1,4 +1,5 @@
 const SubsDepoRouter = require("express").Router();
+dotenv = require("dotenv");
 const {
   db_Select,
   db_Insert,
