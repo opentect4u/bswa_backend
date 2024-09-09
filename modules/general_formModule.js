@@ -17,6 +17,7 @@ const {
 var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs"),
+  dotenv = require("dotenv");
   bcrypt = require("bcrypt");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 dotenv.config({ path: '.env.prod' });

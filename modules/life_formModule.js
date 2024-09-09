@@ -1,6 +1,7 @@
 var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs"),
+  dotenv = require("dotenv");
   bcrypt = require("bcrypt");
 const {
   db_Select,
