@@ -31,16 +31,16 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 transactionDate: new Date().toISOString(),
                 terminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
                 udf1: data.phone_no,
-                udf2: 'abc@gmail.com',//data.email_id,
+                udf2: data.email_id,
                 udf3: data.memb_name,
-                udf4: data.member_id,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto,
                 udf8: data.subs_type,
                 udf9: data.sub_fee,
                 udf10: data.redirect_path,
-                ru: `${process.env.BASE_URL}/success_payment`,
+                ru: paySocFlag ? `${process.env.BASE_URL}/${process.env.UAT_REDIRECT_URL}` : `${process.env.BASE_URL}/${process.env.ASSO_PAY_REDIRECT_URL}`,
                 callbackUrl: process.env.PAY_CALL_BACK_URL,
                 currency: "INR",
                 paymentMode: "ALL",
@@ -78,7 +78,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     }
 })
 
-payRouter.post('/success_payment', async (req, res) => {
+payRouter.post('/success_payment_uat', async (req, res) => {
     const result = req.body.response;
     var dataitems = decryptEas(
         result,
@@ -89,12 +89,43 @@ payRouter.post('/success_payment', async (req, res) => {
     console.log("data", parsedData);
     var res_dt = JSON.parse(parsedData)
     var res_load = await payRecordSave(res_dt)
+    var data = res_dt.udf4.split('||')
+    res_dt.udf4 = data[0]
+    res_dt.udf5 = data[1]
+    res_dt.udf6 = data[2]
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrns(res_dt)
-        if(data.udf5 != 'U'){
+        if(res_dt.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }
-        res.redirect(`${process.env.CLIENT_URL}/main/money_receipt_member/${res_dt.udf4}/${save_dt.trn_id}`)
+        res.redirect(`${process.env.CLIENT_URL}/main/money_receipt_member/${data[0]}/${save_dt.trn_id}`)
+    }else{
+        res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
+    }
+    // res.send(parsedData);
+})
+
+payRouter.post('/success_payment_asso', async (req, res) => {
+    const result = req.body.response;
+    var dataitems = decryptEas(
+        result,
+        process.env.ASSO_PAY_PROD_KEY,
+        process.env.ASSO_PAY_PROD_IV
+    );
+    const parsedData = JSON.parse(dataitems);
+    console.log("data", parsedData);
+    var res_dt = JSON.parse(parsedData)
+    var res_load = await payRecordSave(res_dt)
+    var data = res_dt.udf4.split('||')
+    res_dt.udf4 = data[0]
+    res_dt.udf5 = data[1]
+    res_dt.udf6 = data[2]
+    if(res_dt.txnStatus == 'SUCCESS'){
+        var save_dt = await saveTrns(res_dt)
+        if(res_dt.udf5 != 'U'){
+            var sub_res = await saveSubs(res_dt)
+        }
+        res.redirect(`${process.env.CLIENT_URL}/main/money_receipt_member/${data[0]}/${save_dt.trn_id}`)
     }else{
         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }
