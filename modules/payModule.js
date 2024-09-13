@@ -27,11 +27,16 @@ module.exports = {
         body: raw,
         redirect: "follow",
       };
+
+      console.log(data, config, 'config');
+      
   
       fetch(config["GetepayUrl"], requestOptions)
         .then((response) => response.text())
         .then((result) => {
           var resultobj = JSON.parse(result);
+          console.log(resultobj, 'Result');
+          
           var responseurl = resultobj.response;
           var dataitem = decryptEas(
             responseurl,
@@ -42,7 +47,8 @@ module.exports = {
           const paymentUrl = parsedData.paymentUrl;
           resolve(paymentUrl);
         })
-        .catch((error) => reject(error));
+        .catch((error) => { console.log(error);
+         reject(error)});
     });
   },
   saveTrns: (data) => {
