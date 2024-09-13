@@ -22,19 +22,20 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     try {
         data = JSON.parse(data)
         console.log(data);
+        var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
         if (data.member_id != '' && data.memb_name != '' && data.amount > 0) {
             const reqData = {
-                mid: process.env.PAY_MERCHANT_ID,
+                mid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
                 amount: data.amount.toString(),
                 merchantTransactionId: tnx_id.toString(),
                 transactionDate: new Date().toISOString(),
-                terminalId: process.env.PAY_TERMINAL_ID,
+                terminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
                 udf1: data.phone_no,
-                udf2: data.email_id,
+                udf2: 'abc@gmail.com',//data.email_id,
                 udf3: data.memb_name,
                 udf4: data.member_id,
-                udf5: data.approve_status,
-                udf6: data.form_no,
+                udf5: '',
+                udf6: '',
                 udf7: data.calc_upto,
                 udf8: data.subs_type,
                 udf9: data.sub_fee,
@@ -47,15 +48,15 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 txnType: "single",
                 productType: "IPG",
                 txnNote: "Test Txn",
-                vpa: process.env.PAY_VPA,
+                vpa: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
             };
 
             const config = {
-                GetepayMid: 108,
-                GeepayTerminalId: process.env.PAY_VPA,
-                GetepayKey: process.env.PAY_GET_KEY,
-                GetepayIV: process.env.PAY_GET_IV,
-                GetepayUrl: process.env.PAY_GET_URL,
+                GetepayMid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
+                GeepayTerminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+                GetepayKey: paySocFlag ? process.env.PAY_GET_KEY : process.env.ASSO_PAY_PROD_KEY,
+                GetepayIV: paySocFlag ? process.env.PAY_GET_IV : process.env.ASSO_PAY_PROD_IV,
+                GetepayUrl: paySocFlag ? process.env.PAY_GET_URL : process.env.ASSO_PAY_PROD_GET_URL,
             };
             getepayPortal(reqData, config)
                 .then((paymentUrl) => {
