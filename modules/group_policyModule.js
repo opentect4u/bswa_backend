@@ -11,6 +11,7 @@ const {
   BRANCH_MASTER,
   TRANSFER_TYPE_MASTER,
   VOUCHER_MODE_MASTER,
+  shortenURL,
 } = require("./MasterModule");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 const { dynamicFileUpload } = require("./associate_formModule");
@@ -499,23 +500,79 @@ module.exports = {
       //   flag = 0;
       // var res_dt = await db_Insert(table_name, fields, values, where, flag);
 
-      var table_name = "td_transactions",
-        fields =
-          data.trn_id > 0
-            ? `trn_dt = '${data.form_dt}',premium_amt = '${data.pre_amt}', tot_amt = '${data.pre_amt}', pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
-            : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
-        values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.pre_amt}','${data.pre_amt}','${data.payment}','${data.receipt_no}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','U','${data.user}','${datetime}')`,
-        where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
-        flag = data.trn_id > 0 ? 1 : 0;
-      var trn_data = await db_Insert(table_name, fields, values, where, flag);
-
-      if (trn_data.suc > 0) {
+      if(data.payment != 'O'){
+        var table_name = "td_transactions",
+          fields =
+            data.trn_id > 0
+              ? `trn_dt = '${data.form_dt}',premium_amt = '${data.pre_amt}', tot_amt = '${data.pre_amt}', pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+              : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+          values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.pre_amt}','${data.pre_amt}','${data.payment}','${data.receipt_no}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','U','${data.user}','${datetime}')`,
+          where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
+          flag = data.trn_id > 0 ? 1 : 0;
+        var trn_data = await db_Insert(table_name, fields, values, where, flag);
+  
+        if (trn_data.suc > 0) {
+          var table_name1 = "td_gen_ins",
+            fields1 = `ins_period = 'Y',form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+            values1 = null,
+            whr1 = `form_no = '${data.formNo}'`,
+            flag1 = 1;
+          var accept_dt = await db_Insert(
+            table_name1,
+            fields1,
+            values1,
+            whr1,
+            flag1
+          );
+          trn_data["trn_id"] = trn_id;
+        }
+  
+        try {
+          if (data.pay_mode == "C") {
+            var select = "msg, domain",
+              table_name = "md_whatsapp_msg",
+              whr = `msg_for = 'Accept'`,
+              order = null;
+            var msg_dt = await db_Select(select, table_name, whr, order);
+            var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+              domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+            wpMsg = wpMsg
+              .replace("{user_name}", data.member)
+              .replace("{form_no}", data.formNo)
+              .replace("{status}", formStatus[data.status])
+              .replace("{remarks}", data.reject);
+            var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+          } else {
+            var select = "msg, domain",
+              table_name = "md_whatsapp_msg",
+              whr = `msg_for = 'Member Premium accept online'`,
+              order = null;
+            var msg_dt = await db_Select(select, table_name, whr, order);
+            var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+              domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+            wpMsg = wpMsg
+              .replace("{user_name}", data.member)
+              .replace("{form_no}", data.form_no);
+            // var wpRes = await sendWappMediaMsg(
+            //   data.phone_no,
+            //   wpMsg,
+            //   domain,
+            //   "BOKAROWELFARE.jpg"
+            // );
+          }
+        } catch (err) {
+          console.log(err);
+        }
+        // END //
+  
+        resolve(trn_data);
+      }else{
         var table_name1 = "td_gen_ins",
           fields1 = `ins_period = 'Y',form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
           values1 = null,
           whr1 = `form_no = '${data.formNo}'`,
           flag1 = 1;
-        var accept_dt = await db_Insert(
+        var trn_data = await db_Insert(
           table_name1,
           fields1,
           values1,
@@ -523,59 +580,38 @@ module.exports = {
           flag1
         );
         trn_data["trn_id"] = trn_id;
-      }
+        try {
+          if (data.payment == "O") {
+            const encDtgen = encodeURIComponent(data.payEncDataGen);
+            console.log(encDtgen,'uuu');
 
-      try {
-        if (data.pay_mode == "C") {
-          // var select = "msg, domain",
-          //   table_name = "md_whatsapp_msg",
-          //   whr = `msg_for = 'Accept'`,
-          //   order = null;
-          // var msg_dt = await db_Select(select, table_name, whr, order);
-          // var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-          //   domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-          // wpMsg = wpMsg
-          //   .replace("{user_name}", data.member)
-          //   .replace("{form_no}", data.formNo)
-          //   .replace("{status}", formStatus[data.status]);
-          // var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-          var select = "msg, domain",
-            table_name = "md_whatsapp_msg",
-            whr = `msg_for = 'Accept'`,
-            order = null;
-          var msg_dt = await db_Select(select, table_name, whr, order);
-          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-            domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-          wpMsg = wpMsg
-            .replace("{user_name}", data.member)
-            .replace("{form_no}", data.formNo)
-            .replace("{status}", formStatus[data.status])
-            .replace("{remarks}", data.reject);
-          var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-        } else {
-          var select = "msg, domain",
-            table_name = "md_whatsapp_msg",
-            whr = `msg_for = 'Member Premium accept online'`,
-            order = null;
-          var msg_dt = await db_Select(select, table_name, whr, order);
-          var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-            domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-          wpMsg = wpMsg
-            .replace("{user_name}", data.member)
-            .replace("{form_no}", data.form_no);
-          var wpRes = await sendWappMediaMsg(
-            data.phone_no,
-            wpMsg,
-            domain,
-            "BOKAROWELFARE.jpg"
-          );
+            var select = "msg, domain",
+              table_name = "md_whatsapp_msg",
+              whr = `msg_for = 'Member accept online'`,
+              order = null;
+            var msg_dt = await db_Select(select, table_name, whr, order);
+            var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+              domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+
+            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`;
+            console.log(longUrl, '----------------------');
+            
+
+            // Shorten the URL
+            const shortUrl = await shortenURL(longUrl);
+
+            wpMsg = wpMsg
+              .replace("{user_name}", data.member)
+              .replace("{form_no}", data.formNo)
+              .replace("{pay_link}", shortUrl);
+            var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+            // console.log(wpRes,'message');
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (err) {
-        console.log(err);
+        resolve(trn_data)
       }
-      // END //
-
-      resolve(trn_data);
     });
   },
 
