@@ -620,6 +620,19 @@ const VOUCHER_MODE_MASTER = {
   O: "B",
 };
 
+const shortenURL = (longUrl) => {
+  return new Promise(async (resolve, reject) => {
+    const apiUrl = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
+    try {
+      const response = await axios.get(apiUrl);
+      resolve(response.data); // This will return the shortened URL
+    } catch (error) {
+      console.error('Error shortening URL:', error);
+      resolve(longUrl); // If the shortening fails, fallback to the long URL
+    }
+  })
+}
+
 module.exports = {
   db_Select,
   db_Insert,
@@ -641,5 +654,6 @@ module.exports = {
   // REMARKS_MASTER,
   drVoucher_gmp,
   drVoucher,
-  generateNextSubDate
+  generateNextSubDate,
+  shortenURL
 };

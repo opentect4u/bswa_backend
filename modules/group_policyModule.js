@@ -11,6 +11,7 @@ const {
   BRANCH_MASTER,
   TRANSFER_TYPE_MASTER,
   VOUCHER_MODE_MASTER,
+  shortenURL,
 } = require("./MasterModule");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 const { dynamicFileUpload } = require("./associate_formModule");
@@ -597,13 +598,13 @@ module.exports = {
             
 
             // Shorten the URL
-            const shortUrl = await shortUrl(longUrl);
+            const shortUrl = await shortenURL(longUrl);
 
             wpMsg = wpMsg
               .replace("{user_name}", data.member)
               .replace("{form_no}", data.formNo)
               .replace("{pay_link}", shortUrl);
-            // var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+            var wpRes = await sendWappMsg(data.phone_no, wpMsg);
             // console.log(wpRes,'message');
           }
         } catch (error) {

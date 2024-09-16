@@ -1,7 +1,7 @@
 const payRouter = require('express').Router()
 const CryptoJS = require('crypto-js');
 dotenv = require("dotenv");
-const { getepayPortal, saveTrns, saveSubs, payRecordSave, saveTrnsGmg } = require('../../modules/payModule');
+const { getepayPortal, saveTrns, saveSubs, payRecordSave, saveTrnsGmp } = require('../../modules/payModule');
 const { decryptEas } = require('../../controller/decryptEas');
 const { getMaxTrnId } = require('../../modules/MasterModule');
 const dateFormat = require('dateformat');
@@ -23,22 +23,25 @@ payRouter.post('/generate_pay_url', async (req, res) => {
         data = JSON.parse(data)
         console.log(data);
         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
-        if (data.member_id != '' && data.memb_name != '' && data.amount > 0) {
+        tnx_id = paySocFlag ? data.trn_id : tnx_id
+        console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
+        
+        if (data.memb_name != '' && data.amount > 0) {
             const reqData = {
                 mid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
                 amount: data.amount.toString(),
                 merchantTransactionId: tnx_id.toString(),
                 transactionDate: new Date().toISOString(),
                 terminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
-                udf1: data.phone_no,
-                udf2: data.email_id,
+                udf1: data.phone_no.toString(),
+                udf2: data.email_id ? data.email_id : '',
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${paySocFlag}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto,
                 udf8: data.subs_type,
-                udf9: data.sub_fee,
+                udf9: data.sub_fee.toString(),
                 udf10: data.redirect_path,
                 ru: paySocFlag ? `${process.env.BASE_URL}/${process.env.UAT_REDIRECT_URL}` : `${process.env.BASE_URL}/${process.env.ASSO_PAY_REDIRECT_URL}`,
                 callbackUrl: process.env.PAY_CALL_BACK_URL,
@@ -78,7 +81,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     }
 })
 
-payRouter.post('/success_payment_uat', async (req, res) => {
+payRouter.post('/success_payment_gmp', async (req, res) => {
     const result = req.body.response;
     var dataitems = decryptEas(
         result,
@@ -86,7 +89,7 @@ payRouter.post('/success_payment_uat', async (req, res) => {
         process.env.PAY_GET_IV
     );
     const parsedData = JSON.parse(dataitems);
-    console.log("data", parsedData);
+    console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
     var res_load = await payRecordSave(res_dt)
     var data = res_dt.udf4.split('||')
@@ -94,7 +97,7 @@ payRouter.post('/success_payment_uat', async (req, res) => {
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     if(res_dt.txnStatus == 'SUCCESS'){
-        var save_dt = await saveTrns(res_dt)
+        var save_dt = await saveTrnsGmp(res_dt)
         if(res_dt.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }
@@ -121,13 +124,7 @@ payRouter.post('/success_payment_asso', async (req, res) => {
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     if(res_dt.txnStatus == 'SUCCESS'){
-        var save_dt = {}
-        console.log(data[3], '++++++++++++++++++++++++');
-        if (data[3]){
-            save_dt = await saveTrnsGmg(res_dt)
-        }else{
-            save_dt = await saveTrns(res_dt);
-        }
+        var save_dt = await saveTrns(res_dt);
         if(res_dt.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }

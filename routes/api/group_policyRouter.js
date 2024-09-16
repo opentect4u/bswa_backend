@@ -339,7 +339,7 @@ group_policyRouter.get("/get_gmp_transaction", async (req, res) => {
   // var select =
   //     "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.pay_mode",
   var select =
-      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.trn_dt,b.premium_amt,b.pay_mode,b.receipt_no,b.chq_no,b.chq_dt,b.chq_bank",
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.trn_dt,b.premium_amt,b.pay_mode,b.receipt_no,b.chq_no,b.chq_dt,b.chq_bank, b.trn_id",
     table_name = "td_gen_ins a, td_transactions b",
     whr = `a.form_no = b.form_no 
     AND a.form_no ='${data.form_no}'`,
