@@ -1,7 +1,7 @@
 const payRouter = require('express').Router()
 const CryptoJS = require('crypto-js');
 dotenv = require("dotenv");
-const { getepayPortal, saveTrns, saveSubs, payRecordSave } = require('../../modules/payModule');
+const { getepayPortal, saveTrns, saveSubs, payRecordSave, saveTrnsGmg } = require('../../modules/payModule');
 const { decryptEas } = require('../../controller/decryptEas');
 const { getMaxTrnId } = require('../../modules/MasterModule');
 const dateFormat = require('dateformat');
@@ -33,7 +33,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 udf1: data.phone_no,
                 udf2: data.email_id,
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${paySocFlag}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto,
@@ -121,7 +121,13 @@ payRouter.post('/success_payment_asso', async (req, res) => {
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     if(res_dt.txnStatus == 'SUCCESS'){
-        var save_dt = await saveTrns(res_dt)
+        var save_dt = {}
+        console.log(data[3], '++++++++++++++++++++++++');
+        if (data[3]){
+            save_dt = await saveTrnsGmg(res_dt)
+        }else{
+            save_dt = await saveTrns(res_dt);
+        }
         if(res_dt.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }

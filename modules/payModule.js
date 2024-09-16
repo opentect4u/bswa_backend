@@ -56,8 +56,8 @@ module.exports = {
       const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var table_name = "td_transactions",
         fields =
-        "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
-        values = `('${data.udf6}', '${trn_dt}', '${data.merchantOrderNo}', '${data.txnAmount}', 0, 0, 0, 0, ${data.txnAmount}, 'O', '${data.getepayTxnId}', NULL, NULL, NULL, '${data.udf5}', '${data.udf3}', '${trn_dt}')`,
+          "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
+        values = `('${data.udf6}', '${trn_dt}', '${data.merchantOrderNo}', '${data.txnAmount}', 0, 0, 0, 0, ${data.txnAmount}, 'O', '${data.getepayTxnId}', NULL, NULL, 75, '${data.udf5}', '${data.udf3}', '${trn_dt}')`,
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -87,6 +87,19 @@ module.exports = {
       // }
       // END //
       resolve(res_dt)
+    })
+  },
+  saveTrnsGmg: (data) => {
+    return new Promise(async (resolve, reject) => {
+      const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      var table_name = "td_transactions",
+        fields = `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+        values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
+        where = null,
+        flag = 0;
+      var trn_data = await db_Insert(table_name, fields, values, where, flag);
+      trn_data["trn_id"] = data.merchantOrderNo;
+      resolve(trn_data)
     })
   },
   saveSubs: (data) => {

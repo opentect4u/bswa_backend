@@ -115,7 +115,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
   }
 
-  // console.log(res_dt, "kiki");
+  console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
