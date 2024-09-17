@@ -333,7 +333,7 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
 SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   var data = req.body;
   var select =
-      "a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name,b.member_id",
+      "a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name,b.member_id,b.mem_type",
     table_name = "td_transactions a, md_member b",
     whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
     // order = `ORDER BY trn_dt, trn_id`;
