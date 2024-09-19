@@ -23,7 +23,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
         data = JSON.parse(data)
         console.log(data);
         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
-        tnx_id = paySocFlag ? data.trn_id : tnx_id
+        tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
         console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
         
         if (data.memb_name != '' && data.amount > 0) {
@@ -36,7 +36,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 udf1: data.phone_no.toString(),
                 udf2: data.email_id ? data.email_id : '',
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto,
@@ -96,12 +96,13 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     res_dt.udf4 = data[0]
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
+    res_dt['up_flag'] = data[3]
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrnsGmp(res_dt)
         if(res_dt.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }
-        res.redirect(`${process.env.CLIENT_URL}/main/money_receipt_member/${data[0]}/${save_dt.trn_id}`)
+        res.redirect(`${process.env.CLIENT_URL}/${res_dt.udf10}`)
     }else{
         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }
