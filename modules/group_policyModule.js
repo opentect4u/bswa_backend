@@ -716,23 +716,24 @@ module.exports = {
             );
 
             // WHATSAPP MESSAGE //
-            try {
-              var select = "msg, domain",
-                table_name = "md_whatsapp_msg",
-                whr = `msg_for = 'Accept'`,
-                order = null;
-              var msg_dt = await db_Select(select, table_name, whr, order);
-              var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-                domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-              wpMsg = wpMsg
-                .replace("{user_name}", data.member)
-                .replace("{form_no}", data.formNo)
-                .replace("{status}", formStatus[data.status])
-                .replace("{remarks}", data.reject);
-              var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-            } catch (err) {
-              console.log(err);
-            }
+            //comment on 20.09.2024 
+            // try {
+            //   var select = "msg, domain",
+            //     table_name = "md_whatsapp_msg",
+            //     whr = `msg_for = 'Accept'`,
+            //     order = null;
+            //   var msg_dt = await db_Select(select, table_name, whr, order);
+            //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+            //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+            //   wpMsg = wpMsg
+            //     .replace("{user_name}", data.member)
+            //     .replace("{form_no}", data.formNo)
+            //     .replace("{status}", formStatus[data.status])
+            //     .replace("{remarks}", data.reject);
+            //   var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+            // } catch (err) {
+            //   console.log(err);
+            // }
             // END //
 
             resolve(approval_dt_st);

@@ -322,7 +322,7 @@ module.exports = {
                   data.subscriptionFee_associate_one
                 }',adm_fee = '${data.admissionFee_associate}',donation = '${
                   data.donationFee_associate
-                }',tot_amt = '${data.totalAmount_associate}',receipt_no = '${
+                }',tot_amt = '${data.totalAmount_associate}',pay_mode = '${data.payment}',receipt_no = '${
                   data.receipt_no
                 }',chq_no = null, chq_dt = null, chq_bank = ${
                   data.payment == "C" ? "73" : "75"

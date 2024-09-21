@@ -297,7 +297,7 @@ module.exports = {
                   data.admissionFee_life
                 }',donation = '${data.donationFee_life}',tot_amt = '${
                   data.totalAmount_life
-                }',receipt_no = '${
+                }',pay_mode = '${data.payment}',receipt_no = '${
                   data.receipt_no
                 }',chq_no = null, chq_dt = null, chq_bank = ${
                   data.payment == "C" ? "73" : "75"
