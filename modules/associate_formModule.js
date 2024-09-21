@@ -412,6 +412,8 @@ module.exports = {
 
             // Shorten the URL
             const shortUrl = await shortenURL(longUrl);
+            console.log(shortUrl);
+            
 
             wpMsg = wpMsg
               .replace("{user_name}", data.member)

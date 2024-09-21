@@ -99,10 +99,17 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     res_dt['up_flag'] = data[3]
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrnsGmp(res_dt)
-        if(res_dt.udf5 != 'U'){
-            var sub_res = await saveSubs(res_dt)
-        }
-        res.redirect(`${process.env.CLIENT_URL}/${res_dt.udf10}`)
+        // if(res_dt.udf5 != 'U'){
+        //     var sub_res = await saveSubs(res_dt)
+        // }
+        var redirect_url_client =
+          data[0] != ""
+            ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
+            : `home/money_receipt_member/${save_dt.trn_id}`;
+
+        // console.log(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+        res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+        // res.redirect(`${process.env.CLIENT_URL}/${res_dt.udf10}`)
     }else{
         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }
@@ -129,7 +136,12 @@ payRouter.post('/success_payment_asso', async (req, res) => {
         if(res_dt.udf5 != 'U'){
             var sub_res = await saveSubs(res_dt)
         }
-        res.redirect(`${process.env.CLIENT_URL}/main/money_receipt_member/${data[0]}/${save_dt.trn_id}`)
+        var redirect_url_client = data[0] != ''
+        ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
+        : `home/money_receipt_member/${save_dt.trn_id}`;
+        
+        // console.log(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+        res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
     }else{
         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }

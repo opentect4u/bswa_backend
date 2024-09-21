@@ -3,8 +3,8 @@ const {decryptEas} = require('../controller/decryptEas')
 const fetch = require('node-fetch');
 const dateFormat = require('dateformat');
 const { db_Insert, getMaxTrnId, generateNextSubDate, getCurrFinYear } = require('./MasterModule');
-module.exports = { 
-    getepayPortal : (data, config) => {
+module.exports = {
+  getepayPortal: (data, config) => {
     return new Promise((resolve, reject) => {
       const JsonData = JSON.stringify(data);
       var ciphertext = encryptEas(
@@ -14,7 +14,7 @@ module.exports = {
       );
       var newCipher = ciphertext.toUpperCase();
       var myHeaders = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       };
       var raw = JSON.stringify({
         mid: data.mid,
@@ -28,15 +28,14 @@ module.exports = {
         redirect: "follow",
       };
 
-      console.log(data, config, 'config');
-      
-  
+      console.log(data, config, "config");
+
       fetch(config["GetepayUrl"], requestOptions)
         .then((response) => response.text())
         .then((result) => {
           var resultobj = JSON.parse(result);
-          console.log(resultobj, 'Result');
-          
+          console.log(resultobj, "Result");
+
           var responseurl = resultobj.response;
           var dataitem = decryptEas(
             responseurl,
@@ -47,8 +46,10 @@ module.exports = {
           const paymentUrl = parsedData.paymentUrl;
           resolve(paymentUrl);
         })
-        .catch((error) => { console.log(error);
-         reject(error)});
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
     });
   },
   saveTrns: (data) => {
@@ -86,27 +87,34 @@ module.exports = {
       //   console.log(err);
       // }
       // END //
-      resolve(res_dt)
-    })
+      resolve(res_dt);
+    });
   },
   saveTrnsGmp: (data) => {
     return new Promise(async (resolve, reject) => {
       const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
       var table_name = "td_transactions",
-        fields = data.up_flag > 0 ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'` : 
-        `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+        fields =
+          data.up_flag > 0
+            ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
+            : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
         values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
         where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
         flag = data.up_flag > 0 ? 1 : 0;
       var trn_data = await db_Insert(table_name, fields, values, where, flag);
       trn_data["trn_id"] = data.merchantOrderNo;
-      resolve(trn_data)
-    })
+      resolve(trn_data);
+    });
   },
   saveSubs: (data) => {
     return new Promise(async (resolve, reject) => {
-      var sub_upto = await generateNextSubDate(data.udf7, data.udf8, data.txnAmount, data.udf9)
+      var sub_upto = await generateNextSubDate(
+        data.udf7,
+        data.udf8,
+        data.txnAmount,
+        data.udf9
+      );
       var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var finres = await getCurrFinYear();
       var curr_fin_year = finres.curr_fin_year;
@@ -134,7 +142,7 @@ module.exports = {
       //   dateFormat(new Date(trn_dt), "yyyy-mm-dd")
       // );
 
-      var voucher_res = {suc: 1, msg: 1}
+      var voucher_res = { suc: 1, msg: 1 };
 
       if (voucher_res.suc > 0) {
         if (voucher_res.msg > 0) {
@@ -143,10 +151,12 @@ module.exports = {
               "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
             values = `('${data.udf4}', '${trn_dt}', '${
               data.txnAmount
-            }', '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', 0, '${dateFormat(
+            }', '${dateFormat(
               sub_upto,
               "yyyy-mm-dd HH:MM:ss"
-            )}', '${data.merchantOrderNo}', '${data.udf3}', '${trn_dt}')`,
+            )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${
+              data.merchantOrderNo
+            }', '${data.udf3}', '${trn_dt}')`,
             whr = null,
             flag = 0;
           var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -183,19 +193,107 @@ module.exports = {
       } else {
         resolve(voucher_res);
       }
-    })
+    });
+  },
+  saveSubsGmp: (data) => {
+    return new Promise(async (resolve, reject) => {
+      var sub_upto = await generateNextSubDate(
+        data.udf7,
+        data.udf8,
+        data.txnAmount,
+        data.udf9
+      );
+      var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      var finres = await getCurrFinYear();
+      var curr_fin_year = finres.curr_fin_year;
+
+      // var voucher_res = await postVoucher(
+      //   FIN_YEAR_MASTER[curr_fin_year],
+      //   curr_fin_year,
+      //   2,
+      //   BRANCH_MASTER[2],
+      //   data.trn_id,
+      //   dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+      //   TRANSFER_TYPE_MASTER[data.pay_mode],
+      //   VOUCHER_MODE_MASTER[data.pay_mode],
+      //   data.acc_code,
+      //   CR_ACC_MASTER[data.memb_type],
+      //   "DR",
+      //   data.sub_amt,
+      //   data.chq_no,
+      //   data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+      //   data.remarks,
+      //   "A",
+      //   data.user,
+      //   dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+      //   data.user,
+      //   dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+      // );
+
+      var voucher_res = { suc: 1, msg: 1 };
+
+      if (voucher_res.suc > 0) {
+        if (voucher_res.msg > 0) {
+          var table_name = "td_memb_subscription",
+            fields =
+              "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
+            values = `('${data.udf4}', '${trn_dt}', '${
+              data.txnAmount
+            }', '${dateFormat(
+              sub_upto,
+              "yyyy-mm-dd HH:MM:ss"
+            )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${
+              data.merchantOrderNo
+            }', '${data.udf3}', '${trn_dt}')`,
+            whr = null,
+            flag = 0;
+          var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+          // WHATSAPP MESSAGE //
+          // try {
+          //   var select = "msg, domain",
+          //     table_name = "md_whatsapp_msg",
+          //     whr = `msg_for = 'Approve transaction'`,
+          //     order = null;
+          //   var msg_dt = await db_Select(select, table_name, whr, order);
+          //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+          //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+          //   wpMsg = wpMsg
+          //     .replace("{user_name}", data.member)
+          //     //   .replace("{form_id}", form_no)
+          //     .replace("{trn_id}", data.trn_id)
+          //     .replace("{total}", data.sub_amt)
+          //     .replace(
+          //       "{url}",
+          //       `${domain}/#/home/money_receipt_member/${data.memb_id}/${data.trn_id}`
+          //     );
+          //   var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+          // } catch (err) {
+          //   console.log(err);
+          // }
+
+          // END //
+
+          resolve(res_dt);
+        } else {
+          resolve({ suc: 0, msg: "Voucher Not Saved" });
+        }
+      } else {
+        resolve(voucher_res);
+      }
+    });
   },
   payRecordSave: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var table_name = "td_pg_transaction",
-      fields =
-        "(entry_dt, pay_trns_id, mid, trns_amt, trns_status, mer_order_no, udf1, udf2, udf3, udf4, udf5, udf6, udf7, udf8, udf9, udf10, udf41, cust_ref_no, pay_mode, discriminator, message, paymentStatus, txnDate, surcharge, totalAmount, settlementAmount, settlementRefNo, settlementDate, settlementStatus, txnNote)",
-      values = `('${datetime}', '${data.getepayTxnId}', '${data.mid}', '${data.txnAmount}', '${data.txnStatus}', '${data.merchantOrderNo}', '${data.udf1}', '${data.udf2}', '${data.udf3}', '${data.udf4}', '${data.udf5}', '${data.udf6}', '${data.udf7}', '${data.udf8}', '${data.udf9}', '${data.udf10}', '${data.udf41}', '${data.custRefNo}', '${data.paymentMode}', '${data.discriminator}', '${data.message}', '${data.paymentStatus}', '${data.txnDate}', '${data.surcharge}', '${data.totalAmount}', '${data.settlementAmount}', '${data.settlementRefNo}', '${data.settlementDate}', '${data.settlementStatus}', '${data.txnNote}')`,
-      whr = null,
-      flag = 0;
-    var res_dt = await db_Insert(table_name, fields, values, whr, flag);
-    resolve(res_dt);
-    })
-  }
-}
+        fields =
+          "(entry_dt, pay_trns_id, mid, trns_amt, trns_status, mer_order_no, udf1, udf2, udf3, udf4, udf5, udf6, udf7, udf8, udf9, udf10, udf41, cust_ref_no, pay_mode, discriminator, message, paymentStatus, txnDate, surcharge, totalAmount, settlementAmount, settlementRefNo, settlementDate, settlementStatus, txnNote)",
+        values = `('${datetime}', '${data.getepayTxnId}', '${data.mid}', '${data.txnAmount}', '${data.txnStatus}', '${data.merchantOrderNo}', '${data.udf1}', '${data.udf2}', '${data.udf3}', '${data.udf4}', '${data.udf5}', '${data.udf6}', '${data.udf7}', '${data.udf8}', '${data.udf9}', '${data.udf10}', '${data.udf41}', '${data.custRefNo}', '${data.paymentMode}', '${data.discriminator}', '${data.message}', '${data.paymentStatus}', '${data.txnDate}', '${data.surcharge}', '${data.totalAmount}', '${data.settlementAmount}', '${data.settlementRefNo}', '${data.settlementDate}', '${data.settlementStatus}', '${data.txnNote}')`,
+        whr = null,
+        flag = 0;
+      var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+      resolve(res_dt);
+    });
+  },
+};

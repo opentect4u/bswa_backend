@@ -333,13 +333,16 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
 SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   var data = req.body;
   var select =
-      "a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name,b.member_id,b.mem_type",
-    table_name = "td_transactions a, md_member b",
-    whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
+      `a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,IF(b.memb_name != '', b.memb_name, c.memb_name) memb_name, IF(b.member_id != '', b.member_id, c.member_id) member_id, IF(b.mem_type != '', b.mem_type, c.policy_holder_type) mem_type`,
+    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no",
+    // whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
+    whr = `a.trn_id = '${data.trn_id}' ${data.member_id > 0 ? `AND b.member_id = '${data.member_id}'` : ''}`,
     // order = `ORDER BY trn_dt, trn_id`;
     // order = `ORDER BY trn_dt DESC`;
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
+  console.log(res_dt);
+  
   res.send(res_dt);
 });
 
