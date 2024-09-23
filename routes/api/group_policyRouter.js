@@ -361,4 +361,14 @@ group_policyRouter.post("/accept_gmp_money_receipt", async (req, res) => {
   res.send(res_dt);
 });
 
+group_policyRouter.post("/get_grn_ins_dtls_with_member_id", async (req, res) => {
+  var data = req.body;
+  var select = "member_id, form_no",
+    table_name = "td_gen_ins",
+    where = `member_id = '${data.memb_id}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, where, order);
+  res.send(res_dt);
+});
+
 module.exports = { group_policyRouter };

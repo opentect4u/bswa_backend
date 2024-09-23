@@ -198,9 +198,7 @@ memberRouter.post("/user_tnx_details", async (req, res) => {
   var data = req.body;
   var select = "*",
     table_name = "td_transactions",
-    whr = `form_no = '${data.form_no}' ${
-      data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ""
-    }`,
+    whr = `approval_status IN('A','U') ${data.form_no != '' ? `AND form_no in (${data.form_no})` : ''} ${data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ""}`,
     // order = `ORDER BY trn_dt, trn_id`;
     order = `ORDER BY trn_dt DESC`;
   var res_dt = await db_Select(select, table_name, whr, order);
