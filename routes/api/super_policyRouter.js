@@ -280,7 +280,7 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
           "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
         table_name = "td_stp_ins a, md_unit b",
         whr = `a.association = b.unit_id
-      AND a.member_id ='${data.member_id}' AND form_no = '${data.form_no}'`,
+      AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
@@ -288,7 +288,7 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
           "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
         table_name = "td_stp_ins a, md_unit b",
         whr = `a.association = b.unit_id
-      AND a.member_id ='${data.member_id}' AND form_no = '${data.form_no}'`,
+      AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
     }
