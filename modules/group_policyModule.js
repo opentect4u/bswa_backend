@@ -491,7 +491,7 @@ module.exports = {
 
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
-      // console.log(trn_id, "pppp");
+      // console.log(data, "pppp");
 
       // var table_name = "td_premium_dtls",
       //   fields = `(form_no,premium_dt,premium_id,premium_amt,created_by,created_at)`,
@@ -524,7 +524,7 @@ module.exports = {
             whr1,
             flag1
           );
-          trn_data["trn_id"] = trn_id;
+          trn_data["trn_id"] = data.trn_id;
         }
   
         try {
