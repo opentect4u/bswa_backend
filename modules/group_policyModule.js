@@ -653,15 +653,19 @@ module.exports = {
         datetime
       );
 
-      if (voucher_res.suc > 0) {
-        if (voucher_res.msg > 0) {
-          var table_name = "td_premium_dtls",
-            fields = `(form_no,premium_amt,created_by,created_at)`,
-            values = `('${data.formNo}','${data.pre_amt}','${data.user}','${datetime}')`,
-            where = null,
-            flag = 0;
-          var res_dt = await db_Insert(table_name, fields, values, where, flag);
+      //24.09.2024 comment out
+      // if (voucher_res.suc > 0) {
+        // if (voucher_res.msg > 0) {
+          // var table_name = "td_premium_dtls",
+          //   fields = `(form_no,premium_amt,created_by,created_at)`,
+          //   values = `('${data.formNo}','${data.pre_amt}','${data.user}','${datetime}')`,
+          //   where = null,
+          //   flag = 0;
+          // var res_dt = await db_Insert(table_name, fields, values, where, flag);
 
+          //24.09.2024
+
+          //old_one
           // fields = `(form_no,premium_dt,premium_id,premium_amt ${
           //   data.sup_top_flag == "p2"
           //     ? `,premium_amt2,prm_flag2`
@@ -687,8 +691,10 @@ module.exports = {
           //   whr = `form_no = '${data.formNo}'`,
           //   flag = 1;
           // var premium_dt = await db_Insert(table_name, fields, values, whr, flag);
+          //
 
-          if (res_dt.suc > 0) {
+          //24.09.20254
+          // if (res_dt.suc > 0) {
             var table_name = "td_gen_ins",
               fields = `form_status = 'A',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
               values = null,
@@ -737,13 +743,13 @@ module.exports = {
             // END //
 
             resolve(approval_dt_st);
-          } else {
-            resolve({ suc: 0, msg: "Voucher Not Saved" });
-          }
-        } else {
-          resolve(voucher_res);
-        }
-      }
+          // } else {
+          //   resolve({ suc: 0, msg: "Voucher Not Saved" });
+          // }24.09.2024
+        // } else {
+        //   resolve(voucher_res);
+        // }
+      // }
     });
   },
 };
