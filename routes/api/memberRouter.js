@@ -26,7 +26,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
         res_dt.msg[0].mem_type != "AI"
           ? "a.relation in (3, 15)"
           : `a.intro_member_id is not null`
-      }`,
+      } AND a.delete_flag = 'N'`,
       order = "order by sl_no";
     var spou_dt = await db_Select(select, table_name, whr, order);
 
@@ -37,7 +37,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
         res_dt.msg[0].mem_type != "AI"
           ? "a.relation not in (3, 15)"
           : `a.intro_member_id is null`
-      }`,
+      } AND a.delete_flag = 'N'`,
       order = "order by sl_no";
     var dep_dt = await db_Select(select, table_name, whr, order);
 
@@ -248,5 +248,21 @@ memberRouter.post("/insurance_dtls", async (req, res) => {
 
   res.send(response);
 });
+
+memberRouter.post("/delete_depend", async (req, res) => {
+  var data = req.body;
+  console.log(data,'log');
+  
+
+  let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  
+  var table_name = "md_dependent",
+  fields = `delete_flag = 'Y', deleted_by = '${data.user}', deleted_at = '${datetime}'`,
+  values = null,
+  whr = `member_id = '${data.member_id}' AND sl_no = '${data.sl_no}'`,
+  flag = 1;
+  var delete_dt = await db_Insert(table_name, fields, values, whr, flag);
+  res.send(delete_dt)
+})
 
 module.exports = { memberRouter };
