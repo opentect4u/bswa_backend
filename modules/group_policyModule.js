@@ -203,14 +203,15 @@ module.exports = {
 
             i++
           }
-          var table_name = "td_transactions",
-          fields =`(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,created_by,created_at)`,
-          values = `('${form_no}','${datetime}','${trn_id}','0','0','0','0','${tot_amt}','${
-            tot_amt
-          }','${data.user}','${datetime}')`,
-          where = null,
-          flag = 0;
-        var res_dt = await db_Insert(table_name, fields, values, where, flag);
+        //   var table_name = "td_transactions",
+        //   fields =`(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,created_by,created_at)`,
+        //   values = `('${form_no}','${datetime}','${trn_id}','0','0','0','0','${tot_amt}','${
+        //     tot_amt
+        //   }','${data.user}','${datetime}')`,
+        //   where = null,
+        //   flag = 0;
+        // var res_dt = await db_Insert(table_name, fields, values, where, flag);
+        
         // } else {
         //   for (let dt of data.dependent_dt) {
         //     fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depAddFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;

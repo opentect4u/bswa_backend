@@ -58,7 +58,7 @@ generalRouter.get("/frm_list", async (req, res) => {
     whr = `memb_status IN('P','R','T')`;
   // whr = `memb_status = 'P' OR memb_status = 'R' OR memb_status = 'T'`;
   // AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
-  order = null;
+  order = `ORDER BY form_dt desc`;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "kiki");
   res.send(res_dt);

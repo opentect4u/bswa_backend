@@ -3,7 +3,7 @@ const CryptoJS = require('crypto-js');
 dotenv = require("dotenv");
 const { getepayPortal, saveTrns, saveSubs, payRecordSave, saveTrnsGmp } = require('../../modules/payModule');
 const { decryptEas } = require('../../controller/decryptEas');
-const { getMaxTrnId } = require('../../modules/MasterModule');
+const { getMaxTrnId, db_Insert } = require('../../modules/MasterModule');
 const dateFormat = require('dateformat');
 dotenv.config({ path: '.env.prod' });
 
@@ -97,8 +97,18 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     res_dt['up_flag'] = data[3]
+    // res_dt['direct_flag'] = data[4]
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrnsGmp(res_dt)
+        // try{
+        //     if(res_dt.direct_flag == 'D'){
+        //   var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
+        //   res.send(mem_dt)
+        //   console.log('Update result:', mem_dt);
+        //     }
+        // }catch(err){
+        //     console.log(err);            
+        // }
         // if(res_dt.udf5 != 'U'){
         //     var sub_res = await saveSubs(res_dt)
         // }
