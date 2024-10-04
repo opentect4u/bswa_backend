@@ -628,31 +628,32 @@ module.exports = {
       var finres = await getCurrFinYear();
       var curr_fin_year = finres.curr_fin_year;
 
-      var voucher_res = await drVoucher_gmp(
-        FIN_YEAR_MASTER[curr_fin_year],
-        curr_fin_year,
-        1,
-        BRANCH_MASTER[1],
-        data.trn_id,
-        dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
-        TRANSFER_TYPE_MASTER[data.pay_mode],
-        VOUCHER_MODE_MASTER[data.pay_mode],
-        data.acc_code,
-        4,
-        "DR",
-        data.pre_amt,
-        data.pre_amt,
-        data.chq_no,
-        data.chq_dt && new Date(data.chq_dt) != "Invalid Date"
-          ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd")
-          : "",
-        `Amount deposited for premium of - ${data.user_name}`,
-        "A",
-        data.user,
-        datetime,
-        data.user,
-        datetime
-      );
+      // var voucher_res = await drVoucher_gmp(
+      //   FIN_YEAR_MASTER[curr_fin_year],
+      //   curr_fin_year,
+      //   1,
+      //   BRANCH_MASTER[1],
+      //   data.trn_id,
+      //   dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
+      //   TRANSFER_TYPE_MASTER[data.pay_mode],
+      //   VOUCHER_MODE_MASTER[data.pay_mode],
+      //   data.acc_code,
+      //   4,
+      //   "DR",
+      //   data.pre_amt,
+      //   data.pre_amt,
+      //   data.chq_no,
+      //   data.chq_dt && new Date(data.chq_dt) != "Invalid Date"
+      //     ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd")
+      //     : "",
+      //   `Amount deposited for premium of - ${data.user_name}`,
+      //   "A",
+      //   data.user,
+      //   datetime,
+      //   data.user,
+      //   datetime
+      // );
+      var voucher_res = { suc: 1, msg: 1 };
 
       //24.09.2024 comment out
       // if (voucher_res.suc > 0) {
