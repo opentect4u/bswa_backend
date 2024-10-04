@@ -92,7 +92,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
       res_dt = await db_Select(select, table_name, whr, order);
     } else {
       var select =
-          "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,b.unit_name",
+          "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.disease_flag,a.disease_type,b.unit_name",
         table_name = "td_gen_ins a, md_unit b",
         whr = `a.association = b.unit_id
         AND a.member_id ='${data.member_id}'

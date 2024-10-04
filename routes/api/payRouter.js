@@ -36,7 +36,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 udf1: data.phone_no.toString(),
                 udf2: data.email_id ? data.email_id : '',
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.direct_flag : 'A'}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto,
@@ -97,18 +97,18 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     res_dt['up_flag'] = data[3]
-    // res_dt['direct_flag'] = data[4]
+    res_dt['direct_flag'] = data[4]
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrnsGmp(res_dt)
-        // try{
-        //     if(res_dt.direct_flag == 'D'){
-        //   var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
-        //   res.send(mem_dt)
-        //   console.log('Update result:', mem_dt);
-        //     }
-        // }catch(err){
-        //     console.log(err);            
-        // }
+        try{
+            if(res_dt.direct_flag == 'D'){
+          var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
+          res.send(mem_dt)
+          console.log('Update result:', mem_dt);
+            }
+        }catch(err){
+            console.log(err);            
+        }
         // if(res_dt.udf5 != 'U'){
         //     var sub_res = await saveSubs(res_dt)
         // }
