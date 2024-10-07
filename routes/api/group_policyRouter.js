@@ -1,6 +1,6 @@
 const express = require("express");
 const dateFormat = require("dateformat");
-const { db_Select } = require("../../modules/MasterModule");
+const { db_Select, db_Insert } = require("../../modules/MasterModule");
 const {
   group_policy_form_save,
   group_policy_form_save_child,
@@ -370,5 +370,21 @@ group_policyRouter.post("/get_grn_ins_dtls_with_member_id", async (req, res) => 
   var res_dt = await db_Select(select, table_name, where, order);
   res.send(res_dt);
 });
+
+// group_policyRouter.post("/delete_depends_gmp", async (req, res) => {
+//   var data = req.body;
+//   console.log(data,'log');
+  
+
+//   let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  
+//   var table_name = "md_dependent",
+//   fields = `delete_flag = 'Y', deleted_by = '${data.user}', deleted_at = '${datetime}'`,
+//   values = null,
+//   whr = `member_id = '${data.member_id}' AND sl_no = '${data.sl_no}'`,
+//   flag = 1;
+//   var delete_dt = await db_Insert(table_name, fields, values, whr, flag);
+//   res.send(delete_dt)
+// })
 
 module.exports = { group_policyRouter };

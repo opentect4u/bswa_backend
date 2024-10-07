@@ -95,7 +95,7 @@ reportRouter.get("/gmp_trans_report", async (req, res) => {
   var data = req.query;
   // console.log(data, "bbb");
   var select =
-    "a.member_id,a.memb_name,a.association,b.dept_name,c.premium_dt,c.premium_id,c.premium_amt,c.premium_amt2,c.prm_flag2,c.premium_amt3,c.prm_flag3,d.trn_dt,d.trn_id,e.family_type, f.unit_name";
+    "a.member_id,a.memb_name,a.association,a.sex,a.dob,b.dept_name,c.premium_dt,c.premium_id,c.premium_amt,c.premium_amt2,c.prm_flag2,c.premium_amt3,c.prm_flag3,d.trn_dt,d.trn_id,e.family_type, f.unit_name";
   table_name = " td_gen_ins a, td_gen_ins_depend b, td_premium_dtls c, td_transactions d, md_premium_type e, md_unit f",
     whr = `DATE(a.form_dt) between '${data.from_dt}' and '${data.to_dt}'
            AND  a.form_no = b.form_no

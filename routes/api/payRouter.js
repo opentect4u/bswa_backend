@@ -36,7 +36,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 udf1: data.phone_no.toString(),
                 udf2: data.email_id ? data.email_id : '',
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.direct_flag : 'A'}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto,
@@ -104,7 +104,7 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
             if(res_dt.direct_flag == 'D'){
           var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
           res.send(mem_dt)
-          console.log('Update result:', mem_dt);
+          console.log('Update result:', mem_dt,data,formNo);
             }
         }catch(err){
             console.log(err);            

@@ -119,8 +119,8 @@ module.exports = {
       }
 
       if(depDocFile){
-        if(Array.isArray(depAadFile)){
-          for(let dt of depAadFile){
+        if(Array.isArray(depDocFile)){
+          for(let dt of depDocFile){
             var fileRes = await savegenFiles(dt, 'DEP', form_no)
             depDocFilePath = fileRes.suc > 0 ? fileRes.msg : ''
             depDocFileName.push({fileName: depDocFilePath})
@@ -133,14 +133,14 @@ module.exports = {
       }
 
       if (depAadFile) {
-    if (Array.isArray(depDocFile)) {
-        for (let dt of depDocFile) {
+    if (Array.isArray(depAadFile)) {
+        for (let dt of depAadFile) {
             var fileRes = await savegenFiles(dt, 'DEP_AADH', form_no);
             depAddFilePath = fileRes.suc > 0 ? fileRes.msg : '';
             depAddFileName.push({fileName: depAddFilePath});
         }
     } else {
-        var fileRes = await savegenFiles(depDocFile, 'DEP_AADH', form_no);
+        var fileRes = await savegenFiles(depAadFile, 'DEP_AADH', form_no);
         depAddFilePath = fileRes.suc > 0 ? fileRes.msg : '';
         depAddFileName.push({fileName: depAddFilePath});
     }

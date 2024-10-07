@@ -186,7 +186,7 @@ generalRouter.post("/approve", async (req, res) => {
 generalRouter.post("/accept_money_receipt", async (req, res) => {
   var data = req.body;
   var select =
-      "a.form_no,a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name",
+      "a.form_no,a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,b.memb_name,b.mem_type",
     table_name = "td_transactions a, md_member b",
     whr = `a.form_no = b.form_no AND a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
     order = null;
