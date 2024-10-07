@@ -1,8 +1,9 @@
 const cronRouter = require('express').Router()
 const { sendWappMediaMsg } = require('../modules/whatsappModule');
 const CryptoJS = require('crypto-js');
+dotenv = require("dotenv");
 const {db_Select} = require('../modules/MasterModule')
-
+dotenv.config({ path: '.env.prod' });
 // cronRouter.get('/subscription_cron_notification', async (req, res) => {
 //     var res_dt = await db_Select('a.member_id, a.amount, a.calc_amt, a.calc_upto, c.memb_name, c.phone_no, c.form_no', 'td_memb_subscription a, md_member c', `a.member_id=c.member_id AND date(a.calc_upto) = (SELECT MAX(date(b.calc_upto)) FROM td_memb_subscription b WHERE a.member_id=b.member_id AND b.calc_upto = date(now()))`, null)
 //     if(res_dt.suc > 0){
@@ -69,8 +70,10 @@ cronRouter.get('/subscription_cron_notification', async (req, res) => {
                     console.log(custDt,'cust');
                     
 
-                    const secretKey = process.env.secretKey; // Replace with your actual secret key
-                    const encDt = CryptoJS.AES.encrypt(JSON.stringify(custDt), secretKey).toString();
+                    const secretKey = process.env.secretKey;
+                    console.log(secretKey);
+                     // Replace with your actual secret key
+                    const encDt = CryptoJS.AES.encrypt(JSON.stringify(custDt), secretKey).toString(CryptoJS.enc.Utf8);
 
                     // Replace placeholders in the message
                     wpMsg = wpMsg

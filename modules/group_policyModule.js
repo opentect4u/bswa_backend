@@ -94,7 +94,7 @@ module.exports = {
 
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      // console.log(form_no, "pppp");
+      console.log(form_no, "pppp");
 
       let sl_no = await getMaxSlNo(form_no);
       sl_no = sl_no.suc > 0 ? sl_no.msg[0].sl_no : 1;
@@ -198,11 +198,13 @@ module.exports = {
               whr,
               order
             );
-            policy_dt["form_no"] = form_no;
-            policy_dt["policy_holder_type"] = `${data.checkedmember}`
 
             i++
           }
+          policy_dt["form_no"] = form_no;
+            console.log(policy_dt["form_no"],'lo');
+            
+            policy_dt["policy_holder_type"] = `${data.checkedmember}`
         //   var table_name = "td_transactions",
         //   fields =`(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,created_by,created_at)`,
         //   values = `('${form_no}','${datetime}','${trn_id}','0','0','0','0','${tot_amt}','${
