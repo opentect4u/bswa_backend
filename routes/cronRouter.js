@@ -42,7 +42,7 @@ dotenv.config({ path: '.env.prod' });
 
 
 cronRouter.get('/subscription_cron_notification', async (req, res) => {
-    var res_dt = await db_Select('a.member_id, a.amount, a.calc_amt, a.calc_upto, c.memb_name, c.phone_no, c.form_no', 'td_memb_subscription a, md_member c', `a.member_id=c.member_id AND date(a.calc_upto) = (SELECT MAX(date(b.calc_upto)) FROM td_memb_subscription b WHERE a.member_id=b.member_id AND b.calc_upto = date(now()))`, null);
+    var res_dt = await db_Select('a.member_id, a.amount, a.calc_amt, a.calc_upto, c.memb_name, c.phone_no, c.form_no', 'td_memb_subscription a, md_member c', `a.member_id=c.member_id AND a.member_id NOT LIKE "AI%" AND date(a.calc_upto) = (SELECT MAX(date(b.calc_upto)) FROM td_memb_subscription b WHERE a.member_id=b.member_id AND b.calc_upto < date(now()))`, null);
     
     if (res_dt.suc > 0) {
         if (res_dt.msg.length > 0) {
@@ -79,10 +79,10 @@ cronRouter.get('/subscription_cron_notification', async (req, res) => {
                     wpMsg = wpMsg
                         .replace("{user_name}", dt.memb_name)
                         .replace("{form_no}", dt.form_no)
-                        .replace(
-                            "{url}",
-                            `${domain}/#/auth/payment_preview_page/${encDt}`
-                        );
+                        // .replace(
+                        //     "{url}",
+                        //     `${domain}/#/auth/payment_preview_page/${encDt}`
+                        // );
 
                     // Send the WhatsApp message
                     var wpRes = await sendWappMediaMsg(dt.phone_no, wpMsg);
