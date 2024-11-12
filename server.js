@@ -36,6 +36,7 @@ const { add_adminRouter } = require("./routes/api/add_adminRouter");
 const { memberPolicyRouter } = require("./routes/api/memberPolicyRouter");
 const { cronRouter } = require("./routes/cronRouter");
 const { payRouter } = require("./routes/api/payRouter");
+const { whatsappRouter } = require("./routes/api/whatsappRouter");
 
 app.use(LoginRouter);
 app.use("/fee", admin_fee_typeRouter);
@@ -53,6 +54,7 @@ app.use(password_change);
 app.use(add_adminRouter);
 app.use(payRouter)
 app.use('/cron', cronRouter)
+app.use(whatsappRouter)
 
 app.listen(port, (err) => {
   if (err) throw new Error(err);
