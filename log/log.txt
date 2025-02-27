@@ -1335,3 +1335,33 @@
 [EVENT]   : [27-Jul-24 14:51:07] : Exicuting Select Statement from table md_member 
 [MESSAGE] : [27-Jul-24 14:51:07] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'member_type' in 'where clause'","sqlState":"42S22","index":0,"sql":"SELECT mem_type FROM md_member WHERE member_type = 'AI' "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 08:16:12] : Exicuting Update Statement for table td_gen_ins 
+[MESSAGE] : [27-Feb-25 08:16:12] : Error: ER_BAD_FIELD_ERROR: Unknown column 'approved_by' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 08:17:45] : Exicuting Update Statement for table td_gen_ins 
+[MESSAGE] : [27-Feb-25 08:17:45] : Error: ER_BAD_FIELD_ERROR: Unknown column 'approved_at' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 10:18:06] : Exicuting Select Statement from table td_premium_dtls a, md_premium_type b 
+[MESSAGE] : [27-Feb-25 10:18:06] : {"code":"UNKNOWN_CODE_PLEASE_REPORT","errno":1932,"sqlMessage":"Table 'sail.td_premium_dtls' doesn't exist in engine","sqlState":"42S02","index":0,"sql":"SELECT a.form_no,a.premium_amt,a.premium_amt2,a.prm_flag2,a.premium_amt3,a.prm_flag3,b.family_type FROM td_premium_dtls a, md_premium_type b WHERE a.premium_id = b.family_type_id\n          AND a.form_no = 'GP2025000002' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 10:19:36] : Exicuting Select Statement from table td_premium_dtls a, md_premium_type b 
+[MESSAGE] : [27-Feb-25 10:19:36] : {"code":"UNKNOWN_CODE_PLEASE_REPORT","errno":1932,"sqlMessage":"Table 'sail.td_premium_dtls' doesn't exist in engine","sqlState":"42S02","index":0,"sql":"SELECT a.form_no,a.premium_amt,a.premium_amt2,a.prm_flag2,a.premium_amt3,a.prm_flag3,b.family_type FROM td_premium_dtls a, md_premium_type b WHERE a.premium_id = b.family_type_id\n          AND a.form_no = 'GP2025000002' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 10:20:03] : Exicuting Select Statement from table td_premium_dtls a, md_premium_type b 
+[MESSAGE] : [27-Feb-25 10:20:03] : {"code":"UNKNOWN_CODE_PLEASE_REPORT","errno":1932,"sqlMessage":"Table 'sail.td_premium_dtls' doesn't exist in engine","sqlState":"42S02","index":0,"sql":"SELECT a.form_no,a.premium_amt,a.premium_amt2,a.prm_flag2,a.premium_amt3,a.prm_flag3,b.family_type FROM td_premium_dtls a, md_premium_type b WHERE a.premium_id = b.family_type_id\n          AND a.form_no = 'GP2025000002' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 10:21:17] : Exicuting Insert Statement for table td_premium_dtls 
+[MESSAGE] : [27-Feb-25 10:21:17] : Error: UNKNOWN_CODE_PLEASE_REPORT: Table 'sail.td_premium_dtls' doesn't exist in engine 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 10:21:27] : Exicuting Select Statement from table td_premium_dtls a, md_premium_type b 
+[MESSAGE] : [27-Feb-25 10:21:27] : {"code":"UNKNOWN_CODE_PLEASE_REPORT","errno":1932,"sqlMessage":"Table 'sail.td_premium_dtls' doesn't exist in engine","sqlState":"42S02","index":0,"sql":"SELECT a.form_no,a.premium_amt,a.premium_amt2,a.prm_flag2,a.premium_amt3,a.prm_flag3,b.family_type FROM td_premium_dtls a, md_premium_type b WHERE a.premium_id = b.family_type_id\n          AND a.form_no = 'GP2025000003' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 10:22:21] : Exicuting Select Statement from table td_premium_dtls a, md_premium_type b 
+[MESSAGE] : [27-Feb-25 10:22:21] : {"code":"UNKNOWN_CODE_PLEASE_REPORT","errno":1932,"sqlMessage":"Table 'sail.td_premium_dtls' doesn't exist in engine","sqlState":"42S02","index":0,"sql":"SELECT a.form_no,a.premium_amt,a.premium_amt2,a.prm_flag2,a.premium_amt3,a.prm_flag3,b.family_type FROM td_premium_dtls a, md_premium_type b WHERE a.premium_id = b.family_type_id\n          AND a.form_no = 'GP2025000003' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 11:13:09] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-Feb-25 11:13:09] : Error: ER_BAD_FIELD_ERROR: Unknown column 'approved_at' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Feb-25 11:18:34] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-Feb-25 11:18:34] : Error: ER_BAD_FIELD_ERROR: Unknown column 'approved_at' in 'field list' 
+------------------------------------------------------------------------------------------------------------

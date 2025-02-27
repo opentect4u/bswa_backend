@@ -254,7 +254,7 @@ module.exports = {
           .replace(
             "{url}",
             `${domain}/#/home/print_group_policy/${encodeURIComponent(
-              new Buffer.from(form_no).toString("base64")
+              new Buffer.from(form_no).toString("base64"),data.checkedmember
             )}`
           );
         var wpRes = await sendWappMsg(data.phone, wpMsg);
@@ -570,8 +570,19 @@ module.exports = {
   
         resolve(trn_data);
       }else{
+      //   var table_name = "td_transactions",
+      //   fields =  
+      //     data.trn_id > 0
+      //       ? `trn_dt = '${data.form_dt}',premium_amt = '${data.pre_amt}', tot_amt = '${data.totalAmount}', pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',chq_no = '${data.cheque_no}',chq_dt = '${data.cheque_dt}',chq_bank = '${data.bank_name}',modified_by = '${data.user}',modified_at = '${datetime}'`
+      //       : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at,approved_by,approved_at)`,
+      //   values = `('${data.formNo}','${data.form_dt}','${trn_id}','${data.pre_amt}','${data.totalAmount}','${data.payment}','${data.receipt_no}','${data.cheque_no}','${data.cheque_dt}','${data.bank_name}','A','${data.user}','${datetime}','${data.user}','${datetime}')`,
+      //   where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
+      //   flag = data.trn_id > 0 ? 1 : 0;
+      // var trns_data = await db_Insert(table_name, fields, values, where, flag);
+
+      // if(trns_data.suc > 0){
         var table_name1 = "td_gen_ins",
-          fields1 = `ins_period = 'Y',form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+          fields1 = `ins_period = 'Y',form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
           values1 = null,
           whr1 = `form_no = '${data.formNo}'`,
           flag1 = 1;
@@ -583,6 +594,7 @@ module.exports = {
           flag1
         );
         trn_data["trn_id"] = trn_id;
+      // }
         try {
           if (data.payment == "O") {
             const encDtgen = encodeURIComponent(data.payEncDataGen);
@@ -590,7 +602,8 @@ module.exports = {
 
             var select = "msg, domain",
               table_name = "md_whatsapp_msg",
-              whr = `msg_for = 'Member accept online'`,
+              // whr = `msg_for = 'Member accept online'`,
+              whr = `msg_for = 'Member Premium accept online'`,
               order = null;
             var msg_dt = await db_Select(select, table_name, whr, order);
             var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
