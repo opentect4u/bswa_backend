@@ -18,6 +18,43 @@ const {
 } = require("../../modules/MasterModule");
 const generalRouter = express.Router();
 
+generalRouter.post("/check_staff_no", async (req, res) => {
+  var data = req.body;
+  // console.log(data, 'datarara');
+
+  var select = "mem_type,member_id",
+      table_name = "md_member",
+      whr = `staff_nos = '${data.staff_no}'`,
+      order = null;
+
+  var res_dt = await db_Select(select, table_name, whr, order);
+
+  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+      res.send({ suc: 1, exists: true });  // Ensure `suc` and `exists` are returned
+  } else {
+      res.send({ suc: 0, exists: false });
+  }
+});
+
+generalRouter.post("/check_mobile_no", async (req, res) => {
+  const data = req.body;
+
+  var select = "phone_no",
+      table_name = "md_member",
+      whr = `phone_no = '${data.phone_no}'`,
+      order = null;
+
+  const res_dt = await db_Select(select, table_name, whr, order);
+
+  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+      res.send({ suc: 1, exists: true });
+  } else {
+      res.send({ suc: 0, exists: false });
+  }
+});
+
+
+
 generalRouter.post("/save_genral_form", async (req, res) => {
   //   var user_name = req.user.user_name;
   var data = req.body;
