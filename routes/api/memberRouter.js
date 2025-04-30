@@ -223,8 +223,7 @@ function getMonthRange(startDate, endDate) {
 
 memberRouter.post("/user_tnx_details", async (req, res) => {
   var data = req.body;
-  // let formNos = data.form_no
-  // ?.split(',')
+  // let formNos = data.form_no?.split(',')
   // .map(f => f.trim().replace(/^'+|'+$/g, '')) // Remove any existing quotes
   // .map(f => `'${f}'`)
   // .join(',');
