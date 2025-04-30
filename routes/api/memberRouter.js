@@ -223,11 +223,11 @@ function getMonthRange(startDate, endDate) {
 
 memberRouter.post("/user_tnx_details", async (req, res) => {
   var data = req.body;
-  let formNos = data.form_no
-  ?.split(',')
-  .map(f => f.trim().replace(/^'+|'+$/g, '')) // Remove any existing quotes
-  .map(f => `'${f}'`)
-  .join(',');
+  // let formNos = data.form_no
+  // ?.split(',')
+  // .map(f => f.trim().replace(/^'+|'+$/g, '')) // Remove any existing quotes
+  // .map(f => `'${f}'`)
+  // .join(',');
   // console.log("formNos:", formNos);
   // let rows = [];
 
@@ -248,7 +248,7 @@ LEFT JOIN td_memb_subscription c
         FROM td_memb_subscription
         WHERE member_id = a.form_no AND trans_id < b.trans_id
     )`
-    whr = `a.approval_status IN('A','U') ${formNos ? `AND a.form_no IN (${formNos})` : ''} ${data.trn_id > 0 ? `AND a.trn_id = ${data.trn_id}` : ""}`,
+    whr = `a.approval_status IN('A','U') ${data.form_no ? `AND a.form_no IN (${data.form_no})` : ''} ${data.trn_id > 0 ? `AND a.trn_id = ${data.trn_id}` : ""}`,
     // order = `ORDER BY trn_dt, trn_id`;
     order = `ORDER BY a.trn_dt DESC`;
   var res_dt = await db_Select(select, table_name, whr, order);
