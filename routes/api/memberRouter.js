@@ -194,15 +194,66 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
   res.send(res_dt);
 });
 
+// memberRouter.post("/user_tnx_details", async (req, res) => {
+//   var data = req.body;
+//   var select = "*",
+//     table_name = "td_transactions",
+//     whr = `approval_status IN('A','U') ${data.form_no != '' ? `AND form_no in (${data.form_no})` : ''} ${data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ""}`,
+//     // order = `ORDER BY trn_dt, trn_id`;
+//     order = `ORDER BY trn_dt DESC`;
+//   var res_dt = await db_Select(select, table_name, whr, order);
+//   res.send(res_dt);
+// });
+
+function getMonthRange(startDate, endDate) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const months = [];
+
+  start.setDate(1); // Normalize to start of the month
+  while (start <= end) {
+    months.push(start.toLocaleString('default', { month: 'long', year: 'numeric' }));
+    start.setMonth(start.getMonth() + 1);
+  }
+
+  return `${months[0]} to ${months[months.length - 1]}`;
+}
+
+
+
 memberRouter.post("/user_tnx_details", async (req, res) => {
   var data = req.body;
-  var select = "*",
-    table_name = "td_transactions",
-    whr = `approval_status IN('A','U') ${data.form_no != '' ? `AND form_no in (${data.form_no})` : ''} ${data.trn_id > 0 ? `AND trn_id = ${data.trn_id}` : ""}`,
+  let formNos = data.form_no
+  ?.split(',')
+  .map(f => f.trim().replace(/^'+|'+$/g, '')) // Remove any existing quotes
+  .map(f => `'${f}'`)
+  .join(',');
+  // console.log("formNos:", formNos);
+  // let rows = [];
+
+  var select = `a.*, 
+       b.subscription_upto AS curr_upto,
+       c.subscription_upto AS prev_upto,
+       DATE_FORMAT(c.subscription_upto, '%M %Y') AS prev_month_name,
+       DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y') AS prev_next_month_name,
+       DATE_FORMAT(b.subscription_upto, '%M %Y') AS curr_month_name,
+       TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid`,
+    table_name = `td_transactions a
+LEFT JOIN td_memb_subscription b 
+    ON a.form_no = b.member_id AND a.trn_id = b.trans_id 
+LEFT JOIN td_memb_subscription c 
+    ON a.form_no = c.member_id 
+    AND c.trans_id = (
+        SELECT MAX(trans_id)
+        FROM td_memb_subscription
+        WHERE member_id = a.form_no AND trans_id < b.trans_id
+    )`
+    whr = `a.approval_status IN('A','U') ${formNos ? `AND a.form_no IN (${formNos})` : ''} ${data.trn_id > 0 ? `AND a.trn_id = ${data.trn_id}` : ""}`,
     // order = `ORDER BY trn_dt, trn_id`;
-    order = `ORDER BY trn_dt DESC`;
+    order = `ORDER BY a.trn_dt DESC`;
   var res_dt = await db_Select(select, table_name, whr, order);
-  res.send(res_dt);
+  // console.log("Database result:", res_dt);
+    res.send(res_dt);
 });
 
 memberRouter.post("/insurance_dtls", async (req, res) => {
