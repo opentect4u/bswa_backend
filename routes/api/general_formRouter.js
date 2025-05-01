@@ -92,7 +92,7 @@ generalRouter.get("/frm_list", async (req, res) => {
   // console.log(data, "ccc");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
-    whr = `memb_status IN('P','R','T')`;
+    whr = `memb_status IN('P','R','T','A')`;
   // whr = `memb_status = 'P' OR memb_status = 'R' OR memb_status = 'T'`;
   // AND form_no = '${data.form_no}' OR memb_name = '${data.form_no}'`,
   order = `ORDER BY form_dt desc`;

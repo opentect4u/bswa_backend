@@ -231,12 +231,20 @@ memberRouter.post("/user_tnx_details", async (req, res) => {
   // let rows = [];
 
   var select = `a.*, 
-       b.subscription_upto AS curr_upto,
-       c.subscription_upto AS prev_upto,
-       DATE_FORMAT(c.subscription_upto, '%M %Y') AS prev_month_name,
-       DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y') AS prev_next_month_name,
-       DATE_FORMAT(b.subscription_upto, '%M %Y') AS curr_month_name,
-       TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid`,
+    b.subscription_upto AS curr_upto,
+    c.subscription_upto AS prev_upto,
+    DATE_FORMAT(c.subscription_upto, '%M %Y') AS prev_month_name,
+    DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y') AS prev_next_month_name,
+    DATE_FORMAT(b.subscription_upto, '%M %Y') AS curr_month_name,
+    PERIOD_DIFF(DATE_FORMAT(b.subscription_upto, '%Y%m'), DATE_FORMAT(c.subscription_upto, '%Y%m')) AS months_paid,
+    
+    CASE 
+        WHEN PERIOD_DIFF(DATE_FORMAT(b.subscription_upto, '%Y%m'), DATE_FORMAT(c.subscription_upto, '%Y%m')) = 1 
+            THEN DATE_FORMAT(b.subscription_upto, '%M %Y')
+        WHEN PERIOD_DIFF(DATE_FORMAT(b.subscription_upto, '%Y%m'), DATE_FORMAT(c.subscription_upto, '%Y%m')) > 1 
+            THEN CONCAT(DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y'), ' - ', DATE_FORMAT(b.subscription_upto, '%M %Y'))
+        ELSE 'No months paid'
+    END AS paid_month_range`,
     table_name = `td_transactions a
 LEFT JOIN td_memb_subscription b 
     ON a.form_no = b.member_id AND a.trn_id = b.trans_id 
