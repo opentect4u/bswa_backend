@@ -106,7 +106,7 @@ generalRouter.get("/frm_list_2", async (req, res) => {
   // console.log(data, "bbb");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
-    whr = `(form_no = '${data.form_no}' OR memb_name = '${data.form_no}') AND memb_status IN('P','R','T')`,
+    whr = `(form_no = '${data.form_no}' OR memb_name = '${data.form_no}') AND memb_status IN('P','R','T','A')`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "kiki");
