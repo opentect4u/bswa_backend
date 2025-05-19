@@ -302,7 +302,9 @@ group_policyRouter.get("/premium_dtls", async (req, res) => {
 
 group_policyRouter.get("/get_non_premium_dtls", async (req, res) => {
   var data = req.query;
-  var select =
+  // var select =
+  //     "age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
+       var select =
       "age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
     table_name = "md_premium_type",
     whr = null,
