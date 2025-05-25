@@ -28,7 +28,8 @@ const getMaxFormNo = (flag) => {
 
       const res_dt = await db_Select(select, table_name, whr, order);
 
-      const maxFormRaw = res_dt[0]?.max_form || 0;
+      // const maxFormRaw = res_dt[0]?.max_form || 0;
+      const maxFormRaw = (res_dt[0] && res_dt[0].max_form) ? res_dt[0].max_form : 0;
       resolve(parseInt(maxFormRaw, 10)); // Return as number (not padded string)
     } catch (error) {
       reject(error);
