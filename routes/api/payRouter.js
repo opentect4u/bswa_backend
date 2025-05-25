@@ -10,21 +10,30 @@ dotenv.config({ path: '.env.prod' });
 
 payRouter.post('/generate_pay_url', async (req, res) => {
     var encData = req.body.encData
+    // console.log(encData,'enc');
+    
     const secretKey = process.env.secretKey;
-    console.log(secretKey);
+    // console.log(secretKey);
     // var rand_no = Math.floor(100000 + Math.random() * 900000)
     // var tnx_id = `BOSEC${rand_no}`
     var tnx_data = await getMaxTrnId();
     let year = dateFormat(new Date(), "yyyy");
+    // if (tnx_data.suc > 0 && Array.isArray(tnx_data.msg) && tnx_data.msg.length > 0) {
+    // var maxTrnId = tnx_data.msg[0].max_trn_id;
+    // } else {
+    // var maxTrnId = 0;
+    // }
+    // var tnx_id = `${year}${maxTrnId.toString().padStart(4, '0')}`;
     var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
 
     var data = CryptoJS.AES.decrypt(encData, secretKey).toString(CryptoJS.enc.Utf8);
+    // console.log("Decrypted data string:", data);
     try {
         data = JSON.parse(data)
-        console.log(data);
+        // console.log(data,'kili');
         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
         tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
-        console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
+        // console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
         
         if (data.memb_name != '' && data.amount > 0) {
             const reqData = {
@@ -39,9 +48,10 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}`,
                 udf5: '',
                 udf6: '',
-                udf7: data.calc_upto,
-                udf8: data.subs_type,
-                udf9: data.sub_fee.toString(),
+                udf7: data.calc_upto || '',
+                udf8: data.subs_type || '',
+                udf9: data.sub_fee ? data.sub_fee.toString() : '0',
+                // udf9: data.sub_fee !== undefined ? data.sub_fee.toString() : '',
                 udf10: data.redirect_path,
                 ru: paySocFlag ? `${process.env.BASE_URL}/${process.env.UAT_REDIRECT_URL}` : `${process.env.BASE_URL}/${process.env.ASSO_PAY_REDIRECT_URL}`,
                 callbackUrl: process.env.PAY_CALL_BACK_URL,
@@ -61,6 +71,8 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 GetepayIV: paySocFlag ? process.env.PAY_GET_IV : process.env.ASSO_PAY_PROD_IV,
                 GetepayUrl: paySocFlag ? process.env.PAY_GET_URL : process.env.ASSO_PAY_PROD_GET_URL,
             };
+            // console.log(config,reqData,'poi');
+            
             getepayPortal(reqData, config)
                 .then((paymentUrl) => {
                     console.log(paymentUrl, "Payment URL");
