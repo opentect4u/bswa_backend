@@ -173,9 +173,9 @@ upload_child_policyRouter.post("/fetch_member_details_fr_child_policy", async (r
    var data = req.body;
   //  console.log(data,'datac');
    
-   var select = "form_no,form_dt,flag,member_id,member_name,dob,gender,status,age,effective_date,policy_amount,premium_amount,approval_status,trns_type",
-   table_name = "td_child_policy",
-   whr = `member_id = '${data.memb_id}'`,
+   var select = "a.form_no,a.form_dt,a.flag,a.member_id,a.member_name,a.dob,a.gender,a.status,a.age,a.effective_date,a.policy_amount,a.premium_amount,a.approval_status,a.trns_type,b.phone_no",
+   table_name = "td_child_policy a LEFT JOIN md_member b ON a.member_id = b.member_id",
+   whr = `a.member_id = '${data.memb_id}'`,
    order = null;
    var memb_dtls_child_pol = await db_Select(select,table_name,whr,order);
    res.send(memb_dtls_child_pol)
