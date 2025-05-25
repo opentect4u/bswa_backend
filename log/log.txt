@@ -1365,3 +1365,267 @@
 [EVENT]   : [27-Feb-25 11:18:34] : Exicuting Insert Statement for table td_transactions 
 [MESSAGE] : [27-Feb-25 11:18:34] : Error: ER_BAD_FIELD_ERROR: Unknown column 'approved_at' in 'field list' 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Apr-25 16:13:07] : Exicuting Update Statement for table md_dependent 
+[MESSAGE] : [28-Apr-25 16:13:07] : Error: Incorrect integer value: 'null' for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:41:44] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:41:44] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no in (G-134) AND a.trn_id = 2025000135 ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:42:32] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:42:32] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no in (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:42:34] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:42:34] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no in (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:42:54] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:42:54] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no in (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:43:43] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:43:43] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no in (G-134) AND a.trn_id = 2025000135 ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:44:25] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:44:25] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (G-134) AND a.trn_id = 2025000135 ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:45:15] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:45:15] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134''  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no = ''G-134''  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:45:18] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:45:18] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134''  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no = ''G-134''  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:47:16] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:47:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (G-134) AND a.trn_id = 2025000135 ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:50:11] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:50:11] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:50:15] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:50:15] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:51:41] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:51:41] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:51:44] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:51:44] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:52:09] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:52:09] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 15:52:19] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (
+                                                                                 SELECT MAX(trans_id)
+                                                                                 FROM td_memb_subscription
+                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) 
+[MESSAGE] : [30-Apr-25 15:52:19] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'G-134'')  ORDER BY a.trn_dt DESC' at line 4","sql":"SELECT a.*, b.subscription_upto AS curr_upto,c.subscription_upto AS prev_upto,TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a LEFT JOIN td_memb_subscription b ON a.form_no = b.member_id AND a.trn_id = b.trans_id LEFT JOIN td_memb_subscription c ON a.form_no = c.member_id AND c.trans_id = (\n                                                                                 SELECT MAX(trans_id)\n                                                                                 FROM td_memb_subscription\n                                                                                 WHERE member_id = a.form_no AND trans_id < b.trans_id) WHERE a.approval_status IN('A','U') AND a.form_no IN (''G-134'')  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 18:22:01] : Exicuting Select Statement from table td_transactions a
+LEFT JOIN td_memb_subscription b 
+    ON a.form_no = b.member_id AND a.trn_id = b.trans_id 
+LEFT JOIN td_memb_subscription c 
+    ON a.form_no = c.member_id 
+    AND c.trans_id = (
+        SELECT MAX(trans_id)
+        FROM td_memb_subscription
+        WHERE member_id = a.form_no AND trans_id < b.trans_id
+    ) 
+[MESSAGE] : [30-Apr-25 18:22:01] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, \n       b.subscription_upto AS curr_upto,\n       c.subscription_upto AS prev_upto,\n       DATE_FORMAT(c.subscription_upto, '%M %Y') AS prev_month_name,\n       DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y') AS prev_next_month_name,\n       DATE_FORMAT(b.subscription_upto, '%M %Y') AS curr_month_name,\n       TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a\nLEFT JOIN td_memb_subscription b \n    ON a.form_no = b.member_id AND a.trn_id = b.trans_id \nLEFT JOIN td_memb_subscription c \n    ON a.form_no = c.member_id \n    AND c.trans_id = (\n        SELECT MAX(trans_id)\n        FROM td_memb_subscription\n        WHERE member_id = a.form_no AND trans_id < b.trans_id\n    ) WHERE a.approval_status IN('A','U') AND a.form_no IN (G-134)  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 18:22:07] : Exicuting Select Statement from table td_transactions a
+LEFT JOIN td_memb_subscription b 
+    ON a.form_no = b.member_id AND a.trn_id = b.trans_id 
+LEFT JOIN td_memb_subscription c 
+    ON a.form_no = c.member_id 
+    AND c.trans_id = (
+        SELECT MAX(trans_id)
+        FROM td_memb_subscription
+        WHERE member_id = a.form_no AND trans_id < b.trans_id
+    ) 
+[MESSAGE] : [30-Apr-25 18:22:07] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, \n       b.subscription_upto AS curr_upto,\n       c.subscription_upto AS prev_upto,\n       DATE_FORMAT(c.subscription_upto, '%M %Y') AS prev_month_name,\n       DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y') AS prev_next_month_name,\n       DATE_FORMAT(b.subscription_upto, '%M %Y') AS curr_month_name,\n       TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a\nLEFT JOIN td_memb_subscription b \n    ON a.form_no = b.member_id AND a.trn_id = b.trans_id \nLEFT JOIN td_memb_subscription c \n    ON a.form_no = c.member_id \n    AND c.trans_id = (\n        SELECT MAX(trans_id)\n        FROM td_memb_subscription\n        WHERE member_id = a.form_no AND trans_id < b.trans_id\n    ) WHERE a.approval_status IN('A','U') AND a.form_no IN (G-134)  ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Apr-25 18:22:38] : Exicuting Select Statement from table td_transactions a
+LEFT JOIN td_memb_subscription b 
+    ON a.form_no = b.member_id AND a.trn_id = b.trans_id 
+LEFT JOIN td_memb_subscription c 
+    ON a.form_no = c.member_id 
+    AND c.trans_id = (
+        SELECT MAX(trans_id)
+        FROM td_memb_subscription
+        WHERE member_id = a.form_no AND trans_id < b.trans_id
+    ) 
+[MESSAGE] : [30-Apr-25 18:22:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'G' in 'where clause'","sql":"SELECT a.*, \n       b.subscription_upto AS curr_upto,\n       c.subscription_upto AS prev_upto,\n       DATE_FORMAT(c.subscription_upto, '%M %Y') AS prev_month_name,\n       DATE_FORMAT(DATE_ADD(c.subscription_upto, INTERVAL 1 MONTH), '%M %Y') AS prev_next_month_name,\n       DATE_FORMAT(b.subscription_upto, '%M %Y') AS curr_month_name,\n       TIMESTAMPDIFF(MONTH, c.subscription_upto, b.subscription_upto) AS months_paid FROM td_transactions a\nLEFT JOIN td_memb_subscription b \n    ON a.form_no = b.member_id AND a.trn_id = b.trans_id \nLEFT JOIN td_memb_subscription c \n    ON a.form_no = c.member_id \n    AND c.trans_id = (\n        SELECT MAX(trans_id)\n        FROM td_memb_subscription\n        WHERE member_id = a.form_no AND trans_id < b.trans_id\n    ) WHERE a.approval_status IN('A','U') AND a.form_no IN (G-134) AND a.trn_id = 2025000135 ORDER BY a.trn_dt DESC"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-May-25 22:36:06] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [01-May-25 22:36:06] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlState":"42000","sqlMessage":"FUNCTION sail.default_amt does not exist","sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-May-25 22:39:18] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [01-May-25 22:39:18] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlState":"42000","sqlMessage":"FUNCTION sail.default_amt does not exist","sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [01-May-25 22:40:13] : Exicuting Select Statement from table td_memb_subscription a,md_member b 
+[MESSAGE] : [01-May-25 22:40:13] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlState":"42000","sqlMessage":"FUNCTION sail.default_amt does not exist","sql":"SELECT a.member_id,b.mem_type,b.memb_name,CONCAT(MONTHNAME(max(a.subscription_upto)),\", \", YEAR(max(a.subscription_upto))) as cleared_upto,default_amt((b.mem_dt) <= now(),a.member_id)\"default_amt\" FROM td_memb_subscription a,md_member b WHERE a.member_id = b.member_id\n               AND date(b.mem_dt) <= now()\n               AND b.mem_type = 'G' group by a.member_id,b.mem_type,b.memb_name;"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:28:04] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:28:04] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:36:15] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:36:15] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:37:04] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:37:04] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:37:06] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:37:06] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:37:07] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:37:07] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:37:07] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:37:07] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:37:47] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:37:47] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:37:53] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:37:53] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:38:09] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:38:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:38:09] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:38:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:38:10] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:38:10] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:38:10] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:38:10] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-May-25 10:47:30] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [12-May-25 10:47:30] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [21-May-25 23:53:37] : Exicuting Insert Statement for table td_upload_child_ins 
+[MESSAGE] : [21-May-25 23:53:37] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AI-2,M,DEBASISH CHOWDHURY,DEBASISH CHOWDHURY,1964/09/07,MALE,SELF,2025/05/11,500' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 00:06:40] : Exicuting Insert Statement for table td_upload_child_ins 
+[MESSAGE] : [22-May-25 00:06:40] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AI-2,M,DEBASISH CHOWDHURY,DEBASISH CHOWDHURY,1964/09/07,MALE,SELF,2025/05/11,500' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 00:12:18] : Exicuting Insert Statement for table td_upload_child_ins 
+[MESSAGE] : [22-May-25 00:12:18] : Error: Data truncated for column 'user_type' at row 66 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 00:15:08] : Exicuting Insert Statement for table td_upload_child_ins 
+[MESSAGE] : [22-May-25 00:15:08] : Error: Data truncated for column 'user_type' at row 66 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 00:17:16] : Exicuting Insert Statement for table td_upload_child_ins 
+[MESSAGE] : [22-May-25 00:17:16] : Error: Incorrect date value: 'TANIA ROY' for column 'dob' at row 66 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 00:22:23] : Exicuting Insert Statement for table td_upload_child_ins 
+[MESSAGE] : [22-May-25 00:22:23] : Error: Incorrect date value: '' for column 'dob' at row 28 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 16:09:27] : Exicuting Insert Statement for table td_child_policy 
+[MESSAGE] : [22-May-25 16:09:27] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '16:09:27
+    ),(
+      'AI-5',
+      'TANIYA GUHA',
+      '1977-09-05',
+      'F' at line 11 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 17:12:26] : Exicuting Select Statement from table td_child_policy 
+[MESSAGE] : [22-May-25 17:12:26] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'undefined' in 'where clause'","sql":"SELECT IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form FROM td_child_policy WHERE SUBSTRING(form_no, 1, undefined) = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 17:12:54] : Exicuting Select Statement from table td_child_policy 
+[MESSAGE] : [22-May-25 17:12:54] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'undefined' in 'where clause'","sql":"SELECT IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form FROM td_child_policy WHERE SUBSTRING(form_no, 1, undefined) = 'undefined' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 17:12:54] : Exicuting Insert Statement for table td_child_policy 
+[MESSAGE] : [22-May-25 17:12:54] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '17:12:54
+    ),(
+      undefined2025undefined,
+      '2025-05-22 17:12:54',
+    ' at line 13 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 17:44:15] : Exicuting Insert Statement for table td_child_policy 
+[MESSAGE] : [22-May-25 17:44:15] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '17:44:15
+    ),(
+      undefined2025000001,
+      '2025-05-22 17:44:15',
+      '' at line 13 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 17:44:58] : Exicuting Insert Statement for table td_child_policy 
+[MESSAGE] : [22-May-25 17:44:58] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '17:44:58
+    ),(
+      C2025000001,
+      '2025-05-22 17:44:58',
+      'AI-5',
+ ' at line 13 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 17:49:18] : Exicuting Insert Statement for table td_child_policy 
+[MESSAGE] : [22-May-25 17:49:18] : Error: Unknown column 'effective_dt' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 18:10:14] : Exicuting Insert Statement for table td_child_policy_dependent 
+[MESSAGE] : [22-May-25 18:10:14] : Error: Unknown column 'policy_amount' in 'field list' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 18:13:29] : Exicuting Insert Statement for table td_child_policy_dependent 
+[MESSAGE] : [22-May-25 18:13:29] : Error: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [22-May-25 18:14:20] : Exicuting Insert Statement for table td_child_policy_dependent 
+[MESSAGE] : [22-May-25 18:14:20] : Error: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [23-May-25 18:50:37] : Exicuting Insert Statement for table td_child_policy_dependent 
+[MESSAGE] : [23-May-25 18:50:37] : Error: Incorrect integer value: 'FEMALE' for column 'age' at row 66 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [23-May-25 18:52:17] : Exicuting Insert Statement for table td_child_policy_dependent 
+[MESSAGE] : [23-May-25 18:52:17] : Error: Incorrect integer value: 'FEMALE' for column 'age' at row 66 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [23-May-25 19:02:52] : Exicuting Insert Statement for table td_child_policy_dependent 
+[MESSAGE] : [23-May-25 19:02:52] : Error: Incorrect integer value: 'FEMALE' for column 'age' at row 66 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-May-25 13:10:26] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [25-May-25 13:10:26] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-May-25 13:10:29] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [25-May-25 13:10:29] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-May-25 13:11:11] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [25-May-25 13:11:11] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-May-25 15:46:06] : Exicuting Select Statement from table td_pg_transaction 
+[MESSAGE] : [25-May-25 15:46:06] : {"code":"ER_SP_DOES_NOT_EXIST","errno":1305,"sqlState":"42000","sqlMessage":"FUNCTION sail.split_part does not exist","sql":"SELECT * FROM td_pg_transaction WHERE split_part(udf4, '||', 1) = 'L-55' "} 
+------------------------------------------------------------------------------------------------------------
