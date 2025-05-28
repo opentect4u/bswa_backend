@@ -1638,3 +1638,54 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [26-May-25 00:20:00] : Exicuting Select Statement from table td_child_policy a LEFT JOIN md_member b ON a.member_id = b.member_id 
 [MESSAGE] : [26-May-25 00:20:00] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT a.form_no,a.form_dt,a.flag,a.member_id,a.member_name,a.dob,a.gender,a.status,a.age,a.effective_date,a.policy_amount,a.premium_amount,a.approval_status,a.trns_type,b.phone_no FROM td_child_policy a LEFT JOIN md_member b ON a.member_id = b.member_id WHERE a.member_id = 'L-55' "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-May-25 13:11:54] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [26-May-25 13:11:54] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-May-25 13:12:10] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [26-May-25 13:12:10] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-May-25 13:12:14] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [26-May-25 13:12:14] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-May-25 13:23:58] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [26-May-25 13:23:58] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 07:18:58] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [27-May-25 07:18:58] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 07:35:47] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [27-May-25 07:35:47] : Error: Field 'member_id' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 07:48:07] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [27-May-25 07:48:07] : Error: Field 'member_id' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:00:41] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [27-May-25 08:00:41] : Error: Data truncated for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:28:36] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:28:36] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:34:10] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:34:10] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:34:14] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:34:14] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:34:34] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:34:34] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:34:39] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:34:39] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:37:43] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:37:43] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:37:48] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:37:48] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:39:24] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:39:24] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-May-25 08:39:42] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [27-May-25 08:39:42] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------

@@ -283,17 +283,32 @@ module.exports = {
       }
     });
   },
+  // payRecordSave: (data) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  //     var table_name = "td_pg_transaction",
+  //       fields =
+  //         "(entry_dt, pay_trns_id, mid, trns_amt, trns_status, mer_order_no, udf1, udf2, udf3, udf4, udf5, udf6, udf7, udf8, udf9, udf10, udf41, cust_ref_no, pay_mode, discriminator, message, paymentStatus, txnDate, surcharge, totalAmount, settlementAmount, settlementRefNo, settlementDate, settlementStatus, txnNote)",
+  //       values = `('${datetime}', '${data.getepayTxnId}', '${data.mid}', '${data.txnAmount}', '${data.txnStatus}', '${data.merchantOrderNo}', '${data.udf1}', '${data.udf2}', '${data.udf3}', '${data.udf4}', '${data.udf5}', '${data.udf6}', '${data.udf7}', '${data.udf8}', '${data.udf9}', '${data.udf10}', '${data.udf41}', '${data.custRefNo}', '${data.paymentMode}', '${data.discriminator}', '${data.message}', '${data.paymentStatus}', '${data.txnDate}', '${data.surcharge}', '${data.totalAmount}', '${data.settlementAmount}', '${data.settlementRefNo}', '${data.settlementDate}', '${data.settlementStatus}', '${data.txnNote}')`,
+  //       whr = null,
+  //       flag = 0;
+  //     var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+  //     resolve(res_dt);
+  //   });
+  // },
+
   payRecordSave: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var table_name = "td_pg_transaction",
         fields =
           "(entry_dt, pay_trns_id, mid, trns_amt, trns_status, mer_order_no, udf1, udf2, udf3, udf4, udf5, udf6, udf7, udf8, udf9, udf10, udf41, cust_ref_no, pay_mode, discriminator, message, paymentStatus, txnDate, surcharge, totalAmount, settlementAmount, settlementRefNo, settlementDate, settlementStatus, txnNote)",
-        values = `('${datetime}', '${data.getepayTxnId}', '${data.mid}', '${data.txnAmount}', '${data.txnStatus}', '${data.merchantOrderNo}', '${data.udf1}', '${data.udf2}', '${data.udf3}', '${data.udf4}', '${data.udf5}', '${data.udf6}', '${data.udf7}', '${data.udf8}', '${data.udf9}', '${data.udf10}', '${data.udf41}', '${data.custRefNo}', '${data.paymentMode}', '${data.discriminator}', '${data.message}', '${data.paymentStatus}', '${data.txnDate}', '${data.surcharge}', '${data.totalAmount}', '${data.settlementAmount}', '${data.settlementRefNo}', '${data.settlementDate}', '${data.settlementStatus}', '${data.txnNote}')`,
+        values = `('${datetime}', '${data.getepayTxnId}', '${data.mid}', '${data.txnAmount}', '${data.txnStatus}', '${data.merchantOrderNo}', '${data.udf1}', '${data.udf2}', '${data.udf3}', '${data.udf4}', '${data.udf5}', '${data.udf6}', '${data.udf7}', '${data.udf8}', '${data.udf9}', '${data.udf10}', '${data.udf41}', '${data.custRefNo}', '${data.paymentMode}', '${data.discriminator}', '${data.message}', '${data.paymentStatus}', '${data.txnDate}', '${data.surcharge}', '${data.totalAmount}', '${data.settlementAmount > 0 ? data.settlementAmount : 0}', '${data.settlementRefNo != '' ? data.settlementRefNo : 0}', ${data.settlementDate != '' ? `'${data.settlementDate}'` : null}, '${data.settlementStatus}', '${data.txnNote}')`,
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
       resolve(res_dt);
     });
-  },
+  }
+
 };
