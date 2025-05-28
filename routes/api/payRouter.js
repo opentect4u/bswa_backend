@@ -10,10 +10,10 @@ dotenv.config({ path: '.env.prod' });
 
 payRouter.post('/generate_pay_url', async (req, res) => {
     var encData = req.body.encData
-    // console.log(encData,'enc');
+    console.log(encData,'enc');
     
     const secretKey = process.env.secretKey;
-    // console.log(secretKey);
+    console.log(secretKey);
     // var rand_no = Math.floor(100000 + Math.random() * 900000)
     // var tnx_id = `BOSEC${rand_no}`
     var tnx_data = await getMaxTrnId();
@@ -27,13 +27,13 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
 
     var data = CryptoJS.AES.decrypt(encData, secretKey).toString(CryptoJS.enc.Utf8);
-    // console.log("Decrypted data string:", data);
+    console.log("Decrypted data string:", data);
     try {
         data = JSON.parse(data)
-        // console.log(data,'kili');
+        console.log(data,'kili');
         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
         tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
-        // console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
+        console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
         
         if (data.memb_name != '' && data.amount > 0) {
             const reqData = {
@@ -71,7 +71,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 GetepayIV: paySocFlag ? process.env.PAY_GET_IV : process.env.ASSO_PAY_PROD_IV,
                 GetepayUrl: paySocFlag ? process.env.PAY_GET_URL : process.env.ASSO_PAY_PROD_GET_URL,
             };
-            // console.log(config,reqData,'poi');
+            console.log(config,reqData,'poi');
             
             getepayPortal(reqData, config)
                 .then((paymentUrl) => {
@@ -95,6 +95,8 @@ payRouter.post('/generate_pay_url', async (req, res) => {
 
 payRouter.post('/success_payment_gmp', async (req, res) => {
     const result = req.body.response;
+    console.log(result);
+    
     var dataitems = decryptEas(
         result,
         process.env.PAY_GET_KEY,
@@ -104,6 +106,8 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
     var res_load = await payRecordSave(res_dt)
+    console.log(res_dt,res_load,'test');
+    
     var data = res_dt.udf4.split('||')
     res_dt.udf4 = data[0]
     res_dt.udf5 = data[1]

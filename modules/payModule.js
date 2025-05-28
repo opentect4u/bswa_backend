@@ -298,6 +298,8 @@ module.exports = {
   // },
 
   payRecordSave: (data) => {
+    console.log(data);
+    
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var table_name = "td_pg_transaction",
@@ -307,7 +309,10 @@ module.exports = {
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+      console.log(res_dt,'res');
       resolve(res_dt);
+      console.log(res_dt,'res');
+      
     });
   }
 
