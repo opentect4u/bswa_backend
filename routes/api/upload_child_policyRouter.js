@@ -205,7 +205,7 @@ upload_child_policyRouter.post("/fetch_member_depend_details_fr_child_policy", a
 upload_child_policyRouter.post("/fetch_trans_dtls", async (req, res) => {
   try{
    var data = req.body;
-   console.log(data,'datac');
+  //  console.log(data,'datac');
    
   //  var select = "*",
   //  table_name = "td_pg_transaction",
@@ -214,7 +214,7 @@ upload_child_policyRouter.post("/fetch_trans_dtls", async (req, res) => {
   //  var fetch_transaction = await db_Select(select,table_name,whr,order);
   //  res.send(fetch_transaction)
 
-   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status",
+   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status,b.udf3",
    table_name = "td_transactions a LEFT JOIN td_pg_transaction b ON a.form_no = SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) AND a.trn_id = b.mer_order_no AND DATE(a.trn_dt) = b.entry_dt",
    whr = `b.trns_status = 'SUCCESS' AND SUBSTRING_INDEX(b.udf4, '||', 1) = '${data.member_id}'`,
    order = null;
@@ -231,11 +231,11 @@ upload_child_policyRouter.post("/fetch_trans_dtls", async (req, res) => {
 upload_child_policyRouter.post("/fetch_view_trans_dtls", async (req, res) => {
   try{
    var data = req.body;
-  //  console.log(data,'datac');
+   console.log(data,'datac');
    
-   var select = "*",
-   table_name = "td_pg_transaction",
-   whr = `SUBSTRING_INDEX(udf4, '||', 1) = '${data.member_id}' AND pay_trns_id = '${data.trn_id}'`,
+   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status,b.udf3",
+   table_name = "td_transactions a LEFT JOIN td_pg_transaction b ON a.form_no = SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) AND a.trn_id = b.mer_order_no AND DATE(a.trn_dt) = b.entry_dt",
+   whr = `b.trns_status = 'SUCCESS' AND SUBSTRING_INDEX(b.udf4, '||', 1) = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
    order = null;
    var fetch_transaction_view = await db_Select(select,table_name,whr,order);
    res.send(fetch_transaction_view)
