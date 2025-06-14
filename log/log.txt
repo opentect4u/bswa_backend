@@ -1689,3 +1689,6 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [27-May-25 08:39:42] : Exicuting Insert Statement for table td_transactions 
 [MESSAGE] : [27-May-25 08:39:42] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [10-Jun-25 11:15:43] : Exicuting Insert Statement for table md_dependent 
+[MESSAGE] : [10-Jun-25 11:15:43] : Error: Field 'member_id' doesn't have a default value 
+------------------------------------------------------------------------------------------------------------
