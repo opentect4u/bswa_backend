@@ -338,7 +338,8 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
     table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no",
     // whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
     // whr = `a.trn_id = '${data.trn_id}' ${data.member_id > 0 ? `AND b.member_id = '${data.member_id}'` : ''}`,
-    whr = `a.trn_id = '${data.trn_id}' ${data.member_id && data.member_id.trim() !== '' ? `AND b.member_id = '${data.member_id}'` : ''}`,
+    // whr = `a.trn_id = '${data.trn_id}' ${data.member_id && data.member_id.trim() !== '' ? `AND b.member_id = '${data.member_id}'` : ''}`,
+     whr = `a.trn_id = '${data.trn_id}'`,
     // order = `ORDER BY trn_dt, trn_id`;
     // order = `ORDER BY trn_dt DESC`;
     order = null;

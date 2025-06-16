@@ -1692,3 +1692,54 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [10-Jun-25 11:15:43] : Exicuting Insert Statement for table md_dependent 
 [MESSAGE] : [10-Jun-25 11:15:43] : Error: Field 'member_id' doesn't have a default value 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 10:40:09] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 10:40:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 10:43:23] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 10:43:23] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:09:21] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:09:21] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:09:42] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:09:42] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:17:09] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:17:09] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:17:25] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:17:25] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:18:10] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:18:10] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:19:52] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:19:52] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:20:47] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:20:47] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:34:08] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:34:08] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:37:13] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:37:13] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:37:21] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:37:21] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:37:31] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:37:31] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:37:42] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:37:42] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:38:18] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:38:18] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 11:42:40] : Exicuting Select Statement from table md_premium_type 
+[MESSAGE] : [16-Jun-25 11:42:40] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'age_group' in 'field list'","sql":"SELECT age_group,family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag FROM md_premium_type  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [16-Jun-25 13:50:15] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [16-Jun-25 13:50:15] : Error: Data truncated for column 'premium_type' at row 1 
+------------------------------------------------------------------------------------------------------------

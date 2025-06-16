@@ -1,5 +1,7 @@
 const express = require("express");
 const dateFormat = require("dateformat");
+const path = require('path');
+const fs = require('fs');
 const {
   db_Select,
   getCurrFinYear,
@@ -122,6 +124,18 @@ super_policyRouter.get("/get_member_policy_super", async (req, res) => {
 //   res.send(res_dt);
 // });
 
+super_policyRouter.post("/get_stp_premium_dtls", async (req, res) => {
+ var data = req.body;
+//  console.log(data,'ft');
+ 
+  var select = "premium_type,premium_amt",
+  table_name = "md_stp_premium_type",
+  whr = `premium_type = '${data.type}'`,
+  order = null;
+  var stp_prm_dt = await db_Select(select, table_name, whr, order);
+  res.send(stp_prm_dt);
+});
+
 super_policyRouter.get("/get_super_mediclaim", async (req, res) => {
   var data = req.query;
   // console.log(data, "hhhh");
@@ -176,9 +190,9 @@ super_policyRouter.get("/get_date", async (req, res) => {
 
 super_policyRouter.post("/save_super_policy_form", async (req, res) => {
   var data = req.body;
-  // console.log(data, "mm");
+  console.log(data, "mm");
   var save_super = await super_form_save(data);
-  // console.log(save_super, "aaa");
+  console.log(save_super, "aaa");
   res.send(save_super);
 });
 
@@ -285,28 +299,53 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
   var chk_dt = await db_Select(select, table_name, where, order);
   // console.log(chk_dt, "chk_dt");
   if (chk_dt.suc > 0 && chk_dt.msg.length > 0) {
-    if (chk_dt.msg[0].policy_holder_type == "M") {
+    // if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
           // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-          "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
+          "a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.premium_type,a.premium_amt,b.unit_name",
         table_name = "td_stp_ins a, md_unit b",
         whr = `a.association = b.unit_id
       AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
-    } else {
-      var select =
-          "a.form_no,a.form_dt,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
-        table_name = "td_stp_ins a, md_unit b",
-        whr = `a.association = b.unit_id
-      AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
-        order = null;
-      res_dt = await db_Select(select, table_name, whr, order);
-    }
+    // } 
+    // else {
+    //   var select =
+    //       "a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,b.unit_name",
+    //     table_name = "td_stp_ins a, md_unit b",
+    //     whr = `a.association = b.unit_id
+    //   AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
+    //     order = null;
+    //   res_dt = await db_Select(select, table_name, whr, order);
+    // }
   }
-
-  // console.log(res_dt, "kiki");
   res.send(res_dt);
+});
+
+super_policyRouter.get('/download_super_mediclaim_pdf', async (req, res) => {
+  try {
+    const { form_no } = req.query;  
+
+    if (!form_no) {
+       return res.send('form_no is required');
+    }
+
+    const filePath = path.resolve('pdfs', `${form_no}.pdf`);
+    console.log('Looking for file at:', filePath);
+
+    if (!fs.existsSync(filePath)) {
+      return res.send('PDF not found');
+    }
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=${form_no}.pdf`);
+
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+  } catch (error) {
+    console.error('Download error:', error);
+    res.send('Internal Server Error');
+  }
 });
 
 module.exports = { super_policyRouter };
