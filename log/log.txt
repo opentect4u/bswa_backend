@@ -1743,3 +1743,15 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [16-Jun-25 13:50:15] : Exicuting Insert Statement for table td_stp_ins 
 [MESSAGE] : [16-Jun-25 13:50:15] : Error: Data truncated for column 'premium_type' at row 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-25 07:16:30] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [17-Jun-25 07:16:30] : Error: Incorrect date value: '0000-00-00' for column 'spou_dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-25 07:18:11] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [17-Jun-25 07:18:11] : Error: Incorrect date value: 'NULL' for column 'spou_dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-25 07:19:09] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [17-Jun-25 07:19:09] : Error: Incorrect datetime value: '' for column 'fin_yr' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Jun-25 07:22:54] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [17-Jun-25 07:22:54] : Error: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------

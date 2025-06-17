@@ -40,7 +40,7 @@ module.exports = {
       console.log(form_no, "pppp");
 
       let fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,mem_address,phone_no,min_no,personel_no,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,premium_type,premium_amt,form_status,created_by,created_at)`;
-      values = `('${form_no}','${data.form_dt}','${data.fin_yr}','${data.policy_holder_type}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob ? data.gen_dob : '0000-00-00'}','${data.mem.split("'").join("\\'")}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}','${data.spou_dob ? data.spou_dob : '0000-00-00'}','${data.spou_mobile ? data.spou_mobile : 0}','${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.premium_type}','${data.premium_amt}','P','${data.member}','${datetime}')`;
+      values = `('${form_no}','${data.form_dt}','${data.fin_yr ? `'${data.fin_yr}'` : 'NULL'}','${data.policy_holder_type}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'}''${data.mem.split("'").join("\\'")}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}','${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'}','${data.spou_mobile ? data.spou_mobile : 0}','${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.premium_type}','${data.premium_amt}','P','${data.member}','${datetime}')`;
       table_name = "td_stp_ins";
         whr = null;
         order = null;
