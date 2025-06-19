@@ -67,6 +67,9 @@ module.exports = {
             };
 
             // console.log(config);
+              console.log("Sending WhatsApp to:", phone);
+              console.log("Encoded Message:", msg);
+              console.log("URL:", config);
 
             axios.request(config)
                 .then((response) => {

@@ -1,7 +1,8 @@
 var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs");
-const { db_Select, db_Insert, formStatus } = require("./MasterModule");
+  bcrypt = require("bcrypt");
+const { db_Select, db_Insert, formStatus, shortenURL } = require("./MasterModule");
 const { sendWappMsg } = require("./whatsappModule");
 
 const getMaxFormNo = (flag) => {
@@ -30,7 +31,71 @@ const getMaxTrnId = () => {
 };
 
 module.exports = {
-  super_form_save: (data) => {
+  // super_form_save: (data) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  //     let year = dateFormat(new Date(), "yyyy");
+
+  //     const no = await getMaxFormNo(data.flag);
+  //     let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
+  //     console.log(form_no, "pppp");
+
+  //     let fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,mem_address,phone_no,min_no,personel_no,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,premium_type,premium_amt,form_status,created_by,created_at)`;
+  //     values = `('${form_no}','${data.form_dt}',${data.fin_yr ? `'${data.fin_yr}'` : 'NULL'},'${data.policy_holder_type}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}',${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'},'${data.mem.split("'").join("\\'")}','${data.phone_no}','${data.min_no}','${data.personal_no}','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}',${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'},'${data.spou_mobile ? data.spou_mobile : 0}','${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.premium_type}','${data.premium_amt}','P','${data.member}','${datetime}')`;
+  //     table_name = "td_stp_ins";
+  //       whr = null;
+  //       order = null;
+  //     var stp_dt = await db_Insert(table_name, fields, values, whr, order);
+
+  //     if (stp_dt.suc > 0) {
+  //       for (let dt of data.dependent_dt) {
+  //         fields = `(form_no,sl_no,ind_type,fin_year,particulars,amount,treatment_dtls,created_by,created_at)`;
+  //         values = `('${form_no}','${dt.sl_no}','${dt.ind_type}','${dt.fin_year}','${dt.particulars}','${dt.amount}','${dt.treatment_dtls}','${data.member}','${datetime}')`;
+  //         table_name = "td_stp_dtls";
+  //         whr = null;
+  //         order = null;
+  //         var super_dt = await db_Insert(
+  //           table_name,
+  //           fields,
+  //           values,
+  //           whr,
+  //           order
+  //         );
+  //         stp_dt["form_no"] = form_no;
+  //         stp_dt["policy_holder_type"] = `${data.policy_holder_type}`
+  //       }
+  //     }
+
+  //     // WHATSAPP MESSAGE //
+  //     try {
+  //       var select = "msg, domain",
+  //         table_name = "md_whatsapp_msg",
+  //         whr = `msg_for = 'Submit'`,
+  //         order = null;
+  //       var msg_dt = await db_Select(select, table_name, whr, order);
+  //       var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+  //         domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+  //       wpMsg = wpMsg
+  //         .replace("{user_name}", data.member)
+  //         .replace("{form_id}", form_no)
+  //         .replace(
+  //           "{url}",
+  //           `${domain}/#/home/print_stp_form/${encodeURIComponent(
+  //             new Buffer.from(form_no).toString("base64")
+  //           )}`
+  //         );
+  //       var wpRes = await sendWappMsg(data.phone, wpMsg);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //     // END //
+
+  //     // console.log(super_dt, "gggg");
+  //     resolve(stp_dt);
+  //   });
+  // },
+
+    super_form_save: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
@@ -63,6 +128,18 @@ module.exports = {
           stp_dt["form_no"] = form_no;
           stp_dt["policy_holder_type"] = `${data.policy_holder_type}`
         }
+        // ✅ Additional insert to md_stp_login
+      // const stp_pwd = await bcrypt.hash(data.min_no, 10);
+      const stp_pwd = bcrypt.hashSync(data.min_no.toString(), 10);
+
+      table_name = "md_stp_login";
+      fields = `(policy_holder_type,min_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
+      values = `('${data.policy_holder_type}','${data.min_no}','${data.member}','${data.phone_no}','${stp_pwd}','A','${data.member}', '${datetime}')`;
+      try {
+        await db_Insert(table_name, fields, values, whr, order);
+      } catch (err) {
+        console.log("Error inserting to md_stp_login:", err);
+      }
       }
 
       // WHATSAPP MESSAGE //
@@ -209,5 +286,58 @@ module.exports = {
       // END //
       resolve(approve_dt);
     });
+  },
+
+   save_stp_data: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      let year = dateFormat(new Date(), "yyyy");
+
+      const no = await getMaxTrnId();
+      let trn_id = `${year}${no.msg[0].max_trn_id}`;
+      console.log(trn_id,'trn');
+      
+
+        var table_name = "td_stp_ins",
+        fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        values = null,
+        whr = `form_no = '${data.formNo}'`,
+        flag = 1;
+        var trn_data = await db_Insert(table_name,fields,values,whr,flag);
+        trn_data["trn_id"] = trn_id;
+        try {
+          if (data.payment == "O") {
+            const encDtstp = encodeURIComponent(data.payEncDataSuper);
+            console.log(encDtstp,'uuu');
+
+            var select = "msg, domain",
+            table_name = "md_whatsapp_msg",
+            whr = `msg_for = 'Member Premium accept online'`,
+            order = null;
+            var msg_dt = await db_Select(select, table_name, whr, order);
+            var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+            domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+
+            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtstp}`;
+            console.log(longUrl, '----------------------');
+            
+
+            // Shorten the URL
+            const shortUrl = await shortenURL(longUrl);
+            console.log(shortUrl);
+            
+
+            wpMsg = wpMsg
+              .replace("{user_name}", data.member)
+              .replace("{form_no}", data.formNo)
+              .replace("{pay_link}", shortUrl);
+            var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+            console.log(wpRes,data.phone_no, wpMsg,'message');
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        resolve(trn_data)
+      });
   },
 };

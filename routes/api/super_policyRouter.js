@@ -12,6 +12,7 @@ const {
   reject_dt,
   approve_dt,
   approve_dt_stp,
+  save_stp_data,
 } = require("../../modules/super_policyMOdule");
 
 const super_policyRouter = express.Router();
@@ -213,7 +214,7 @@ super_policyRouter.get("/frm_list_policy", async (req, res) => {
   // if (data.checkedmember) {
   var select = "form_no,form_dt,member_id,form_status,memb_name, phone_no",
     table_name = "td_stp_ins",
-    whr = `form_status IN('P','R','T')`;
+    whr = `form_status IN('P','R','A')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
   order = null;
   // var res_dt = await db_Select(select, table_name, whr, order);
@@ -302,7 +303,7 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
     // if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
           // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-          "a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.premium_type,a.premium_amt,b.unit_name",
+          "a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,b.unit_name",
         table_name = "td_stp_ins a, md_unit b",
         whr = `a.association = b.unit_id
       AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
@@ -346,6 +347,13 @@ super_policyRouter.get('/download_super_mediclaim_pdf', async (req, res) => {
     console.error('Download error:', error);
     res.send('Internal Server Error');
   }
+});
+
+super_policyRouter.post("/save_trn_data_stp", async (req, res) => {
+  var data = req.body;
+  console.log(data, "trn_data_stp");
+  var res_dt = await save_stp_data(data);
+  res.send(res_dt);
 });
 
 module.exports = { super_policyRouter };
