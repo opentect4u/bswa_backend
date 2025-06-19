@@ -5,6 +5,7 @@ const {
   admin_login_data,
   member_login_data,
   superadmin_login_data,
+  stp_member_login_data,
 } = require("../../modules/LoginModule");
 const { db_Insert } = require("../../modules/MasterModule");
 const { createToken } = require("../../utils/jwt.util");
@@ -161,4 +162,55 @@ LoginRouter.post("/superadmin_login", async (req, res) => {
     });
   }
 });
+
+LoginRouter.post("/stp_member_login", async (req, res) => {
+  var data = req.body;
+  console.log(data,'data_stp');
+  
+  const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  var stp_log_dt = await stp_member_login_data(data);
+
+  if (stp_log_dt.suc > 0) {
+    if (stp_log_dt.msg.length > 0) {
+      if (await bcrypt.compare(data.password, stp_log_dt.msg[0].password)) {
+        try {
+          await db_Insert(
+            "md_stp_login",
+            `last_log="${datetime}"`,
+            null,
+            `min_no='${stp_log_dt.msg[0].min_no}'`,
+            1
+          );
+        } catch (err) {
+          console.log(err);
+        }
+        let data = {
+          time: new Date(),
+          userdata: stp_log_dt.msg,
+        };
+        const token = createToken(data);
+        res.send({ suc: 1, msg: data, token: token });
+      } else {
+        res.send({
+          suc: 0,
+          msg: "Please check your userid or password",
+          token: "",
+        });
+      }
+    } else {
+      res.send({
+        suc: 0,
+        msg: "Please check your userid or password",
+        token: "",
+      });
+    }
+  } else {
+    res.send({
+      suc: 0,
+      msg: "Please check your userid or password",
+      token: "",
+    });
+  }
+});
+
 module.exports = { LoginRouter };
