@@ -323,6 +323,32 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
   res.send(res_dt);
 });
 
+super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) => {
+  var data = req.body;
+
+  var select = "a.form_no,a.form_dt,a.fin_yr,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.dependent_flag,a.premium_type,a.premium_amt,b.unit_name",
+  table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id",
+  whr = `a.min_no = '${data.min_no}'`,
+  order = null;
+  var stp_memb_dtls = await db_Select(select,table_name,whr,order);
+  res.send(stp_memb_dtls);
+});
+
+super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res) => {
+  var data = req.body;
+
+  var select = "a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag",
+  table_name = "td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no",
+  whr = `a.min_no IN (
+        '${data.min_no}',
+        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '${data.min_no}')
+         )`,
+  order = `ORDER BY a.sl_no`;
+  var stp_premium_dtls = await db_Select(select,table_name,whr,order);
+  res.send(stp_premium_dtls);
+});
+
+
 super_policyRouter.get('/download_super_mediclaim_pdf', async (req, res) => {
   try {
     const { form_no } = req.query;  
