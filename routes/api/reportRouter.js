@@ -116,9 +116,9 @@ reportRouter.get("/member_stp_trans_report", async (req, res) => {
   
 
   let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
-    b.min_no, b.memb_name, b.dob`;
+    b.min_no, b.memb_name, b.dob,b.memb_oprn`;
   
-  if (data.memb_type === 'D') {
+  if (data.memb_oprn === 'D' || data.memb_oprn === 'A') {
     select += `, b.spou_min_no, b.spou_dob, b.dependent_name`;
   }
 
@@ -129,7 +129,7 @@ reportRouter.get("/member_stp_trans_report", async (req, res) => {
     AND a.pay_mode = 'O'
     ${
                data.memb_oprn != "A" && data.memb_oprn != ""
-                 ? `AND a.b.memb_oprn='${data.memb_oprn}'`
+                 ? `AND b.memb_oprn='${data.memb_oprn}'`
                  : ""
              }`;
   const order = `ORDER BY a.trn_dt, a.trn_id`;
