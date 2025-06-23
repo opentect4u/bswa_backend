@@ -110,6 +110,35 @@ reportRouter.get("/gmp_trans_report", async (req, res) => {
   res.send(res_dt);
 });
 
+reportRouter.get("/member_stp_trans_report", async (req, res) => {
+  const data = req.query;
+  console.log(data,'data');
+  
+
+  let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
+    b.min_no, b.memb_name, b.dob`;
+  
+  if (data.memb_type === 'D') {
+    select += `, b.spou_min_no, b.spou_dob, b.dependent_name`;
+  }
+
+  const table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.member_id";
+  const whr = `
+    DATE(a.trn_dt) BETWEEN '${data.from_dt}' AND '${data.to_dt}'
+    AND a.approval_status = 'A'
+    AND a.pay_mode = 'O'
+    ${
+               data.memb_oprn != "A" && data.memb_oprn != ""
+                 ? `AND a.b.memb_oprn='${data.memb_oprn}'`
+                 : ""
+             }`;
+  const order = `ORDER BY a.trn_dt, a.trn_id`;
+
+  const res_dt = await db_Select(select, table_name, whr, order);
+  res.send(res_dt);
+});
+
+
 
 reportRouter.get("/get_pg_approve_mem", async (req, res) => {
   var data = req.query;
