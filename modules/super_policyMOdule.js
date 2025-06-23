@@ -133,8 +133,8 @@ module.exports = {
       const stp_pwd = bcrypt.hashSync(data.min_no.toString(), 10);
 
       table_name = "md_stp_login";
-      fields = `(policy_holder_type,min_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
-      values = `('${data.policy_holder_type}','${data.min_no}','${data.member}','${data.phone_no}','${stp_pwd}','A','${data.member}', '${datetime}')`;
+      fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
+      values = `('${data.policy_holder_type}','${data.min_no}','${form_no}','${data.member}','${data.phone_no}','${stp_pwd}','I','${data.member}', '${datetime}')`;
       try {
         await db_Insert(table_name, fields, values, whr, order);
       } catch (err) {
@@ -303,40 +303,49 @@ module.exports = {
         values = null,
         whr = `form_no = '${data.formNo}'`,
         flag = 1;
+        var trns_data = await db_Insert(table_name,fields,values,whr,flag);
+        trns_data["trn_id"] = trn_id;
+
+        if(trns_data.suc > 0){
+        var table_name = "md_stp_login",
+        fields = `stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        values = null,
+        whr = `form_no = '${data.formNo}'`,
+        flag = 1;
         var trn_data = await db_Insert(table_name,fields,values,whr,flag);
-        trn_data["trn_id"] = trn_id;
-        try {
-          if (data.payment == "O") {
-            const encDtstp = encodeURIComponent(data.payEncDataSuper);
-            console.log(encDtstp,'uuu');
-
-            var select = "msg, domain",
-            table_name = "md_whatsapp_msg",
-            whr = `msg_for = 'Member Premium accept online'`,
-            order = null;
-            var msg_dt = await db_Select(select, table_name, whr, order);
-            var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-            domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-
-            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtstp}`;
-            console.log(longUrl, '----------------------');
-            
-
-            // Shorten the URL
-            const shortUrl = await shortenURL(longUrl);
-            console.log(shortUrl);
-            
-
-            wpMsg = wpMsg
-              .replace("{user_name}", data.member)
-              .replace("{form_no}", data.formNo)
-              .replace("{pay_link}", shortUrl);
-            var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-            console.log(wpRes,data.phone_no, wpMsg,'message');
-          }
-        } catch (error) {
-          console.log(error);
         }
+        // try {
+        //   if (data.payment == "O") {
+        //     const encDtstp = encodeURIComponent(data.payEncDataSuper);
+        //     console.log(encDtstp,'uuu');
+
+        //     var select = "msg, domain",
+        //     table_name = "md_whatsapp_msg",
+        //     whr = `msg_for = 'Member Premium accept online'`,
+        //     order = null;
+        //     var msg_dt = await db_Select(select, table_name, whr, order);
+        //     var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+        //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+
+        //     const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtstp}`;
+        //     console.log(longUrl, '----------------------');
+            
+
+        //     // Shorten the URL
+        //     const shortUrl = await shortenURL(longUrl);
+        //     console.log(shortUrl);
+            
+
+        //     wpMsg = wpMsg
+        //       .replace("{user_name}", data.member)
+        //       .replace("{form_no}", data.formNo)
+        //       .replace("{pay_link}", shortUrl);
+        //     var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+        //     console.log(wpRes,data.phone_no, wpMsg,'message');
+        //   }
+        // } catch (error) {
+        //   console.log(error);
+        // }
         resolve(trn_data)
       });
   },

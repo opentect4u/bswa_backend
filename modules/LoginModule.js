@@ -35,14 +35,44 @@ module.exports = {
     });
   },
 
-    stp_member_login_data: (data) => {
-    return new Promise(async (resolve, reject) => {
-      var select = "policy_holder_type,min_no,stp_memb_name,stp_memb_phone,stp_user_status,password",
-        table_name = "md_stp_login",
-        whr = `stp_user_status = 'A' AND min_no = '${data.min_no}'`,
-        order = null;
-      var stp_mem_login_dt = await db_Select(select, table_name, whr, order);
+  //   stp_member_login_data: (data) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     var select = "a.policy_holder_type,a.min_no,a.stp_memb_name,a.stp_memb_phone,a.stp_user_status,a.password,b.member_id",
+  //       table_name = "md_stp_login a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no",
+  //       whr = `a.stp_user_status = 'A' AND a.min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci`,
+  //       order = null;
+  //     var stp_mem_login_dt = await db_Select(select, table_name, whr, order);
+  //     resolve(stp_mem_login_dt);
+  //   });
+  // },
+
+  stp_member_login_data: (data) => {
+  return new Promise(async (resolve, reject) => {
+    const select = `
+      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,
+      a.stp_user_status, a.password, b.member_id
+    `;
+    
+    const table_name = `
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no COLLATE utf8mb4_general_ci = b.min_no COLLATE utf8mb4_general_ci
+    `;
+
+    const whr = `
+      a.stp_user_status = 'A'
+      AND a.min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci
+    `;
+
+    const order = null;
+
+    try {
+      const stp_mem_login_dt = await db_Select(select, table_name, whr, order);
       resolve(stp_mem_login_dt);
-    });
-  },
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
 };

@@ -348,6 +348,23 @@ super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res)
   res.send(stp_premium_dtls);
 });
 
+super_policyRouter.post("/fetch_stp_trans_dtls", async (req, res) => {
+  try{
+   var data = req.body;
+
+   var select = "form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,approval_status",
+   table_name = "td_transactions",
+   whr = `form_no = '${data.no}'`,
+   order = null;
+   var fetch_stp_transaction = await db_Select(select,table_name,whr,order);
+   res.send(fetch_stp_transaction)
+   console.log(fetch_stp_transaction,'fetch');
+   
+  }catch(error){
+    console.error('Error:', error);
+    res.send(error);
+  }
+});
 
 super_policyRouter.get('/download_super_mediclaim_pdf', async (req, res) => {
   try {
