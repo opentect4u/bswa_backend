@@ -122,7 +122,7 @@ reportRouter.get("/member_stp_trans_report", async (req, res) => {
     select += `, b.spou_min_no, b.spou_dob, b.dependent_name`;
   }
 
-  const table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.member_id";
+  const table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no";
   const whr = `
     DATE(a.trn_dt) BETWEEN '${data.from_dt}' AND '${data.to_dt}'
     AND a.approval_status = 'A'
