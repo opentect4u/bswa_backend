@@ -110,34 +110,74 @@ reportRouter.get("/gmp_trans_report", async (req, res) => {
   res.send(res_dt);
 });
 
-reportRouter.get("/member_stp_trans_report", async (req, res) => {
-  const data = req.query;
-  console.log(data,'data');
+// reportRouter.get("/member_stp_trans_report", async (req, res) => {
+//   const data = req.query;
+//   console.log(data,'data');
   
 
-  let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
-    b.min_no, b.memb_name, b.dob,b.memb_oprn`;
+//   let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
+//     b.min_no, b.memb_name, b.dob,b.memb_oprn`;
   
+//   if (data.memb_oprn === 'D' || data.memb_oprn === 'A') {
+//     select += `, b.spou_min_no, b.spou_dob, b.dependent_name`;
+//   }
+
+//   const table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no";
+//   const whr = `
+//     DATE(a.trn_dt) BETWEEN '${data.from_dt}' AND '${data.to_dt}'
+//     AND a.approval_status = 'A'
+//     AND a.pay_mode = 'O'
+//     ${
+//                data.memb_oprn != "A" && data.memb_oprn != ""
+//                  ? `AND b.memb_oprn='${data.memb_oprn}'`
+//                  : ""
+//              }`;
+//   const order = `ORDER BY a.trn_dt, a.trn_id`;
+
+//   const res_dt = await db_Select(select, table_name, whr, order);
+//   res.send(res_dt);
+// });
+
+reportRouter.get("/member_stp_trans_report", async (req, res) => {
+  const data = req.query;
+  console.log(data, 'data');
+
+  let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
+    b.min_no, b.memb_name, b.dob, b.memb_oprn`;
+
+  // Include spouse/dependent fields if D or A
   if (data.memb_oprn === 'D' || data.memb_oprn === 'A') {
     select += `, b.spou_min_no, b.spou_dob, b.dependent_name`;
   }
 
   const table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no";
-  const whr = `
+
+  // Base condition
+  let whr = `
     DATE(a.trn_dt) BETWEEN '${data.from_dt}' AND '${data.to_dt}'
     AND a.approval_status = 'A'
     AND a.pay_mode = 'O'
-    ${
-               data.memb_oprn != "A" && data.memb_oprn != ""
-                 ? `AND b.memb_oprn='${data.memb_oprn}'`
-                 : ""
-             }`;
+  `;
+
+  // memb_oprn logic
+  if (data.memb_oprn === 'S') {
+    whr += ` AND b.memb_oprn = 'S'`;
+  } else if (data.memb_oprn === 'D') {
+    whr += ` AND b.memb_oprn = 'D'`;
+  } else if (data.memb_oprn === 'A') {
+    whr += ` AND b.memb_oprn IN ('S', 'D')`;
+  }
+
   const order = `ORDER BY a.trn_dt, a.trn_id`;
 
-  const res_dt = await db_Select(select, table_name, whr, order);
-  res.send(res_dt);
+  try {
+    const res_dt = await db_Select(select, table_name, whr, order);
+    res.send(res_dt);
+  } catch (err) {
+    console.error('Database error:', err);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
 });
-
 
 
 reportRouter.get("/get_pg_approve_mem", async (req, res) => {
