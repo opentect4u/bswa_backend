@@ -72,7 +72,7 @@ module.exports = {
 
      const whr = `
       a.stp_user_status = 'A'
-      AND a.min_no = '${data.min_no}'
+      AND a.min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci
     `;
 
     const order = null;
