@@ -214,53 +214,80 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var tnx_data = await getMaxTrnId();
   let year = dateFormat(new Date(), "yyyy");
   var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
-  if(data.pay_mode != 'O'){
+
+  const chq_no = data.chq_no ? `'${data.chq_no}'` : 'NULL';
+  const chq_dt = data.chq_dt ? `'${data.chq_dt}'` : 'NULL';
+  const chq_bank = data.chq_bank ? `'${data.chq_bank}'` : 'NULL';
+
+  var tot_tenure = data.sub_amt > 0 ? data.sub_amt / data.sub_fee : 0;
+  console.log(tot_tenure,'ten');
+  
+  var sub_upto = new Date(trn_dt);
+  // sub_upto.setMonth(sub_upto.getMonth() + tot_tenure - 1);
+  sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+  // if(data.pay_mode != 'O'){
     var table_name = "td_transactions",
       fields =
         "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
-      values = `('${data.form_no}', '${data.form_dt}', '${tnx_id}', '${data.sub_amt}', 0, 0, 0, 0, ${data.sub_amt}, '${data.pay_mode}', '${data.receipt_no}', '${data.chq_no}', '${data.chq_dt}', '${data.chq_bank}', '${data.approval_status}', '${data.user}', '${trn_dt}')`,
+      values = `('${data.form_no}', '${data.form_dt}', '${tnx_id}', '${data.sub_amt}', 0, 0, 0, 0, ${data.sub_amt}, '${data.pay_mode}', '${data.receipt_no}', ${chq_no}, ${chq_dt}, ${chq_bank}, '${data.approval_status}', '${data.user}', '${trn_dt}')`,
+      whr = null,
+      flag = 0;
+    var res_dts = await db_Insert(table_name, fields, values, whr, flag);
+
+    if(res_dts.suc > 0){
+      var table_name = "td_memb_subscription",
+      fields =
+        "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, modified_by, modified_at)",
+      values = `('${data.memb_id}', '${data.form_dt}', '${data.sub_amt}', '${dateFormat(
+                      sub_upto,
+                      "yyyy-mm-dd HH:MM:ss"
+                    )}', '${data.cal_amt}', '${dateFormat(
+                sub_upto,
+                "yyyy-mm-dd HH:MM:ss"
+              )}', '${tnx_id}', '${data.user}', '${trn_dt}')`,
       whr = null,
       flag = 0;
     var res_dt = await db_Insert(table_name, fields, values, whr, flag);
-  
-    res_dt["trn_id"] = tnx_id;
-    res.send(res_dt)
-  }else{
-    // WHATSAPP MESSAGE //
-    try {
-      const encDtgen = encodeURIComponent(data.pay_enc_data)
-      console.log(encDtgen,'uuu');
-      
-      var select = "msg, domain",
-        table_name = "md_whatsapp_msg",
-        whr = `msg_for = 'Member accept online'`,
-        order = null;
-      var msg_dt = await db_Select(select, table_name, whr, order);
-      var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-        domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-  
-        // Construct the long URL
-      const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`;
-  
-        // Shorten the URL
-      const shortUrl = await shortenURL(longUrl);
-  
-      wpMsg = wpMsg
-        .replace("{user_name}", data.member)
-        .replace("{form_no}", data.form_no)
-        // .replace("{pay_link}", `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`);
-        .replace("{pay_link}", shortUrl);
-      var wpRes = await sendWappMsg(
-        data.phone_no,
-        wpMsg
-      );
-      console.log(wpRes,'message');
-      res.send({suc: 1, msg: wpRes})
-    } catch (err) {
-      console.log(err);
-      res.send({suc: 0, msg: "Message Not send for online transaction"})
     }
-  }
+  
+    res_dts["trn_id"] = tnx_id;
+    res.send(res_dt)
+  // }else{
+  //   // WHATSAPP MESSAGE //
+  //   try {
+  //     const encDtgen = encodeURIComponent(data.pay_enc_data)
+  //     console.log(encDtgen,'uuu');
+      
+  //     var select = "msg, domain",
+  //       table_name = "md_whatsapp_msg",
+  //       whr = `msg_for = 'Member accept online'`,
+  //       order = null;
+  //     var msg_dt = await db_Select(select, table_name, whr, order);
+  //     var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+  //       domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+  
+  //       // Construct the long URL
+  //     const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`;
+  
+  //       // Shorten the URL
+  //     const shortUrl = await shortenURL(longUrl);
+  
+  //     wpMsg = wpMsg
+  //       .replace("{user_name}", data.member)
+  //       .replace("{form_no}", data.form_no)
+  //       // .replace("{pay_link}", `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`);
+  //       .replace("{pay_link}", shortUrl);
+  //     var wpRes = await sendWappMsg(
+  //       data.phone_no,
+  //       wpMsg
+  //     );
+  //     console.log(wpRes,'message');
+  //     res.send({suc: 1, msg: wpRes})
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.send({suc: 0, msg: "Message Not send for online transaction"})
+  //   }
+  // }
 
     // END //
 

@@ -1849,3 +1849,22 @@ LEFT JOIN td_memb_subscription c
      
 [MESSAGE] : [24-Jun-25 14:32:05] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 15:55:11] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 15:55:11] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 16:41:07] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [24-Jun-25 16:41:07] : Error: Incorrect date value: 'undefined' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 16:43:04] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [24-Jun-25 16:43:04] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 16:43:20] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [24-Jun-25 16:43:20] : Error: Incorrect date value: 'NULL' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 17:26:18] : Exicuting Insert Statement for table td_memb_subscription 
+[MESSAGE] : [24-Jun-25 17:26:18] : Error: Column count doesn't match value count at row 1 
+------------------------------------------------------------------------------------------------------------
