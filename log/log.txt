@@ -1828,3 +1828,24 @@ LEFT JOIN td_memb_subscription c
      
 [MESSAGE] : [24-Jun-25 12:05:29] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 14:30:42] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 14:30:42] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '1100498'\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 14:31:59] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 14:31:59] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 14:32:05] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 14:32:05] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
+------------------------------------------------------------------------------------------------------------
