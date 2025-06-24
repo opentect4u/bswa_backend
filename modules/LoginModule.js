@@ -53,27 +53,27 @@ module.exports = {
       a.stp_user_status, a.password, a.form_no,b.member_id
     `;
     
-    // const table_name = `
-    //   md_stp_login a
-    //   LEFT JOIN td_stp_ins b
-    //   ON a.min_no COLLATE utf8mb4_general_ci = b.min_no COLLATE utf8mb4_general_ci
-    // `;
-
-     const table_name = `
+    const table_name = `
       md_stp_login a
       LEFT JOIN td_stp_ins b
-      ON a.min_no = b.min_no
+      ON a.min_no COLLATE utf8mb4_general_ci = b.min_no COLLATE utf8mb4_general_ci
     `;
 
-    // const whr = `
-    //   a.stp_user_status = 'A'
-    //   AND a.min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci
+    //  const table_name = `
+    //   md_stp_login a
+    //   LEFT JOIN td_stp_ins b
+    //   ON a.min_no = b.min_no
     // `;
 
-     const whr = `
+    const whr = `
       a.stp_user_status = 'A'
-      AND a.min_no = '${data.min_no}'
+      AND a.min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci
     `;
+
+    //  const whr = `
+    //   a.stp_user_status = 'A'
+    //   AND a.min_no = '${data.min_no}'
+    // `;
 
     const order = null;
 
