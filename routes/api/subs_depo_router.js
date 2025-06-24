@@ -330,24 +330,65 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
   res.send(res_dt);
 });
 
+// SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
+//   var data = req.body;
+//   var select =
+//       `a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,IF(b.memb_name != '', b.memb_name, c.memb_name) memb_name, IF(b.member_id != '', b.member_id, c.member_id) member_id, IF(b.mem_type != '', b.mem_type, c.policy_holder_type) mem_type`,
+//       // `a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,IF(b.memb_name != '', b.memb_name, c.memb_name) memb_name, IF(b.member_id != '', b.member_id, c.member_id) member_id, IF(b.mem_type != '', b.mem_type, c.memb_type) mem_type`,
+//     table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no",
+//     // whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
+//     // whr = `a.trn_id = '${data.trn_id}' ${data.member_id > 0 ? `AND b.member_id = '${data.member_id}'` : ''}`,
+//     // whr = `a.trn_id = '${data.trn_id}' ${data.member_id && data.member_id.trim() !== '' ? `AND b.member_id = '${data.member_id}'` : ''}`,
+//      whr = `a.trn_id = '${data.trn_id}'`,
+//     // order = `ORDER BY trn_dt, trn_id`;
+//     // order = `ORDER BY trn_dt DESC`;
+//     order = null;
+//   var res_dt = await db_Select(select, table_name, whr, order);
+//   console.log(res_dt);
+  
+//   res.send(res_dt);
+// });
+
 SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   var data = req.body;
-  var select =
-      `a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,IF(b.memb_name != '', b.memb_name, c.memb_name) memb_name, IF(b.member_id != '', b.member_id, c.member_id) member_id, IF(b.mem_type != '', b.mem_type, c.policy_holder_type) mem_type`,
-      // `a.trn_dt,a.trn_id,a.tot_amt,a.pay_mode,a.receipt_no,a.chq_no,a.chq_dt,a.chq_bank,a.approval_status,IF(b.memb_name != '', b.memb_name, c.memb_name) memb_name, IF(b.member_id != '', b.member_id, c.member_id) member_id, IF(b.mem_type != '', b.mem_type, c.memb_type) mem_type`,
-    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no",
-    // whr = ` a.form_no = b.form_no AND b.member_id = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
-    // whr = `a.trn_id = '${data.trn_id}' ${data.member_id > 0 ? `AND b.member_id = '${data.member_id}'` : ''}`,
-    // whr = `a.trn_id = '${data.trn_id}' ${data.member_id && data.member_id.trim() !== '' ? `AND b.member_id = '${data.member_id}'` : ''}`,
+  var select =`a.trn_dt,
+  a.trn_id,
+  a.tot_amt,
+  a.pay_mode,
+  a.receipt_no,
+  a.chq_no,
+  a.chq_dt,
+  a.chq_bank,
+  a.approval_status,
+    -- Member Name Logic
+  CASE 
+    WHEN b.memb_name IS NOT NULL AND b.memb_name != '' THEN b.memb_name
+    WHEN LEFT(a.form_no, 3) = 'STP' AND d.memb_name IS NOT NULL THEN d.memb_name
+    ELSE c.memb_name
+  END AS memb_name,
+
+  -- Member ID Logic
+  CASE 
+    WHEN b.member_id IS NOT NULL AND b.member_id != '' THEN b.member_id
+    WHEN LEFT(a.form_no, 3) = 'STP' AND d.member_id IS NOT NULL THEN d.member_id
+    ELSE c.member_id
+  END AS member_id,
+
+  -- Member Type Logic
+  CASE 
+    WHEN b.mem_type IS NOT NULL AND b.mem_type != '' THEN b.mem_type
+    WHEN LEFT(a.form_no, 3) = 'STP' AND d.policy_holder_type IS NOT NULL THEN d.policy_holder_type
+    ELSE c.policy_holder_type
+  END AS mem_type`,
+    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no",
      whr = `a.trn_id = '${data.trn_id}'`,
-    // order = `ORDER BY trn_dt, trn_id`;
-    // order = `ORDER BY trn_dt DESC`;
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   console.log(res_dt);
   
   res.send(res_dt);
 });
+
 
 SubsDepoRouter.post("/subscription_voucher", async (req, res) => {});
 
