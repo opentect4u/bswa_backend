@@ -62,7 +62,7 @@ module.exports = {
      const table_name = `
       md_stp_login a
       LEFT JOIN td_stp_ins b
-      ON a.min_no COLLATE utf8mb4_general_ci = b.min_no COLLATE utf8mb4_general_ci
+      ON a.min_no COLLATE utf8mb4_0900_ai_ci = b.min_no COLLATE utf8mb4_0900_ai_ci
     `;
 
     // const whr = `
@@ -72,7 +72,7 @@ module.exports = {
 
      const whr = `
       a.stp_user_status = 'A'
-      AND a.min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci
+      AND a.min_no COLLATE utf8mb4_0900_ai_ci = '${data.min_no}' COLLATE utf8mb4_0900_ai_ci
     `;
 
     const order = null;
