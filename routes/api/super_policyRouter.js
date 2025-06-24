@@ -354,7 +354,7 @@ super_policyRouter.post("/fetch_stp_trans_dtls", async (req, res) => {
 
    var select = "form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,approval_status",
    table_name = "td_transactions",
-   whr = `form_no = '${data.member_id}'`,
+   whr = `form_no = '${data.form_no}'`,
    order = null;
    var fetch_stp_transaction = await db_Select(select,table_name,whr,order);
    res.send(fetch_stp_transaction)
@@ -372,7 +372,7 @@ super_policyRouter.post("/fetch_fr_view_stp_trans_dtls", async (req, res) => {
 
    var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type,b.premium_amt",
    table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.member_id",
-   whr = `a.form_no = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
+   whr = `a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
    order = null;
    var fetch_stp_view_transaction = await db_Select(select,table_name,whr,order);
    res.send(fetch_stp_view_transaction)

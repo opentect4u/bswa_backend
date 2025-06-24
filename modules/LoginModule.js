@@ -50,7 +50,7 @@ module.exports = {
   return new Promise(async (resolve, reject) => {
     const select = `
       a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,
-      a.stp_user_status, a.password, b.member_id
+      a.stp_user_status, a.password, a.form_no,b.member_id
     `;
     
     // const table_name = `
