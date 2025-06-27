@@ -154,7 +154,7 @@ super_policyRouter.get("/get_super_transaction", async (req, res) => {
   var data = req.query;
   // console.log(data, "hhhh");
   var select =
-      "form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt",
+      "form_no,form_dt,member_id,remarks,form_status,resolution_no,resolution_dt",
     table_name = "td_stp_ins",
     whr = `form_no ='${data.form_no}'`,
     order = null;
@@ -167,7 +167,7 @@ super_policyRouter.get("/get_super_transaction_reject", async (req, res) => {
   var data = req.query;
   // console.log(data, "hhhh");
   var select =
-      "a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt",
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt",
     table_name = "td_stp_ins a",
     whr = `a.form_no ='${data.form_no}'`,
     order = null;
@@ -191,9 +191,9 @@ super_policyRouter.get("/get_date", async (req, res) => {
 
 super_policyRouter.post("/save_super_policy_form", async (req, res) => {
   var data = req.body;
-  console.log(data, "mm");
+  // console.log(data, "mm");
   var save_super = await super_form_save(data);
-  console.log(save_super, "aaa");
+  // console.log(save_super, "aaa");
   res.send(save_super);
 });
 
@@ -303,9 +303,10 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
     // if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
           // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
-          "a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name",
-        table_name = "td_stp_ins a, md_unit b",
+          "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,a.form_status,a.resolution_no,a.resolution_dt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name,c.policy_holder_type",
+        table_name = "td_stp_ins a, md_unit b, md_policy_holder_type c",
         whr = `a.association = b.unit_id
+        AND a.policy_holder_type = c.policy_holder_type_id
         AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
@@ -326,8 +327,8 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
 super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) => {
   var data = req.body;
 
-  var select = "a.form_no,a.form_dt,a.fin_yr,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.dependent_flag,a.premium_type,a.premium_amt,b.unit_name",
-  table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id",
+  var select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type",
+  table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id",
   whr = `a.min_no = '${data.min_no}'`,
   order = null;
   var stp_memb_dtls = await db_Select(select,table_name,whr,order);
@@ -370,7 +371,7 @@ super_policyRouter.post("/fetch_fr_view_stp_trans_dtls", async (req, res) => {
   try{
    var data = req.body;
 
-   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type,b.premium_amt",
+   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type",
    table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no",
    whr = `a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
    order = null;

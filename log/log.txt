@@ -1916,3 +1916,195 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [26-Jun-25 18:02:43] : Exicuting Insert Statement for table td_stp_dtls 
 [MESSAGE] : [26-Jun-25 18:02:43] : Error: Incorrect integer value: '' for column 'sl_no' at row 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 08:42:10] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [27-Jun-25 08:42:10] : Error: Incorrect integer value: '' for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 08:43:25] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [27-Jun-25 08:43:25] : Error: Incorrect integer value: '' for column 'sl_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 08:43:25] : Exicuting Insert Statement for table md_stp_login 
+[MESSAGE] : [27-Jun-25 08:43:25] : Error: Incorrect integer value: '' for column 'stp_memb_phone' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 08:43:30] : Exicuting Select Statement from table td_stp_ins a, md_unit b 
+[MESSAGE] : [27-Jun-25 08:43:30] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name FROM td_stp_ins a, md_unit b WHERE a.association = b.unit_id\n        AND a.member_id ='S8583' AND a.form_no = 'STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:00:00] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [27-Jun-25 09:00:00] : Error: Incorrect integer value: '' for column 'sl_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:00:04] : Exicuting Select Statement from table td_stp_ins a, md_unit b 
+[MESSAGE] : [27-Jun-25 09:00:04] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name FROM td_stp_ins a, md_unit b WHERE a.association = b.unit_id\n        AND a.member_id ='S8583' AND a.form_no = 'STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:01:33] : Exicuting Select Statement from table td_stp_ins a, md_unit b 
+[MESSAGE] : [27-Jun-25 09:01:33] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name FROM td_stp_ins a, md_unit b WHERE a.association = b.unit_id\n        AND a.member_id ='S8583' AND a.form_no = 'STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:04:16] : Exicuting Select Statement from table td_stp_ins a, md_unit b 
+[MESSAGE] : [27-Jun-25 09:04:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name FROM td_stp_ins a, md_unit b WHERE a.association = b.unit_id\n        AND a.member_id ='S8583' AND a.form_no = 'STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:04:16] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 09:04:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:04:16] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 09:04:16] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:05:55] : Exicuting Select Statement from table td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id 
+[MESSAGE] : [27-Jun-25 09:05:55] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.dependent_flag,a.premium_type,a.premium_amt,b.unit_name FROM td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id WHERE a.min_no = 'S8583' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:05:59] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [27-Jun-25 09:05:59] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        'S8583',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = 'S8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 09:06:02] : Exicuting Select Statement from table td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id 
+[MESSAGE] : [27-Jun-25 09:06:02] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.dependent_flag,a.premium_type,a.premium_amt,b.unit_name FROM td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id WHERE a.min_no = 'S8583' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 10:49:29] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [27-Jun-25 10:49:29] : Error: Incorrect integer value: '' for column 'sl_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 10:49:30] : Exicuting Select Statement from table td_stp_ins a, md_unit b 
+[MESSAGE] : [27-Jun-25 10:49:30] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name FROM td_stp_ins a, md_unit b WHERE a.association = b.unit_id\n        AND a.member_id ='S8583' AND a.form_no = 'STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 10:57:47] : Exicuting Select Statement from table td_stp_ins a, md_unit b 
+[MESSAGE] : [27-Jun-25 10:57:47] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.policy_holder_type,a.fin_yr,a.association,a.memb_type mem_type,a.member_id,a.memb_oprn,a.memb_name,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dob,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.resolution_no,a.resolution_dt,a.form_status,a.dependent_flag,a.premium_type,a.premium_amt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name FROM td_stp_ins a, md_unit b WHERE a.association = b.unit_id\n        AND a.member_id ='S8583' AND a.form_no = 'STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:38:22] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:38:22] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:38:22] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:38:22] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:38:26] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:38:26] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:38:26] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:38:26] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:38:51] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:38:51] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:38:51] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:38:51] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:46:38] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:46:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:46:38] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:46:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:49:04] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:49:04] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:49:04] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:49:04] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:51:52] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:51:52] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:51:52] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:51:52] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:55:12] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:55:12] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:55:12] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:55:12] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:55:35] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:55:35] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:55:35] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:55:35] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:56:33] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:56:33] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:56:33] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:56:33] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:56:36] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:56:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:56:36] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:56:36] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:57:26] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:57:26] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:57:26] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:57:26] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:57:38] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:57:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:57:38] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:57:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:17] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:59:17] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:17] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:59:17] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:21] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:59:21] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:21] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:59:21] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:31] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:59:31] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:31] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:59:31] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:38] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:59:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:38] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:59:38] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:43] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 11:59:43] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 11:59:43] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 11:59:43] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:00:11] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 12:00:11] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:00:11] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 12:00:11] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:03:08] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 12:03:08] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:03:08] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 12:03:08] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:03:28] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 12:03:28] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt FROM td_stp_ins a WHERE a.form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:03:29] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 12:03:29] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:05:01] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 12:05:01] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'fin_yr' in 'field list'","sql":"SELECT form_no,form_dt,fin_yr,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:05:27] : Exicuting Select Statement from table td_stp_ins 
+[MESSAGE] : [27-Jun-25 12:05:27] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'premium_amt' in 'field list'","sql":"SELECT form_no,form_dt,member_id,remarks,form_status,resolution_no,resolution_dt,premium_amt FROM td_stp_ins WHERE form_no ='STP2025000001' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 12:32:06] : Exicuting Select Statement from table td_stp_ins a 
+[MESSAGE] : [27-Jun-25 12:32:06] : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column 'a.fin_yr' in 'field list'","sql":"SELECT a.form_no,a.form_dt,a.fin_yr,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address FROM td_stp_ins a WHERE a.form_no = 'STP2025000002'\n      AND a.member_id = '9007' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 16:29:06] : Exicuting Update Statement for table md_stp_login 
+[MESSAGE] : [27-Jun-25 16:29:06] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'undefined'' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 16:32:39] : Exicuting Update Statement for table md_stp_login 
+[MESSAGE] : [27-Jun-25 16:32:39] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'undefined'' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 16:44:08] : Exicuting Update Statement for table md_stp_login 
+[MESSAGE] : [27-Jun-25 16:44:08] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'undefined'' at line 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 18:40:40] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [27-Jun-25 18:40:40] : Error: Data truncated for column 'spou_gender' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [27-Jun-25 18:48:59] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [27-Jun-25 18:48:59] : Error: Data truncated for column 'dependent_flag' at row 1 
+------------------------------------------------------------------------------------------------------------

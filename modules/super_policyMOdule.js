@@ -102,10 +102,10 @@ module.exports = {
 
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      console.log(form_no, "pppp");
+      // console.log(form_no, "pppp");
 
-      let fields = `(form_no,form_dt,fin_yr,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,dob,mem_address,phone_no,min_no,personel_no,memb_flag,dependent_name,spou_min_no,spou_dob,spou_phone,spou_address,dependent_flag,premium_type,premium_amt,form_status,created_by,created_at)`;
-      values = `('${form_no}','${data.form_dt}',${data.fin_yr ? `'${data.fin_yr}'` : 'NULL'},'${data.policy_holder_type}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}',${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'},'${data.mem.split("'").join("\\'")}','${data.phone_no}','${data.min_no}','${data.personal_no}','Y','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}',${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'},'${data.spou_mobile ? data.spou_mobile : 0}','${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','Y','${data.premium_type}','${data.premium_amt}','P','${data.member}','${datetime}')`;
+      let fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,gender,dob,mem_address,phone_no,min_no,personel_no,memb_flag,dependent_name,spou_min_no,spou_dob,spou_phone,spou_gender,spou_address,dependent_flag,premium_type,form_status,created_by,created_at)`;
+      values = `('${form_no}','${data.form_dt}',${data.policy_holder_type ? `'${data.policy_holder_type}'` : 'NULL'},'${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}',${data.unit ? `'${data.unit}'` : 'NULL'},${data.member_type ? `'${data.member_type}'` : 'NULL'},${data.memb_oprn ? `'${data.memb_oprn}'` : 'NULL'},${data.member ? `'${data.member}'` : 'NULL'},${data.gender ? `'${data.gender}'` : 'NULL'},${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'},'${data.mem.split("'").join("\\'")}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},${data.min_no ? `'${data.min_no}'` : 'NULL'},${data.personal_no ? `'${data.personal_no}'` : 'NULL'},'Y','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}',${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'},'${data.spou_mobile ? data.spou_mobile : 0}',${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},'${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.memb_oprn == 'S' ? 'N' : 'Y'}','${data.premium_type}','P','${data.member}','${datetime}')`;
       table_name = "td_stp_ins";
         whr = null;
         order = null;
@@ -114,7 +114,7 @@ module.exports = {
       if (stp_dt.suc > 0) {
         for (let dt of data.dependent_dt) {
           fields = `(form_no,sl_no,ind_type,min_no,fin_year,particulars,amount,treatment_dtls,treatment_flag,created_by,created_at)`;
-          values = `('${form_no}','${dt.sl_no}','${dt.ind_type}','${dt.ind_type == 'S' ? `${data.min_no}` : `${data.spouse_min_no}`}','${dt.fin_year}','${dt.particulars}','${dt.amount}','${dt.treatment_dtls}','Y','${data.member}','${datetime}')`;
+          values = `('${form_no}',${dt.sl_no ? `'${dt.sl_no}'` : 'NULL'},'${dt.ind_type}','${dt.ind_type == 'S' ? `${data.min_no}` : `${data.spouse_min_no}`}','${dt.fin_year}','${dt.particulars}','${dt.amount}','${dt.treatment_dtls}','Y','${data.member}','${datetime}')`;
           table_name = "td_stp_dtls";
           whr = null;
           order = null;
@@ -134,7 +134,7 @@ module.exports = {
 
       table_name = "md_stp_login";
       fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
-      values = `('${data.policy_holder_type}','${data.min_no}','${form_no}','${data.member}','${data.phone_no}','${stp_pwd}','I','${data.member}', '${datetime}')`;
+      values = `('${data.policy_holder_type}','${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}','${form_no}','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'${stp_pwd}','I','${data.member}', '${datetime}')`;
       try {
         await db_Insert(table_name, fields, values, whr, order);
       } catch (err) {
