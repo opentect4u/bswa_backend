@@ -7,7 +7,7 @@ const {
   superadmin_login_data,
   stp_member_login_data,
 } = require("../../modules/LoginModule");
-const { db_Insert } = require("../../modules/MasterModule");
+const { db_Insert, db_Select } = require("../../modules/MasterModule");
 const { createToken } = require("../../utils/jwt.util");
 const LoginRouter = express.Router();
 
@@ -209,6 +209,57 @@ LoginRouter.post("/stp_member_login", async (req, res) => {
       suc: 0,
       msg: "Please check your userid or password",
       token: "",
+    });
+  }
+});
+
+LoginRouter.get("/encrypt_member_passwords",async (req, res) => {
+  try{
+    const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+    // Select member details from the table
+    var select = "form_no,policy_holder_type,member_id,min_no,memb_name,phone_no",
+    table_name = "td_stp_ins",
+    whr = null,
+    order = null;
+    var member_details = await db_Select(select,table_name,whr,order);
+
+    if(member_details.suc > 0 && member_details.msg.length > 0){
+      // Loop through each member's data
+      for (let member of member_details.msg) {
+      const form_no = member.form_no;
+      const policy_holder_type = member.policy_holder_type;
+      const member_id = member.member_id;
+      const min_no = member.min_no;
+      const memb_name = member.memb_name;
+      const phone_no = member.phone_no;
+
+       // Encrypt the min_no (as password)
+      const encrypted_pwd = bcrypt.hashSync(min_no.toString(), 10);
+      
+       // Prepare the insert statement for the new table
+       var table_name = "md_stp_login",
+        fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`,
+        values = `('${policy_holder_type}','${member_id}','${form_no}','${memb_name}','${phone_no}','${encrypted_pwd}','A','Migration','${datetime}')`,
+        whr = null,
+        flag = 0;
+      var res_dt = await db_Insert(table_name, fields, values, whr, flag); 
+      }
+
+        res.send({
+        success: true,
+        message: "Passwords encrypted and inserted successfully.",
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "No member records found.",
+      });
+    }
+  }catch(error){
+    console.error("❌ Error:", error);
+    res.send({
+      error: "Something went wrong while encrypting passwords",
     });
   }
 });

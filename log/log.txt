@@ -1868,3 +1868,51 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [24-Jun-25 17:26:18] : Exicuting Insert Statement for table td_memb_subscription 
 [MESSAGE] : [24-Jun-25 17:26:18] : Error: Column count doesn't match value count at row 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 22:48:43] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 22:48:43] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 22:54:30] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 22:54:30] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 22:59:17] : Exicuting Select Statement from table 
+      md_stp_login a
+      LEFT JOIN td_stp_ins b
+      ON a.min_no = b.min_no
+     
+[MESSAGE] : [24-Jun-25 22:59:17] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_0900_ai_ci,IMPLICIT) and (utf8mb4_general_ci,IMPLICIT) for operation '='","sql":"SELECT \n      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,\n      a.stp_user_status, a.password, a.form_no,b.member_id\n     FROM \n      md_stp_login a\n      LEFT JOIN td_stp_ins b\n      ON a.min_no = b.min_no\n     WHERE \n      a.stp_user_status = 'A'\n      AND a.min_no = '8583'\n     "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [24-Jun-25 23:14:44] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [24-Jun-25 23:14:44] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '8583',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-Jun-25 11:59:33] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [25-Jun-25 11:59:33] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '8583',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-Jun-25 12:41:18] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no 
+[MESSAGE] : [25-Jun-25 12:41:18] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type,b.premium_amt FROM td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no WHERE a.form_no = 'STP2025000004' AND a.trn_id = '2025000191' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-Jun-25 12:41:20] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no 
+[MESSAGE] : [25-Jun-25 12:41:20] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type,b.premium_amt FROM td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no WHERE a.form_no = 'STP2025000004' AND a.trn_id = '2025000191' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-Jun-25 12:41:29] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [25-Jun-25 12:41:29] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '8583',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [25-Jun-25 12:41:36] : Exicuting Select Statement from table td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no 
+[MESSAGE] : [25-Jun-25 12:41:36] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type,b.premium_amt FROM td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no WHERE a.form_no = 'STP2025000004' AND a.trn_id = '2025000191' "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-Jun-25 16:29:00] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [26-Jun-25 16:29:00] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '8583',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-Jun-25 18:01:50] : Exicuting Insert Statement for table td_stp_ins 
+[MESSAGE] : [26-Jun-25 18:01:50] : Error: Incorrect integer value: '' for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [26-Jun-25 18:02:43] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [26-Jun-25 18:02:43] : Error: Incorrect integer value: '' for column 'sl_no' at row 1 
+------------------------------------------------------------------------------------------------------------

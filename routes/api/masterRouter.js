@@ -13,6 +13,16 @@ masterRouter.get("/unit_list", async (req, res) => {
   res.send(res_dt);
 });
 
+masterRouter.get("/policy_holder_list", async (req, res) => {
+  var data = req.query;
+  var select = "policy_holder_type_id, policy_holder_type",
+    table_name = "md_policy_holder_type",
+    whr = null,
+    order = null;
+  var policy_res_dt = await db_Select(select, table_name, whr, order);
+  res.send(policy_res_dt);
+});
+
 masterRouter.get("/relationship_list", async (req, res) => {
   var data = req.query;
   var select = "id, relation_name",
