@@ -2108,3 +2108,51 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [27-Jun-25 18:48:59] : Exicuting Update Statement for table td_stp_ins 
 [MESSAGE] : [27-Jun-25 18:48:59] : Error: Data truncated for column 'dependent_flag' at row 1 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:06:04] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [28-Jun-25 17:06:04] : Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'modified_by = 'Sail', modified_at = '2025-06-28 17:06:04' WHERE form_no = 'STP20' at line 2 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:22:41] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [28-Jun-25 17:22:41] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:22:41] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [28-Jun-25 17:22:41] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:24:23] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [28-Jun-25 17:24:23] : Error: Data truncated for column 'spou_gender' at row 2 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:24:23] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [28-Jun-25 17:24:23] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:24:23] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [28-Jun-25 17:24:23] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:26:03] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [28-Jun-25 17:26:03] : Error: Data truncated for column 'spou_gender' at row 2 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:29:33] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [28-Jun-25 17:29:33] : Error: Data truncated for column 'spou_gender' at row 2 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 17:31:37] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [28-Jun-25 17:31:37] : Error: Data truncated for column 'spou_gender' at row 2 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [28-Jun-25 18:16:51] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [28-Jun-25 18:16:51] : Error: Data truncated for column 'spou_gender' at row 2 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 01:51:00] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 01:51:00] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '9007',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 01:51:22] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 01:51:22] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '9007',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 01:53:04] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 01:53:04] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '9007',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 01:53:08] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 01:53:08] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '9007',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 01:56:24] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 01:56:24] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no COLLATE utf8mb4_unicode_ci IN (\n        '9007',\n        (SELECT spou_min_no COLLATE utf8mb4_unicode_ci FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 01:57:40] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 01:57:40] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (latin1_swedish_ci,NUMERIC), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        9007,\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = 9007)\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------

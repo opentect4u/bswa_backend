@@ -6,6 +6,7 @@ const {
   db_Select,
   getCurrFinYear,
   WIFE_ID,
+  db_Insert,
 } = require("../../modules/MasterModule");
 const {
   super_form_save,
@@ -327,12 +328,31 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
 super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) => {
   var data = req.body;
 
-  var select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type",
+  var select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type",
   table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id",
-  whr = `a.min_no = '${data.min_no}'`,
+  whr = `a.min_no = '${data.min_no}' AND a.member_id = '${data.member_id}' AND a.form_no = '${data.form_no}'`,
   order = null;
   var stp_memb_dtls = await db_Select(select,table_name,whr,order);
   res.send(stp_memb_dtls);
+});
+
+super_policyRouter.post("/edit_stp_member_details", async (req, res) => {
+ try{
+  var data = req.body;
+  console.log(data,'mem_data');
+  
+ let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+var fields = `policy_holder_type = '${data.policy_holder_type}',association ='${data.unit_name}',memb_type = '${data.member_type}',memb_oprn = '${data.memb_oprn}',memb_name = '${data.memb_name}',gender = '${data.gender}',dob = '${data.dob}',mem_address = '${data.memb_addr.split("'").join("\\'")}',phone_no = '${data.memb_mobile}',personel_no = '${data.personel_no}',memb_flag = '${data.memb_flag}',dependent_name = '${data.spou_name}',spou_min_no = '${data.spou_min}',spou_dob = '${data.spou_dob}',spou_phone = '${data.spou_mobile}',spou_gender = '${data.spou_gender}',spou_address = '${data.spou_addr.split("'").join("\\'")}', dependent_flag = '${data.dependent_flag}',premium_type = '${data.premium_type}',modified_by = '${data.user_name}',modified_at = '${datetime}'`,
+table_name = "td_stp_ins",
+values = null,
+whr = `form_no = '${data.formNo}' AND member_id = '${data.member_id}' AND min_no = '${data.min_no}'`,
+flag = 1;
+var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
+res.send(mem_dt)
+ }catch(error){
+  console.log(error);
+ }
 });
 
 super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res) => {

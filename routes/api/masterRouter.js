@@ -7,7 +7,7 @@ masterRouter.get("/unit_list", async (req, res) => {
   var data = req.query;
   var select = "unit_id, unit_name",
     table_name = "md_unit",
-    whr = data.unit_id > 0 ? `unit_id = ${unit_id}` : null,
+    whr = data.unit_id > 0 ? `unit_id = ${data.unit_id}` : null,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   res.send(res_dt);

@@ -34,7 +34,7 @@ memberPolicyRouter.post("/member_policy_dtls_view", async (req, res) => {
   if (res_dt.suc > 0) {
     var select = "sl_no,ind_type,fin_year,particulars,amount,treatment_dtls",
       table_name = "td_stp_dtls",
-      whr = `form_no = '${data.form_no}'`,
+      whr = `form_no = '${data.form_no}' AND treatment_flag = 'Y'`,
       order = null;
     var dep_dt = await db_Select(select, table_name, whr, order);
     res_dt.msg[0]["dep_dt"] =
@@ -54,13 +54,13 @@ memberPolicyRouter.post("/update_member_policy_dtls", async (req, res) => {
 
 
   var table_name = "td_stp_ins",
-    fields = `policy_holder_type = '${data.policy_holder}', association = '${data.unit_nm}', memb_oprn = '${data.memb_opr}', memb_name = '${escapeSQL(data.member)}', gender = '${data.gender}', dob = ${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'}, mem_address = '${escapeSQL(data.mem)}', phone_no = ${data.mobile ? `'${data.mobile}'` : 'NULL'}, personel_no = ${data.personal_no ? `'${data.personal_no}'` : 'NULL'}, memb_flag = '${data.memb_flag}', dependent_name = '${escapeSQL(data.spouse)}', spou_dob = ${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'}, spou_phone = ${data.spou_mobile ? `'${data.spou_mobile}'` : 'NULL'}, spou_gender = ${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'}, spou_address = '${escapeSQL(data.spou_mem)}', dependent_flag = '${data.dependent_flag}',
+    fields = `policy_holder_type = '${data.policy_holder}', association = '${data.unit_nm}', memb_oprn = '${data.memb_opr}', memb_name = '${escapeSQL(data.member)}', gender = '${data.gender}', dob = ${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'}, mem_address = '${escapeSQL(data.mem)}', phone_no = ${data.mobile ? `'${data.mobile}'` : 'NULL'}, personel_no = ${data.personal_no ? `'${data.personal_no}'` : 'NULL'}, memb_flag = '${data.memb_flag}', dependent_name = '${escapeSQL(data.spouse)}', spou_dob = ${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'}, spou_phone = ${data.spou_mobile ? `'${data.spou_mobile}'` : 'NULL'}, spou_gender = ${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'}, spou_address = '${escapeSQL(data.spou_mem)}', dependent_flag = '${data.dependent_flag}',premium_type = '${data.memb_opr}',
     modified_by = '${data.user}', modified_at = '${datetime}'`,
     values = null,
     whr = `form_no = '${data.form_no}'`,
     flag = 1;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
-  console.log("td_stp_ins update:", res_dt);
+  console.log("td_stp_ins update:", res_dt,data.dependent_flag);
 
   if(res_dt.suc > 0 && res_dt.msg.length > 0){
     var table_name = "md_stp_login",
@@ -77,10 +77,10 @@ memberPolicyRouter.post("/update_member_policy_dtls", async (req, res) => {
         fields =
           dt.sl_no > 0
             ? `ind_type = '${dt.ind_type}',fin_year = '${dt.fin_year}',
-     amount = '${dt.amount}', particulars = '${escapeSQL(dt.particulars)}', treatment_dtls = '${escapeSQL(dt.treatment_dtls)}',
+     amount = '${dt.amount}', particulars = '${escapeSQL(dt.particulars)}', treatment_dtls = '${escapeSQL(dt.treatment_dtls)}', treatment_flag ='${dt.treatment_flag}',
      modified_by = '${data.user}', modified_at = '${datetime}'`
-            : `(form_no,sl_no,ind_type,fin_year,amount,particulars,treatment_dtls,created_by,created_at)`,
-        values = `SELECT '${data.form_no}',max(sl_no)+1,'${dt.ind_type}','${dt.fin_year}','${dt.amount}','${escapeSQL(dt.particulars)}','${escapeSQL(dt.treatment_dtls)}','${data.user}','${datetime}' from td_stp_dtls WHERE form_no = '${data.form_no}'`,
+            : `(form_no,sl_no,ind_type,fin_year,amount,particulars,treatment_dtls,treatment_flag,created_by,created_at)`,
+        values = `SELECT '${data.form_no}',COALESCE(MAX(sl_no), 0) + 1,'${dt.ind_type}','${dt.fin_year}','${dt.amount}','${escapeSQL(dt.particulars)}','${escapeSQL(dt.treatment_dtls)}','${dt.treatment_flag}','${data.user}','${datetime}' from td_stp_dtls WHERE form_no = '${data.form_no}'`,
         whr =
           dt.sl_no > 0
             ? `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`
@@ -98,6 +98,44 @@ memberPolicyRouter.post("/update_member_policy_dtls", async (req, res) => {
   }
   res.send(res_dt);
 });
+
+memberPolicyRouter.post("/remove_medical_and_spose_details", async (req, res) => {
+  const data = req.body;
+  console.log("📥 API Called with:", data);
+
+  const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+  const table1 = "td_stp_ins";
+  const fields1 = `dependent_flag = 'N', modified_by = '${data.user}', modified_at = '${datetime}'`;
+  const whr1 = `form_no = '${data.form_no}'`;
+  const flag1 = 1;
+
+  const res_ins = await db_Insert(table1, fields1, null, whr1, flag1);
+  console.log("➡️ DB Update Result:", res_ins);
+
+  res.send(res_ins);
+});
+
+
+memberPolicyRouter.post("/remove_medical_and_spose_details", async (req, res) => {
+  const data = req.body;
+  console.log(data, 'daramed');
+
+  const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+  // Update td_stp_ins - set dependent_flag = 'N'
+  const table1 = "td_stp_ins";
+  const fields1 = `dependent_flag = 'N', modified_by = '${data.user}', modified_at = '${datetime}'`;
+  const whr1 = `form_no = '${data.form_no}'`;
+  const flag1 = 1;
+
+  const res_ins = await db_Insert(table1, fields1, null, whr1, flag1);
+
+
+  res.send(res_ins);
+});
+
+
 
 memberPolicyRouter.post("/member_gmp_policy_dtls", async (req, res) => {
   var data = req.body;

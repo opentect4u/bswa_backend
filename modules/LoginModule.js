@@ -49,8 +49,8 @@ module.exports = {
   stp_member_login_data: (data) => {
   return new Promise(async (resolve, reject) => {
     const select = `
-      a.policy_holder_type, a.min_no, a.stp_memb_name, a.stp_memb_phone,
-      a.stp_user_status, a.password, a.form_no,b.member_id
+      a.policy_holder_type, a.stp_memb_name, a.stp_memb_phone,
+      a.stp_user_status, a.password, a.form_no,b.member_id,b.min_no
     `;
     
     // const table_name = `
@@ -62,7 +62,7 @@ module.exports = {
      const table_name = `
       md_stp_login a
       LEFT JOIN td_stp_ins b
-      ON a.min_no = b.min_no
+      ON a.min_no = b.member_id
     `;
 
     // const whr = `
@@ -72,7 +72,7 @@ module.exports = {
 
      const whr = `
       a.stp_user_status = 'A'
-      AND a.min_no = '${data.min_no}'
+      AND a.min_no = '${data.member_id}'
     `;
 
     const order = null;
