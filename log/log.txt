@@ -2156,3 +2156,51 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [29-Jun-25 01:57:40] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
 [MESSAGE] : [29-Jun-25 01:57:40] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (latin1_swedish_ci,NUMERIC), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        9007,\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = 9007)\n         ) ORDER BY a.sl_no"} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 08:27:32] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 08:27:32] : Error: Incorrect integer value: 'Bokaro Steel Plant' for column 'association' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 08:59:15] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 08:59:15] : Error: Data truncated for column 'memb_oprn' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:08:30] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:08:30] : Error: Incorrect integer value: 'undefined' for column 'association' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:10:53] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:10:53] : Error: Incorrect integer value: 'undefined' for column 'association' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:11:46] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:11:46] : Error: Incorrect date value: 'N/A' for column 'spou_dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:14:27] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:14:27] : Error: Incorrect integer value: ' N/A' for column 'spou_phone' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:23:27] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:23:27] : Error: Incorrect date value: '1987-06-09T18:30:00.000Z' for column 'dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:24:15] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:24:15] : Error: Incorrect date value: '1987-06-09T18:30:00.000Z' for column 'dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:25:48] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:25:48] : Error: Incorrect date value: '1987-06-09T18:30:00.000Z' for column 'dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 09:33:59] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 09:33:59] : Error: Incorrect date value: '1989-06-16T18:30:00.000Z' for column 'spou_dob' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 10:38:44] : Exicuting Update Statement for table td_stp_ins 
+[MESSAGE] : [29-Jun-25 10:38:44] : Error: Incorrect integer value: 'N/A' for column 'phone_no' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 10:46:18] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 10:46:18] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '8583',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 10:54:10] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 10:54:10] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no COLLATE utf8mb4_general_ci IN (\n        '8583' COLLATE utf8mb4_general_ci,\n        (SELECT spou_min_no COLLATE utf8mb4_general_ci FROM td_stp_ins WHERE min_no = '8583')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 12:34:20] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jun-25 12:34:20] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no COLLATE utf8mb4_general_ci IN (\n        '9007' COLLATE utf8mb4_general_ci,\n        (SELECT spou_min_no COLLATE utf8mb4_general_ci FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 13:23:38] : Exicuting Select Statement from table undefined 
+[MESSAGE] : [29-Jun-25 13:23:38] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT MAX(financial_year) AS max_year \n      FROM md_stp_premium_type \n      WH' at line 2","sql":"SELECT \n      SELECT MAX(financial_year) AS max_year \n      FROM md_stp_premium_type \n      WHERE premium_type = 'D'\n     FROM undefined  "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jun-25 13:27:58] : Exicuting Select Statement from table md_stp_premium_type 
+[MESSAGE] : [29-Jun-25 13:27:58] : {"code":"ER_PARSE_ERROR","errno":1064,"sqlState":"42000","sqlMessage":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT MAX(financial_year) AS max_year FROM md_stp_premium_type WHERE premium_ty' at line 1","sql":"SELECT SELECT MAX(financial_year) AS max_year FROM md_stp_premium_type WHERE premium_type = 'D' "} 
+------------------------------------------------------------------------------------------------------------

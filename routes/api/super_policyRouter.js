@@ -325,16 +325,120 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
   res.send(res_dt);
 });
 
-super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) => {
-  var data = req.body;
+// super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) => {
+//    try {
+//   var data = req.body;
 
-  var select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type",
-  table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id",
-  whr = `a.min_no = '${data.min_no}' AND a.member_id = '${data.member_id}' AND a.form_no = '${data.form_no}'`,
-  order = null;
-  var stp_memb_dtls = await db_Select(select,table_name,whr,order);
-  res.send(stp_memb_dtls);
+//   var select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type,c.policy_holder_type_id",
+//   table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id",
+//   whr = `a.min_no = '${data.min_no}' AND a.member_id = '${data.member_id}' AND a.form_no = '${data.form_no}'`,
+//   order = null;
+//   var stp_memb_dtls = await db_Select(select,table_name,whr,order);
+//    console.log("stp_memb_dtls:", stp_memb_dtls);
+
+//     let premium_amt = null;
+
+//     if (stp_memb_dtls?.length > 0 && stp_memb_dtls[0].premium_type) {
+//       const premium_type = stp_memb_dtls[0].premium_type;
+//        console.log("premium_type:", premium_type);
+
+//        const maxYearQuery = `
+//        SELECT MAX(financial_year) AS max_year 
+//        FROM md_stp_premium_type 
+//        WHERE premium_type = '${premium_type}'`;
+//        const maxYearResult = await db.raw(maxYearQuery);
+//         console.log("Max Year Result:", maxYearResult);
+
+//         const maxFinancialYear = maxYearResult?.[0]?.max_year;
+//          console.log("Max finYear Result:", maxFinancialYear);
+
+        
+//        if (maxFinancialYear) {
+//        const select2 = `premium_amt`;
+//        const table_name2 = `md_stp_premium_type`;
+//        const where2 = `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`;
+
+//        const premiumResult = await db_Select(select2, table_name2, where2, null);
+//         console.log("Premium Result:", premiumResult);
+
+//         // premium_amt = premiumResult?.length > 0 ? premiumResult[0].premium_amt : null;
+//        }
+//        }
+//   //        if (stp_memb_dtls?.length > 0) {
+//   //   stp_memb_dtls[0].premium_amt = premium_amt;
+//   // }
+//      res.send(premiumResult);
+//       } catch (err) {
+//     console.error("Error in fetch_member_details_fr_stp_policy:", err);
+//     res.send({ error: "Internal Server Error" });
+//   }
+// });
+
+super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Fetch member details
+    const select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type,c.policy_holder_type_id";
+    const table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id";
+    const whr = `a.min_no = '${data.min_no}' AND a.member_id = '${data.member_id}' AND a.form_no = '${data.form_no}'`;
+    const order = null;
+    const stp_memb_dtls = await db_Select(select, table_name, whr, order);
+    // console.log("stp_memb_dtls:", stp_memb_dtls);
+    res.send(stp_memb_dtls);
+
+  } catch (err) {
+    console.error("Error in fetch_member_details_fr_stp_policy:", err);
+    res.send({ error: "Internal Server Error" });
+  }
 });
+
+super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
+  try{
+    const data = req.body;
+    const premium_type = data.premium_type;
+    // console.log(premium_type);
+    
+
+    
+    if (!premium_type) {
+      return res.send({ error: "Missing premium_type in request body." });
+    }
+
+      const maxYearResult = await db_Select(
+       "MAX(financial_year) AS max_year",
+      "md_stp_premium_type",
+      `premium_type = '${premium_type}'`,
+      null);
+   console.log(maxYearResult);
+   
+        const maxFinancialYear = maxYearResult?.msg?.[0]?.max_year;
+      // console.log("Max finYear Result:", maxFinancialYear);
+
+      let premium_amt = null;
+
+      if (maxFinancialYear) {
+        const premiumResult = await db_Select(
+          "premium_amt",
+          "md_stp_premium_type",
+          `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
+          null
+        );
+        // console.log("Premium Result:", premiumResult);
+
+        premium_amt = premiumResult?.msg?.[0]?.premium_amt;
+      }
+        res.send({
+      premium_type,
+      financial_year: maxFinancialYear,
+      premium_amt
+    });
+  }catch (err) {
+    console.error("Error in fetch premium amount:", err);
+    res.send({ error: "Internal Server Error" });
+  }
+})
+
 
 super_policyRouter.post("/edit_stp_member_details", async (req, res) => {
  try{
@@ -342,11 +446,18 @@ super_policyRouter.post("/edit_stp_member_details", async (req, res) => {
   console.log(data,'mem_data');
   
  let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+ const spouMobile = data.spou_mobile ? String(data.spou_mobile).trim() : '';
 
-var fields = `policy_holder_type = '${data.policy_holder_type}',association ='${data.unit_name}',memb_type = '${data.member_type}',memb_oprn = '${data.memb_oprn}',memb_name = '${data.memb_name}',gender = '${data.gender}',dob = '${data.dob}',mem_address = '${data.memb_addr.split("'").join("\\'")}',phone_no = '${data.memb_mobile}',personel_no = '${data.personel_no}',memb_flag = '${data.memb_flag}',dependent_name = '${data.spou_name}',spou_min_no = '${data.spou_min}',spou_dob = '${data.spou_dob}',spou_phone = '${data.spou_mobile}',spou_gender = '${data.spou_gender}',spou_address = '${data.spou_addr.split("'").join("\\'")}', dependent_flag = '${data.dependent_flag}',premium_type = '${data.premium_type}',modified_by = '${data.user_name}',modified_at = '${datetime}'`,
+
+var fields = `policy_holder_type = ${data.policy_holder_type ? `'${data.policy_holder_type}'` : 'NULL'},association =${data.unit_name ? `'${data.unit_name}'` : 'NULL'},memb_type = ${data.member_type ? `'${data.member_type}'` : 'NULL'},memb_oprn = ${data.memb_oprn ? `'${data.memb_oprn}'` : 'NULL'},memb_name =${data.memb_name ? `'${data.memb_name}'` : 'NULL'},gender = ${data.gender ? `'${data.gender}'` : 'NULL'},dob =  ${(data.dob && data.dob !== 'N/A' && data.dob !== 'undefined' && data.dob.trim() !== '') 
+  ? `'${data.dob.split('T')[0]}'` : 'NULL'},mem_address = '${data.memb_addr.split("'").join("\\'")}',phone_no = ${data.phone_no ? `'${data.phone_no}'` : 'NULL'},personel_no = ${data.personel_no ? `'${data.personel_no}'` : 'NULL'},memb_flag = '${data.memb_flag}',dependent_name = ${data.spou_name ? `'${data.spou_name}'` : 'NULL'},spou_min_no = ${data.spou_min ? `'${data.spou_min}'` : 'NULL'},spou_dob = ${(data.spou_dob && data.spou_dob !== 'N/A' && data.spou_dob !== 'undefined' && data.spou_dob.trim() !== '') ? `'${data.spou_dob}'` : 'NULL'},spou_phone = ${
+  spouMobile !== '' && /^\d+$/.test(spouMobile)
+    ? spouMobile
+    : 'NULL'
+},spou_gender = ${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},spou_address = '${data.spou_addr.split("'").join("\\'")}', dependent_flag = '${data.dependent_flag}',premium_type = ${data.premium_type ? `'${data.premium_type}'` : 'NULL'},modified_by = '${data.user_name}',modified_at = '${datetime}'`,
 table_name = "td_stp_ins",
 values = null,
-whr = `form_no = '${data.formNo}' AND member_id = '${data.member_id}' AND min_no = '${data.min_no}'`,
+whr = `form_no = '${data.form_no}' AND member_id = '${data.member_id}' AND min_no = '${data.min_no}'`,
 flag = 1;
 var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
 res.send(mem_dt)
@@ -360,9 +471,9 @@ super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res)
 
   var select = "a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag",
   table_name = "td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no",
-  whr = `a.min_no IN (
-        '${data.min_no}',
-        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '${data.min_no}')
+  whr = `a.min_no COLLATE utf8mb4_general_ci IN (
+        '${data.min_no}' COLLATE utf8mb4_general_ci,
+        (SELECT spou_min_no COLLATE utf8mb4_general_ci FROM td_stp_ins WHERE min_no = '${data.min_no}')
          )`,
   order = `ORDER BY a.sl_no`;
   var stp_premium_dtls = await db_Select(select,table_name,whr,order);
