@@ -380,6 +380,7 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   var data = req.body;
   var select =`a.trn_dt,
   a.trn_id,
+  a.premium_amt,
   a.tot_amt,
   a.pay_mode,
   a.receipt_no,
@@ -387,6 +388,20 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   a.chq_dt,
   a.chq_bank,
   a.approval_status,
+  d.min_no,
+
+   -- STP Flag(only for STP)
+  CASE 
+    WHEN LEFT(a.form_no, 3) = 'STP' THEN 'STP'
+    ELSE NULL
+  END AS flag,
+
+     -- STP premium type(only for STP)
+  CASE 
+    WHEN LEFT(a.form_no, 3) = 'STP' THEN d.premium_type
+    ELSE NULL
+  END AS premium_type,
+
     -- Member Name Logic
   CASE 
     WHEN b.memb_name IS NOT NULL AND b.memb_name != '' THEN b.memb_name

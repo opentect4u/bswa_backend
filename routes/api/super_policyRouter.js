@@ -471,14 +471,28 @@ super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res)
 
   var select = "a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag",
   table_name = "td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no",
-  whr = `a.min_no COLLATE utf8mb4_general_ci IN (
-        '${data.min_no}' COLLATE utf8mb4_general_ci,
-        (SELECT spou_min_no COLLATE utf8mb4_general_ci FROM td_stp_ins WHERE min_no = '${data.min_no}')
+  whr = `a.min_no IN (
+        '${data.min_no}',
+        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '${data.min_no}')
          )`,
   order = `ORDER BY a.sl_no`;
   var stp_premium_dtls = await db_Select(select,table_name,whr,order);
   res.send(stp_premium_dtls);
 });
+
+// super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res) => {
+//   var data = req.body;
+
+//   var select = "a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag",
+//   table_name = "td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no COLLATE utf8mb4_general_ci = b.min_no COLLATE utf8mb4_general_ci",
+//   whr = `a.min_no COLLATE utf8mb4_general_ci IN (
+//         '${data.min_no}' COLLATE utf8mb4_general_ci,
+//         (SELECT spou_min_no COLLATE utf8mb4_general_ci FROM td_stp_ins WHERE min_no COLLATE utf8mb4_general_ci = '${data.min_no}' COLLATE utf8mb4_general_ci)
+//          )`,
+//   order = `ORDER BY a.sl_no`;
+//   var stp_premium_dtls = await db_Select(select,table_name,whr,order);
+//   res.send(stp_premium_dtls);
+// });
 
 super_policyRouter.post("/fetch_stp_trans_dtls", async (req, res) => {
  try{
@@ -504,6 +518,7 @@ super_policyRouter.post("/fetch_fr_view_stp_trans_dtls", async (req, res) => {
 
    var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.memb_name,b.min_no,b.premium_type",
    table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no",
+  //  table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no COLLATE utf8mb4_general_ci = b.form_no COLLATE utf8mb4_general_ci",
    whr = `a.form_no = '${data.form_no}' AND a.trn_id = '${data.trn_id}'`,
    order = null;
    var fetch_stp_view_transaction = await db_Select(select,table_name,whr,order);
