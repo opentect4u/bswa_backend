@@ -379,7 +379,7 @@ const postVoucher = (
       headers: {
         "Content-Type": "application/json",
       },
-      data: data,
+      data: data,      
     };
 
     axios

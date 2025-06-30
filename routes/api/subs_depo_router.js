@@ -144,6 +144,8 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
   );
 
   var voucher_res = {suc: 1, msg: 1}
+  console.log(voucher_res,'voucher_res');
+  
 
   if (voucher_res.suc > 0) {
     if (voucher_res.msg > 0) {
@@ -208,9 +210,13 @@ var finres = getCurrFinYear();
 
 SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   const data = req.body;
-  console.log(data,'dt');
+  console.log(data,'data');
   
   trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  var sub_upto = new Date(data.calc_upto);
+
+  console.log(sub_upto,'upto');
+
   var tnx_data = await getMaxTrnId();
   let year = dateFormat(new Date(), "yyyy");
   var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
@@ -225,7 +231,39 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var sub_upto = new Date(trn_dt);
   // sub_upto.setMonth(sub_upto.getMonth() + tot_tenure - 1);
   sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+
+   var finres = await getCurrFinYear();
+  var curr_fin_year = finres.curr_fin_year;
+
+  var voucher_res = await postVoucher(
+    FIN_YEAR_MASTER[curr_fin_year],
+    curr_fin_year,
+    2,
+    BRANCH_MASTER[2],
+    data.trn_id,
+    dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+    TRANSFER_TYPE_MASTER[data.pay_mode],
+    VOUCHER_MODE_MASTER[data.pay_mode],
+    data.acc_code,
+    CR_ACC_MASTER[data.memb_type],
+    "DR",
+    data.sub_amt,
+    data.chq_no,
+    data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+    data.remarks,
+    "A",
+    data.user,
+    dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+    data.user,
+    dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+  );
+
+  var voucher_res = {suc: 1, msg: 1}
+  console.log(voucher_res,'voucher_res');
+
   // if(data.pay_mode != 'O'){
+  if (voucher_res.suc > 0) {
+    if (voucher_res.msg > 0) {
     var table_name = "td_transactions",
       fields =
         "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
@@ -252,6 +290,13 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   
     res_dts["trn_id"] = tnx_id;
     res.send(res_dt)
+     } else {
+      res.send({ suc: 0, msg: "Voucher Not Saved" });
+    }
+  } else {
+    res.send(voucher_res);
+  }
+
   // }else{
   //   // WHATSAPP MESSAGE //
   //   try {
