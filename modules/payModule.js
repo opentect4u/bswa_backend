@@ -2,7 +2,7 @@ const {encryptEas} = require('../controller/encryptEas')
 const {decryptEas} = require('../controller/decryptEas')
 const fetch = require('node-fetch');
 const dateFormat = require('dateformat');
-const { db_Insert, getMaxTrnId, generateNextSubDate, getCurrFinYear, postVoucher, getCurrFinYear,
+const { db_Insert, getMaxTrnId, generateNextSubDate, postVoucher, getCurrFinYear,
   FIN_YEAR_MASTER,
   BRANCH_MASTER,
   TRANSFER_TYPE_MASTER,
