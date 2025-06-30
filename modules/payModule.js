@@ -2,7 +2,12 @@ const {encryptEas} = require('../controller/encryptEas')
 const {decryptEas} = require('../controller/decryptEas')
 const fetch = require('node-fetch');
 const dateFormat = require('dateformat');
-const { db_Insert, getMaxTrnId, generateNextSubDate, getCurrFinYear, postVoucher } = require('./MasterModule');
+const { db_Insert, getMaxTrnId, generateNextSubDate, getCurrFinYear, postVoucher, getCurrFinYear,
+  FIN_YEAR_MASTER,
+  BRANCH_MASTER,
+  TRANSFER_TYPE_MASTER,
+  VOUCHER_MODE_MASTER,
+  CR_ACC_MASTER, } = require('./MasterModule');
 module.exports = {
   getepayPortal: (data, config) => {
     return new Promise((resolve, reject) => {
