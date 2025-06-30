@@ -30,8 +30,8 @@ reportRouter.get("/stp_member_register_report", async (req, res) => {
  var data = req.query;
 console.log(data);
 
- var select = "a.form_no,a.form_dt,a.policy_holder_type holder_id,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.premium_type,b.policy_holder_type",
- table_name = "td_stp_ins a LEFT JOIN md_policy_holder_type b ON a.policy_holder_type = policy_holder_type_id",
+ var select = "a.form_no,a.form_dt,a.policy_holder_type holder_id,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.premium_type,b.policy_holder_type,c.unit_name",
+ table_name = "td_stp_ins a LEFT JOIN md_policy_holder_type b ON a.policy_holder_type = policy_holder_type_id LEFT JOIN md_unit c ON a.association = c.unit_id",
  whr = `a.form_dt between '${data.from_dt}' AND '${data.to_dt}' AND a.memb_oprn = '${data.memb_oprn}'`,
  order = `ORDER BY a.form_no asc`;
  var stp_memb_register = await db_Select(select,table_name,whr,order);
