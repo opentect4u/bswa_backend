@@ -119,28 +119,28 @@ module.exports = {
       var finres = await getCurrFinYear();
       var curr_fin_year = finres.curr_fin_year;
 
-      // var voucher_res = await postVoucher(
-      //   FIN_YEAR_MASTER[curr_fin_year],
-      //   curr_fin_year,
-      //   2,
-      //   BRANCH_MASTER[2],
-      //   data.trn_id,
-      //   dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-      //   TRANSFER_TYPE_MASTER[data.pay_mode],
-      //   VOUCHER_MODE_MASTER[data.pay_mode],
-      //   data.acc_code,
-      //   CR_ACC_MASTER[data.memb_type],
-      //   "DR",
-      //   data.sub_amt,
-      //   data.chq_no,
-      //   data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
-      //   data.remarks,
-      //   "A",
-      //   data.user,
-      //   dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-      //   data.user,
-      //   dateFormat(new Date(trn_dt), "yyyy-mm-dd")
-      // );
+      var voucher_res = await postVoucher(
+        FIN_YEAR_MASTER[curr_fin_year],
+        curr_fin_year,
+        2,
+        BRANCH_MASTER[2],
+        data.trn_id,
+        dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+        TRANSFER_TYPE_MASTER[data.pay_mode],
+        VOUCHER_MODE_MASTER[data.pay_mode],
+        data.acc_code,
+        CR_ACC_MASTER[data.memb_type],
+        "DR",
+        data.sub_amt,
+        data.chq_no,
+        data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+        data.remarks,
+        "A",
+        data.user,
+        dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+        data.user,
+        dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+      );
 
       var voucher_res = { suc: 1, msg: 1 };
 
