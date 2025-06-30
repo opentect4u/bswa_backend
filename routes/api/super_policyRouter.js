@@ -393,51 +393,104 @@ super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) 
   }
 });
 
-super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
-  try{
-    const data = req.body;
-    const premium_type = data.premium_type;
-    // console.log(premium_type);
+// super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
+//   try{
+//     const data = req.body;
+//     const premium_type = data.premium_type;
+//     // console.log(premium_type);
     
 
     
+//     if (!premium_type) {
+//       return res.send({ error: "Missing premium_type in request body." });
+//     }
+
+//       const maxYearResult = await db_Select(
+//        "MAX(financial_year) AS max_year",
+//       "md_stp_premium_type",
+//       `premium_type = '${premium_type}'`,
+//       null);
+//    console.log(maxYearResult);
+   
+//         const maxFinancialYear = maxYearResult?.msg?.[0]?.max_year;
+//       // console.log("Max finYear Result:", maxFinancialYear);
+
+//       let premium_amt = null;
+
+//       if (maxFinancialYear) {
+//         const premiumResult = await db_Select(
+//           "premium_amt",
+//           "md_stp_premium_type",
+//           `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
+//           null
+//         );
+//         // console.log("Premium Result:", premiumResult);
+
+//         premium_amt = premiumResult?.msg?.[0]?.premium_amt;
+//       }
+//         res.send({
+//       premium_type,
+//       financial_year: maxFinancialYear,
+//       premium_amt
+//     });
+//   }catch (err) {
+//     console.error("Error in fetch premium amount:", err);
+//     res.send({ error: "Internal Server Error" });
+//   }
+// })
+
+super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
+  try {
+    const data = req.body;
+    const premium_type = data.premium_type;
+
     if (!premium_type) {
       return res.send({ error: "Missing premium_type in request body." });
     }
 
-      const maxYearResult = await db_Select(
-       "MAX(financial_year) AS max_year",
+    const maxYearResult = await db_Select(
+      "MAX(financial_year) AS max_year",
       "md_stp_premium_type",
       `premium_type = '${premium_type}'`,
-      null);
-   console.log(maxYearResult);
-   
-        const maxFinancialYear = maxYearResult?.msg?.[0]?.max_year;
-      // console.log("Max finYear Result:", maxFinancialYear);
+      null
+    );
 
-      let premium_amt = null;
+    const maxFinancialYear =
+      maxYearResult &&
+      maxYearResult.msg &&
+      maxYearResult.msg[0] &&
+      maxYearResult.msg[0].max_year;
 
-      if (maxFinancialYear) {
-        const premiumResult = await db_Select(
-          "premium_amt",
-          "md_stp_premium_type",
-          `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
-          null
-        );
-        // console.log("Premium Result:", premiumResult);
+    let premium_amt = null;
 
-        premium_amt = premiumResult?.msg?.[0]?.premium_amt;
+    if (maxFinancialYear) {
+      const premiumResult = await db_Select(
+        "premium_amt",
+        "md_stp_premium_type",
+        `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
+        null
+      );
+
+      if (
+        premiumResult &&
+        premiumResult.msg &&
+        premiumResult.msg[0] &&
+        premiumResult.msg[0].premium_amt
+      ) {
+        premium_amt = premiumResult.msg[0].premium_amt;
       }
-        res.send({
+    }
+
+    res.send({
       premium_type,
       financial_year: maxFinancialYear,
-      premium_amt
+      premium_amt,
     });
-  }catch (err) {
+  } catch (err) {
     console.error("Error in fetch premium amount:", err);
     res.send({ error: "Internal Server Error" });
   }
-})
+});
 
 
 super_policyRouter.post("/edit_stp_member_details", async (req, res) => {
