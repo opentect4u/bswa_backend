@@ -2255,3 +2255,6 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [30-Jun-25 08:38:13] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
 [MESSAGE] : [30-Jun-25 08:38:13] : {"code":"ER_CANT_AGGREGATE_3COLLATIONS","errno":1270,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT), (utf8mb4_unicode_ci,COERCIBLE), (utf8mb4_0900_ai_ci,IMPLICIT) for operation ' IN '","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n        '9007',\n        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '9007')\n         ) ORDER BY a.sl_no"} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [30-Jun-25 17:40:48] : Exicuting Insert Statement for table td_memb_subscription 
+[MESSAGE] : [30-Jun-25 17:40:48] : Error: Duplicate entry 'L-55-2025-06-30 00:00:00' for key 'td_memb_subscription.PRIMARY' 
+------------------------------------------------------------------------------------------------------------

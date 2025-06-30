@@ -213,7 +213,7 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   console.log(data,'data');
   
   trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-  var sub_upto = new Date(data.calc_upto);
+  var sub_upto = new Date(data.cal_upto);
 
   console.log(sub_upto,'upto');
 
@@ -240,7 +240,8 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
     curr_fin_year,
     2,
     BRANCH_MASTER[2],
-    data.trn_id,
+    // data.trn_id,
+    tnx_id,
     dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
     TRANSFER_TYPE_MASTER[data.pay_mode],
     VOUCHER_MODE_MASTER[data.pay_mode],
