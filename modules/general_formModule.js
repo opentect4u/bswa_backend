@@ -537,7 +537,7 @@ module.exports = {
   // },
 
   approve_dt: (data) => {
-    // console.log("From MEmber");
+    console.log(data,"general");
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
@@ -557,37 +557,38 @@ module.exports = {
       var finres = await getCurrFinYear();
       var curr_fin_year = finres.curr_fin_year;
 
-      // var voucher_res = await drVoucher(
-      //   FIN_YEAR_MASTER[curr_fin_year],
-      //   curr_fin_year,
-      //   2,
-      //   BRANCH_MASTER[2],
-      //   data.trn_id,
-      //   dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
-      //   TRANSFER_TYPE_MASTER[data.pay_mode],
-      //   VOUCHER_MODE_MASTER[data.pay_mode],
-      //   data.acc_code,
-      //   CR_ACC_MASTER[data.memb_type],
-      //   "DR",
-      //   data.admission_acc_id,
-      //   data.donation_acc_id,
-      //   data.memb_type,
-      //   data.memb_type != "G" ? data.onetime_amt : data.donation_amt,
-      //   data.admission_amt,
-      //   data.tot_amt,
-      //   data.memb_type != "L" ? data.sub_amt : data.tot_amt,
-      //   data.chq_no,
-      //   data.chq_dt && new Date(data.chq_dt) != "Invalid Date"
-      //     ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd")
-      //     : "",
-      //   `Amount deposited for opening of member for member no ${member_id}`,
-      //   // REMARKS_MASTER[member_id],
-      //   "A",
-      //   data.user,
-      //   datetime,
-      //   data.user,
-      //   datetime
-      // );
+      var voucher_res = await drVoucher(
+        FIN_YEAR_MASTER[curr_fin_year],
+        curr_fin_year,
+        2,
+        BRANCH_MASTER[2],
+        data.trn_id,
+        dateFormat(new Date(data.trn_dt), "yyyy-mm-dd"),
+        TRANSFER_TYPE_MASTER[data.pay_mode],
+        VOUCHER_MODE_MASTER[data.pay_mode],
+        data.acc_code,
+        CR_ACC_MASTER[data.memb_type],
+        "DR",
+        data.admission_acc_id,
+        data.donation_acc_id,
+        data.memb_type,
+        data.memb_type != "G" ? data.onetime_amt : data.donation_amt,
+        data.admission_amt,
+        data.tot_amt,
+        data.memb_type != "L" ? data.sub_amt : data.tot_amt,
+        data.chq_no,
+        data.chq_dt && new Date(data.chq_dt) != "Invalid Date"
+          ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd")
+          : "",
+        `Amount deposited for opening of member for member no ${member_id}`,
+        // REMARKS_MASTER[member_id],
+        "A",
+        data.user,
+        datetime,
+        data.user,
+        datetime
+      );
+      console.log(voucher_res,'voucher_res');
       var voucher_res = { suc: 1, msg: 1 };
 
       if (voucher_res.suc > 0) {
