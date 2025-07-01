@@ -519,15 +519,37 @@ res.send(mem_dt)
  }
 });
 
+// super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res) => {
+//   var data = req.body;
+
+//   var select = "a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag",
+//   table_name = "td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no",
+//   whr = `a.min_no IN (
+//         '${data.min_no}',
+//         (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '${data.min_no}')
+//          )`,
+//   order = `ORDER BY a.sl_no`;
+//   var stp_premium_dtls = await db_Select(select,table_name,whr,order);
+//   res.send(stp_premium_dtls);
+// });
+
 super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res) => {
   var data = req.body;
 
   var select = "a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag",
   table_name = "td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no",
   whr = `a.min_no IN (
-        '${data.min_no}',
-        (SELECT spou_min_no FROM td_stp_ins WHERE min_no = '${data.min_no}')
-         )`,
+         SELECT DISTINCT min_no FROM (
+         SELECT '${data.min_no}' AS min_no
+         UNION
+         SELECT spou_min_no 
+         FROM td_stp_ins 
+         WHERE min_no = '${data.min_no}' 
+         AND spou_min_no IS NOT NULL AND spou_min_no != ''
+        LIMIT 1
+      ) AS min_list
+      WHERE min_no IS NOT NULL
+    )`,
   order = `ORDER BY a.sl_no`;
   var stp_premium_dtls = await db_Select(select,table_name,whr,order);
   res.send(stp_premium_dtls);

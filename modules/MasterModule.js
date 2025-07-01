@@ -372,6 +372,9 @@ const postVoucher = (
       },
     });
 
+    console.log(data, 'Req Data for api');
+    
+
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -385,11 +388,11 @@ const postVoucher = (
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data));
+        console.log(JSON.stringify(response.data), 'Res from PHP');
         resolve({ suc: 1, msg: response.data });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error, 'Error');
         resolve({ suc: 0, msg: error });
       });
   });

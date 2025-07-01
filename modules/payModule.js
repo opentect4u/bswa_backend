@@ -7,7 +7,8 @@ const { db_Insert, getMaxTrnId, generateNextSubDate, postVoucher, getCurrFinYear
   BRANCH_MASTER,
   TRANSFER_TYPE_MASTER,
   VOUCHER_MODE_MASTER,
-  CR_ACC_MASTER, } = require('./MasterModule');
+  CR_ACC_MASTER,
+  db_Select, } = require('./MasterModule');
 module.exports = {
   getepayPortal: (data, config) => {
     return new Promise((resolve, reject) => {
@@ -113,6 +114,8 @@ module.exports = {
     });
   },
   saveSubs: (data) => {
+    console.log(data,'online');
+    
     return new Promise(async (resolve, reject) => {
       var sub_upto = await generateNextSubDate(
         data.udf7,
@@ -124,30 +127,38 @@ module.exports = {
       var finres = await getCurrFinYear();
       var curr_fin_year = finres.curr_fin_year;
 
+      var memberDt = await db_Select('mem_type', 'md_member', `form_no = '${data.udf6}'`, 'LIMIT 1')
+      const mem_type = memberDt.suc > 0 ? (memberDt.msg.length > 0 ? memberDt.msg[0].mem_type : '') : '';
+
       var voucher_res = await postVoucher(
         FIN_YEAR_MASTER[curr_fin_year],
         curr_fin_year,
         2,
         BRANCH_MASTER[2],
-        data.trn_id,
+        data.getepayTxnId,
         dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-        TRANSFER_TYPE_MASTER[data.pay_mode],
-        VOUCHER_MODE_MASTER[data.pay_mode],
-        data.acc_code,
-        CR_ACC_MASTER[data.memb_type],
+        // TRANSFER_TYPE_MASTER[data.pay_mode],
+        TRANSFER_TYPE_MASTER['O'],
+        // VOUCHER_MODE_MASTER[data.pay_mode],
+        VOUCHER_MODE_MASTER['O'],
+        75,
+        CR_ACC_MASTER[mem_type],
         "DR",
-        data.sub_amt,
-        data.chq_no,
+        data.txnAmount,
+        data.chq_no ? data.chq_no : "",
         data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
-        data.remarks,
-        "A",
-        data.user,
+        data.paymentStatus,
+        data.udf5,
+        data.udf3,
         dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-        data.user,
+        data.udf3,
         dateFormat(new Date(trn_dt), "yyyy-mm-dd")
       );
 
-      var voucher_res = { suc: 1, msg: 1 };
+      console.log(voucher_res, 'Res in transaction');
+      
+
+      // var voucher_res = { suc: 1, msg: 1 };
 
       if (voucher_res.suc > 0) {
         if (voucher_res.msg > 0) {
