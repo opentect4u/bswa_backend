@@ -305,10 +305,9 @@ super_policyRouter.get("/get_member_policy_print_super", async (req, res) => {
       var select =
           // "a.form_no,a.form_dt,a.member_id,a.mem_dt,a.mem_type,a.memb_oprn,a.memb_name,a.unit_id,a.gurdian_name,a.gender,a.marital_status,a.dob,a.pers_no,a.min_no,a.memb_address,a.phone_no,b.dependent_dt,b.dependent_name,b.gurdian_name spou_guard,b.relation,b.min_no spou_min,b.dob spou_db,b.phone_no spou_phone,b.memb_address spou_address",
           "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,a.form_status,a.resolution_no,a.resolution_dt,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,a.remarks,b.unit_name,c.policy_holder_type",
-        table_name = "td_stp_ins a, md_unit b, md_policy_holder_type c",
-        whr = `a.association = b.unit_id
-        AND a.policy_holder_type = c.policy_holder_type_id
-        AND a.member_id ='${data.member_id}' AND a.form_no = '${data.form_no}'`,
+        table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c a.policy_holder_type = c.policy_holder_type_id",
+        whr = `a.member_id ='${data.member_id}'
+         AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
     // } 
