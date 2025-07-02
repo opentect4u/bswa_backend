@@ -97,25 +97,25 @@ module.exports = {
       resolve(res_dt);
     });
   },
-  // saveTrnsGmp: (data) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  saveTrnsGmp: (data) => {
+    return new Promise(async (resolve, reject) => {
+      const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
-  //     var table_name = "td_transactions",
-  //       fields =
-  //         data.up_flag > 0
-  //           ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
-  //           : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
-  //       values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
-  //       where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
-  //       flag = data.up_flag > 0 ? 1 : 0;
-  //     var trn_data = await db_Insert(table_name, fields, values, where, flag);
-  //     trn_data["trn_id"] = data.merchantOrderNo;
-  //     resolve(trn_data);
-  //   });
-  // },
+      var table_name = "td_transactions",
+        fields =
+          data.up_flag > 0
+            ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
+            : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+        values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
+        where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
+        flag = data.up_flag > 0 ? 1 : 0;
+      var trn_data = await db_Insert(table_name, fields, values, where, flag);
+      trn_data["trn_id"] = data.merchantOrderNo;
+      resolve(trn_data);
+    });
+  },
 
-   saveTrnsGmp: (data) => {
+   saveTrnsGmps: (data) => {
     console.log(data,'online_stp');
 
     return new Promise(async (resolve, reject) => {
@@ -143,9 +143,7 @@ module.exports = {
         BRANCH_MASTER[1],
         data.getepayTxnId,
         dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-        // TRANSFER_TYPE_MASTER[data.pay_mode],
         TRANSFER_TYPE_MASTER['O'],
-        // VOUCHER_MODE_MASTER[data.pay_mode],
         VOUCHER_MODE_MASTER['O'],
         75,
         // CR_ACC_MASTER[mem_type],
