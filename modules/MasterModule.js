@@ -484,94 +484,8 @@ const drVoucher = (
   });
 };
 
-const drVoucher_children = (
-  fin_year,
-  fin_full_year,
-  br_id,
-  br_nm,
-  trn_id,
-  trn_dt,
-  transfer_type,
-  voucher_mode,
-  acc_code,
-  acc_cd_cr,
-  dr_cr_flag,
-  acc_cd_adm_cr,
-  acc_cd_don_cr,
-  memb_type,
-  amount_don_cr,
-  amount_adm_cr,
-  amount,
-  amount_cr,
-  ins_no,
-  ins_dt,
-  remarks,
-  approval_status,
-  created_by,
-  created_at,
-  approved_by,
-  approved_dt
-) => {
-  return new Promise((resolve, reject) => {
-    let data = JSON.stringify({
-      data: {
-        fin_yr: fin_year,
-        fin_fulyr: fin_full_year,
-        branch_id: br_id,
-        br_nm: br_nm,
-        trans_no: trn_id,
-        voucher_date: trn_dt,
-        trans_dt: trn_dt,
-        transfer_type: transfer_type,
-        voucher_mode: voucher_mode,
-        acc_cd_dr: acc_code,
-        dr_cr_flag: dr_cr_flag,
-        amount_dr: amount,
-        amount_cr: amount_cr,
-        acc_cd_cr: acc_cd_cr,
-        acc_cd_don_cr: acc_cd_don_cr,
-        acc_cd_adm_cr: acc_cd_adm_cr,
-        memb_type: memb_type,
-        amount_don_cr: amount_don_cr,
-        amount_adm_cr: amount_adm_cr,
-        ins_no: ins_no,
-        ins_dt: ins_dt,
-        remarks: remarks,
-        approval_status: approval_status,
-        created_by: created_by,
-        created_dt: created_at,
-        approved_by: approved_by,
-        approved_dt: approved_dt,
-      },
-    });
-
-    console.log(data, "data");
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://bspwa.in/fin/index.php/api_voucher/child_policy",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log(JSON.stringify(response.data));
-        resolve({ suc: 1, msg: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-        resolve({ suc: 0, msg: error });
-      });
-  });
-};
-
 const drVoucher_stp = (
-  fin_year,
+   fin_year,
   fin_full_year,
   br_id,
   br_nm,
@@ -582,13 +496,7 @@ const drVoucher_stp = (
   acc_code,
   acc_cd_cr,
   dr_cr_flag,
-  acc_cd_adm_cr,
-  acc_cd_don_cr,
-  memb_type,
-  amount_don_cr,
-  amount_adm_cr,
   amount,
-  amount_cr,
   ins_no,
   ins_dt,
   remarks,
@@ -606,20 +514,14 @@ const drVoucher_stp = (
         branch_id: br_id,
         br_nm: br_nm,
         trans_no: trn_id,
-        voucher_date: trn_dt,
         trans_dt: trn_dt,
+        voucher_date: trn_dt,
         transfer_type: transfer_type,
         voucher_mode: voucher_mode,
         acc_cd_dr: acc_code,
         dr_cr_flag: dr_cr_flag,
-        amount_dr: amount,
-        amount_cr: amount_cr,
+        amount: amount,
         acc_cd_cr: acc_cd_cr,
-        acc_cd_don_cr: acc_cd_don_cr,
-        acc_cd_adm_cr: acc_cd_adm_cr,
-        memb_type: memb_type,
-        amount_don_cr: amount_don_cr,
-        amount_adm_cr: amount_adm_cr,
         ins_no: ins_no,
         ins_dt: ins_dt,
         remarks: remarks,
@@ -793,8 +695,8 @@ const CR_ACC_MASTER = {
   G: 67,
   AI: 68,
   L: 69,
-  Children_Policy_Payable: 106,
-  Super_topup_policy_payable: 107,
+  Children_Policy_Payable: "106",
+  Super_topup_policy_payable: "107",
 };
 
 const VOUCHER_MODE_MASTER = {
@@ -839,6 +741,5 @@ module.exports = {
   drVoucher,
   generateNextSubDate,
   shortenURL,
-  drVoucher_children,
   drVoucher_stp
 };

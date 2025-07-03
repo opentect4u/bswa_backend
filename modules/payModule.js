@@ -98,6 +98,8 @@ module.exports = {
     });
   },
   saveTrnsGmp: (data) => {
+    console.log(data,'data');
+    
     return new Promise(async (resolve, reject) => {
       const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
@@ -115,77 +117,78 @@ module.exports = {
     });
   },
 
-   saveTrnsGmps: (data) => {
-    console.log(data,'online_stp');
+  //  saveTrnsGmp: (data) => {
+  //   console.log(data,'online_stp');
 
-    return new Promise(async (resolve, reject) => {
-       var sub_upto = await generateNextSubDate(
-        data.udf7,
-        data.udf8,
-        data.txnAmount,
-        data.udf9
-      );
-      var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-      var finres = await getCurrFinYear();
-      var curr_fin_year = finres.curr_fin_year;
+  //   return new Promise(async (resolve, reject) => {
+  //     var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+  //     var finres = await getCurrFinYear();
+  //     var curr_fin_year = finres.curr_fin_year;
 
-      var flag_dt = await db_Select('flag', 'td_child_policy', `member_id = '${data.udf6}'`, 'LIMIT 1')
-      const flag_dtls = flag_dt.suc > 0 ? (flag_dt.msg.length > 0 ? flag_dt.msg[0].flag : '') : '';
+  //     var flag_dt = await db_Select('flag', 'td_child_policy', `member_id = '${data.udf6}'`, 'LIMIT 1')
+  //     const flag_dtls = flag_dt.suc > 0 ? (flag_dt.msg.length > 0 ? flag_dt.msg[0].flag : '') : '';
 
 
-      // const cr_acc_code = flag_dtls === 'CP' ? 106 : 107;
-      const cr_acc_code = flag_dtls === 'CP' ? CR_ACC_MASTER.Children_Policy_Payable : CR_ACC_MASTER.Super_topup_policy_payable;
+  //     // const cr_acc_code = flag_dtls === 'CP' ? 106 : 107;
+  //     const cr_acc_code = flag_dtls === 'CP' ? "Children_Policy_Payable" : "Super_topup_policy_payable";
+  //     const resolved_acc_cd_cr = CR_ACC_MASTER[cr_acc_code];
+  //      const amount = Number(data.txnAmount);
 
-      var voucher_res = await drVoucher_stp(
-        FIN_YEAR_MASTER[curr_fin_year],
-        curr_fin_year,
-        2,
-        BRANCH_MASTER[1],
-        data.getepayTxnId,
-        dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-        TRANSFER_TYPE_MASTER['O'],
-        VOUCHER_MODE_MASTER['O'],
-        75,
-        // CR_ACC_MASTER[mem_type],
-        CR_ACC_MASTER[cr_acc_code],
-        "DR",
-        data.txnAmount,
-        data.chq_no ? data.chq_no : "",
-        data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
-        // data.paymentStatus,
-        `Being subscription received from Member No ${data.udf6}`,
-        data.udf5,
-        data.udf3,
-        dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-        data.udf3,
-        dateFormat(new Date(trn_dt), "yyyy-mm-dd")
-      );
+  //     var voucher_res = await drVoucher_stp(
+  //       FIN_YEAR_MASTER[curr_fin_year],
+  //       curr_fin_year,
+  //       2,
+  //       BRANCH_MASTER[1],
+  //       data.getepayTxnId,
+  //       dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+  //       TRANSFER_TYPE_MASTER['O'],
+  //       VOUCHER_MODE_MASTER['O'],
+  //       "75",
+  //       resolved_acc_cd_cr,
+  //       "DR",
+  //       // data.txnAmount,
+  //       // txnAmount,
+  //       amount,
+  //       data.chq_no ? data.chq_no : "",
+  //       data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+  //       // data.paymentStatus,
+  //       `Being premium received from Member No ${data.udf6}`,
+  //       data.udf5,
+  //       data.udf3,
+  //       dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+  //       data.udf3,
+  //       dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+  //     );
 
-      console.log(voucher_res, 'Res in transaction');
+  //     console.log("cr_acc_code:", cr_acc_code);
+  //     console.log("Resolved acc_cd_cr:", CR_ACC_MASTER[cr_acc_code]);
+  //     console.log("Txn Amount:", data.txnAmount);
+  //     console.log("Txn Amount:", amount);
+  //     console.log(voucher_res, 'Res in transaction');
 
-       if (voucher_res.suc > 0) {
-        if (voucher_res.msg > 0) {
+  //      if (voucher_res.suc > 0) {
+  //       if (voucher_res.msg > 0) {
 
-      var table_name = "td_transactions",
-        fields =
-          data.up_flag > 0
-            ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
-            : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
-        values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
-        where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
-        flag = data.up_flag > 0 ? 1 : 0;
-      var trn_data = await db_Insert(table_name, fields, values, where, flag);
-      trn_data["trn_id"] = data.merchantOrderNo;
-      resolve(trn_data);
-       } else {
-          resolve({ suc: 0, msg: "Voucher Not Saved" });
-        }
-      } else {
-        resolve(voucher_res);
-      }
+  //     var table_name = "td_transactions",
+  //       fields =
+  //         data.up_flag > 0
+  //           ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
+  //           : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+  //       values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
+  //       where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
+  //       flag = data.up_flag > 0 ? 1 : 0;
+  //     var trn_data = await db_Insert(table_name, fields, values, where, flag);
+  //     trn_data["trn_id"] = data.merchantOrderNo;
+  //     resolve(trn_data);
+  //      } else {
+  //         resolve({ suc: 0, msg: "Voucher Not Saved" });
+  //       }
+  //     } else {
+  //       resolve(voucher_res);
+  //     }
 
-    });
-  },
+  //   });
+  // },
 
 
   saveSubs: (data) => {
