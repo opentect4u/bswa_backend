@@ -697,7 +697,9 @@ module.exports = {
                 .replace("{password}", pwd)
                 .replace("{month}", dateFormat(sub_upto, "mm"))
                 .replace("{year}", dateFormat(sub_upto, "yyyy"));
+                console.log("WhatsApp message:", wpMsg);
               var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+              console.log("WhatsApp response:", wpRes);
             } catch (err) {
               console.log(err);
             }
