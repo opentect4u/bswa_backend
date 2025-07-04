@@ -519,7 +519,8 @@ module.exports = {
       try{
         var select = "msg, domain",
           table_name = "md_whatsapp_msg",
-          whr = `msg_for = 'Accept'`,
+          // whr = `msg_for = 'Accept'`,
+          whr = `msg_for = 'Member accept online'`,
           order = null;
         var msg_dt = await db_Select(select, table_name, whr, order);
         var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
