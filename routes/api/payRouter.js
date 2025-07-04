@@ -11,6 +11,7 @@ dotenv.config({ path: '.env.prod' });
 payRouter.post('/generate_pay_url', async (req, res) => {
     var encData = req.body.encData
     console.log(encData,'enc');
+    // res.send('huegfegsfyg')
     
     const secretKey = process.env.secretKey;
     console.log(secretKey);
@@ -93,15 +94,71 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     }
 })
 
+// payRouter.post('/success_payment_gmp', async (req, res) => {
+//     const result = req.body.response;
+//     console.log(result);
+    
+//     var dataitems = decryptEas(
+//         result,
+//         process.env.PAY_GET_KEY,
+//         process.env.PAY_GET_IV
+//     );
+//     const parsedData = JSON.parse(dataitems);
+//     console.log("data UAT", parsedData);
+//     var res_dt = JSON.parse(parsedData)
+//     var res_load = await payRecordSave(res_dt)
+//     console.log(res_dt,res_load,'test');
+    
+//     var data = res_dt.udf4.split('||')
+//     res_dt.udf4 = data[0]
+//     res_dt.udf5 = data[1]
+//     res_dt.udf6 = data[2]
+//     res_dt['up_flag'] = data[3]
+//     res_dt['direct_flag'] = data[4]
+//     if(res_dt.txnStatus == 'SUCCESS'){
+//         var save_dt = await saveTrnsGmp(res_dt)
+//         try{
+//             if(res_dt.direct_flag == 'D'){
+//           var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
+//           res.send(mem_dt)
+//           console.log('Update result:', mem_dt,data,formNo);
+//             }
+//         }catch(err){
+//             console.log(err);            
+//         }
+//         // if(res_dt.udf5 != 'U'){
+//         //     var sub_res = await saveSubs(res_dt)
+//         // }
+//         var redirect_url_client =
+//           data[0] != ""
+//             ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
+//             : `home/money_receipt_member/${save_dt.trn_id}`;
+
+//         // console.log(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+//         res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+//         // res.redirect(`${process.env.CLIENT_URL}/${res_dt.udf10}`)
+//     }else{
+//         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
+//     }
+//     // res.send(parsedData);
+// })
+
 payRouter.post('/success_payment_gmp', async (req, res) => {
     const result = req.body.response;
     console.log(result);
     
-    var dataitems = decryptEas(
+    // let dataitems;
+    // try{
+     dataitems = decryptEas(
         result,
         process.env.PAY_GET_KEY,
         process.env.PAY_GET_IV
     );
+    // } catch (err) {
+    //   console.error("Decryption error:", err.message);
+    //   return res.send({ suc: 0, msg: "Invalid or malformed encrypted response" });
+    // }
+   
     const parsedData = JSON.parse(dataitems);
     console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
@@ -115,6 +172,8 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     res_dt['up_flag'] = data[3]
     res_dt['direct_flag'] = data[4]
     if(res_dt.txnStatus == 'SUCCESS'){
+        console.log(res_dt.txnStatus,'res_dt.txnStatus');
+        
         var save_dt = await saveTrnsGmp(res_dt)
         try{
             if(res_dt.direct_flag == 'D'){

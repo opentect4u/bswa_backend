@@ -422,6 +422,62 @@ SubsDepoRouter.post("/mem_sub_tnx_save_online", async (req, res) => {
 //   res.send(res_dt);
 // });
 
+// SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
+//   var data = req.body;
+//   var select =`a.trn_dt,
+//   a.trn_id,
+//   a.premium_amt,
+//   a.tot_amt,
+//   a.pay_mode,
+//   a.receipt_no,
+//   a.chq_no,
+//   a.chq_dt,
+//   a.chq_bank,
+//   a.approval_status,
+//   d.min_no,
+
+//    -- STP Flag(only for STP)
+//   CASE 
+//     WHEN LEFT(a.form_no, 3) = 'STP' THEN 'STP'
+//     ELSE NULL
+//   END AS flag,
+
+//      -- STP premium type(only for STP)
+//   CASE 
+//     WHEN LEFT(a.form_no, 3) = 'STP' THEN d.premium_type
+//     ELSE NULL
+//   END AS premium_type,
+
+//     -- Member Name Logic
+//   CASE 
+//     WHEN b.memb_name IS NOT NULL AND b.memb_name != '' THEN b.memb_name
+//     WHEN LEFT(a.form_no, 3) = 'STP' AND d.memb_name IS NOT NULL THEN d.memb_name
+//     ELSE c.memb_name
+//   END AS memb_name,
+
+//   -- Member ID Logic
+//   CASE 
+//     WHEN b.member_id IS NOT NULL AND b.member_id != '' THEN b.member_id
+//     WHEN LEFT(a.form_no, 3) = 'STP' AND d.member_id IS NOT NULL THEN d.member_id
+//     ELSE c.member_id
+//   END AS member_id,
+
+//   -- Member Type Logic
+//   CASE 
+//     WHEN b.mem_type IS NOT NULL AND b.mem_type != '' THEN b.mem_type
+//     WHEN LEFT(a.form_no, 3) = 'STP' AND d.policy_holder_type IS NOT NULL THEN d.policy_holder_type
+//     ELSE c.policy_holder_type
+//   END AS mem_type`,
+//     table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no",
+//      whr = `a.trn_id = '${data.trn_id}'`,
+//     order = null;
+//   var res_dt = await db_Select(select, table_name, whr, order);
+//   console.log(res_dt);
+  
+//   res.send(res_dt);
+// });
+
+
 SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   var data = req.body;
   var select =`a.trn_dt,
@@ -452,6 +508,7 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   CASE 
     WHEN b.memb_name IS NOT NULL AND b.memb_name != '' THEN b.memb_name
     WHEN LEFT(a.form_no, 3) = 'STP' AND d.memb_name IS NOT NULL THEN d.memb_name
+    WHEN e.member_name IS NOT NULL THEN e.member_name
     ELSE c.memb_name
   END AS memb_name,
 
@@ -459,6 +516,7 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   CASE 
     WHEN b.member_id IS NOT NULL AND b.member_id != '' THEN b.member_id
     WHEN LEFT(a.form_no, 3) = 'STP' AND d.member_id IS NOT NULL THEN d.member_id
+    WHEN e.member_id IS NOT NULL THEN e.member_id
     ELSE c.member_id
   END AS member_id,
 
@@ -468,7 +526,7 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
     WHEN LEFT(a.form_no, 3) = 'STP' AND d.policy_holder_type IS NOT NULL THEN d.policy_holder_type
     ELSE c.policy_holder_type
   END AS mem_type`,
-    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no",
+    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no LEFT JOIN td_child_policy e ON a.form_no = e.form_no",
      whr = `a.trn_id = '${data.trn_id}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
@@ -476,7 +534,6 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   
   res.send(res_dt);
 });
-
 
 SubsDepoRouter.post("/subscription_voucher", async (req, res) => {});
 
