@@ -481,60 +481,60 @@ module.exports = {
     });
   },
 
-  // upi_dt: (data) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-  //     let year = dateFormat(new Date(), "yyyy");
+  upi_dt: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      let year = dateFormat(new Date(), "yyyy");
 
-  //     const no = await getMaxTrnId();
-  //     let trn_id = data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
-  //     console.log(trn_id, "pppp");
-  //     // var tot_amt = data.admissionFee + data.donationFee + data.subscriptionFee;
+      const no = await getMaxTrnId();
+      let trn_id = data.trn_id > 0 ? data.trn_id : `${year}${no.msg[0].max_trn_id}`;
+      console.log(trn_id, "pppp");
+      // var tot_amt = data.admissionFee + data.donationFee + data.subscriptionFee;
 
-  //     var table_name = "td_transactions",
-  //       fields =
-  //         data.trn_id > 0
-  //           ? `sub_amt = '${data.subscriptionFee}',adm_fee = '${data.admissionFee}',donation = '${data.donationFee}',tot_amt = '${data.totalAmount}',pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',modified_by = '${data.user}',modified_at = '${datetime}'`
-  //           : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,created_by,created_at)`,
-  //       values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee}','0','${data.admissionFee}','${data.donationFee}','0','${data.totalAmount}','${data.payment}','${data.receipt_no}','0','0000-00-00','0','${data.user}','${datetime}')`,
-  //       where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
-  //       flag = data.trn_id > 0 ? 1 : 0;
-  //     var res_dt = await db_Insert(table_name, fields, values, where, flag);
+      var table_name = "td_transactions",
+        fields =
+          data.trn_id > 0
+            ? `sub_amt = '${data.subscriptionFee}',adm_fee = '${data.admissionFee}',donation = '${data.donationFee}',tot_amt = '${data.totalAmount}',pay_mode = '${data.payment}',receipt_no = '${data.receipt_no}',modified_by = '${data.user}',modified_at = '${datetime}'`
+            : `(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,created_by,created_at)`,
+        values = `('${data.formNo}','${datetime}','${trn_id}','${data.subscriptionFee}','0','${data.admissionFee}','${data.donationFee}','0','${data.totalAmount}','${data.payment}','${data.receipt_no}','0','0000-00-00','0','${data.user}','${datetime}')`,
+        where = data.trn_id > 0 ? `trn_id = ${data.trn_id}` : null,
+        flag = data.trn_id > 0 ? 1 : 0;
+      var res_dt = await db_Insert(table_name, fields, values, where, flag);
 
-  //     if (res_dt.suc > 0) {
-  //       var table_name1 = "md_member",
-  //         fields1 = `memb_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
-  //         values1 = null,
-  //         whr1 = `form_no = '${data.formNo}'`,
-  //         flag1 = 1;
-  //       var accept_dt = await db_Insert(
-  //         table_name1,
-  //         fields1,
-  //         values1,
-  //         whr1,
-  //         flag1
-  //       );
+      if (res_dt.suc > 0) {
+        var table_name1 = "md_member",
+          fields1 = `memb_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+          values1 = null,
+          whr1 = `form_no = '${data.formNo}'`,
+          flag1 = 1;
+        var accept_dt = await db_Insert(
+          table_name1,
+          fields1,
+          values1,
+          whr1,
+          flag1
+        );
 
-  //     // WHATSAPP MESSAGE //
-  //     try{
-  //       var select = "msg, domain",
-  //         table_name = "md_whatsapp_msg",
-  //         whr = `msg_for = 'Accept'`,
-  //         order = null;
-  //       var msg_dt = await db_Select(select, table_name, whr, order);
-  //       var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
-  //       domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
-  //       wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{status}', formStatus[data.status])
-  //       var wpRes = await sendWappMsg(data.phone_no, wpMsg)
-  //     }catch(err){
-  //       console.log(err);
-  //     }
-  //     // END //
+      // WHATSAPP MESSAGE //
+      try{
+        var select = "msg, domain",
+          table_name = "md_whatsapp_msg",
+          whr = `msg_for = 'Accept'`,
+          order = null;
+        var msg_dt = await db_Select(select, table_name, whr, order);
+        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+        domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+        wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{status}', formStatus[data.status])
+        var wpRes = await sendWappMsg(data.phone_no, wpMsg)
+      }catch(err){
+        console.log(err);
+      }
+      // END //
 
-  //       resolve(accept_dt);
-  //     }
-  //   });
-  // },
+        resolve(accept_dt);
+      }
+    });
+  },
 
   approve_dt: (data) => {
     console.log(data,"general");
