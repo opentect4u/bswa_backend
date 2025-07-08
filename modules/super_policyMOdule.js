@@ -20,12 +20,22 @@ const getMaxFormNo = (flag) => {
 const getMaxTrnId = () => {
   return new Promise(async (resolve, reject) => {
     var now_year = dateFormat(new Date(), "yyyy");
+    var now = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     var select =
         "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
-      table_name = "td_transactions",
+      table_name = "td_generate_id",
       whr = `SUBSTRING(trn_id, 1, 4) = ${now_year}`,
       order = null;
+  
     var res_dt = await db_Select(select, table_name, whr, order);
+
+    var max_value = res_dt.msg[0].max_trn_id;
+    let fields = `(trn_date,trn_id)`;
+      values = `('${now}','${now_year.max_value}')`;
+      table_name = "td_generate_id";
+
+    var gen_id = await db_Insert('td_generate_id', ``, values, null, null);   
+
     resolve(res_dt);
   });
 };
