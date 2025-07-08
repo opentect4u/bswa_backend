@@ -121,10 +121,10 @@ const getMaxTrnId = () => {
 
     var max_value = res_dt.msg[0].max_trn_id;
     let fields = `(trn_date,trn_id)`;
-      values = `('${now}','${now_year.max_value}')`;
+      values = `('${now}','${now_year+max_value}')`;
       table_name = "td_generate_id";
 
-    var gen_id = await db_Insert('td_generate_id', ``, values, null, null);   
+    var gen_id = await db_Insert('td_generate_id',fields, values, null, null);   
 
     resolve(res_dt);
   });
