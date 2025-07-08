@@ -17,6 +17,8 @@ const getMaxFormNo = (flag) => {
   });
 };
 
+//Generating Maximum Transaction ID. The max trn id is serial no. lapded with 0 upto 6 character 
+//and concated with current year. So every year the trn id starts at 000001
 const getMaxTrnId = () => {
   return new Promise(async (resolve, reject) => {
     var now_year = dateFormat(new Date(), "yyyy");
