@@ -28,7 +28,7 @@ reportRouter.get("/member_list_report", async (req, res) => {
 
 reportRouter.get("/stp_member_register_report", async (req, res) => {
  var data = req.query;
-console.log(data);
+// console.log(data);
 
  var select = "a.form_no,a.form_dt,a.policy_holder_type holder_id,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.premium_type,b.policy_holder_type,c.unit_name",
  table_name = "td_stp_ins a LEFT JOIN md_policy_holder_type b ON a.policy_holder_type = policy_holder_type_id LEFT JOIN md_unit c ON a.association = c.unit_id",
@@ -152,14 +152,14 @@ reportRouter.get("/gmp_trans_report", async (req, res) => {
 
 reportRouter.get("/member_stp_trans_report", async (req, res) => {
   const data = req.query;
-  console.log(data, 'data');
+  // console.log(data, 'data');
 
   let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
-    b.min_no, b.memb_name, b.dob, b.memb_oprn`;
+    b.min_no, b.memb_name, b.gender, b.dob, b.memb_oprn`;
 
   // Include spouse/dependent fields if D or A
   if (data.memb_oprn === 'D' || data.memb_oprn === 'A') {
-    select += `, b.spou_min_no, b.spou_dob, b.dependent_name`;
+    select += `, b.spou_min_no, b.spou_dob, b.spou_gender, b.dependent_name`;
   }
 
   const table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no";
@@ -194,7 +194,7 @@ reportRouter.get("/member_stp_trans_report", async (req, res) => {
 
 reportRouter.get("/get_pg_approve_mem", async (req, res) => {
   var data = req.query;
-  console.log(data, 'data');
+  // console.log(data, 'data');
 
   var select = "DISTINCT udf3,udf4";
   table_name = "td_pg_transaction",
@@ -208,14 +208,14 @@ reportRouter.get("/get_pg_approve_mem", async (req, res) => {
 
 reportRouter.get("/get_pg_approve_dtls", async (req, res) => {
   var data = req.query;
-  console.log(data, 'data');
+  // console.log(data, 'data');
 
   var select = "*";
   table_name = "td_pg_transaction",
   whr =`udf4 = '${data.member_id}'`,
   order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  console.log(res_dt, "mimi");
+  // console.log(res_dt, "mimi");
   res.send(res_dt);
 })
 
