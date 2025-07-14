@@ -181,7 +181,9 @@ module.exports = {
               new Buffer.from(form_no).toString("base64")
             )}`
           );
+          console.log("📤 Sending message:", wpMsg);
         var wpRes = await sendWappMsg(data.phone, wpMsg);
+        console.log("✅ WhatsApp API Response:", wpRes);
       } catch (err) {
         console.log(err);
       }
