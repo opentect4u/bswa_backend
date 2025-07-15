@@ -186,6 +186,7 @@ module.exports = {
               Buffer.from(form_no).toString("base64")
             )}`
           );
+          console.log("Encoded URL:", `${domain}/#/home/print_general_form/${encodeURIComponent(Buffer.from(form_no).toString("base64"))}`);
           console.log("📤 Sending message:", wpMsg);
         var wpRes = await sendWappMsg(data.phone, wpMsg);
         console.log("✅ WhatsApp API Response:", wpRes);
