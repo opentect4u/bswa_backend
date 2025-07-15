@@ -597,7 +597,7 @@ super_policyRouter.post("/fetch_fr_view_stp_trans_dtls", async (req, res) => {
    order = null;
    var fetch_stp_view_transaction = await db_Select(select,table_name,whr,order);
    res.send(fetch_stp_view_transaction)
-   console.log(fetch_stp_view_transaction,'fetch');
+  //  console.log(fetch_stp_view_transaction,'fetch');
    
   }catch(error){
     console.error('Error:', error);
