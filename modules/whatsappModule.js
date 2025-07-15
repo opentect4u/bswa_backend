@@ -87,6 +87,7 @@ module.exports = {
      sendWappMsg: (phone, msg) => {
       phone = phone.toString().length == 10 ? `91${phone}` : phone
        console.log(phone, 'asassa', phone.length);
+       
         return new Promise((resolve, reject) => {
             let config = {
                 method: 'get',
