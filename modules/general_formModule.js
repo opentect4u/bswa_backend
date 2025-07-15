@@ -175,10 +175,15 @@ module.exports = {
         wpMsg = wpMsg
           .replace("{user_name}", data.member)
           .replace("{form_id}", form_no)
+          // .replace(
+          //   "{url}",
+          //   `${domain}/#/home/print_general_form/${encodeURIComponent(
+          //     new Buffer.from(form_no).toString("base64")
+          //   )}`
           .replace(
             "{url}",
             `${domain}/#/home/print_general_form/${encodeURIComponent(
-              new Buffer.from(form_no).toString("base64")
+              Buffer.from(form_no).toString("base64")
             )}`
           );
           console.log("📤 Sending message:", wpMsg);
