@@ -221,7 +221,7 @@ module.exports = {
       dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
       TRANSFER_TYPE_MASTER['O'],
       VOUCHER_MODE_MASTER['O'],
-      "75", // Debit account code
+      "85", // Debit account code
       resolved_acc_cd_cr,
       "DR",
       data.txnAmount,

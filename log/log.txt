@@ -2306,3 +2306,183 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [04-Jul-25 16:43:36] : Exicuting Select Statement from table td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no LEFT JOIN td_child_policy e ON a.form_no = e.form_no 
 [MESSAGE] : [04-Jul-25 16:43:36] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.trn_dt,\n  a.trn_id,\n  a.premium_amt,\n  a.tot_amt,\n  a.pay_mode,\n  a.receipt_no,\n  a.chq_no,\n  a.chq_dt,\n  a.chq_bank,\n  a.approval_status,\n  d.min_no,\n\n   -- STP Flag(only for STP)\n  CASE \n    WHEN LEFT(a.form_no, 3) = 'STP' THEN 'STP'\n    ELSE NULL\n  END AS flag,\n\n     -- STP premium type(only for STP)\n  CASE \n    WHEN LEFT(a.form_no, 3) = 'STP' THEN d.premium_type\n    ELSE NULL\n  END AS premium_type,\n\n    -- Member Name Logic\n  CASE \n    WHEN b.memb_name IS NOT NULL AND b.memb_name != '' THEN b.memb_name\n    WHEN LEFT(a.form_no, 3) = 'STP' AND d.memb_name IS NOT NULL THEN d.memb_name\n    WHEN e.member_name IS NOT NULL THEN e.member_name\n    ELSE c.memb_name\n  END AS memb_name,\n\n  -- Member ID Logic\n  CASE \n    WHEN b.member_id IS NOT NULL AND b.member_id != '' THEN b.member_id\n    WHEN LEFT(a.form_no, 3) = 'STP' AND d.member_id IS NOT NULL THEN d.member_id\n    WHEN e.member_id IS NOT NULL THEN e.member_id\n    ELSE c.member_id\n  END AS member_id,\n\n  -- Member Type Logic\n  CASE \n    WHEN b.mem_type IS NOT NULL AND b.mem_type != '' THEN b.mem_type\n    WHEN LEFT(a.form_no, 3) = 'STP' AND d.policy_holder_type IS NOT NULL THEN d.policy_holder_type\n    ELSE c.policy_holder_type\n  END AS mem_type FROM td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no LEFT JOIN td_child_policy e ON a.form_no = e.form_no WHERE a.trn_id = '2025000215' "} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:35:46] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:35:46] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:35:46] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:35:46] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:36:48] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:36:48] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:36:48] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:36:48] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:44:51] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:44:51] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:44:51] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:44:51] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:45:22] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [15-Jul-25 11:45:22] : Error: Duplicate entry '20250' for key 'td_transactions.PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:52:03] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:52:03] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:52:03] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:52:03] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:56:16] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:56:16] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 11:56:16] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [15-Jul-25 11:56:16] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 12:02:08] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [15-Jul-25 12:02:08] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [15-Jul-25 12:02:08] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [15-Jul-25 12:02:08] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [18-Jul-25 13:55:00] : Exicuting Select Statement from table md_member 
+[MESSAGE] : [18-Jul-25 13:55:00] : {"errorno":"ETIMEDOUT","code":"ETIMEDOUT","syscall":"connect","fatal":true} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [29-Jul-25 16:23:05] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [29-Jul-25 16:23:05] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n         SELECT DISTINCT min_no FROM (\n         SELECT '8583' AS min_no\n         UNION\n         SELECT spou_min_no \n         FROM td_stp_ins \n         WHERE min_no = '8583' \n         AND spou_min_no IS NOT NULL AND spou_min_no != ''\n        LIMIT 1\n      ) AS min_list\n      WHERE min_no IS NOT NULL\n    ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:19:29] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [02-Aug-25 15:19:29] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n         SELECT DISTINCT min_no FROM (\n         SELECT '8583' AS min_no\n         UNION\n         SELECT spou_min_no \n         FROM td_stp_ins \n         WHERE min_no = '8583' \n         AND spou_min_no IS NOT NULL AND spou_min_no != ''\n        LIMIT 1\n      ) AS min_list\n      WHERE min_no IS NOT NULL\n    ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:36:48] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:36:48] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:36:48] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:36:48] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:38:16] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:38:16] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:38:16] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:38:16] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:38:17] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:38:17] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:38:17] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:38:17] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:43:15] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:43:15] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:43:15] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:43:15] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:45:30] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:45:30] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:45:30] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:45:30] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:53:07] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:53:07] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:53:07] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:53:07] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:53:59] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:53:59] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:53:59] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:53:59] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:54:04] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:54:04] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:54:04] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:54:04] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:55:20] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:55:20] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:55:20] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:55:20] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:55:23] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:55:23] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:55:23] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:55:23] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:55:33] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:55:33] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:55:33] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:55:33] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:57:19] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:57:19] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:57:19] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:57:19] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:57:50] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:57:50] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 15:57:50] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 15:57:50] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:01:57] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:01:57] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:01:57] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:01:57] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:04:58] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:04:58] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:04:58] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:04:58] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:05:37] : Exicuting Insert Statement for table td_pg_transaction 
+[MESSAGE] : [02-Aug-25 16:05:37] : Error: Incorrect FLOAT value: '' for column 'surcharge' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:24:20] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:24:20] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:24:20] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:24:20] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:24:55] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:24:55] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:24:55] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:24:55] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:25:53] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:25:53] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:25:53] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:25:53] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:25:56] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:25:56] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:25:56] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:25:56] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:33:44] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:33:44] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:33:44] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:33:44] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:33:52] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:33:52] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [02-Aug-25 16:33:52] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [02-Aug-25 16:33:52] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [03-Aug-25 17:36:12] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [03-Aug-25 17:36:12] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n         SELECT DISTINCT min_no FROM (\n         SELECT '8583' AS min_no\n         UNION\n         SELECT spou_min_no \n         FROM td_stp_ins \n         WHERE min_no = '8583' \n         AND spou_min_no IS NOT NULL AND spou_min_no != ''\n        LIMIT 1\n      ) AS min_list\n      WHERE min_no IS NOT NULL\n    ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
