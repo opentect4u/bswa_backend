@@ -2486,3 +2486,90 @@ LEFT JOIN td_memb_subscription c
 [EVENT]   : [03-Aug-25 17:36:12] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
 [MESSAGE] : [03-Aug-25 17:36:12] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n         SELECT DISTINCT min_no FROM (\n         SELECT '8583' AS min_no\n         UNION\n         SELECT spou_min_no \n         FROM td_stp_ins \n         WHERE min_no = '8583' \n         AND spou_min_no IS NOT NULL AND spou_min_no != ''\n        LIMIT 1\n      ) AS min_list\n      WHERE min_no IS NOT NULL\n    ) ORDER BY a.sl_no"} 
 ------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Aug-25 16:21:16] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [07-Aug-25 16:21:16] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Aug-25 16:21:16] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [07-Aug-25 16:21:16] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [07-Aug-25 16:26:25] : Exicuting Insert Statement for table td_memb_subscription 
+[MESSAGE] : [07-Aug-25 16:26:25] : Error: Out of range value for column 'trans_id' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [08-Aug-25 18:33:39] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [08-Aug-25 18:33:39] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:10:48] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [11-Aug-25 11:10:48] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:10:48] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [11-Aug-25 11:10:48] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:10:48] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:10:48] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:11:03] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [11-Aug-25 11:11:03] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:11:03] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [11-Aug-25 11:11:03] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:11:03] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:11:03] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:13:42] : Exicuting Select Statement from table td_generate_id 
+[MESSAGE] : [11-Aug-25 11:13:42] : {"code":"ER_NO_SUCH_TABLE","errno":1146,"sqlState":"42S02","sqlMessage":"Table 'sail.td_generate_id' doesn't exist","sql":"SELECT IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id FROM td_generate_id WHERE SUBSTRING(trn_id, 1, 4) = 2025 "} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:13:42] : Exicuting Insert Statement for table td_generate_id 
+[MESSAGE] : [11-Aug-25 11:13:42] : Error: Table 'sail.td_generate_id' doesn't exist 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:13:42] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:13:42] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:14:53] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:14:53] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:15:53] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:15:53] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:29:24] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:29:24] : Error: Incorrect date value: '0' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:29:33] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:29:33] : Error: Incorrect FLOAT value: 'undefined' for column 'adm_fee' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:29:45] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:29:45] : Error: Incorrect FLOAT value: 'undefined' for column 'adm_fee' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:29:53] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:29:53] : Error: Incorrect FLOAT value: 'undefined' for column 'adm_fee' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:31:12] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:31:12] : Error: Incorrect date value: '0' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:39:50] : Exicuting Update Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:39:50] : Error: Incorrect FLOAT value: 'undefined' for column 'adm_fee' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 11:41:21] : Exicuting Update Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 11:41:21] : Error: Incorrect FLOAT value: 'undefined' for column 'adm_fee' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [11-Aug-25 12:30:28] : Exicuting Insert Statement for table td_transactions 
+[MESSAGE] : [11-Aug-25 12:30:28] : Error: Incorrect date value: '' for column 'chq_dt' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [12-Aug-25 16:49:13] : Exicuting Insert Statement for table td_memb_subscription 
+[MESSAGE] : [12-Aug-25 16:49:13] : Error: Duplicate entry 'G-106-2025-08-12 00:00:00' for key 'td_memb_subscription.PRIMARY' 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Aug-25 17:00:52] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [17-Aug-25 17:00:52] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Aug-25 17:07:54] : Exicuting Insert Statement for table td_stp_dtls 
+[MESSAGE] : [17-Aug-25 17:07:54] : Error: Column 'sl_no' cannot be null 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [17-Aug-25 17:25:14] : Exicuting Select Statement from table td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no 
+[MESSAGE] : [17-Aug-25 17:25:14] : {"code":"ER_CANT_AGGREGATE_2COLLATIONS","errno":1267,"sqlState":"HY000","sqlMessage":"Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='","sql":"SELECT a.sl_no,a.min_no,a.ind_type,a.fin_year,a.particulars,a.amount,a.treatment_dtls,a.treatment_flag FROM td_stp_dtls a LEFT JOIN td_stp_ins b ON a.min_no = b.min_no WHERE a.min_no IN (\n         SELECT DISTINCT min_no FROM (\n         SELECT '9163' AS min_no\n         UNION\n         SELECT spou_min_no \n         FROM td_stp_ins \n         WHERE min_no = '9163' \n         AND spou_min_no IS NOT NULL AND spou_min_no != ''\n        LIMIT 1\n      ) AS min_list\n      WHERE min_no IS NOT NULL\n    ) ORDER BY a.sl_no"} 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [18-Aug-25 00:06:28] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [18-Aug-25 00:06:28] : Error: Incorrect integer value: 'tinyurl.com/279xffur' for column 'link_expiry_time' at row 1 
+------------------------------------------------------------------------------------------------------------
+[EVENT]   : [18-Aug-25 00:07:59] : Exicuting Update Statement for table md_member 
+[MESSAGE] : [18-Aug-25 00:07:59] : Error: Incorrect integer value: 'tinyurl.com/2dgw737p' for column 'link_expiry_time' at row 1 
+------------------------------------------------------------------------------------------------------------

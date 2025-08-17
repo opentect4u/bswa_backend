@@ -12,10 +12,13 @@ const {
   approve_dt,
   upi_dt,
 } = require("../../modules/general_formModule");
+const CryptoJS = require('crypto-js');
+
 const {
   db_Select,
   HUSBAND_ID,
   WIFE_ID,
+  db_Insert,
 } = require("../../modules/MasterModule");
 const generalRouter = express.Router();
 
@@ -91,7 +94,7 @@ generalRouter.post("/image_form_save", async (req, res) => {
 generalRouter.get("/frm_list", async (req, res) => {
   var data = req.query;
   // console.log(data, "ccc");
-  var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
+  var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status,pay_status",
     table_name = "md_member",
     whr = `memb_status IN('P','R','T','A')`;
   // whr = `memb_status = 'P' OR memb_status = 'R' OR memb_status = 'T'`;
@@ -183,6 +186,57 @@ generalRouter.post("/payment_accept", async (req, res) => {
   // console.log(data, "accept");
   var res_dt = await accept_dt_cash(data);
   res.send(res_dt);
+});
+
+generalRouter.post('/check_link_expiry', async (req, res) => {
+    const formNo = req.body.form_no;
+    const result = await db_Select(
+        "payment_link,link_expiry_time",
+        "md_member",
+        `form_no='${formNo}'`,
+        null
+    );
+    console.log(result,'result');
+    
+
+    if (result.suc > 0) {
+        const expiryTime = new Date(result.msg[0].link_expiry_time).getTime();
+        console.log(expiryTime,'expiryTime');
+        
+        // const now = new Date();
+        if (Date.now() > expiryTime) {
+          console.log(now > expiryTime,'loiu');
+          
+            return res.json({ expired: true });
+        }
+        return res.json({ expired: false });
+    }
+    res.json({ expired: true });
+});
+
+generalRouter.post('/update_payment_status', async (req, res) => {
+  try {
+    const { form_no, pay_status } = req.body;
+    console.log(form_no,pay_status);
+    
+
+    if (!form_no || !pay_status) {
+      return res.json({ suc: 0, msg: "Missing parameters" });
+    }
+
+    // Update the database
+    var table_name = "md_member",
+    fields = `pay_status = '${pay_status}'`,
+    values = null,
+    whr = `form_no = '${form_no}'`,
+    flag = 1;
+    const result = await db_Insert(table_name,fields,values,whr,flag);
+
+    res.json({ suc: 1, msg: "Payment status updated" });
+  } catch (error) {
+    console.error(error);
+    res.json({ suc: 0, msg: "Server error", error });
+  }
 });
 
 generalRouter.post("/payment_accept_cheque", async (req, res) => {

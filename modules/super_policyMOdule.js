@@ -4,6 +4,7 @@ var dateFormat = require("dateformat"),
   bcrypt = require("bcrypt");
 const { db_Select, db_Insert, formStatus, shortenURL } = require("./MasterModule");
 const { sendWappMsg } = require("./whatsappModule");
+const { sendSms } = require("./smsModule");
 
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
@@ -154,28 +155,50 @@ module.exports = {
       }
       }
 
+       // SEND SMS AFTER FORM SUBMIT //
+ 
+        try{
+          // ✅ Trim member name to 30 characters max
+          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+          const phone = data.phone_no;
+
+             // Send SMS
+           let smsRes = await sendSms(
+           phone,
+            "FORM_SUBMISSION",
+           [
+           memb_name,
+           form_no
+           ]);
+         console.log("SMS Response:", smsRes);
+        }catch(err){
+          console.log("Error in sending SMS",err);
+        }
+
+      // END //
+
       // WHATSAPP MESSAGE //
-      try {
-        var select = "msg, domain",
-          table_name = "md_whatsapp_msg",
-          whr = `msg_for = 'Submit'`,
-          order = null;
-        var msg_dt = await db_Select(select, table_name, whr, order);
-        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-        wpMsg = wpMsg
-          .replace("{user_name}", data.member)
-          .replace("{form_id}", form_no)
-          .replace(
-            "{url}",
-            `${domain}/#/home/print_stp_form/${encodeURIComponent(
-              new Buffer.from(form_no).toString("base64")
-            )}`
-          );
-        var wpRes = await sendWappMsg(data.phone, wpMsg);
-      } catch (err) {
-        console.log(err);
-      }
+      // try {
+      //   var select = "msg, domain",
+      //     table_name = "md_whatsapp_msg",
+      //     whr = `msg_for = 'Submit'`,
+      //     order = null;
+      //   var msg_dt = await db_Select(select, table_name, whr, order);
+      //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+      //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+      //   wpMsg = wpMsg
+      //     .replace("{user_name}", data.member)
+      //     .replace("{form_id}", form_no)
+      //     .replace(
+      //       "{url}",
+      //       `${domain}/#/home/print_stp_form/${encodeURIComponent(
+      //         new Buffer.from(form_no).toString("base64")
+      //       )}`
+      //     );
+      //   var wpRes = await sendWappMsg(data.phone, wpMsg);
+      // } catch (err) {
+      //   console.log(err);
+      // }
       // END //
 
       // console.log(super_dt, "gggg");
@@ -193,24 +216,46 @@ module.exports = {
         flag = 1;
       var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
 
+       // SEND SMS AFTER FORM REJECT //
+       try{
+          // ✅ Trim member name to 30 characters max
+          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+          const phone = data.phone_no;
+          const form_no = data.formNo;
+
+           // Send SMS
+           let smsRes = await sendSms(
+           phone,
+            "FORM_REJECTION",
+          [
+           memb_name,
+           form_no
+           ]);
+          console.log("SMS Response:", smsRes, phone);
+        }catch(err){
+          console.log("Error in sending SMS",err);
+        }
+
+      // END //
+
       // WHATSAPP MESSAGE //
-      try {
-        var select = "msg, domain",
-          table_name = "md_whatsapp_msg",
-          whr = `msg_for = 'Reject'`,
-          order = null;
-        var msg_dt = await db_Select(select, table_name, whr, order);
-        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-        wpMsg = wpMsg
-          .replace("{user_name}", data.member)
-          .replace("{form_no}", data.formNo)
-          .replace("{status}", formStatus[data.status])
-          .replace("{remarks}", data.reject);
-        var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-      } catch (err) {
-        console.log(err);
-      }
+      // try {
+      //   var select = "msg, domain",
+      //     table_name = "md_whatsapp_msg",
+      //     whr = `msg_for = 'Reject'`,
+      //     order = null;
+      //   var msg_dt = await db_Select(select, table_name, whr, order);
+      //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+      //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+      //   wpMsg = wpMsg
+      //     .replace("{user_name}", data.member)
+      //     .replace("{form_no}", data.formNo)
+      //     .replace("{status}", formStatus[data.status])
+      //     .replace("{remarks}", data.reject);
+      //   var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+      // } catch (err) {
+      //   console.log(err);
+      // }
       // END //
 
       resolve(mem_dt);
@@ -326,6 +371,30 @@ module.exports = {
         flag = 1;
         var trn_data = await db_Insert(table_name,fields,values,whr,flag);
         }
+
+           // SEND SMS AFTER FORM APPROVED //
+           try{
+            // ✅ Trim member name to 30 characters max
+            let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+            let status_label = data.status === "A" ? "Approved" : "";
+            const phone = data.phone_no;
+            const form_no = data.formNo;
+
+             // Send SMS
+           let smsRes = await sendSms(
+           phone,
+           "ACCEPT_STP",
+           [
+            memb_name,
+            form_no,
+            status_label
+           ]);
+         console.log("SMS Response:", smsRes);
+        }catch(err){
+          console.log("Error in sending SMS",err);
+        }
+      // END //
+
         // try {
         //   if (data.payment == "O") {
         //     const encDtstp = encodeURIComponent(data.payEncDataSuper);

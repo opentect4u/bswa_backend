@@ -15,6 +15,7 @@ const {
 } = require("../../modules/MasterModule");
 const dateFormat = require("dateformat");
 const { sendWappMsg } = require("../../modules/whatsappModule");
+const { sendSms } = require("../../modules/smsModule");
 dotenv.config({ path: '.env.prod' });
 
 async function shortenURL(longUrl) {
@@ -288,8 +289,27 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
       flag = 0;
     var res_dt = await db_Insert(table_name, fields, values, whr, flag);
     }
-  
     res_dts["trn_id"] = tnx_id;
+
+    // SMS //
+     try {
+          let memb_name = data.memb_name ? (data.memb_name.length > 30 ? data.memb_name.substring(0, 27) + "..." : data.memb_name) : "";
+            const phone = data.phone_no;
+            const sub_amt = data.sub_amt;
+            
+             let smsRes = await sendSms(
+           phone,
+           "APPROVE_TRANSACTION",
+           [
+            memb_name,
+            sub_amt,
+            tnx_id
+           ]);
+         console.log("SMS Response:", smsRes);
+        } catch (err) {
+          console.log(err);
+        }
+    //END //
     res.send(res_dt)
      } else {
       res.send({ suc: 0, msg: "Voucher Not Saved" });

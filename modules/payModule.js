@@ -11,6 +11,7 @@ const { db_Insert, getMaxTrnId, generateNextSubDate, postVoucher, getCurrFinYear
   db_Select,
   drVoucher_stp,
   drVoucher_child, } = require('./MasterModule');
+const { sendSms } = require('./smsModule');
 module.exports = {
   getepayPortal: (data, config) => {
     return new Promise((resolve, reject) => {
@@ -71,6 +72,27 @@ module.exports = {
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
       res_dt["trn_id"] = data.merchantOrderNo;
+
+       // SMS //
+     try {
+          let memb_name = data.udf3 ? (data.udf3.length > 30 ? data.udf3.substring(0, 27) + "..." : data.udf3) : "";
+            const phone = data.udf1;
+            const sub_amt = data.txnAmount;
+            const tnx_id = data.merchantOrderNo;
+            
+             let smsRes = await sendSms(
+           phone,
+           "APPROVE_TRANSACTION",
+           [
+            memb_name,
+            sub_amt,
+            tnx_id
+           ]);
+         console.log("SMS Response:", smsRes);
+        } catch (err) {
+          console.log(err);
+        }
+    //END //
       // console.log(res_dt, "res");
       // WHATSAPP MESSAGE //
       // try {
@@ -339,6 +361,27 @@ module.exports = {
             whr = null,
             flag = 0;
           var res_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+          // SMS //
+     try {
+          let memb_name = data.udf3 ? (data.udf3.length > 30 ? data.udf3.substring(0, 27) + "..." : data.udf3) : "";
+            const phone = data.udf1;
+            const sub_amt = data.txnAmount;
+            const tnx_id = data.merchantOrderNo;
+
+             let smsRes = await sendSms(
+           phone,
+           "APPROVE_TRANSACTION",
+           [
+            memb_name,
+            sub_amt,
+            tnx_id
+           ]);
+         console.log("SMS Response:", smsRes);
+        } catch (err) {
+          console.log(err);
+        }
+    //END //
 
           // WHATSAPP MESSAGE //
           // try {
