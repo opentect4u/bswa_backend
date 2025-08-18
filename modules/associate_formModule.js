@@ -456,7 +456,8 @@ module.exports = {
              // ⏳ Use expiryTimestamp from frontend (if provided)
            const expiryParam = data.expiryTimestamp ? `&exp=${data.expiryTimestamp}` : "";
 
-            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDt}${expiryParam}`;
+            // const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDt}${expiryParam}`;
+            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDt}`;
 
             // Shorten the URL
             const shortUrl = await shortenURL(longUrl);

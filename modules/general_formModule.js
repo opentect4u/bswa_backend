@@ -501,10 +501,11 @@ module.exports = {
             const encDtgen = encodeURIComponent(data.payEncDataGen);
             // console.log(encDtgen,'uuu');
 
-            // ⏳ Use expiryTimestamp from frontend (if provided)
+          //   ⏳ Use expiryTimestamp from frontend (if provided)
            const expiryParam = data.expiryTimestamp ? `&exp=${data.expiryTimestamp}` : "";
 
-            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}${expiryParam}`;
+            // const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}${expiryParam}`;
+            const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`;
 
             // Shorten the URL
             const shortUrl = await shortenURL(longUrl);
