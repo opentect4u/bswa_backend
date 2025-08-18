@@ -659,7 +659,7 @@ module.exports = {
             var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
             var table_name = "md_member",
-              fields = `memb_status = 'A', member_id = '${member_id}', mem_dt = '${datetime}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+              fields = `memb_status = 'A', pay_status = 'PA', member_id = '${member_id}', mem_dt = '${datetime}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
               values = null,
               whr = `form_no = '${data.formNo}'`,
               flag = 1;
