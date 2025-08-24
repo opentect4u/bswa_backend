@@ -454,7 +454,7 @@ module.exports = {
             // console.log(encDt);
 
              // ⏳ Use expiryTimestamp from frontend (if provided)
-           const expiryParam = data.expiryTimestamp ? `&exp=${data.expiryTimestamp}` : "";
+          //  const expiryParam = data.expiryTimestamp ? `&exp=${data.expiryTimestamp}` : "";
 
             // const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDt}${expiryParam}`;
             const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDt}`;
@@ -468,7 +468,7 @@ module.exports = {
             console.log("Short URL without protocol:", shortUrlNoProtocol);
 
         var table_name1 = "md_member",
-          fields1 = `memb_status = '${data.status}', pay_status = 'P', payment_link = '${shortUrlNoProtocol}', link_expiry_time = '${data.expiryTimestamp}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+          fields1 = `memb_status = '${data.status}', pay_status = 'P', payment_link = '${shortUrlNoProtocol}', link_expiry_time = '${dateFormat(new Date(data.expiryTimestamp), 'yyyy-mm-dd HH:MM:ss')}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
           values1 = null,
           whr1 = `form_no = '${data.formNo}'`,
           flag1 = 1;
