@@ -115,48 +115,75 @@ module.exports = {
 
       const no = await getMaxFormNo(data.flag);
       let form_no = `${data.flag}${year}${no.msg[0].max_form}`;
-      // console.log(form_no, "pppp");
+      console.log(form_no, "pppp");
 
-      let fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,gender,dob,mem_address,phone_no,min_no,personel_no,memb_flag,dependent_name,spou_min_no,spou_dob,spou_phone,spou_gender,spou_address,dependent_flag,premium_type,form_status,created_by,created_at)`;
-      values = `('${form_no}','${data.form_dt}',${data.policy_holder_type ? `'${data.policy_holder_type}'` : 'NULL'},'${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}',${data.unit ? `'${data.unit}'` : 'NULL'},${data.member_type ? `'${data.member_type}'` : 'NULL'},${data.memb_oprn ? `'${data.memb_oprn}'` : 'NULL'},${data.member ? `'${data.member}'` : 'NULL'},${data.gender ? `'${data.gender}'` : 'NULL'},${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'},'${data.mem.split("'").join("\\'")}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},${data.min_no ? `'${data.min_no}'` : 'NULL'},${data.personal_no ? `'${data.personal_no}'` : 'NULL'},'Y','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}',${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'},'${data.spou_mobile ? data.spou_mobile : 0}',${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},'${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.memb_oprn == 'S' ? 'N' : 'Y'}','${data.premium_type}','P','${data.member}','${datetime}')`;
-      table_name = "td_stp_ins";
-        whr = null;
-        order = null;
-      var stp_dt = await db_Insert(table_name, fields, values, whr, order);
+      let userUpdateSuccess = false;
+
+       let table_name = "td_stp_ins";
+      fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,gender,dob,mem_address,phone_no,min_no,personel_no,memb_flag,dependent_name,spou_min_no,spou_dob,spou_phone,spou_gender,spou_address,dependent_flag,premium_type,form_status,created_by,created_at)`;
+      values = `('${form_no}','${data.form_dt}',${data.policy_holder_type ? `'${data.policy_holder_type}'` : 'NULL'},'${data.policy_holder_type == 'M' ? `${data.member_id}` : `${data.min_no}`}',${data.unit ? `'${data.unit}'` : 'NULL'},${data.member_type ? `'${data.member_type}'` : 'NULL'},${data.memb_oprn ? `'${data.memb_oprn}'` : 'NULL'},${data.member ? `'${data.member}'` : 'NULL'},${data.gender ? `'${data.gender}'` : 'NULL'},${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'},'${data.mem.split("'").join("\\'")}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},${data.min_no ? `'${data.min_no}'` : 'NULL'},${data.personal_no ? `'${data.personal_no}'` : 'NULL'},'Y','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}',${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'},'${data.spou_mobile ? data.spou_mobile : 0}',${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},'${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.memb_oprn == 'S' ? 'N' : 'Y'}','${data.premium_type}','P','${data.member}','${datetime}')`;
+      whr = null;
+      flag = 0;
+      var stp_dt = await db_Insert(table_name, fields, values, whr, flag);
 
       if (stp_dt.suc > 0) {
         for (let dt of data.dependent_dt) {
+          table_name = "td_stp_dtls";
           fields = `(form_no,sl_no,ind_type,min_no,fin_year,particulars,amount,treatment_dtls,treatment_flag,created_by,created_at)`;
           values = `('${form_no}',${dt.sl_no ? `'${dt.sl_no}'` : 'NULL'},'${dt.ind_type}','${dt.ind_type == 'S' ? `${data.min_no}` : `${data.spouse_min_no}`}','${dt.fin_year}','${dt.particulars}','${dt.amount}','${dt.treatment_dtls}','Y','${data.member}','${datetime}')`;
-          table_name = "td_stp_dtls";
           whr = null;
-          order = null;
+          flag = 0;
           var super_dt = await db_Insert(
             table_name,
             fields,
             values,
             whr,
-            order
+            flag
           );
           stp_dt["form_no"] = form_no;
           stp_dt["policy_holder_type"] = `${data.policy_holder_type}`
         }
         // ✅ Additional insert to md_stp_login
       // const stp_pwd = await bcrypt.hash(data.min_no, 10);
-      const stp_pwd = bcrypt.hashSync(data.min_no.toString(), 10);
 
-      table_name = "md_stp_login";
-      fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
-      values = `('${data.policy_holder_type}','${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}','${form_no}','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'${stp_pwd}','I','${data.member}', '${datetime}')`;
-      try {
-        await db_Insert(table_name, fields, values, whr, order);
+      // const stp_pwd = bcrypt.hashSync(data.min_no.toString(), 10);
+
+      // table_name = "md_stp_login";
+      // fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
+      // values = `('${data.policy_holder_type}','${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}','${form_no}','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'${stp_pwd}','I','${data.member}', '${datetime}')`;
+      // try {
+      //   await db_Insert(table_name, fields, values, whr, order);
+      // } catch (err) {
+      //   console.log("Error inserting to md_stp_login:", err);
+      // }
+
+      if(data.policy_holder_type == 'M'){
+      table_name = "md_user";
+      fields = `min_no = '${data.min_no}',stp_form_no = '${form_no}',stp_user_status = 'I',modified_by = '${data.member}',modified_at = '${datetime}'`;
+      values = null;
+      whr = `user_id = '${data.member_id}'`;
+      flag = 1;
+      }else {
+      table_name = "md_user";
+      fields = `(user_id,user_type,user_name,user_phone,user_status,min_no,stp_form_no,stp_user_status,created_by,created_at)`;
+      values = `('${data.min_no}','N','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'I','${data.min_no}','${form_no}','I','${data.member}','${datetime}')`;
+      whr = null;
+      flag = 0;
+      }
+      try{
+        let mdUserRes = await db_Insert(table_name, fields, values, whr, flag);
+
+        // mark success only if inserted/updated
+    if (mdUserRes?.suc > 0) {
+        userUpdateSuccess = true;
+    }
       } catch (err) {
-        console.log("Error inserting to md_stp_login:", err);
+        console.log("Error inserting into md_user:", err);
       }
       }
 
        // SEND SMS AFTER FORM SUBMIT //
- 
+       if (userUpdateSuccess) {
         try{
           // ✅ Trim member name to 30 characters max
           let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
@@ -173,6 +200,9 @@ module.exports = {
          console.log("SMS Response:", smsRes);
         }catch(err){
           console.log("Error in sending SMS",err);
+        }
+        } else {
+        console.log("SKIPPING SMS — md_user insert/update failed.");
         }
 
       // END //
@@ -352,8 +382,9 @@ module.exports = {
 
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
-      console.log(trn_id,'trn');
+      // console.log(trn_id,'trn');
       
+      let approveSuccess = false;
 
         var table_name = "td_stp_ins",
         fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
@@ -363,16 +394,31 @@ module.exports = {
         var trns_data = await db_Insert(table_name,fields,values,whr,flag);
         trns_data["trn_id"] = trn_id;
 
-        if(trns_data.suc > 0){
-        var table_name = "md_stp_login",
-        fields = `stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        // if(trns_data.suc > 0){
+        // var table_name = "md_stp_login",
+        // fields = `stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        // values = null,
+        // whr = `form_no = '${data.formNo}'`,
+        // flag = 1;
+        // var trn_data = await db_Insert(table_name,fields,values,whr,flag);
+        // }
+
+          if(trns_data.suc > 0){
+        var table_name = "md_user",
+        fields = `user_status = 'A',stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
         values = null,
-        whr = `form_no = '${data.formNo}'`,
+        whr = `stp_form_no = '${data.formNo}'`,
         flag = 1;
         var trn_data = await db_Insert(table_name,fields,values,whr,flag);
+
+         if (trn_data?.suc > 0) {
+           approveSuccess = true;
+             }
         }
 
+         
            // SEND SMS AFTER FORM APPROVED //
+           if(approveSuccess){
            try{
             // ✅ Trim member name to 30 characters max
             let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
@@ -392,6 +438,9 @@ module.exports = {
          console.log("SMS Response:", smsRes);
         }catch(err){
           console.log("Error in sending SMS",err);
+        }
+        } else {
+        console.log("SKIPPING SMS");
         }
       // END //
 

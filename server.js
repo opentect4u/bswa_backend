@@ -1,3 +1,4 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const express = require("express");
 var app = express(),
   fs = require("fs"),
@@ -6,7 +7,11 @@ var app = express(),
   dotenv = require("dotenv"),
   cors = require("cors");
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+dotenv.config({ path: `.env.test` });
+// require("dotenv").config({ path: `.env.${process.env.NODE_ENV || 'test'}` });
+// console.log("ENV CHECK:", process.env);
+// dotenv.config({ path: `.env.prod` });
+// console.log('SHOW_SQL value is:', process.env.NODE_ENV);
 
 app.use(cors());
 
@@ -38,6 +43,9 @@ const { cronRouter } = require("./routes/cronRouter");
 const { payRouter } = require("./routes/api/payRouter");
 const { whatsappRouter } = require("./routes/api/whatsappRouter");
 const { upload_child_policyRouter } = require("./routes/api/upload_child_policyRouter");
+const { super_dashboardRouter } = require("./routes/api/superadmin_dashboardRouter");
+const { admindashboardRouter } = require("./routes/api/admindashboardRouter");
+const { childrenPolicyRouter } = require("./routes/api/childrenPolicyRouter");
 
 app.use(LoginRouter);
 app.use("/fee", admin_fee_typeRouter);
@@ -57,6 +65,16 @@ app.use(payRouter)
 app.use('/cron', cronRouter)
 app.use(whatsappRouter)
 app.use(upload_child_policyRouter)
+app.use('/superadmin', super_dashboardRouter)
+app.use('/admin', admindashboardRouter)
+app.use(childrenPolicyRouter)
+
+// app.get("/",async (req, res) => {
+//   const bcrypt = require("bcrypt");
+//   var pass = bcrypt.hashSync('9073320374',10)
+//   console.log(pass);
+// res.send(pass)
+// });
 
 app.listen(port, (err) => {
   if (err) throw new Error(err);

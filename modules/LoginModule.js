@@ -13,14 +13,36 @@ module.exports = {
     });
   },
 
-  member_login_data: (data) => {
+    user_data: (data) => {
+    return new Promise(async (resolve, reject) => {
+      var select = "*",
+        table_name = "md_user",
+        whr = `user_id = '${data.username}'`,
+        order = null;
+      var user_data = await db_Select(select, table_name, whr, order);
+      resolve(user_data);
+    });
+  },
+
+  member_login_data: (username) => {
     return new Promise(async (resolve, reject) => {
       var select = "a.*, b.mem_type, b.form_no, b.mem_type, b.memb_name, b.member_id",
         table_name = "md_user a, md_member b",
-        whr = `a.user_id=b.member_id AND a.user_type = 'M' AND a.user_status = 'A' AND a.user_id = '${data.username}'`,
+        whr = `a.user_id=b.member_id AND a.user_type = 'M' AND a.user_status = 'A' AND a.user_id = '${username}'`,
         order = null;
       var mem_login_dt = await db_Select(select, table_name, whr, order);
       resolve(mem_login_dt);
+    });
+  },
+
+    stp_login_data: (username) => {
+    return new Promise(async (resolve, reject) => {
+      var select = "a.form_no,a.form_dt,d.user_type,a.policy_holder_type,c.policy_holder_type,a.member_id,a.association,b.unit_name,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type",
+      table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id LEFT JOIN md_user d ON a.min_no = d.min_no AND a.form_no = d.stp_form_no AND a.member_id = d.user_id",
+      whr = `a.member_id = '${username}' AND d.user_status = 'A' AND d.stp_user_status = 'A'`,
+      order = null;
+      var stp_login_dt = await db_Select(select, table_name, whr, order);
+      resolve(stp_login_dt);
     });
   },
 

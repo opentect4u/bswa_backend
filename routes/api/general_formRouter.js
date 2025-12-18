@@ -11,8 +11,11 @@ const {
   accept_dt_cheque,
   approve_dt,
   upi_dt,
+  pin_data,
 } = require("../../modules/general_formModule");
 const CryptoJS = require('crypto-js');
+const crypto = require('crypto');
+const { ed25519 } = require('@noble/curves/ed25519');
 
 const {
   db_Select,
@@ -34,9 +37,9 @@ generalRouter.post("/check_staff_no", async (req, res) => {
   var res_dt = await db_Select(select, table_name, whr, order);
 
   if (res_dt.suc > 0 && res_dt.msg.length > 0) {
-      res.send({ suc: 1, exists: true });  // Ensure `suc` and `exists` are returned
+      res.send({ suc: 2, exists: true });  // Ensure `suc` and `exists` are returned
   } else {
-      res.send({ suc: 0, exists: false });
+      res.send({ suc: 1, exists: false });
   }
 });
 
@@ -51,9 +54,9 @@ generalRouter.post("/check_mobile_no", async (req, res) => {
   const res_dt = await db_Select(select, table_name, whr, order);
 
   if (res_dt.suc > 0 && res_dt.msg.length > 0) {
-      res.send({ suc: 1, exists: true });
+      res.send({ suc: 2, exists: true });
   } else {
-      res.send({ suc: 0, exists: false });
+      res.send({ suc: 1, exists: false });
   }
 });
 
@@ -110,7 +113,7 @@ generalRouter.get("/frm_list_2", async (req, res) => {
   // console.log(data, "bbb");
   var select = "form_no,form_dt,memb_name,gender,mem_type,memb_status",
     table_name = "md_member",
-    whr = `(form_no = '${data.form_no}' OR memb_name = '${data.form_no}') AND memb_status IN('P','R','T','A')`,
+    whr = `(form_no LIKE '%${data.form_no}%' OR memb_name LIKE '%${data.form_no}%') AND memb_status IN('P','R','T','A')`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "kiki");
@@ -121,7 +124,7 @@ generalRouter.get("/get_member_dtls", async (req, res) => {
   var data = req.query;
   // console.log(data, "ooo");
   var select =
-      "a.form_no,a.mem_type,a.memb_name,a.unit_id,a.gurdian_name,a.dob,a.blood_grp,a.staff_nos,a.pers_no,a.min_no,a.memb_status,a.remarks,a.memb_address,a.ps,a.phone_no,a.email_id,a.resolution_no,a.resolution_dt,c.adm_fee,c.donation,c.subs_type,c.subscription_1,c.subscription_2,d.unit_name, a.memb_pic",
+      "a.form_no,a.member_id,a.mem_type,a.memb_name,a.unit_id,a.gurdian_name,a.dob,a.blood_grp,a.staff_nos,a.pers_no,a.min_no,a.memb_status,a.remarks,a.memb_address,a.ps,a.phone_no,a.email_id,a.resolution_no,a.resolution_dt,c.adm_fee,c.donation,c.subs_type,c.subscription_1,c.subscription_2,d.unit_name, a.memb_pic",
     table_name = `md_member a 
     JOIN md_member_fees c ON a.mem_type = c.memb_type AND date(c.effective_dt) = (SELECT max(date(d.effective_dt))
     FROM md_member_fees d
@@ -275,6 +278,13 @@ generalRouter.post("/approve", async (req, res) => {
   res.send(res_dt);
 });
 
+generalRouter.post("/set_pin", async (req, res) => {
+  var data = req.body;
+  console.log(data,'set');
+  var set_pin_data = await pin_data(data);
+  res.send(set_pin_data)
+})
+
 generalRouter.post("/accept_money_receipt", async (req, res) => {
   var data = req.body;
   var select =
@@ -285,6 +295,160 @@ generalRouter.post("/accept_money_receipt", async (req, res) => {
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "lo");
   res.send(res_dt);
+});
+
+// VERIFY MEMBER IS OK OR NOT
+generalRouter.post("/check_member_id", async (req, res) => {
+  const data = req.body;
+
+   // Validation
+   if (!data.member_id || data.member_id.trim() === '') {
+    return res.send({ suc: 0, msg: 'Member ID is required' });
+    }
+
+  var select = "member_id",
+      table_name = "md_member",
+      whr = `member_id = '${data.member_id}'`,
+      order = null;
+  const res_dt = await db_Select(select, table_name, whr, order);
+
+  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+      res.send({ suc: 1, msg: 'Member ID is Valid' });
+  } else {
+      res.send({ suc: 0, msg: 'Invalid Member ID' });
+  }
+});
+
+// SEND REGISTERED MOBILE NO FOR OTP
+generalRouter.post("/send_phone_no_fr_otp", async (req, res) => {
+  const data = req.body;
+
+  var select = "phone_no",
+      table_name = "md_member",
+      whr = `member_id = '${data.member_id}'`,
+      order = null;
+  const res_dt = await db_Select(select, table_name, whr, order);
+  res.send(res_dt)
+});
+
+generalRouter.get("/show_data", async (req, res) => {
+  const data = req.query;
+  // console.log(data,'datata');
+  
+  var select = "created_by,created_at,modified_by,modified_at,approve_by,approve_at,rejected_by,rejected_dt,remarks",
+      table_name = "md_member",
+      whr = `form_no = '${data.form_no}'`;
+      order = null;
+  const res_dt_show = await db_Select(select, table_name, whr, order);
+  res.send(res_dt_show)
+});
+
+// Start challenge endpoint
+
+generalRouter.post("/challange_start", async (req, res) => {
+  var data = req.body;
+  let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+  if (!data.device_id) {
+    return res.send({ suc: 0, msg: 'device_id required' });
+  }
+
+  var select = "user_status,public_key",
+  table_name = "md_user",
+  whr = `user_id = '${data.member_id}' AND device_id = '${data.device_id}'`,
+  order = null;
+  var key_data = await db_Select(select,table_name,whr,order);
+
+   // DEBUG
+    // console.log("key_data:", key_data);
+
+  const challenge = crypto.randomBytes(32).toString('hex');
+
+  var table_name = "md_device_challenges",
+  fields =`(user_id,device_id,challenge,used,created_by,created_at)`,
+  values = `('${data.member_id}','${data.device_id}','${challenge}','0','${data.member_id}','${datetime}')`,
+  where = null,
+  flag = 0;
+  var res_dt = await db_Insert(table_name, fields, values, where, flag);
+
+   // DEBUG
+    // console.log("Insert response:", res_dt);
+    
+   return res.send({
+      suc: 1,
+      challenge: challenge
+    });
+});
+
+//Verify signature endpoint
+generalRouter.post("/challange_verify", async (req, res) => {
+ var data = req.body;
+
+  // ----------------- GET PUBLIC KEY -----------------
+    let userRes = await db_Select(
+        "public_key",
+        "md_user",
+        `user_id = '${data.member_id}' AND device_id = '${data.device_id}' AND user_status = 'A'`,
+        null
+    );
+
+    if (!userRes.suc || userRes.msg.length === 0) {
+        return res.send({ suc: 0, msg: "User or device not found" });
+    }
+
+    const publicKeyHex = userRes.msg[0].public_key;
+
+ // ----------------- GET CHALLENGE -----------------
+    let challengeRes = await db_Select(
+        "id, created_at, used",
+        "md_device_challenges",
+        `user_id = '${data.member_id}' AND device_id = '${data.device_id}' AND challenge = '${data.challenge}'`,
+        "ORDER BY id DESC LIMIT 1"
+    );
+
+    if (!challengeRes.suc || challengeRes.msg.length === 0) {
+        return res.send({ suc: 0, msg: "Challenge not found" });
+    }
+
+    const challenge = challengeRes.msg[0];
+
+    if (challenge.used === 1) {
+        return res.send({ suc: 0, msg: "Challenge already used" });
+    }
+
+    // ----------------- EXPIRY CHECK (2 MIN) -----------------
+    const createdAt = new Date(challenge.created_at);
+    if ((Date.now() - createdAt.getTime()) > 2 * 60 * 1000) {
+        return res.send({ suc: 0, msg: "Challenge expired" });
+    }
+
+    // ----------------- VERIFY SIGNATURE -----------------
+    // const message = Buffer.from(data.challenge, "hex");
+    // const message = Buffer.from(data.challenge, "utf8");
+    const message = new TextEncoder().encode(data.challenge);
+    const signatureBytes = Buffer.from(data.signature, "hex");
+    const publicKeyBytes = Buffer.from(publicKeyHex, "hex");
+
+    const isValid = ed25519.verify(signatureBytes, message, publicKeyBytes);
+
+    if (!isValid) {
+        return res.send({ suc: 0, msg: "Signature verification failed" });
+    }
+
+    // ----------------- MARK CHALLENGE USED -----------------
+    let updateRes = await db_Insert(
+        "md_device_challenges",
+        "used = '1'",
+        null,
+        `id = '${challenge.id}'`,
+        1
+    );
+
+    if (!updateRes.suc) {
+        return res.send({ suc: 0, msg: "Failed to update challenge" });
+    }
+
+    return res.send({ suc: 1, msg: "Challenge verified" });
 });
 
 module.exports = { generalRouter };

@@ -52,7 +52,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
 
 memberRouter.post("/update_member_dtls", async (req, res) => {
   var data = req.body.data;
-  data = JSON.parse(data, "kiuy");
+  data = JSON.parse(data);
   var spu_file = req.files ? req.files.spouse_file : null,
     mem_file = req.files ? req.files.member_file : null,
     ownFile_name = null,
@@ -76,6 +76,23 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
       file_upload.suc > 0 ? `uploads/${data.form_no}/${fileName}` : null;
   }
 
+  let final_marital_status = "S";
+
+  // 1️⃣ If member operation is selected (highest priority)
+if (data.member_opt) {
+    if (data.member_opt === "Joint") {
+        final_marital_status = "J";
+    } else if (data.member_opt === "Self") {
+        final_marital_status = "S";
+    } 
+}
+// 2️⃣ Otherwise apply your original rule
+else if (data.marital_status === "M" && data.mem_type === "AI") {
+    final_marital_status = "J";
+} else {
+    final_marital_status = "S";
+}
+
   if (spu_file) {
     var fileName = data.form_no + "_" + nowTime + "_" + spu_file.name;
     var file_upload = await dynamicFileUpload(
@@ -90,11 +107,7 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
   // console.log(JSON.parse(data), typeof(data));
   var datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
   var table_name = "md_member",
-    fields = `mem_type = '${data.mem_type}', memb_oprn = '${
-      data.member_opt
-    }', memb_name = '${data.member}', unit_id = '${
-      data.unit_nm
-    }', gurdian_name = '${data.gurdian}', gender = '${
+    fields = `mem_type = '${data.mem_type}', memb_oprn = '${final_marital_status}', memb_name = '${data.member}', unit_id = '${data.unit_nm > 0 ? data.unit_nm : 0}', gurdian_name = '${data.gurdian}', gender = '${
       data.gen ? data.gen : "M"
     }', marital_status = '${
       data.marital_status ? data.marital_status : "N"

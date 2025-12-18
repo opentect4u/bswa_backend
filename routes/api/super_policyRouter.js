@@ -378,9 +378,11 @@ super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) 
     const data = req.body;
 
     // Fetch member details
-    const select = "a.form_no,a.form_dt,a.policy_holder_type,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type,b.unit_name,c.policy_holder_type,c.policy_holder_type_id";
-    const table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id";
-    const whr = `a.min_no = '${data.min_no}' AND a.member_id = '${data.member_id}' AND a.form_no = '${data.form_no}'`;
+    const select = "a.form_no,a.form_dt,d.user_type,a.policy_holder_type,c.policy_holder_type,a.member_id,a.association,b.unit_name,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type";
+    const table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id LEFT JOIN md_user d ON a.min_no = d.min_no AND a.form_no = d.stp_form_no AND a.member_id = d.user_id";
+    const whr = `a.form_no = '${data.from_no}'
+                 AND d.user_status = 'A'
+                 AND d.stp_user_status = 'A'`;
     const order = null;
     const stp_memb_dtls = await db_Select(select, table_name, whr, order);
     // console.log("stp_memb_dtls:", stp_memb_dtls);
@@ -438,15 +440,78 @@ super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) 
 //   }
 // })
 
+// super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
+//   try {
+//     const data = req.body;
+//     const premium_type = data.premium_type;
+
+//     if (!premium_type) {
+//       return res.send({ suc: 0, error: "Missing premium_type in request body." });
+//     }
+
+//     const maxYearResult = await db_Select(
+//       "MAX(financial_year) AS max_year",
+//       "md_stp_premium_type",
+//       `premium_type = '${premium_type}'`,
+//       null
+//     );
+
+//     const maxFinancialYear =
+//       maxYearResult &&
+//       maxYearResult.msg &&
+//       maxYearResult.msg[0] &&
+//       maxYearResult.msg[0].max_year;
+
+//       if (!maxFinancialYear) {
+//       // No year found → no premium available in DB
+//       return res.send({
+//         suc: 0,
+//         financial_year: null,
+//         premium_amt: null,
+//         msg: "No premium data found for this premium type."
+//       });
+//     }
+
+//     let premium_amt = null;
+
+//     if (maxFinancialYear) {
+//       const premiumResult = await db_Select(
+//         "premium_amt",
+//         "md_stp_premium_type",
+//         `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
+//         null
+//       );
+
+//       if (premiumResult &&premiumResult.msg &&premiumResult.msg[0] &&premiumResult.msg[0].premium_amt) {
+//         premium_amt = premiumResult.msg[0].premium_amt;
+//       }
+//     }
+
+//     res.send({
+//       suc: 1,
+//       premium_type,
+//       financial_year: maxFinancialYear,
+//       premium_amt,
+//     });
+//   } catch (err) {
+//     console.error("Error in fetch premium amount:", err);
+//     res.send({ error: "Internal Server Error" });
+//   }
+// });
+
 super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
   try {
     const data = req.body;
     const premium_type = data.premium_type;
 
     if (!premium_type) {
-      return res.send({ error: "Missing premium_type in request body." });
+      return res.send({
+        suc: 0,
+        error: "Missing premium_type in request body."
+      });
     }
 
+    // Fetch max financial year for premium type
     const maxYearResult = await db_Select(
       "MAX(financial_year) AS max_year",
       "md_stp_premium_type",
@@ -454,40 +519,53 @@ super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
       null
     );
 
-    const maxFinancialYear =
-      maxYearResult &&
-      maxYearResult.msg &&
-      maxYearResult.msg[0] &&
-      maxYearResult.msg[0].max_year;
+    const maxFinancialYear = maxYearResult?.msg?.[0]?.max_year || null;
 
-    let premium_amt = null;
-
-    if (maxFinancialYear) {
-      const premiumResult = await db_Select(
-        "premium_amt",
-        "md_stp_premium_type",
-        `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
-        null
-      );
-
-      if (
-        premiumResult &&
-        premiumResult.msg &&
-        premiumResult.msg[0] &&
-        premiumResult.msg[0].premium_amt
-      ) {
-        premium_amt = premiumResult.msg[0].premium_amt;
-      }
+    if (!maxFinancialYear) {
+      // No year found → no premium available in DB
+      return res.send({
+        suc: 0,
+        financial_year: null,
+        premium_amt: null,
+        msg: "No premium data found for this premium type."
+      });
     }
 
-    res.send({
+    // Fetch premium amount
+    const premiumResult = await db_Select(
+      "premium_amt",
+      "md_stp_premium_type",
+      `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
+      null
+    );
+
+    const premium_amt = premiumResult?.msg?.[0]?.premium_amt || null;
+
+    // If premium amount not found, send suc = 0
+    if (!premium_amt) {
+      return res.send({
+        suc: 0,
+        financial_year: maxFinancialYear,
+        premium_amt: null,
+        msg: "Premium amount not found."
+      });
+    }
+
+    // Success → premium amount exists
+    return res.send({
+      suc: 1,
       premium_type,
       financial_year: maxFinancialYear,
-      premium_amt,
+      premium_amt
     });
+
   } catch (err) {
     console.error("Error in fetch premium amount:", err);
-    res.send({ error: "Internal Server Error" });
+
+    return res.send({
+      suc: 0,
+      error: "Internal Server Error"
+    });
   }
 });
 
@@ -502,11 +580,11 @@ super_policyRouter.post("/edit_stp_member_details", async (req, res) => {
 
 
 var fields = `policy_holder_type = ${data.policy_holder_type ? `'${data.policy_holder_type}'` : 'NULL'},association =${data.unit_name ? `'${data.unit_name}'` : 'NULL'},memb_type = ${data.member_type ? `'${data.member_type}'` : 'NULL'},memb_oprn = ${data.memb_oprn ? `'${data.memb_oprn}'` : 'NULL'},memb_name =${data.memb_name ? `'${data.memb_name}'` : 'NULL'},gender = ${data.gender ? `'${data.gender}'` : 'NULL'},dob =  ${(data.dob && data.dob !== 'N/A' && data.dob !== 'undefined' && data.dob.trim() !== '') 
-  ? `'${data.dob.split('T')[0]}'` : 'NULL'},mem_address = '${data.memb_addr.split("'").join("\\'")}',phone_no = ${data.phone_no ? `'${data.phone_no}'` : 'NULL'},personel_no = ${data.personel_no ? `'${data.personel_no}'` : 'NULL'},memb_flag = '${data.memb_flag}',dependent_name = ${data.spou_name ? `'${data.spou_name}'` : 'NULL'},spou_min_no = ${data.spou_min ? `'${data.spou_min}'` : 'NULL'},spou_dob = ${(data.spou_dob && data.spou_dob !== 'N/A' && data.spou_dob !== 'undefined' && data.spou_dob.trim() !== '') ? `'${data.spou_dob}'` : 'NULL'},spou_phone = ${
+  ? `'${data.dob.split('T')[0]}'` : 'NULL'},mem_address = '${data.memb_addr ? data.memb_addr.split("'").join("\\'") : ''}',phone_no = ${data.phone_no ? `'${data.phone_no}'` : 'NULL'},personel_no = ${data.personel_no ? `'${data.personel_no}'` : 'NULL'},memb_flag = '${data.memb_flag}',dependent_name = ${data.spou_name ? `'${data.spou_name}'` : 'NULL'},spou_min_no = ${data.spou_min ? `'${data.spou_min}'` : 'NULL'},spou_dob = ${(data.spou_dob && data.spou_dob !== 'N/A' && data.spou_dob !== 'undefined' && data.spou_dob.trim() !== '') ? `'${data.spou_dob}'` : 'NULL'},spou_phone = ${
   spouMobile !== '' && /^\d+$/.test(spouMobile)
     ? spouMobile
     : 'NULL'
-},spou_gender = ${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},spou_address = '${data.spou_addr.split("'").join("\\'")}', dependent_flag = '${data.dependent_flag}',premium_type = ${data.premium_type ? `'${data.premium_type}'` : 'NULL'},modified_by = '${data.user_name}',modified_at = '${datetime}'`,
+},spou_gender = ${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},spou_address = '${data.spou_addr ? data.spou_addr.split("'").join("\\'") : ''}', dependent_flag = '${data.dependent_flag}',premium_type = ${data.premium_type ? `'${data.premium_type}'` : 'NULL'},modified_by = '${data.user_name}',modified_at = '${datetime}'`,
 table_name = "td_stp_ins",
 values = null,
 whr = `form_no = '${data.form_no}' AND member_id = '${data.member_id}' AND min_no = '${data.min_no}'`,
@@ -636,6 +714,61 @@ super_policyRouter.post("/save_trn_data_stp", async (req, res) => {
   console.log(data, "trn_data_stp");
   var res_dt = await save_stp_data(data);
   res.send(res_dt);
+});
+
+// VERIFY MIN NO IS OK OR NOT
+super_policyRouter.post("/check_min_no", async (req, res) => {
+ const data = req.body;
+
+   // Validation
+   if (!data.min_no || data.min_no.trim() === '') {
+    return res.send({ suc: 0, msg: 'MIN No is required' });
+    }
+
+  var select = "min_no",
+      table_name = "td_stp_ins",
+      whr = `min_no = '${data.min_no}'`,
+      order = null;
+  const res_dt = await db_Select(select, table_name, whr, order);
+
+  if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+      res.send({ suc: 1, msg: 'MIN No is Valid' });
+  } else {
+      res.send({ suc: 0, msg: 'Invalid MIN No' });
+  }
+});
+
+// SEND REGISTERED MOBILE NO FOR OTP
+super_policyRouter.post("/send_phone_no_fr_otp_stp", async (req, res) => {
+  const data = req.body;
+
+  var select = "memb_name,min_no,phone_no",
+      table_name = "td_stp_ins",
+      whr = `min_no = '${data.min_no}'`,
+      order = null;
+  const res_dt = await db_Select(select, table_name, whr, order);
+  res.send(res_dt)
+});
+
+super_policyRouter.post("/fetch_member_details_fr_stp_policy_app", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Fetch member details
+    const select = "a.form_no,a.form_dt,d.user_type,a.policy_holder_type,c.policy_holder_type,a.member_id,a.association,b.unit_name,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type";
+    const table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id LEFT JOIN md_user d ON a.min_no = d.min_no AND a.form_no = d.stp_form_no AND a.member_id = d.user_id";
+    const whr = `a.form_no = '${data.from_no}'
+                 AND d.user_status = 'A'
+                 AND d.stp_user_status = 'A'`;
+    const order = null;
+    const stp_memb_dtls = await db_Select(select, table_name, whr, order);
+    // console.log("stp_memb_dtls:", stp_memb_dtls);
+    res.send(stp_memb_dtls);
+
+  } catch (err) {
+    console.error("Error in fetch_member_details_fr_stp_policy:", err);
+    res.send({ error: "Internal Server Error" });
+  }
 });
 
 module.exports = { super_policyRouter };

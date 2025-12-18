@@ -60,7 +60,7 @@ lifeRouter.get("/get_dependent_dtls_life", async (req, res) => {
   var data = req.query;
   // console.log(data, "ooo");
   var select =
-      "member_id,mem_type,dependent_dt,dependent_name,gurdian_name gurd_name,relation, min_no spou_min,dob spou_dob,blood_grp spou_blood_grp,memb_address spou_memb_address,ps spou_ps,phone_no spou_phone,email_id spou_email,memb_pic spou_pic",
+      "member_id,mem_type,dependent_dt,dependent_name,gurdian_name gurd_name,relation, min_no spou_min,dob spou_dob,blood_grp spou_blood_grp,memb_address spou_memb_address,ps spou_ps,phone_no spou_phone,email_id spou_email,memb_pic spou_pic,city_town_dist",
     table_name = "md_dependent",
     where = `form_no = '${data.form_no}' AND relation IN (${HUSBAND_ID}, ${WIFE_ID})`,
     order = null;
