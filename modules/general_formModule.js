@@ -233,6 +233,8 @@ module.exports = {
       data["created_at"] = datetime;
 
       var db_field_value = await generateDBValue({ data, flag: 0 });
+      // console.log(db_field_value,'db');
+      
 
       var table_name = "md_dependent",
         fields = `(${db_field_value.fields})`,
@@ -261,7 +263,7 @@ module.exports = {
             dt["form_no"] = data.form_no;
 
             var db_field_value = await generateDBValue({ data: dt, flag: 0 });
-
+            //  console.log(db_field_value,'db2');
             var table_name = "md_dependent",
               fields = `(${db_field_value.fields})`,
               values = `(${db_field_value.values})`,
@@ -757,8 +759,8 @@ module.exports = {
           var trn_dt = await db_Select(select, table_name, whr, order);
 
           var table_name = "md_user",
-            fields = `(user_id,user_type,password,user_name,user_email,user_phone,user_status,created_by,created_at)`,
-            values = `('${member_id}','M','${pass}','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
+            fields = `(user_id,user_type,user_name,user_email,user_phone,user_status,created_by,created_at)`,
+            values = `('${member_id}','M','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
             whr = null,
             flag = 0;
           var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -843,8 +845,8 @@ module.exports = {
            phone,
            "NEW_SUBSCRIPTION_FORM_APPROVED",
            [
-            member_id,
-            pwd
+            member_id
+            // pwd
            ]);
          console.log("SMS Response:", smsRes);
         }catch(err){
@@ -888,4 +890,18 @@ module.exports = {
       }
     });
   },
+
+    pin_data: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      var pin = bcrypt.hashSync(data.pin.toString(), 4);
+        var table_name = "md_user",
+            fields =`password = '${pin}',device_id = '${data.device_id}',public_key = '${data.public_key}',created_by = '${data.member_id}',created_at = '${datetime}'`,
+            values = null,
+            where = `user_id = '${data.member_id}'`,
+            flag = 1;
+        var res_dt = await db_Insert(table_name, fields, values, where, flag);
+        resolve(res_dt);
+      });
+    },
 };

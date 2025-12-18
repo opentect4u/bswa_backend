@@ -19,7 +19,11 @@ const db_Select = (select, table_name, whr, order) => {
           console.log(err);
           data = { suc: 0, msg: JSON.stringify(err) };
         } else {
-          data = { suc: 1, msg: result, sql };
+          // data = { suc: 1, msg: result, sql };
+          data = { suc: 1, msg: result};
+           if (process.env.SHOW_SQL === 'true') {
+          data.sql = sql; // 🧩 only show when explicitly allowed
+        }
         }
         resolve(data);
       });
@@ -28,7 +32,8 @@ const db_Select = (select, table_name, whr, order) => {
         event: `Exicuting Select Statement from table ${table_name}`,
         message: err,
       });
-      reject({ suc: 0, msg: err, sql: sql });
+      // reject({ suc: 0, msg: err, sql: sql });
+      reject({ suc: 0, msg: err});
     }
   });
 };
