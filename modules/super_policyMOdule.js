@@ -174,7 +174,7 @@ module.exports = {
         let mdUserRes = await db_Insert(table_name, fields, values, whr, flag);
 
         // mark success only if inserted/updated
-    if (mdUserRes?.suc > 0) {
+    if (mdUserRes.suc > 0) {
         userUpdateSuccess = true;
     }
       } catch (err) {

@@ -192,7 +192,7 @@ super_policyRouter.get("/get_date", async (req, res) => {
 
 super_policyRouter.post("/save_super_policy_form", async (req, res) => {
   var data = req.body;
-  // console.log(data, "mm");
+  console.log(data, "mm");
   var save_super = await super_form_save(data);
   // console.log(save_super, "aaa");
   res.send(save_super);
@@ -748,6 +748,29 @@ super_policyRouter.post("/send_phone_no_fr_otp_stp", async (req, res) => {
       order = null;
   const res_dt = await db_Select(select, table_name, whr, order);
   res.send(res_dt)
+});
+
+super_policyRouter.post("/send_otp", async (req, res) => {
+  try {
+   data = req.body; 
+
+    // Static OTP
+    const otp = "1234";
+    // console.log(`OTP sent to ${data.mobile_no}: ${otp}`);
+
+    res.json({
+      suc: 1,
+      msg: "OTP sent successfully",
+      otp: otp 
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.json({
+      suc: 0,
+      msg: "Failed to send OTP"
+    });
+  }
 });
 
 super_policyRouter.post("/fetch_member_details_fr_stp_policy_app", async (req, res) => {
