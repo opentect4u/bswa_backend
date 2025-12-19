@@ -519,7 +519,7 @@ super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
       null
     );
 
-    const maxFinancialYear = maxYearResult?.msg?.[0]?.max_year || null;
+    const maxFinancialYear = maxYearResult.msg[0].max_year || null;
 
     if (!maxFinancialYear) {
       // No year found → no premium available in DB
@@ -539,7 +539,7 @@ super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
       null
     );
 
-    const premium_amt = premiumResult?.msg?.[0]?.premium_amt || null;
+    const premium_amt = premiumResult.msg[0].premium_amt || null;
 
     // If premium amount not found, send suc = 0
     if (!premium_amt) {
