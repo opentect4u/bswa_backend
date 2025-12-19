@@ -411,7 +411,7 @@ module.exports = {
         flag = 1;
         var trn_data = await db_Insert(table_name,fields,values,whr,flag);
 
-         if (trn_data?.suc > 0) {
+         if (trn_data.suc > 0) {
            approveSuccess = true;
              }
         }
