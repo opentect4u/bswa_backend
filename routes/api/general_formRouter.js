@@ -349,9 +349,9 @@ generalRouter.post("/challange_start", async (req, res) => {
   var data = req.body;
   let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
-  if (!data.device_id) {
-    return res.send({ suc: 0, msg: 'device_id required' });
-  }
+  // if (!data.device_id) {
+  //   return res.send({ suc: 0, msg: 'device_id required' });
+  // }
 
   // for test playstore
 
