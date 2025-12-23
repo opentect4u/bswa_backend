@@ -349,20 +349,9 @@ generalRouter.post("/challange_start", async (req, res) => {
   var data = req.body;
   let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
-  // if (!data.device_id) {
-  //   return res.send({ suc: 0, msg: 'device_id required' });
-  // }
-
-  // for test playstore
-
-   const restrictedMembers = ["L-55", "897"];
-
-   if (restrictedMembers.includes(data.member_id)) {
-      return res.send({
-        suc: 1,
-        challenge: null
-      });
-    }
+  if (!data.device_id) {
+    return res.send({ suc: 0, msg: 'device_id required' });
+  }
 
   var select = "user_status,public_key",
   table_name = "md_user",
@@ -394,17 +383,6 @@ generalRouter.post("/challange_start", async (req, res) => {
 //Verify signature endpoint
 generalRouter.post("/challange_verify", async (req, res) => {
  var data = req.body;
-
- // test for playstore
-
-  const restrictedMembers = ["L-55", "897"];
-
-   if (restrictedMembers.includes(data.member_id)) {
-      return res.send({
-        suc: 1,
-        msg: "Challenge verification bypassed"
-      });
-    }
 
   // ----------------- GET PUBLIC KEY -----------------
     let userRes = await db_Select(

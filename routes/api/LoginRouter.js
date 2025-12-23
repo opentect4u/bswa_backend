@@ -126,35 +126,20 @@ LoginRouter.post("/login", async (req, res) => {
 LoginRouter.post("/member_login", async (req, res) => {
   try {
   var data = req.body,response_data ={};
-  console.log(data,'datatatat');
+  // console.log(data,'datatatat');
   
   const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
   //FETCH USER DATA
   var log_dt  = await user_data(data);
-  console.log(log_dt,'log');
+  // console.log(log_dt,'log');
   
   if (log_dt .suc > 0 && log_dt .msg.length > 0) {
     // CHECK PASSWORD
-    // comment off only for playstore check
-      // if (await bcrypt.compare(data.pas, log_dt.msg[0].password)) {
+      if (await bcrypt.compare(data.pas, log_dt.msg[0].password)) {
 
        const user = log_dt.msg[0];
-       console.log(user,user);
-       
-
-       // add for app test in playstore
-
-       // SPECIAL OVERRIDE LOGIN
-      const specialUsers = ["L-55", "897"];
-      const specialPin = "5058";
-
-      const isSpecialLogin =
-        specialUsers.includes(data.username) &&
-        data.pas === specialPin;
-
-      // NORMAL PASSWORD CHECK OR SPECIAL LOGIN
-      if (isSpecialLogin || await bcrypt.compare(data.pas, user.password)) {
+      //  console.log(user,user);
 
        // FINAL RESPONSE FORMAT
       response_data = {
@@ -173,7 +158,7 @@ LoginRouter.post("/member_login", async (req, res) => {
 
          // FETCH MEMBER DETAILS
         let memb_dt = await member_login_data(data.username);
-        console.log(memb_dt,'mem');
+        // console.log(memb_dt,'mem');
         if (memb_dt.suc > 0) response_data.userdata = memb_dt.msg;
         }        
 
@@ -182,7 +167,7 @@ LoginRouter.post("/member_login", async (req, res) => {
            response_data.hasstp = "Y";
 
           let stp_dt = await stp_login_data(data.username);
-        console.log(stp_dt,'stp');
+        // console.log(stp_dt,'stp');
 
           if (stp_dt.suc > 0) response_data.stp_details = stp_dt.msg;
          }
