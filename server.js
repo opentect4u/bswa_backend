@@ -46,6 +46,7 @@ const { upload_child_policyRouter } = require("./routes/api/upload_child_policyR
 const { super_dashboardRouter } = require("./routes/api/superadmin_dashboardRouter");
 const { admindashboardRouter } = require("./routes/api/admindashboardRouter");
 const { childrenPolicyRouter } = require("./routes/api/childrenPolicyRouter");
+const { active_deactiveRouter } = require("./routes/api/active_deactiveRouter");
 
 app.use(LoginRouter);
 app.use("/fee", admin_fee_typeRouter);
@@ -68,10 +69,11 @@ app.use(upload_child_policyRouter)
 app.use('/superadmin', super_dashboardRouter)
 app.use('/admin', admindashboardRouter)
 app.use(childrenPolicyRouter)
+app.use(active_deactiveRouter);
 
 // app.get("/",async (req, res) => {
 //   const bcrypt = require("bcrypt");
-//   var pass = bcrypt.hashSync('9073320374',10)
+//   var pass = bcrypt.hashSync('5058',4)
 //   console.log(pass);
 // res.send(pass)
 // });

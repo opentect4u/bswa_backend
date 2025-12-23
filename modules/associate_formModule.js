@@ -708,8 +708,8 @@ module.exports = {
           var trn_dt = await db_Select(select, table_name, whr, order);
 
           var table_name = "md_user",
-            fields = `(user_id,user_type,password,user_name,user_email,user_phone,user_status,created_by,created_at)`,
-            values = `('${member_id}','M','${pass}','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
+            fields = `(user_id,user_type,user_name,user_email,user_phone,user_status,created_by,created_at)`,
+            values = `('${member_id}','M','${res_dt.msg[0].memb_name}','${res_dt.msg[0].email_id}','${res_dt.msg[0].phone_no}','A','${data.user}','${datetime}')`,
             whr = null,
             flag = 0;
           var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -796,7 +796,7 @@ module.exports = {
            "NEW_SUBSCRIPTION_FORM_APPROVED",
            [
            member_id,
-           pwd
+           //pwd
            ]);
          console.log("SMS Response:", smsRes);
         }catch(err){
