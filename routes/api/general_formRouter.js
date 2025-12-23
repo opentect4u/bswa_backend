@@ -360,7 +360,6 @@ generalRouter.post("/challange_start", async (req, res) => {
    if (restrictedMembers.includes(data.member_id)) {
       return res.send({
         suc: 1,
-        msg: "Challenge not required for this member",
         challenge: null
       });
     }
