@@ -73,7 +73,7 @@ active_deactiveRouter.post("/change_status", async (req, res) => {
     var change_status = await db_Insert(table_name,fields,values,whr,flag);
     
     // No DB update
-    if (!change_status || change_status.lastId?.affectedRows === 0) {
+    if (!change_status || change_status.lastId.affectedRows === 0) {
       return res.send({
         suc: 0,
         msg: 'No record updated'
