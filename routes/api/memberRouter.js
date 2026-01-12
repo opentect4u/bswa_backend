@@ -20,7 +20,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
   // console.log(res_dt, "iiiii");
   if (data.flag) {
     const member = res_dt.msg[0];
-  const isAI = member?.mem_type === "AI";
+  const isAI = member.mem_type === "AI";
     var select =
         "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no, b.relation_name",
       table_name = "md_dependent a, md_relationship b",
