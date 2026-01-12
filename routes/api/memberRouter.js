@@ -19,12 +19,13 @@ memberRouter.post("/member_dtls", async (req, res) => {
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "iiiii");
   if (data.flag) {
+    const member = res_dt.msg[0];
+  const isAI = member?.mem_type === "AI";
     var select =
         "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no, b.relation_name",
       table_name = "md_dependent a, md_relationship b",
       whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${
-        res_dt.msg[0].mem_type != "AI"
-          ? "a.relation in (3, 15)"
+        isAI ? "a.relation in (3, 15)"
           : `a.intro_member_id is not null`
       } AND a.delete_flag = 'N'`,
       order = "order by sl_no";
@@ -34,18 +35,19 @@ memberRouter.post("/member_dtls", async (req, res) => {
         "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no,b.relation_name",
       table_name = "md_dependent a, md_relationship b",
       whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${
-        res_dt.msg[0].mem_type != "AI"
-          ? "a.relation not in (3, 15)"
+        isAI ? "a.relation not in (3, 15)"
           : `a.intro_member_id is null`
       } AND a.delete_flag = 'N'`,
       order = "order by sl_no";
     var dep_dt = await db_Select(select, table_name, whr, order);
 
-    res_dt.msg[0]["spou_dt"] =
+    // res_dt.msg[0]["spou_dt"] =
       // spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg[0] : {}) : {};
-      spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : {};
-    res_dt.msg[0]["dep_dt"] =
-      dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
+      // member.spou_dt = spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : {};
+      member.spou_dt = spou_dt.suc > 0 ? spou_dt.msg : [];
+    // res_dt.msg[0]["dep_dt"] =
+      // member.dep_dt = dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
+      member.dep_dt = dep_dt.suc > 0 ? dep_dt.msg : [];
   }
   res.send(res_dt);
 });
@@ -53,6 +55,8 @@ memberRouter.post("/member_dtls", async (req, res) => {
 memberRouter.post("/update_member_dtls", async (req, res) => {
   var data = req.body.data;
   data = JSON.parse(data);
+  console.log(data,'data');
+  
   var spu_file = req.files ? req.files.spouse_file : null,
     mem_file = req.files ? req.files.member_file : null,
     ownFile_name = null,
@@ -119,11 +123,7 @@ else if (data.marital_status === "M" && data.mem_type === "AI") {
       data.min
     }', memb_address = "${data.mem}" ${
       data.police_st ? `, ps = '${data.police_st}'` : ""
-    } ${data.city ? `, city_town_dist = '${data.city}'` : ""} ${
-      data.pin ? `, pin_no = '${data.pin}'` : ""
-    }, phone_no = '${data.phone}' ${
-      data.email_id ? `, email_id = '${data.email_id}'` : ""
-    } ${ownFile_name ? `, memb_pic = '${ownFile_name}'` : ""}, modified_by = '${
+    } ${data.city ? `, city_town_dist = '${data.city}'` : ""} ,pin_no = ${data.pin !== null ? `'${data.pin}'` : 'NULL'}, phone_no = '${data.phone}', email_id = ${data.email_id !== null ? `'${data.email_id}'` : 'NULL'} ${ownFile_name ? `, memb_pic = '${ownFile_name}'` : ""}, modified_by = '${
       data.user
     }', modified_at = '${datetime}'`,
     values = null,
@@ -131,29 +131,39 @@ else if (data.marital_status === "M" && data.mem_type === "AI") {
     flag = 1;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
-  if (res_dt.suc > 0) {
-    var table_name = "md_dependent",
-      fields = `dependent_name = '${data.spouse_fr.spou_name}' ${
-        data.spouse_fr.spou_gurd_name
-          ? `, gurdian_name = '${data.spouse_fr.spou_gurd_name}'`
-          : ""
-      }, min_no = '${data.spouse_fr.spou_min_no}', dob = '${
-        data.spouse_fr.spou_dob
-      }' ${
-        data.spouse_fr.spou_blood_grp
-          ? `, blood_grp = '${data.spouse_fr.spou_blood_grp}'`
-          : ""
-      }, memb_address = "${data.spouse_fr.spou_mem_addr}" ${
-        data.spouse_fr.spou_police_st
-          ? `, ps = '${data.spouse_fr.spou_police_st}'`
-          : ""
-      } ${
-        data.spouse_fr.spou_city
-          ? `, city_town_dist = '${data.spouse_fr.spou_city}'`
-          : ""
-      }, phone_no = '${data.spouse_fr.spou_mobile_no}' ${
-        spuseFile_name ? `, memb_pic = '${spuseFile_name}'` : ""
-      }, modified_by = '${data.user}', modified_at = '${datetime}'`,
+  if (res_dt.suc > 0 && data.spouse_fr && Number(data.spouse_fr.sl_no) > 0) {
+   var table_name = "md_dependent",
+    fields = `dependent_name = '${data.spouse_fr.spou_name}' ${
+      data.spouse_fr.spou_gurd_name
+        ? `, gurdian_name = '${data.spouse_fr.spou_gurd_name}'`
+        : ""
+    } ${
+      data.spouse_fr.spou_min_no
+        ? `, min_no = '${data.spouse_fr.spou_min_no}'`
+        : ""
+    } ${
+      data.spouse_fr.spou_dob
+        ? `, dob = '${data.spouse_fr.spou_dob}'`
+        : ""
+    } ${
+      data.spouse_fr.spou_mem_addr
+        ? `, memb_address = "${data.spouse_fr.spou_mem_addr}"`
+        : ""
+    } ${
+      data.spouse_fr.spou_police_st
+        ? `, ps = '${data.spouse_fr.spou_police_st}'`
+        : ""
+    } ${
+      data.spouse_fr.spou_city
+        ? `, city_town_dist = '${data.spouse_fr.spou_city}'`
+        : ""
+    } ${
+      data.spouse_fr.spou_mobile_no
+        ? `, phone_no = '${data.spouse_fr.spou_mobile_no}'`
+        : ""
+    } ${
+      spuseFile_name ? `, memb_pic = '${spuseFile_name}'` : ""
+    }, modified_by = '${data.user}', modified_at = '${datetime}'`,
       values = null,
       whr = `form_no = '${data.form_no}' AND sl_no = ${data.spouse_fr.sl_no}`,
       flag = 1;

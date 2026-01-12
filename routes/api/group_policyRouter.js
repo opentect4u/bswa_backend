@@ -22,18 +22,11 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   // console.log(data, "hhhh");
   var select = "member_id",
   table_name = "td_gen_ins",
-  whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
+  whr = `member_id = '${data.member_id}' AND policy_holder_type = '${data.policy_holder_type}'`,
   order = null;
  var gmp_exists_dt = await db_Select(select, table_name, whr, order);
 
- if(gmp_exists_dt.suc > 0 && gmp_exists_dt.msg.length == 0){
-  var select = "member_id",
-  table_name = "td_stp_ins",
-  whr = `member_id = '${data.member_id}' AND policy_holder_type = 'M'`,
-  order = null;
-var exists_dt = await db_Select(select, table_name, whr, order);
-// if (data.checkedmember) {
-if(exists_dt.suc > 0 && exists_dt.msg.length == 0){
+if(gmp_exists_dt.suc > 0 && gmp_exists_dt.msg.length == 0){
   var select =
   "a.form_no,a.form_dt,a.mem_type,a.memb_name,a.phone_no,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
   table_name = "md_member a",
@@ -41,7 +34,14 @@ whr = `a.member_id ='${data.member_id}'`,
 order = null;
 res_dt = await db_Select(select, table_name, whr, order);
 
-if (res_dt.suc > 0 && res_dt.msg.length > 0) {
+var select ="a.sl_no,a.dependent_name,a.relation,a.dob,a.member_id,b.relation_name",
+    table_name = "md_dependent a, md_relationship b",
+    whr = `a.relation = b.id
+      AND a.member_id ='${data.member_id}'`,
+    order = null;
+var dep_dt = await db_Select(select, table_name, whr, order);
+
+if (dep_dt.suc > 0 && dep_dt.msg.length > 0) {
   var select =
       "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
     table_name = "md_premium_type",
@@ -51,14 +51,13 @@ if (res_dt.suc > 0 && res_dt.msg.length > 0) {
         : null,
     order = null;
   var pre_dt = await db_Select(select, table_name, whr, order);
+  res_dt.msg[0]["dept_dt"] = dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
   res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? (pre_dt.msg.length > 0 ? pre_dt.msg : []) : [];
   res.send(res_dt);
 }else{
   res.send({ suc: 0, msg: "Member details not found" });
 }
-} else {
-  res.send({ suc: 2, msg: "Member already has an Insurance in STP policy" });
-}
+
  }else {
   res.send({ suc: 3, msg: "Member already has an Insurance in GMP policy" })
  }
@@ -159,13 +158,56 @@ group_policyRouter.post("/save_group_policy_form", async (req, res) => {
   res.send(save_gen);
 });
 
-group_policyRouter.post("/save_child_group_policy_form", async (req, res) => {
+group_policyRouter.post("/fetch_gp_member_details", async (req, res) => {
   var data = req.body;
-  // console.log(data, "bbb");
-  var save_gen = await group_policy_form_save_child(data);
-  // console.log(save_gen, "aaa");
-  res.send(save_gen);
+
+   var select = "a.form_no,a.form_dt,a.flag,a.policy_holder_type policy_holder_type_id,c.policy_holder_type,a.member_id,a.association,b.unit_name,a.memb_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name,a.gender,a.marital_status,a.dob,d.gp_user_status,e.premium_dt,e.premium_id id,f.family_type premium_id,e.premium_amt,e.premium_amt2,e.prm_flag2,e.premium_amt3,e.prm_flag3,CASE WHEN e.prm_flag2 = 'Y' THEN 'Super Top up Amount 6 lacs' ELSE 'Super Top up Amount 12 lacs' END AS super_top_up_label",
+
+      table_name = "td_gen_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id LEFT JOIN md_user d ON a.form_no = d.gp_form_no AND a.member_id = d.user_id LEFT JOIN td_premium_dtls e ON a.form_no = e.form_no LEFT JOIN md_premium_type f ON e.premium_id = f.family_type_id",
+
+      whr = `a.member_id = '${data.member_id}' AND d.user_status = 'A' AND d.gp_user_status = 'A'`,
+
+      order = null;
+      var gp_login_dt = await db_Select(select, table_name, whr, order);
+
+      if(gp_login_dt.suc > 0 && gp_login_dt.msg.length > 0){
+        var select = "a.sl_no,a.member_id,a.dept_name,a.relation relation_id,a.hospital_flag,a.disease_flag,a.disease_type,a.dob,a.dep_img,a.dep_doc,b.relation_name relation",
+        table_name = "td_gen_ins_depend a LEFT JOIN md_relationship b ON a.relation = b.id",
+        whr = `a.member_id = '${data.member_id}'`,
+        order = null;
+        var gp_dependent_data = await db_Select(select,table_name,whr,order);
+        
+        gp_login_dt.msg[0]["dependent_dt"] = gp_dependent_data.suc > 0 ? (gp_dependent_data.msg.length > 0 ? gp_dependent_data.msg : []) : [];
+        res.send(gp_login_dt);
+      }else{
+        res.send({ suc: 0, msg: "Member details not found" });
+      }
 });
+
+group_policyRouter.post("/fetch_gp_trans_dtls", async (req, res) => {
+ try{
+   var data = req.body;
+
+   var select = "form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,approval_status",
+   table_name = "td_transactions",
+   whr = `form_no = '${data.form_no}'`,
+   order = null;
+   var fetch_gp_transaction = await db_Select(select,table_name,whr,order);
+   res.send(fetch_gp_transaction)
+  //  console.log(fetch_cp_transaction,'fetch');
+  }catch(error){
+    console.error('Error:', error);
+    res.send(error);
+  }
+});
+
+// group_policyRouter.post("/save_child_group_policy_form", async (req, res) => {
+//   var data = req.body;
+//   // console.log(data, "bbb");
+//   var save_gen = await group_policy_form_save_child(data);
+//   // console.log(save_gen, "aaa");
+//   res.send(save_gen);
+// });
 
 group_policyRouter.get("/frm_list_policy_group", async (req, res) => {
   var data = req.query;

@@ -378,9 +378,9 @@ super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) 
     const data = req.body;
 
     // Fetch member details
-    const select = "a.form_no,a.form_dt,d.user_type,a.policy_holder_type,c.policy_holder_type,a.member_id,a.association,b.unit_name,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type";
+    const select = "a.form_no,a.form_dt,d.user_type,a.policy_holder_type policy_holder_type_id,c.policy_holder_type,a.member_id,a.association,b.unit_name,a.memb_type,a.memb_oprn,a.memb_name,a.gender,a.dob,a.mem_address,a.phone_no,a.min_no,a.personel_no,a.memb_flag,a.dependent_name,a.spou_min_no,a.spou_dob,a.spou_phone,a.spou_gender,a.spou_address,a.dependent_flag,a.premium_type";
     const table_name = "td_stp_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id LEFT JOIN md_user d ON a.min_no = d.min_no AND a.form_no = d.stp_form_no AND a.member_id = d.user_id";
-    const whr = `a.form_no = '${data.from_no}'
+    const whr = `a.form_no = '${data.form_no}' AND a.member_id = '${data.member_id}' AND a.min_no = '${data.min_no}'
                  AND d.user_status = 'A'
                  AND d.stp_user_status = 'A'`;
     const order = null;
@@ -623,7 +623,6 @@ super_policyRouter.post("/fetch_premium_details_fr_stp_policy", async (req, res)
          FROM td_stp_ins 
          WHERE min_no = '${data.min_no}' 
          AND spou_min_no IS NOT NULL AND spou_min_no != ''
-        LIMIT 1
       ) AS min_list
       WHERE min_no IS NOT NULL
     )`,
@@ -725,9 +724,15 @@ super_policyRouter.post("/check_min_no", async (req, res) => {
     return res.send({ suc: 0, msg: 'MIN No is required' });
     }
 
-  var select = "min_no",
-      table_name = "td_stp_ins",
-      whr = `min_no = '${data.min_no}'`,
+    const value = data.min_no.toString().trim();
+
+  var select = "val",
+      table_name = `(
+      SELECT CAST(min_no AS CHAR) AS val FROM td_stp_ins
+      UNION ALL
+      SELECT CAST(member_id AS CHAR) AS val FROM td_gen_ins
+    ) t`,
+      whr = `t.val='${value}'`,
       order = null;
   const res_dt = await db_Select(select, table_name, whr, order);
 
@@ -742,9 +747,25 @@ super_policyRouter.post("/check_min_no", async (req, res) => {
 super_policyRouter.post("/send_phone_no_fr_otp_stp", async (req, res) => {
   const data = req.body;
 
-  var select = "memb_name,min_no,phone_no",
-      table_name = "td_stp_ins",
-      whr = `min_no = '${data.min_no}'`,
+  const value = data.min_no.toString().trim();
+
+  var select = "memb_name, min_no, phone_no",
+      table_name = ` (
+      SELECT 
+        memb_name,
+        CAST(min_no AS CHAR) AS min_no,
+        phone_no
+      FROM td_stp_ins
+
+      UNION ALL
+
+      SELECT 
+        memb_name,
+        CAST(member_id AS CHAR) AS min_no,
+        phone AS phone_no
+      FROM td_gen_ins
+    ) t`,
+      whr = `t.min_no='${value}'`,
       order = null;
   const res_dt = await db_Select(select, table_name, whr, order);
   res.send(res_dt)

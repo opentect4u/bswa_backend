@@ -12,6 +12,7 @@ const {
   TRANSFER_TYPE_MASTER,
   VOUCHER_MODE_MASTER,
   shortenURL,
+  db_Delete,
 } = require("./MasterModule");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 const { dynamicFileUpload } = require("./associate_formModule");
@@ -109,10 +110,11 @@ const savegenFiles= (file, fileType, form_no) => {
 module.exports = {
  
   group_policy_form_save: (data, ownDocFile, ownAadFile, depDocFile, depAadFile) => {
-    // console.log(data,'gdata');
+    console.log(data,'gdata');
     return new Promise(async (resolve, reject) => {
       var depDocFileName = [];
       var depAddFileName = [];
+      let userUpdateSuccess = false;
 
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy"), ownDocFilePath = '', ownAddFilePath = '', depDocFilePath = '', depAddFilePath = '' ;;
@@ -170,11 +172,6 @@ module.exports = {
         depAddFileName.push({fileName: depAddFilePath});
     }
 }
-      // if(depAadFile){
-      //   var fileRes = await savegenFiles(depAadFile, 'DEP_AADH', form_no)
-      //   depAddFilePath = fileRes.suc > 0 ? fileRes.msg : ''
-      // }
-
       fields = `(form_no,premium_dt,premium_id,premium_amt ${
         data.sup_top_flag == "p2"
           ? `,premium_amt2,prm_flag2`
@@ -182,37 +179,36 @@ module.exports = {
           ? ",premium_amt3,prm_flag3"
           : ""
       },created_by,created_at)`;
-      values = `('${form_no}','${datetime}','${data.grp_name}','${data.pre_amont}' ${
-        data.sup_top_flag == "p2" || data.sup_top_flag == "p3"
-          ? `,${data.sup_top_up},'Y'`
-          : ""
-      },'${data.member}','${datetime}')`;
+      values = `('${form_no}','${datetime}','${data.grp_name}','${data.pre_amont}'
+      ${
+    data.sup_top_flag === "p2"
+      ? `,${data.sup_top_up ? `'${data.sup_top_up}'` : 'NULL'},'Y'`
+      : data.sup_top_flag === "p3"
+      ? `,${data.sup_top_up ? `'${data.sup_top_up}'` : 'NULL'},'Y'`
+      : ''},'${data.member}','${datetime}')`;
       table_name = "td_premium_dtls";
       whr = null;
       order = null;
       var policy_data = await db_Insert(table_name, fields, values, whr, order);
+       if (policy_data.suc <= 0)
+        return reject({ suc: 0, msg: "Premium insert failed" });
 
-      // if (data.checkedmember) {
-        fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name, sex, marital_status, dob ${ownDocFilePath != '' ? ', memb_img' : ''} ${ownAddFilePath != '' ? ', doc_img' : ''}, form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-        values = `('${form_no}','${data.form_dt}','${data.checkedmember == 'false' ? "N" : "M"}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}' ${ownDocFilePath != '' ? `, '${ownDocFilePath}'` : ''} ${ownAddFilePath != '' ? `, '${ownAddFilePath}'` : ''},'GP','P',${data.type_diseases ? `'${data.type_diseases}'` : `'N'`},'${data.name_diseases}','${data.member}','${datetime}')`;
-        table_name = "td_gen_ins";
+      var table_name = "td_gen_ins";
+      fields = `(form_no,form_dt,flag,policy_holder_type,member_id,association,memb_type,memb_oprn,memb_name,phone,father_husband_name,gender,marital_status,dob ${ownDocFilePath != '' ? ', memb_img' : ''} ${ownAddFilePath != '' ? ', doc_img' : ''},form_status,disease_flag,disease_type,created_by,created_at)`;
+        values = `('${form_no}','${datetime}','GP','${data.policy_holder_type}','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}' ${ownDocFilePath != '' ? `, '${ownDocFilePath}'` : ''} ${ownAddFilePath != '' ? `, '${ownAddFilePath}'` : ''},'P',${data.type_diseases ? `'${data.type_diseases}'` : `'N'`},'${data.name_diseases}','${data.member}','${datetime}')`;
         whr = null;
         order = null;
-      // } else {
-      //   fields = `(form_no,form_dt, policy_holder_type,member_id,association,memb_type, memb_oprn, memb_name,phone,father_husband_name, sex, marital_status, dob ${ownDocFilePath != '' ? ', memb_img' : ''} ${ownAddFilePath != '' ? ', doc_img' : ''}, form_type,form_status,disease_flag,disease_type,created_by,created_at)`;
-      //   values = `('${form_no}','${data.form_dt}','N','${data.member_id}','${data.unit}','${data.member_type}','${data.memb_oprn}','${data.member}','${data.phone}','${data.gurdian}','${data.gen}','${data.marital_status}','${data.gen_dob}' ${ownDocFilePath != '' ? `, '${ownDocFilePath}'` : ''} ${ownAddFilePath != '' ? `, '${ownAddFilePath}'` : ''},'GP','p','${data.type_diseases}','${data.name_diseases}','${data.member}','${datetime}')`;
-      //   table_name = "td_gen_ins";
-      //   whr = null;
-      //   order = null;
-      // }
       var policy_dt = await db_Insert(table_name, fields, values, whr, order);
+      if (policy_dt.suc <= 0) {
+        await db_Delete("td_premium_dtls", `form_no='${form_no}'`);
+        return reject({ suc: 0, msg: "Policy insert failed" });
+      }
 
       if (policy_dt.suc > 0) {
-        // if (data.checkedmember) {
           var i = 0
           for (let dt of JSON.parse(data.dependent_dt)) {
             fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depAddFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;
-            values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases}','${dt.name_diseases}','${dt.dob}' ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''} ${depAddFileName.length > i && depAddFileName[i].fileName ? `, '${depAddFileName[i].fileName}'` : ''},'${data.member}','${datetime}')`;
+            values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases == 'Y' ? 'Y' : 'N'}',${dt.name_diseases ? dt.name_diseases : 'NULL'},'${dt.dob}' ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''} ${depAddFileName.length > i && depAddFileName[i].fileName ? `, '${depAddFileName[i].fileName}'` : ''},'${data.member}','${datetime}')`;
             table_name = "td_gen_ins_depend";
             whr = null;
             order = null;
@@ -223,74 +219,60 @@ module.exports = {
               whr,
               order
             );
-
             i++
+          if (policy_dependent_dt.suc <= 0) {
+          await db_Delete("td_gen_ins_depend", `form_no='${form_no}'`);
+          await db_Delete("td_gen_ins", `form_no='${form_no}'`);
+          await db_Delete("td_premium_dtls", `form_no='${form_no}'`);
+          return reject({ suc: 0, msg: "Dependent insert failed → rolled back" });
+        }
           }
-          policy_dt["form_no"] = form_no;
-            console.log(policy_dt["form_no"],'lo');
-            
-            policy_dt["policy_holder_type"] = `${data.checkedmember}`
-        //   var table_name = "td_transactions",
-        //   fields =`(form_no,trn_dt,trn_id,sub_amt,onetime_amt,adm_fee,donation,premium_amt,tot_amt,created_by,created_at)`,
-        //   values = `('${form_no}','${datetime}','${trn_id}','0','0','0','0','${tot_amt}','${
-        //     tot_amt
-        //   }','${data.user}','${datetime}')`,
-        //   where = null,
-        //   flag = 0;
-        // var res_dt = await db_Insert(table_name, fields, values, where, flag);
-        
-        // } else {
-        //   for (let dt of data.dependent_dt) {
-        //     fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depAddFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;
-        //     values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases}','${dt.name_diseases}','${dt.dob}' ${depDocFilePath != '' ? `, '${depDocFilePath}'` : ''} ${depAddFilePath != '' ? `, '${depAddFilePath}'` : ''},'${data.member}','${datetime}')`;
-        //     table_name = "td_gen_ins_depend";
-        //     whr = null;
-        //     order = null;
-        //     var policy_dependent_dt = await db_Insert(
-        //       table_name,
-        //       fields,
-        //       values,
-        //       whr,
-        //       order
-        //     );
-        //     policy_dependent_dt["form_no"] = form_no;
-        //   }
-        // }
+          policy_dt["form_no"] = form_no;            
+          policy_dt["policy_holder_type"] = `${data.checkedmember}`
+      
+      if(data.policy_holder_type == 'M'){
+        table_name = "md_user";
+        fields = `gp_form_no = '${form_no}',gp_user_status = 'I',modified_by = '${data.member}',modified_at = '${datetime}'`;
+        values = null;
+        whr = `user_id = '${data.member_id}'`;
+        flag = 1; 
+      }else {
+        var select = "*",
+        table_name = "md_user",
+        whr = `user_id = '${data.member_id}'`,
+        order = null;
+        var user_data = await db_Select(select,table_name,whr,order);
+
+        if(user_data.suc > 0 && user_data.msg.length > 0){
+        table_name = "md_user";
+        fields = `gp_form_no = '${form_no}',gp_user_status = 'I',modified_by = '${data.member}',modified_at = '${datetime}'`;
+        values = null;
+        whr = `user_id = '${data.member_id}'`;
+        flag = 1; 
+        }else {
+        table_name = "md_user";
+        fields = `(user_id,user_type,user_name,user_phone,user_status,cp_form_no,cp_user_status,created_by,created_at)`;
+        values = `('${data.member_id}','N','${data.member}',${data.phone ? `'${data.phone}'` : 'NULL'},'I','${form_no}','I','${data.member}','${datetime}')`;
+        whr = null;
+        flag = 0; 
+        }
       }
-        // policy_dependent_dt["form_no"] = form_no;
-      // console.log(policy_dependent_dt, "gggg");
+      try{
+        let mdUserRes = await db_Insert(table_name, fields, values, whr, flag);
 
-      // if(policy_dependent_dt && policy_dependent_dt.suc > 0){
-       
-      // }
-
-      // WHATSAPP MESSAGE //
-      try {
-        var select = "msg, domain",
-          table_name = "md_whatsapp_msg",
-          whr = `msg_for = 'Submit'`,
-          order = null;
-        var msg_dt = await db_Select(select, table_name, whr, order);
-        var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-          domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
-        wpMsg = wpMsg
-          .replace("{user_name}", data.member)
-          .replace("{form_id}", form_no)
-          .replace(
-            "{url}",
-            `${domain}/#/home/print_group_policy/${encodeURIComponent(
-              new Buffer.from(form_no).toString("base64"),data.checkedmember
-            )}`
-          );
-        var wpRes = await sendWappMsg(data.phone, wpMsg);
+        // mark success only if inserted/updated
+    if (mdUserRes.suc > 0) {
+        userUpdateSuccess = true;
+    }
       } catch (err) {
-        console.log(err);
+        console.log("Error inserting into md_user:", err);
       }
-      // END //
-
+    }
       resolve(policy_dt);
     });
   },
+
+  
 
   group_policy_form_save_child: (data) => {
     return new Promise(async (resolve, reject) => {

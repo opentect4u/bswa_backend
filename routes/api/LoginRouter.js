@@ -8,6 +8,8 @@ const {
   stp_member_login_data,
   user_data,
   stp_login_data,
+  cp_login_data,
+  gp_login_data,
 } = require("../../modules/LoginModule");
 const { db_Insert, db_Select } = require("../../modules/MasterModule");
 const { createToken } = require("../../utils/jwt.util");
@@ -145,11 +147,13 @@ LoginRouter.post("/member_login", async (req, res) => {
       response_data = {
         userdata: [],
         stp_details: [],
-        // cp_details: [],
+        cp_details: [],
+        gp_details: [],
         ismember: "N",
         hasstp: "N",
         time: new Date(),
-        // hascp: "N"
+        hascp: "N",
+        hasgp: "N"
       };
 
        //CHECK MEMBER TYPE
@@ -170,6 +174,26 @@ LoginRouter.post("/member_login", async (req, res) => {
         // console.log(stp_dt,'stp');
 
           if (stp_dt.suc > 0) response_data.stp_details = stp_dt.msg;
+         }
+
+         // CHECK CP DETAILS
+         if(user.cp_user_status === "A"){
+           response_data.hascp = "Y";
+
+          let cp_dt = await cp_login_data(data.username);
+        // console.log(stp_dt,'stp');
+
+          if (cp_dt.suc > 0) response_data.cp_details = cp_dt.msg;
+         }
+
+            // CHECK GP DETAILS
+         if(user.gp_user_status === "A"){
+           response_data.hasgp = "Y";
+
+          let gp_dt = await gp_login_data(data.username);
+        // console.log(stp_dt,'stp');
+
+          if (gp_dt.suc > 0) response_data.gp_details = gp_dt.msg;
          }
        
          // CREATE TOKEN
