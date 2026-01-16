@@ -54,7 +54,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
 
 memberRouter.post("/update_member_dtls", async (req, res) => {
   var data = req.body.data;
-  data = JSON.parse(data);
+  // data = JSON.parse(data);
   console.log(data,'data');
   
   var spu_file = req.files ? req.files.spouse_file : null,
@@ -84,9 +84,9 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
 
   // 1️⃣ If member operation is selected (highest priority)
 if (data.member_opt) {
-    if (data.member_opt === "Joint") {
+    if (data.member_opt === "J") {
         final_marital_status = "J";
-    } else if (data.member_opt === "Self") {
+    } else if (data.member_opt === "S") {
         final_marital_status = "S";
     } 
 }
@@ -131,7 +131,7 @@ else if (data.marital_status === "M" && data.mem_type === "AI") {
     flag = 1;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
-  if (res_dt.suc > 0 && data.spouse_fr && Number(data.spouse_fr.sl_no) > 0) {
+  if (res_dt.suc > 0 && data.spouse_fr && data.spouse_fr.sl_no && Number(data.spouse_fr.sl_no) > 0) {
    var table_name = "md_dependent",
     fields = `dependent_name = '${data.spouse_fr.spou_name}' ${
       data.spouse_fr.spou_gurd_name
