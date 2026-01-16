@@ -54,8 +54,31 @@ memberRouter.post("/member_dtls", async (req, res) => {
 
 memberRouter.post("/update_member_dtls", async (req, res) => {
   var data = req.body.data;
-  data = JSON.parse(data);
-  console.log(data,'data');
+  // data = JSON.parse(data);
+  // console.log(data,'data');
+
+  let data;
+
+try {
+  if (!req.body.data) {
+    return res.send({
+      success: false,
+      msg: "data field missing in request"
+    });
+  }
+
+  data =
+    typeof req.body.data === "string"
+      ? JSON.parse(req.body.data)
+      : req.body.data;
+
+} catch (err) {
+  console.error("JSON parse error:", err);
+  return res.send({
+    success: false,
+    msg: "Invalid JSON in data"
+  });
+}
   
   var spu_file = req.files ? req.files.spouse_file : null,
     mem_file = req.files ? req.files.member_file : null,
