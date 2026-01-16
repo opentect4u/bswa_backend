@@ -54,7 +54,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
 
 memberRouter.post("/update_member_dtls", async (req, res) => {
   var data = req.body.data;
-  // data = JSON.parse(data);
+  data = JSON.parse(data);
   console.log(data,'data');
   
   var spu_file = req.files ? req.files.spouse_file : null,
