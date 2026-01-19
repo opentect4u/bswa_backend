@@ -123,7 +123,7 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
       data.gen ? data.gen : "M"
     }', marital_status = '${
       data.marital_status ? data.marital_status : "N"
-    }', dob = = ${genDobSql} ${
+    }', dob = ${genDobSql} ${
       data.blood ? `, blood_grp = '${data.blood}'` : ""
     } ${data.caste ? `, caste = '${data.caste}'` : ""} ${
       data.staff ? `, staff_nos = '${data.staff}'` : ""
