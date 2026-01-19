@@ -177,7 +177,8 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
       flag = 1;
     var spou_dt = await db_Insert(table_name, fields, values, whr, flag);
 
-    if (data.depenFields.length > 0) {
+    if (res_dt.suc > 0 && Array.isArray(data.depenFields)) {
+    // if (res_dt.suc > 0 && Array.isArray(data.depenFields.length > 0) {
       for (let dt of data.depenFields) {
         // var table_name = "md_dependent",
         //   fields = `dependent_name = '${dt.dependent_name}, phone_no = '${dt.phone_no}', relation = '${dt.relation}', dob = '${dt.dob_dep}', modified_by = '${data.user}', modified_at = '${datetime}'`,
