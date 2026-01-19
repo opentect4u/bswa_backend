@@ -18,7 +18,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
     order = "order by cast(substr(member_id,3) as unsigned)";
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "iiiii");
-  if (data.flag) {
+  if (data.flag && res_dt.suc > 0 && res_dt.msg.length > 0) {
     const member = res_dt.msg[0];
   const isAI = member.mem_type === "AI";
     var select =
@@ -111,12 +111,18 @@ else if (data.marital_status === "M" && data.mem_type === "AI") {
 
   // console.log(JSON.parse(data), typeof(data));
   var datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+
+  let genDobSql = "NULL";
+if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
+  genDobSql = `'${dateFormat(new Date(data.gen_dob), "yyyy-mm-dd")}'`;
+}
+
   var table_name = "md_member",
     fields = `mem_type = '${data.mem_type}', memb_oprn = '${final_marital_status}', memb_name = '${data.member}', unit_id = '${data.unit_nm > 0 ? data.unit_nm : 0}', gurdian_name = '${data.gurdian}', gender = '${
       data.gen ? data.gen : "M"
     }', marital_status = '${
       data.marital_status ? data.marital_status : "N"
-    }', dob = '${dateFormat(new Date(data.gen_dob), "yyyy-mm-dd")}' ${
+    }',  gen_dob = ${genDobSql} ${
       data.blood ? `, blood_grp = '${data.blood}'` : ""
     } ${data.caste ? `, caste = '${data.caste}'` : ""} ${
       data.staff ? `, staff_nos = '${data.staff}'` : ""
