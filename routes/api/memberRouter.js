@@ -139,7 +139,15 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
     flag = 1;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
-  if (res_dt.suc > 0 && data.spouse_fr && data.spouse_fr.sl_no && Number(data.spouse_fr.sl_no) > 0) {
+  if (res_dt.suc <= 0) {
+      return res.send({
+        success: false,
+        msg: "Member update failed",
+      });
+    }
+
+  // if (res_dt.suc > 0 && data.spouse_fr && data.spouse_fr.sl_no && Number(data.spouse_fr.sl_no) > 0) {
+  if (data.spouse_fr && data.spouse_fr.sl_no && Number(data.spouse_fr.sl_no) > 0) {
    var table_name = "md_dependent",
     fields = `dependent_name = '${data.spouse_fr.spou_name}' ${
       data.spouse_fr.spou_gurd_name
@@ -176,8 +184,9 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
       whr = `form_no = '${data.form_no}' AND sl_no = ${data.spouse_fr.sl_no}`,
       flag = 1;
     var spou_dt = await db_Insert(table_name, fields, values, whr, flag);
+  }
 
-    if (res_dt.suc > 0 && Array.isArray(data.depenFields)) {
+    if (Array.isArray(data.depenFields)) {
     // if (res_dt.suc > 0 && Array.isArray(data.depenFields.length > 0) {
       for (let dt of data.depenFields) {
         // var table_name = "md_dependent",
@@ -222,7 +231,6 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
         );
       }
     }
-  }
   res.send(res_dt);
 });
 
