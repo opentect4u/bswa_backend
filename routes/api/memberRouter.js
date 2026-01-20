@@ -57,15 +57,25 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
   // var data = req.body.data;
   // data = JSON.parse(data);
   console.log(data,'data');
+
+   if (data.spouse_fr && typeof data.spouse_fr === "string") {
+      data.spouse_fr = JSON.parse(data.spouse_fr);
+    }
+
+    if (data.depenFields && typeof data.depenFields === "string") {
+      data.depenFields = JSON.parse(data.depenFields);
+    }
   
   var spu_file = req.files ? req.files.spouse_file : null,
     mem_file = req.files ? req.files.member_file : null,
+
     ownFile_name = null,
     spuseFile_name = null,
     nowTime = new Date().getTime();
 
   var dir = "assets";
   var subDir = `uploads/${data.form_no}`;
+  
   if (!fs.existsSync(path.join(dir, subDir))) {
     fs.mkdirSync(path.join(dir, subDir));
   }
