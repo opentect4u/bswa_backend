@@ -75,7 +75,7 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
 
   var dir = "assets";
   var subDir = `uploads/${data.form_no}`;
-  
+
   if (!fs.existsSync(path.join(dir, subDir))) {
     fs.mkdirSync(path.join(dir, subDir));
   }
@@ -211,7 +211,7 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
             dt.sl_no > 0
               ? `dependent_name = '${dt.dependent_name}' ${
                   dt.phone_no ? `, phone_no = '${dt.phone_no}'` : ""
-                }, relation = '${dt.relation}' ${
+                } ${ dt.relation ? `, relation = '${dt.relation}'` : ""} ${
                   dt.dob_dep ? `, dob = '${dt.dob_dep}'` : ""
                 }, modified_by = '${data.user}', modified_at = '${datetime}'`
               : `(form_no, sl_no, member_id, mem_type, dependent_name, relation ${
@@ -219,7 +219,7 @@ if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
                 } ${dt.phone_no ? ", phone_no" : ""}, created_by, created_at)`,
           values = `SELECT '${data.form_no}', count(sl_no)+1, '${
             data.mem_id
-          }', '${data.mem_type}', '${dt.dependent_name}', '${dt.relation}' ${
+          }', '${data.mem_type}', '${dt.dependent_name}', ${dt.relation ? `, '${dt.relation}'` : ""} ${
             dt.dob_dep ? `, '${dt.dob_dep}'` : ""
           } ${dt.phone_no ? `, '${dt.phone_no}'` : ""}, '${
             data.user
