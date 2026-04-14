@@ -29,15 +29,66 @@ async function shortenURL(longUrl) {
   }
 }
 
+// SubsDepoRouter.post("/get_mem_subs_dtls", async (req, res) => {
+//   const data = req.body;
+//   var select =
+//       "a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.amount, b.calc_amt, b.calc_upto",
+//     table_name = "md_member a, td_memb_subscription b",
+//     whr = `a.member_id=b.member_id AND a.member_id = '${data.memb_id}' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id) AND a.memb_status = 'A'`,
+//     order = null;
+//   var res_dt = await db_Select(select, table_name, whr, order);
+//   res.send(res_dt);
+// });
+
 SubsDepoRouter.post("/get_mem_subs_dtls", async (req, res) => {
   const data = req.body;
-  var select =
+
+  try{
+  // Check member exists
+    var select = "*",
+      table_name = "md_member",
+      whr = `member_id='${data.memb_id}'`,
+      order = null;
+    var member = await db_Select(select, table_name, whr, order);
+
+    if (member.suc === 0) {
+      return res.send({
+        suc: 0,
+        msg: "Member not found"
+      });
+    }
+
+     // Check member active
+    if (member.msg[0].memb_status !== 'A') {
+      return res.send({
+        suc: 0,
+        msg: "Member is deactive"
+      });
+    }
+
+ // Fetch subscription details
+ var select =
       "a.member_id, a.form_no, a.memb_name, a.mem_type, a.memb_oprn, a.phone_no, a.email_id, DATE(b.subscription_upto) subscription_upto, b.amount, b.calc_amt, b.calc_upto",
     table_name = "md_member a, td_memb_subscription b",
-    whr = `a.member_id=b.member_id AND a.member_id = '${data.memb_id}' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id)`,
+    whr = `a.member_id=b.member_id AND a.member_id = '${data.memb_id}' AND DATE(b.subscription_upto) = (SELECT MAX(DATE(c.subscription_upto)) FROM td_memb_subscription c WHERE a.member_id=c.member_id) AND a.memb_status = 'A'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
-  res.send(res_dt);
+
+   if (res_dt.suc > 0) {
+      res.send(res_dt);
+    } else {
+      res.send({
+        suc: 0,
+        msg: "Subscription data not found"
+      });
+    }
+  }catch (error) {
+   console.error(error);
+   res.send({
+      suc: 0,
+      msg: "Data not found"
+   });
+  }
 });
 
 SubsDepoRouter.post("/get_tnx_details", async (req, res) => {
@@ -229,9 +280,19 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var tot_tenure = data.sub_amt > 0 ? data.sub_amt / data.sub_fee : 0;
   console.log(tot_tenure,'ten');
   
-  var sub_upto = new Date(trn_dt);
+  // var sub_upto = new Date(trn_dt);
   // sub_upto.setMonth(sub_upto.getMonth() + tot_tenure - 1);
+
+  // sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+  // console.log(sub_upto.setMonth(sub_upto.getMonth() + tot_tenure),'lo');
+
+  // Use previous calculation date if exists
+  var baseDate = data.cal_upto ? new Date(data.cal_upto) : new Date(trn_dt);
+  
+  var sub_upto = new Date(baseDate);
   sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+
+console.log(sub_upto, 'correct upto');
 
    var finres = await getCurrFinYear();
   var curr_fin_year = finres.curr_fin_year;

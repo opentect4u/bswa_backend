@@ -83,13 +83,13 @@ active_deactiveRouter.post("/change_status", async (req, res) => {
     // DB updated successfully — send SMS
     try {
       if (data.phone_no) {
-        await sendSms(
-          data.phone_no,
-          "NEW_SUBSCRIPTION_FORM_APPROVED",
-          [
-            data.member_id
-          ]
-        );
+        // await sendSms(
+        //   data.phone_no,
+        //   "NEW_SUBSCRIPTION_FORM_APPROVED",
+        //   [
+        //     data.member_id
+        //   ]
+        // );
       }
     } catch (smsErr) {
       console.error("SMS sending failed:", smsErr);

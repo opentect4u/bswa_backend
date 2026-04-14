@@ -151,12 +151,12 @@ upload_child_policyRouter.post('/upload_child_policy', async (req, res) => {
     }
 
     // Insert into td_child_policy
-    const member_fields = '(form_no,form_dt,flag,member_id,member_name,dob,gender,status,age,effective_date,policy_amount,premium_amount,approval_status,trns_type,created_by,created_at)';
+    const member_fields = '(form_no,form_dt,flag,member_id,member_name,dob,gender,marital_status,status,age,phone_no,member_address,gurdian_name,effective_date,policy_amount,premium_amount,approval_status,trns_type,created_by,created_at)';
     const res_member = await db_Insert('td_child_policy', member_fields, td_child_policy_values, null, 0);
 
     // Insert into td_child_policy_dependent
     if (td_child_policy_dependent_values.length > 0) {
-      const dep_fields = '(form_no,member_id,dependent_name,dob,gender,status,age,created_by,created_at)';
+      const dep_fields = '(form_no,member_id,dependent_name,dob,gender,status,age,active_flag,treatment_flag,treatment_dtls,created_by,created_at)';
       await db_Insert('td_child_policy_dependent', dep_fields, td_child_policy_dependent_values, null, 0);
     }
 

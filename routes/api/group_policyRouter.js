@@ -11,6 +11,8 @@ const {
   save_gmp_data,
   saveFiles,
   savegenFiles,
+  reject_dt,
+  save_gp_data,
 } = require("../../modules/group_policyModule");
 const { saveFile } = require("../../modules/associate_formModule");
 
@@ -20,9 +22,9 @@ group_policyRouter.get("/get_member_policy", async (req, res) => {
   var data = req.query,
     res_dt;
   // console.log(data, "hhhh");
-  var select = "member_id",
+  var select = "*",
   table_name = "td_gen_ins",
-  whr = `member_id = '${data.member_id}' AND policy_holder_type = '${data.policy_holder_type}'`,
+  whr = `member_id = '${data.member_id}'`,
   order = null;
  var gmp_exists_dt = await db_Select(select, table_name, whr, order);
 
@@ -41,7 +43,7 @@ var select ="a.sl_no,a.dependent_name,a.relation,a.dob,a.member_id,b.relation_na
     order = null;
 var dep_dt = await db_Select(select, table_name, whr, order);
 
-if (dep_dt.suc > 0 && dep_dt.msg.length > 0) {
+if (res_dt.suc > 0 && res_dt.msg.length > 0) {
   var select =
       "family_catg, family_type, family_type_id, premium1, premium1_flag,premium2,premium2_flag,premium3,premium3_flag",
     table_name = "md_premium_type",
@@ -72,34 +74,35 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     res_dt;
   // console.log(data, "hhhh");
   // if (data.checkedmember) {
-  var select = "policy_holder_type",
-    table_name = "td_gen_ins",
-    where = `member_id = '${data.member_id}' AND form_no = '${data.form_no}'`,
-    order = null;
-  var chk_dt = await db_Select(select, table_name, where, order);
+  // var select = "policy_holder_type",
+  //   table_name = "td_gen_ins",
+  //   where = `member_id = '${data.member_id}' AND form_no = '${data.form_no}'`,
+  //   order = null;
+  // var chk_dt = await db_Select(select, table_name, where, order);
   // console.log(chk_dt, "chk_dt");
-  if (chk_dt.suc > 0 && chk_dt.msg.length > 0) {
-    if (chk_dt.msg[0].policy_holder_type == "M") {
+  // if (chk_dt.suc > 0 && chk_dt.msg.length > 0) {
+    // if (chk_dt.msg[0].policy_holder_type == "M") {
       var select =
         // "a.form_no,a.form_dt,a.memb_type mem_type,a.memb_name,a.memb_oprn,a.gurdian_name,a.gender,a.marital_status,a.dob,a.unit_id",
-        "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.form_status,a.disease_flag,a.disease_type,b.unit_name";
-      (table_name = "td_gen_ins a, md_unit b"),
-        (whr = `a.association = b.unit_id
-        AND a.member_id ='${data.member_id}'
-        AND a.form_no = '${data.form_no}'`),
-        (order = null);
-      res_dt = await db_Select(select, table_name, whr, order);
-    } else {
-      var select =
-          "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.form_status,a.disease_flag,a.disease_type,b.unit_name",
-        table_name = "td_gen_ins a, md_unit b",
+        "a.form_no,a.form_dt,a.flag,a.policy_holder_type policy_id,a.member_id,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.form_status,a.disease_flag,a.disease_type,b.unit_name,c.policy_holder_type";
+        table_name = "td_gen_ins a, md_unit b, md_policy_holder_type c",
         whr = `a.association = b.unit_id
+        AND a.policy_holder_type = c.policy_holder_type_id
         AND a.member_id ='${data.member_id}'
         AND a.form_no = '${data.form_no}'`,
         order = null;
       res_dt = await db_Select(select, table_name, whr, order);
-    }
-  }
+    // } else {
+    //   var select =
+    //       "a.form_no,a.form_dt,a.association,a.memb_type mem_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name gurdian_name,a.sex gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.form_status,a.disease_flag,a.disease_type,b.unit_name",
+    //     table_name = "td_gen_ins a, md_unit b",
+    //     whr = `a.association = b.unit_id
+    //     AND a.member_id ='${data.member_id}'
+    //     AND a.form_no = '${data.form_no}'`,
+    //     order = null;
+    //   res_dt = await db_Select(select, table_name, whr, order);
+    // }
+  // }
 
   if (res_dt > 0 && res_dt.msg.length > 0) {
     var select =
@@ -114,7 +117,7 @@ group_policyRouter.get("/get_member_policy_print", async (req, res) => {
     res_dt.msg[0]["pre_dt"] = pre_dt.suc > 0 ? pre_dt.msg : [];
   }
 
-  console.log(res_dt, "kiki");
+  // console.log(res_dt, "kiki");
   res.send(res_dt);
 });
 
@@ -430,5 +433,92 @@ group_policyRouter.post("/get_grn_ins_dtls_with_member_id", async (req, res) => 
 //   var delete_dt = await db_Insert(table_name, fields, values, whr, flag);
 //   res.send(delete_dt)
 // })
+
+group_policyRouter.post("/search_form_gp", async (req, res) => {
+var data = req.body;
+
+  var select = "form_no,form_dt,member_id,memb_name,form_status",
+    table_name = "td_gen_ins",
+    whr = `(form_no like '%${data.form_no}%' OR memb_name like '%${data.form_no}%') 
+    AND form_status IN('P','R','A')`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  res.send(res_dt);
+});
+
+group_policyRouter.get("/frm_list_gp_policy", async (req, res) => {
+  var data = req.query;
+  
+  var select = "form_no,form_dt,member_id,memb_name,phone,form_status",
+    table_name = "td_gen_ins",
+    whr = `form_status IN('P','R','A')`;
+    order = `ORDER BY form_no desc`;
+  var res_dt_1 = await db_Select(select, table_name, whr, order);
+  res.send(res_dt_1);
+});
+
+group_policyRouter.get("/get_member_policy_print_gp", async (req, res) => {
+  var data = req.query,
+    res_dt;
+      var select =
+          "a.form_no,a.form_dt,a.flag,a.policy_holder_type code,a.member_id,a.association,a.memb_type,a.memb_oprn,a.memb_name,a.phone,a.father_husband_name,a.gender,a.marital_status,a.dob,a.memb_img,a.doc_img,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,a.disease_flag,a.disease_type,a.created_by,a.created_at,a.modified_by,a.modified_at,a.approve_by,a.approve_at,a.rejected_by,a.rejected_dt,b.unit_name,c.policy_holder_type",
+        table_name = "td_gen_ins a LEFT JOIN md_unit b ON a.association = b.unit_id LEFT JOIN md_policy_holder_type c ON a.policy_holder_type = c.policy_holder_type_id",
+        whr = `member_id ='${data.member_id}'
+         AND form_no = '${data.form_no}'`,
+        order = null;
+      res_dt = await db_Select(select, table_name, whr, order);
+  res.send(res_dt);
+});
+
+group_policyRouter.get("/fetch_dependent_details_gp", async (req, res) => {
+  var data = req.query;
+
+  var select = "a.form_no,a.member_id,a.dept_name,a.relation,a.dob,a.dep_img,a.dep_doc,a.disease_flag,a.disease_type,b.relation_name",
+  table_name = "td_gen_ins_depend a LEFT JOIN md_relationship b ON a.relation = b.id",
+  whr = `member_id ='${data.member_id}'
+         AND form_no = '${data.form_no}'`,
+  order = null;
+  var dependent_data = await db_Select(select,table_name,whr,order);
+  res.send(dependent_data);
+});
+
+group_policyRouter.get("/get_gp_transaction", async (req, res) => {
+  var data = req.query;
+  var select =
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,b.premium_amt,b.premium_amt2,b.prm_flag2,b.premium_amt3,b.prm_flag3",
+    table_name = "td_gen_ins a LEFT JOIN td_premium_dtls b ON a.form_no = b.form_no",
+    whr = `a.form_no ='${data.form_no}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  // console.log(res_dt, "kiki");
+  res.send(res_dt);
+});
+
+group_policyRouter.get("/get_gp_transaction_reject", async (req, res) => {
+  var data = req.query;
+  // console.log(data, "hhhh");
+  var select =
+      "a.form_no,a.form_dt,a.member_id,a.remarks,a.form_status,a.resolution_no,a.resolution_dt,a.rejected_by,a.rejected_dt",
+    table_name = "td_gen_ins a",
+    whr = `a.form_no ='${data.form_no}'`,
+    order = null;
+  var res_dt = await db_Select(select, table_name, whr, order);
+  // console.log(res_dt, "kiki");
+  res.send(res_dt);
+});
+
+group_policyRouter.post("/reject_gp_topup", async (req, res) => {
+  var data = req.body;
+  // console.log(data,'reject');
+  var res_dt = await reject_dt(data);
+  res.send(res_dt);
+});
+
+group_policyRouter.post("/save_trn_data_gp", async (req, res) => {
+  var data = req.body;
+  // console.log(data, "trn_data_stp");
+  var res_dt = await save_gp_data(data);
+  res.send(res_dt);
+});
 
 module.exports = { group_policyRouter };

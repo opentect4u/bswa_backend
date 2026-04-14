@@ -7,15 +7,40 @@ const { dynamicFileUpload } = require("../../modules/general_formModule");
 
 memberRouter.post("/member_dtls", async (req, res) => {
   var data = req.body;
+
+  let searchCond = "";
+
+  if(data.search){
+  searchCond = `AND (
+    a.form_no LIKE '%${data.search}%'
+    OR a.member_id LIKE '%${data.search}%'
+    OR a.memb_name LIKE '%${data.search}%'
+  )`;
+  }
+
+  const page = parseInt(data.page) || 1;
+   const limit = parseInt(data.limit) || 10;
+   const offset = (page - 1) * limit;
+
+   // Total Count
+    const countRes = await db_Select(
+      "COUNT(*) total",
+      "md_member a",
+      `a.memb_status = 'A' ${searchCond}`,
+      null
+    );
+    const totalRecords = countRes && countRes.msg && countRes.msg.length > 0 ? countRes.msg[0].total
+    : 0;
+
   var select =
       "a.form_no, a.form_dt, a.member_id, a.mem_dt, a.mem_type, a.memb_oprn, a.memb_name, a.unit_id, a.gurdian_name, a.gender, a.marital_status, a.dob, a.blood_grp, a.caste, a.staff_nos, a.pers_no, a.min_no, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.memb_status, a.remarks, a.resolution_no, a.resolution_dt, b.unit_name",
     table_name = "md_member a LEFT JOIN md_unit b ON a.unit_id = b.unit_id",
     whr = data.flag
-      ? `a.form_no = '${data.form_no}'`
+      ? `a.form_no = '${data.form_no}' AND a.memb_status = 'A' ${searchCond}`
       : data.mem_id
-      ? `a.member_id = '${data.mem_id}'`
-      : null,
-    order = "order by cast(substr(member_id,3) as unsigned)";
+      ? `a.member_id = '${data.mem_id}' AND a.memb_status = 'A' ${searchCond}`
+      : `a.memb_status = 'A' ${searchCond}`,
+    order = `order by cast(substr(member_id,3) as unsigned) LIMIT ${limit} OFFSET ${offset}`;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "iiiii");
   if (data.flag && res_dt.suc > 0 && res_dt.msg.length > 0) {
@@ -28,7 +53,7 @@ memberRouter.post("/member_dtls", async (req, res) => {
         isAI ? "a.relation in (3, 15)"
           : `a.intro_member_id is not null`
       } AND a.delete_flag = 'N'`,
-      order = "order by sl_no";
+      order = `order by sl_no LIMIT ${limit} OFFSET ${offset}`;
     var spou_dt = await db_Select(select, table_name, whr, order);
 
     var select =
@@ -49,7 +74,11 @@ memberRouter.post("/member_dtls", async (req, res) => {
       // member.dep_dt = dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
       member.dep_dt = dep_dt.suc > 0 ? dep_dt.msg : [];
   }
-  res.send(res_dt);
+  res.send({
+    suc: 1,
+    msg: res_dt.msg || [],
+    total: totalRecords
+});
 });
 
 memberRouter.post("/update_member_dtls", async (req, res) => {

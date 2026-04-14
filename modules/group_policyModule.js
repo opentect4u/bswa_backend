@@ -16,6 +16,7 @@ const {
 } = require("./MasterModule");
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
 const { dynamicFileUpload } = require("./associate_formModule");
+const { sendSms } = require("./smsModule");
 
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
@@ -208,7 +209,9 @@ module.exports = {
           var i = 0
           for (let dt of JSON.parse(data.dependent_dt)) {
             fields = `(form_no,sl_no,member_id,dept_name,relation,disease_flag,disease_type,dob ${depDocFilePath != '' ? ', dep_img' : ''} ${depAddFilePath != '' ? ', dep_doc' : ''},created_by,created_at)`;
-            values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases == 'Y' ? 'Y' : 'N'}',${dt.name_diseases ? dt.name_diseases : 'NULL'},'${dt.dob}' ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''} ${depAddFileName.length > i && depAddFileName[i].fileName ? `, '${depAddFileName[i].fileName}'` : ''},'${data.member}','${datetime}')`;
+            values = `('${form_no}','${dt.sl_no}','${data.member_id}','${dt.dependent_name}','${dt.relation}','${dt.type_diseases == 'Y' ? 'Y' : 'N'}',
+            ${dt.name_diseases ? `'${dt.name_diseases}'` : 'NULL'},
+            '${dt.dob}' ${depDocFileName.length > i && depDocFileName[i].fileName ? `, '${depDocFileName[i].fileName}'` : ''} ${depAddFileName.length > i && depAddFileName[i].fileName ? `, '${depAddFileName[i].fileName}'` : ''},'${data.member}','${datetime}')`;
             table_name = "td_gen_ins_depend";
             whr = null;
             order = null;
@@ -775,5 +778,73 @@ module.exports = {
         // }
       // }
     });
+  },
+
+   reject_dt: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      var fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject.split("'").join("\\'")}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        table_name = "td_gen_ins",
+        values = null,
+        whr = `form_no = '${data.formNo}'`,
+        flag = 1;
+      var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
+
+       // SEND SMS AFTER FORM REJECT //
+       try{
+          // ✅ Trim member name to 30 characters max
+          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+          const phone = data.phone_no;
+          const form_no = data.formNo;
+
+           // Send SMS
+           let smsRes = await sendSms(
+           phone,
+            "FORM_REJECTION",
+          [
+           memb_name,
+           form_no
+           ]);
+          console.log("SMS Response:", smsRes, phone);
+        }catch(err){
+          console.log("Error in sending SMS",err);
+        }
+      resolve(mem_dt);
+    });
+  },
+
+     save_gp_data: (data) => {
+    return new Promise(async (resolve, reject) => {
+      let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      let year = dateFormat(new Date(), "yyyy");
+
+      const no = await getMaxTrnId();
+      let trn_id = `${year}${no.msg[0].max_trn_id}`;
+      // console.log(trn_id,'trn');
+      
+      let approveSuccess = false;
+
+        var table_name = "td_gen_ins",
+        fields = `resolution_dt = '${data.resolution_dt}',form_status = '${data.status}',resolution_no ='${data.resolution_no}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        values = null,
+        whr = `form_no = '${data.formNo}'`,
+        flag = 1;
+        var trns_data = await db_Insert(table_name,fields,values,whr,flag);
+        trns_data["trn_id"] = trn_id;
+
+          if(trns_data.suc > 0){
+        var table_name = "md_user",
+        fields = `user_status = 'A',gp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+        values = null,
+        whr = `gp_form_no = '${data.formNo}'`,
+        flag = 1;
+        var trn_data = await db_Insert(table_name,fields,values,whr,flag);
+
+         if (trn_data.suc > 0) {
+           approveSuccess = true;
+             }
+        }
+        resolve(trn_data)
+      });
   },
 };
