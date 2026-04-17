@@ -767,19 +767,26 @@ const generateNextSubDate = (calc_upto, sub_type, paid_month_amt, sub_fee) => {
         
         break;
 
-      default:
-        var tot_tenure =
-          sub_fee > 0 ? (paid_month_amt / sub_fee) : 0;
-        var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
-        if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
-        if(sub_upto.getFullYear() != sub_year){
-          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
-        }else{
-          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
-        }
+        default:
+      var tot_tenure =
+        sub_fee > 0 ? paid_month_amt / sub_fee : 0;
+      sub_upto.setMonth(sub_upto.getMonth() + tot_tenure-1);
+      break;
+
+      // default:
+      //   var tot_tenure =
+      //     sub_fee > 0 ? (paid_month_amt / sub_fee) : 0;
+
+      //   var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
+      //   if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
+      //   if(sub_upto.getFullYear() != sub_year){
+      //     sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
+      //   }else{
+      //     sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
+      //   }
         
-        sub_upto = new Date(sub_year, sub_mon, 0)
-        break;
+      //   sub_upto = new Date(sub_year, sub_mon, 0)
+      //   break;
     }
     resolve(sub_upto)
   })
