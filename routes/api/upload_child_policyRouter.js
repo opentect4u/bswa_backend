@@ -37,6 +37,137 @@ const getMaxFormNo = (flag) => {
   });
 };
 
+// upload_child_policyRouter.post('/upload_child_policy', async (req, res) => {
+//   const data = req.body.data;
+//   // console.log(data);
+
+//   const datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+//   const year = dateFormat(new Date(), "yyyy");
+//   const created_by = 'Sail';
+
+//   if (!Array.isArray(data) || data.length === 0) {
+//     return res.json({ message: 'No data received' });
+//   }
+
+//   function quote(val, isDate = false) {
+//     if (val === null || val === undefined || val === '') return 'NULL';
+//     if (isDate) return `'${val}'`;
+//     if (typeof val === 'number') return val;
+//     return `'${String(val).replace(/'/g, "''")}'`;
+//   }
+
+//   function cleanDate(dateStr) {
+//     if (!dateStr) return null;
+//     const d = dateStr.toString().trim().replace(/\//g, '-');
+//     if (/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+//     return null;
+//   }
+
+//   try {
+//     const prefix = 'CP' + `${year}`;
+//     const formNoMap = {}; // Stores numeric max form number
+//     const td_child_policy_values = [];
+//     const td_child_policy_dependent_values = [];
+
+//     // Fetch and store the current max form number (as integer)
+//     if (!formNoMap[prefix]) {
+//       const maxFormRaw = await getMaxFormNo(prefix); // Returns number
+//       formNoMap[prefix] = maxFormRaw; // e.g., 124
+//     }
+
+//     const memberMap = new Map();
+
+//     // Group data by memberNo
+//     for (const row of data) {
+//       if (!memberMap.has(row.memberNo)) {
+//         memberMap.set(row.memberNo, []);
+//       }
+//       memberMap.get(row.memberNo).push(row);
+//     }
+
+//     // Process each member and their dependents
+//     for (const [memberNo, rows] of memberMap.entries()) {
+//       const datetimeNow = `'${datetime}'`;
+//       formNoMap[prefix] += 1; // Increment ONCE per member group
+//       const paddedNum = formNoMap[prefix].toString().padStart(6, '0');
+//       const form_no = `${prefix}${paddedNum}`;
+
+//       for (const row of rows) {
+//         const dobClean = cleanDate(row.dob);
+//         const effDateClean = cleanDate(row.effectiveDate);
+
+//         // Validate age
+//         const ageVal = Number(row.age);
+//         if (isNaN(ageVal)) {
+//           console.warn(`Skipping row due to invalid age (memberNo: ${row.memberNo}):`, row.age);
+//           continue;
+//         }
+
+//         if (row.status === 'SELF') {
+//           td_child_policy_values.push(`(
+//             '${form_no}',
+//             ${datetimeNow},
+//             'CP',
+//             ${quote(row.memberNo)},
+//             ${quote(row.name)},
+//             ${quote(dobClean, true)},
+//             ${quote(row.gender)},
+//             ${quote(row.status)},
+//             ${ageVal},
+//             ${quote(effDateClean, true)},
+//             ${quote(row.policyAmount)},
+//             ${quote(row.premium)},
+//             'A',
+//             'Online',
+//             ${quote(created_by)},
+//             ${datetimeNow}
+//           )`);
+
+//           td_child_policy_dependent_values.push(`(
+//             '${form_no}',
+//             ${quote(row.memberNo)},
+//             ${quote(row.name)},
+//             ${quote(dobClean, true)},
+//             ${quote(row.gender)},
+//             ${quote(row.status)},
+//             ${ageVal},
+//             ${quote(created_by)},
+//             ${datetimeNow}
+//           )`);
+//         } else {
+//           td_child_policy_dependent_values.push(`(
+//             '${form_no}',
+//             ${quote(row.memberNo)},
+//             ${quote(row.dependname)},
+//             ${quote(dobClean, true)},
+//             ${quote(row.gender)},
+//             ${quote(row.status)},
+//             ${ageVal},
+//             ${quote(created_by)},
+//             ${datetimeNow}
+//           )`);
+//         }
+//       }
+//     }
+
+//     // Insert into td_child_policy
+//     const member_fields = '(form_no,form_dt,flag,member_id,member_name,dob,gender,marital_status,status,age,phone_no,member_address,gurdian_name,effective_date,policy_amount,premium_amount,approval_status,trns_type,created_by,created_at)';
+//     const res_member = await db_Insert('td_child_policy', member_fields, td_child_policy_values, null, 0);
+
+//     // Insert into td_child_policy_dependent
+//     if (td_child_policy_dependent_values.length > 0) {
+//       const dep_fields = '(form_no,member_id,dependent_name,dob,gender,status,age,active_flag,treatment_flag,treatment_dtls,created_by,created_at)';
+//       await db_Insert('td_child_policy_dependent', dep_fields, td_child_policy_dependent_values, null, 0);
+//     }
+
+//     res.json({ message: 'Data inserted successfully', inserted: { members: res_member } });
+
+//   } catch (err) {
+//     console.error('DB Insert Error:', err);
+//     res.json({ message: 'Database insert failed', error: err });
+//   }
+// });
+
 upload_child_policyRouter.post('/upload_child_policy', async (req, res) => {
   const data = req.body.data;
   // console.log(data);
@@ -151,12 +282,12 @@ upload_child_policyRouter.post('/upload_child_policy', async (req, res) => {
     }
 
     // Insert into td_child_policy
-    const member_fields = '(form_no,form_dt,flag,member_id,member_name,dob,gender,marital_status,status,age,phone_no,member_address,gurdian_name,effective_date,policy_amount,premium_amount,approval_status,trns_type,created_by,created_at)';
+    const member_fields = '(form_no,form_dt,flag,member_id,member_name,dob,gender,status,age,effective_date,policy_amount,premium_amount,approval_status,trns_type,created_by,created_at)';
     const res_member = await db_Insert('td_child_policy', member_fields, td_child_policy_values, null, 0);
 
     // Insert into td_child_policy_dependent
     if (td_child_policy_dependent_values.length > 0) {
-      const dep_fields = '(form_no,member_id,dependent_name,dob,gender,status,age,active_flag,treatment_flag,treatment_dtls,created_by,created_at)';
+      const dep_fields = '(form_no,member_id,dependent_name,dob,gender,status,age,created_by,created_at)';
       await db_Insert('td_child_policy_dependent', dep_fields, td_child_policy_dependent_values, null, 0);
     }
 
