@@ -499,6 +499,32 @@ super_policyRouter.post("/fetch_member_details_fr_stp_policy", async (req, res) 
 //   }
 // });
 
+// fetch si/premium amount
+// super_policyRouter.post("/sum_insured_list", async (req, res) => {
+// try{
+// const data = req.body;
+
+// var select = "policy_amount",
+// table_name = "md_stp_premium_type",
+// whr = ;
+// order = null;
+// var pol_list = await db_Select(select,table_name,whr,order);
+
+// if(pol_list.suc > 0 && pol_list.msg.length > 0){
+//   return res.send({
+//       suc: 1,
+//       msg: pol_list
+//     });
+// }
+// }catch (err) {
+//     console.error("Error in fetch sum insured amount:", err);
+//     return res.send({
+//       suc: 0,
+//       error: "Internal Server Error"
+//     });
+//   }
+// });
+
 super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
   try {
     const data = req.body;
@@ -533,19 +559,24 @@ super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
 
     // Fetch premium amount
     const premiumResult = await db_Select(
-      "premium_amt",
+      "policy_amount,premium_amt",
       "md_stp_premium_type",
       `financial_year = '${maxFinancialYear}' AND premium_type = '${premium_type}'`,
       null
     );
 
-    const premium_amt = premiumResult.msg[0].premium_amt || null;
+    // const policy_amt = premiumResult.msg[0].policy_amount || null;
+    // const premium_amt = premiumResult.msg[0].premium_amt || null;
+
+    const policy_amt = premiumResult.msg.map(item => item.policy_amount);
+    const premium_amt = premiumResult.msg.map(item => item.premium_amt);
 
     // If premium amount not found, send suc = 0
-    if (!premium_amt) {
+    if (!policy_amt || !premium_amt) {
       return res.send({
         suc: 0,
         financial_year: maxFinancialYear,
+        policy_amt: null,
         premium_amt: null,
         msg: "Premium amount not found."
       });
@@ -556,6 +587,7 @@ super_policyRouter.post("/fetch_max_premium_amt", async (req, res) => {
       suc: 1,
       premium_type,
       financial_year: maxFinancialYear,
+      policy_amt,
       premium_amt
     });
 
@@ -649,8 +681,8 @@ super_policyRouter.post("/fetch_stp_trans_dtls", async (req, res) => {
  try{
    var data = req.body;
 
-   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.premium_type",
-   table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no",
+   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.premium_type,c.policy_amount",
+   table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no LEFT JOIN md_stp_premium_type c ON b.premium_type = c.premium_type AND a.premium_amt = c.premium_amt",
    whr = `a.form_no = '${data.form_no}'`,
    order = null;
    var fetch_stp_transaction = await db_Select(select,table_name,whr,order);
