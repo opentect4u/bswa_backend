@@ -566,6 +566,8 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
   a.premium_amt,
   a.tot_amt,
   a.pay_mode,
+  d.premium_type,
+  f.policy_amount,
   a.receipt_no,
   a.chq_no,
   a.chq_dt,
@@ -607,7 +609,7 @@ SubsDepoRouter.post("/user_money_receipt", async (req, res) => {
     WHEN LEFT(a.form_no, 3) = 'STP' AND d.policy_holder_type IS NOT NULL THEN d.policy_holder_type
     ELSE c.policy_holder_type
   END AS mem_type`,
-    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no LEFT JOIN td_child_policy e ON a.form_no = e.form_no",
+    table_name = "td_transactions a LEFT JOIN md_member b ON a.form_no = b.form_no LEFT JOIN td_gen_ins c ON a.form_no = c.form_no LEFT JOIN td_stp_ins d ON a.form_no = d.form_no LEFT JOIN td_child_policy e ON a.form_no = e.form_no LEFT JOIN md_stp_premium_type f ON d.premium_type = f.premium_type AND a.premium_amt = f.premium_amt",
      whr = `a.trn_id = '${data.trn_id}'`,
     order = null;
   var res_dt = await db_Select(select, table_name, whr, order);
