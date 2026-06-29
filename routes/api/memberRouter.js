@@ -10,8 +10,8 @@ memberRouter.post("/member_dtls", async (req, res) => {
 
   let searchCond = "";
 
-  if(data.search){
-  searchCond = `AND (
+  if (data.search) {
+    searchCond = `AND (
     a.form_no LIKE '%${data.search}%'
     OR a.member_id LIKE '%${data.search}%'
     OR a.memb_name LIKE '%${data.search}%'
@@ -19,82 +19,85 @@ memberRouter.post("/member_dtls", async (req, res) => {
   }
 
   const page = parseInt(data.page) || 1;
-   const limit = parseInt(data.limit) || 10;
-   const offset = (page - 1) * limit;
+  const limit = parseInt(data.limit) || 10;
+  const offset = (page - 1) * limit;
 
-   // Total Count
-    const countRes = await db_Select(
-      "COUNT(*) total",
-      "md_member a",
-      `a.memb_status = 'A' ${searchCond}`,
-      null
-    );
-    const totalRecords = countRes && countRes.msg && countRes.msg.length > 0 ? countRes.msg[0].total
+  // Total Count
+  const countRes = await db_Select(
+    "COUNT(*) total",
+    "md_member a",
+    `a.memb_status = 'A' ${searchCond}`,
+    null
+  );
+  const totalRecords = countRes && countRes.msg && countRes.msg.length > 0 ? countRes.msg[0].total
     : 0;
 
   var select =
-      "a.form_no, a.form_dt, a.member_id, a.mem_dt, a.mem_type, a.memb_oprn, a.memb_name, a.unit_id, a.gurdian_name, a.gender, a.marital_status, a.dob, a.blood_grp, a.caste, a.staff_nos, a.pers_no, a.min_no, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.memb_status, a.remarks, a.resolution_no, a.resolution_dt, b.unit_name",
+    "a.form_no, a.form_dt, a.member_id, a.mem_dt, a.mem_type, a.memb_oprn, a.memb_name, a.unit_id, a.gurdian_name, a.gender, a.marital_status, a.dob, a.blood_grp, a.caste, a.staff_nos, a.pers_no, a.min_no, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.memb_status, a.remarks, a.resolution_no, a.resolution_dt, b.unit_name",
     table_name = "md_member a LEFT JOIN md_unit b ON a.unit_id = b.unit_id",
     whr = data.flag
       ? `a.form_no = '${data.form_no}' AND a.memb_status = 'A' ${searchCond}`
       : data.mem_id
-      ? `a.member_id = '${data.mem_id}' AND a.memb_status = 'A' ${searchCond}`
-      : `a.memb_status = 'A' ${searchCond}`,
+        ? `a.member_id = '${data.mem_id}' AND a.memb_status = 'A' ${searchCond}`
+        : `a.memb_status = 'A' ${searchCond}`,
     order = `order by cast(substr(member_id,3) as unsigned) LIMIT ${limit} OFFSET ${offset}`;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log(res_dt, "iiiii");
   if (data.flag && res_dt.suc > 0 && res_dt.msg.length > 0) {
     const member = res_dt.msg[0];
-  const isAI = member.mem_type === "AI";
+    const isAI = member.mem_type === "AI";
     var select =
-        "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no, b.relation_name",
+      "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no, b.relation_name",
       table_name = "md_dependent a, md_relationship b",
-      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${
-        isAI ? "a.relation in (3, 15)"
+      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${isAI ? "a.relation in (3, 15)"
           : `a.intro_member_id is not null`
-      } AND a.delete_flag = 'N'`,
+        } AND a.delete_flag = 'N'`,
       order = `order by sl_no LIMIT ${limit} OFFSET ${offset}`;
     var spou_dt = await db_Select(select, table_name, whr, order);
 
     var select =
-        "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no,b.relation_name",
+      "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no,b.relation_name",
       table_name = "md_dependent a, md_relationship b",
-      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${
-        isAI ? "a.relation not in (3, 15)"
+      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${isAI ? "a.relation not in (3, 15)"
           : `a.intro_member_id is null`
-      } AND a.delete_flag = 'N'`,
+        } AND a.delete_flag = 'N'`,
       order = "order by sl_no";
     var dep_dt = await db_Select(select, table_name, whr, order);
 
     // res_dt.msg[0]["spou_dt"] =
-      // spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg[0] : {}) : {};
-      // member.spou_dt = spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : {};
-      member.spou_dt = spou_dt.suc > 0 ? spou_dt.msg : [];
+    // spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg[0] : {}) : {};
+    // member.spou_dt = spou_dt.suc > 0 ? (spou_dt.msg.length > 0 ? spou_dt.msg : []) : {};
+    member.spou_dt = spou_dt.suc > 0 ? spou_dt.msg : [];
     // res_dt.msg[0]["dep_dt"] =
-      // member.dep_dt = dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
-      member.dep_dt = dep_dt.suc > 0 ? dep_dt.msg : [];
+    // member.dep_dt = dep_dt.suc > 0 ? (dep_dt.msg.length > 0 ? dep_dt.msg : []) : [];
+    member.dep_dt = dep_dt.suc > 0 ? dep_dt.msg : [];
   }
   res.send({
     suc: 1,
     msg: res_dt.msg || [],
     total: totalRecords
-});
+  });
 });
 
 memberRouter.post("/update_member_dtls", async (req, res) => {
   var data = req.body;
-  // var data = req.body.data;
-  // data = JSON.parse(data);
-  console.log(data,'data');
-
-   if (data.spouse_fr && typeof data.spouse_fr === "string") {
-      data.spouse_fr = JSON.parse(data.spouse_fr);
+  if (data.data) {
+    if (typeof data.data === 'string') {
+      data = JSON.parse(data.data);
+    } else {
+      data = data.data;
     }
+  }
+  console.log(data, 'data');
 
-    if (data.depenFields && typeof data.depenFields === "string") {
-      data.depenFields = JSON.parse(data.depenFields);
-    }
-  
+  if (data.spouse_fr && typeof data.spouse_fr === "string") {
+    data.spouse_fr = JSON.parse(data.spouse_fr);
+  }
+
+  if (data.depenFields && typeof data.depenFields === "string") {
+    data.depenFields = JSON.parse(data.depenFields);
+  }
+
   var spu_file = req.files ? req.files.spouse_file : null,
     mem_file = req.files ? req.files.member_file : null,
 
@@ -123,19 +126,19 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
   let final_marital_status = "S";
 
   // 1️⃣ If member operation is selected (highest priority)
-if (data.member_opt) {
+  if (data.member_opt) {
     if (data.member_opt === "J") {
-        final_marital_status = "J";
+      final_marital_status = "J";
     } else if (data.member_opt === "S") {
-        final_marital_status = "S";
-    } 
-}
-// 2️⃣ Otherwise apply your original rule
-else if (data.marital_status === "M" && data.mem_type === "AI") {
+      final_marital_status = "S";
+    }
+  }
+  // 2️⃣ Otherwise apply your original rule
+  else if (data.marital_status === "M" && data.mem_type === "AI") {
     final_marital_status = "J";
-} else {
+  } else {
     final_marital_status = "S";
-}
+  }
 
   if (spu_file) {
     var fileName = data.form_no + "_" + nowTime + "_" + spu_file.name;
@@ -152,124 +155,102 @@ else if (data.marital_status === "M" && data.mem_type === "AI") {
   var datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
   let genDobSql = "NULL";
-if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
-  genDobSql = `'${dateFormat(new Date(data.gen_dob), "yyyy-mm-dd")}'`;
-}
+  if (data.gen_dob && !isNaN(new Date(data.gen_dob))) {
+    genDobSql = `'${dateFormat(new Date(data.gen_dob), "yyyy-mm-dd")}'`;
+  }
 
 
   var table_name = "md_member",
-    fields = `mem_type = '${data.mem_type}', memb_oprn = '${final_marital_status}', memb_name = '${data.member}', unit_id = '${data.unit_nm > 0 ? data.unit_nm : 0}', gurdian_name = '${data.gurdian}', gender = '${
-      data.gen ? data.gen : "M"
-    }', marital_status = '${
-      data.marital_status ? data.marital_status : "N"
-    }', dob = ${genDobSql} ${
-      data.blood ? `, blood_grp = '${data.blood}'` : ""
-    } ${data.caste ? `, caste = '${data.caste}'` : ""} ${
-      data.staff ? `, staff_nos = '${data.staff}'` : ""
-    } ${data.personal ? `, pers_no = '${data.personal}'` : ""}, min_no = '${
-      data.min
-    }', memb_address = "${data.mem}" ${
-      data.police_st ? `, ps = '${data.police_st}'` : ""
-    } ${data.city ? `, city_town_dist = '${data.city}'` : ""} ,pin_no = ${data.pin !== null ? `'${data.pin}'` : 'NULL'}, phone_no = '${data.phone}', email_id = ${data.email_id !== null ? `'${data.email_id}'` : 'NULL'} ${ownFile_name ? `, memb_pic = '${ownFile_name}'` : ""}, modified_by = '${
-      data.user
-    }', modified_at = '${datetime}'`,
+    fields = `mem_type = '${data.mem_type}', memb_oprn = '${final_marital_status}', memb_name = '${data.member}', unit_id = '${data.unit_nm > 0 ? data.unit_nm : 0}', gurdian_name = '${data.gurdian}', gender = '${data.gen ? data.gen : "M"
+      }', marital_status = '${data.marital_status ? data.marital_status : "N"
+      }', dob = ${genDobSql} ${data.blood ? `, blood_grp = '${data.blood}'` : ""
+      } ${data.caste ? `, caste = '${data.caste}'` : ""} ${data.staff ? `, staff_nos = '${data.staff}'` : ""
+      } ${data.personal ? `, pers_no = '${data.personal}'` : ""}, min_no = '${data.min
+      }', memb_address = "${data.mem}" ${data.police_st ? `, ps = '${data.police_st}'` : ""
+      } ${data.city ? `, city_town_dist = '${data.city}'` : ""} ,pin_no = ${data.pin !== null ? `'${data.pin}'` : 'NULL'}, phone_no = '${data.phone}', email_id = ${data.email_id !== null ? `'${data.email_id}'` : 'NULL'} ${ownFile_name ? `, memb_pic = '${ownFile_name}'` : ""}, modified_by = '${data.user
+      }', modified_at = '${datetime}'`,
     values = null,
     whr = `form_no = '${data.form_no}'`,
     flag = 1;
   var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
   if (res_dt.suc <= 0) {
-      return res.send({
-        success: false,
-        msg: "Member update failed",
-      });
-    }
+    return res.send({
+      success: false,
+      msg: "Member update failed",
+    });
+  }
 
   // if (res_dt.suc > 0 && data.spouse_fr && data.spouse_fr.sl_no && Number(data.spouse_fr.sl_no) > 0) {
   if (data.spouse_fr && data.spouse_fr.sl_no && Number(data.spouse_fr.sl_no) > 0) {
-   var table_name = "md_dependent",
-    fields = `dependent_name = '${data.spouse_fr.spou_name}' ${
-      data.spouse_fr.spou_gurd_name
-        ? `, gurdian_name = '${data.spouse_fr.spou_gurd_name}'`
-        : ""
-    } ${
-      data.spouse_fr.spou_min_no
-        ? `, min_no = '${data.spouse_fr.spou_min_no}'`
-        : ""
-    } ${
-      data.spouse_fr.spou_dob
-        ? `, dob = '${data.spouse_fr.spou_dob}'`
-        : ""
-    } ${
-      data.spouse_fr.spou_mem_addr
-        ? `, memb_address = "${data.spouse_fr.spou_mem_addr}"`
-        : ""
-    } ${
-      data.spouse_fr.spou_police_st
-        ? `, ps = '${data.spouse_fr.spou_police_st}'`
-        : ""
-    } ${
-      data.spouse_fr.spou_city
-        ? `, city_town_dist = '${data.spouse_fr.spou_city}'`
-        : ""
-    } ${
-      data.spouse_fr.spou_mobile_no
-        ? `, phone_no = '${data.spouse_fr.spou_mobile_no}'`
-        : ""
-    } ${
-      spuseFile_name ? `, memb_pic = '${spuseFile_name}'` : ""
-    }, modified_by = '${data.user}', modified_at = '${datetime}'`,
+    var table_name = "md_dependent",
+      fields = `dependent_name = '${data.spouse_fr.spou_name}' ${data.spouse_fr.spou_gurd_name
+          ? `, gurdian_name = '${data.spouse_fr.spou_gurd_name}'`
+          : ""
+        } ${data.spouse_fr.spou_min_no
+          ? `, min_no = '${data.spouse_fr.spou_min_no}'`
+          : ""
+        } ${data.spouse_fr.spou_dob
+          ? `, dob = '${data.spouse_fr.spou_dob}'`
+          : ""
+        } ${data.spouse_fr.spou_mem_addr
+          ? `, memb_address = "${data.spouse_fr.spou_mem_addr}"`
+          : ""
+        } ${data.spouse_fr.spou_police_st
+          ? `, ps = '${data.spouse_fr.spou_police_st}'`
+          : ""
+        } ${data.spouse_fr.spou_city
+          ? `, city_town_dist = '${data.spouse_fr.spou_city}'`
+          : ""
+        } ${data.spouse_fr.spou_mobile_no
+          ? `, phone_no = '${data.spouse_fr.spou_mobile_no}'`
+          : ""
+        } ${spuseFile_name ? `, memb_pic = '${spuseFile_name}'` : ""
+        }, modified_by = '${data.user}', modified_at = '${datetime}'`,
       values = null,
       whr = `form_no = '${data.form_no}' AND sl_no = ${data.spouse_fr.sl_no}`,
       flag = 1;
     var spou_dt = await db_Insert(table_name, fields, values, whr, flag);
   }
 
-    if (Array.isArray(data.depenFields)) {
+  if (Array.isArray(data.depenFields)) {
     // if (res_dt.suc > 0 && Array.isArray(data.depenFields.length > 0) {
-      for (let dt of data.depenFields) {
-        // var table_name = "md_dependent",
-        //   fields = `dependent_name = '${dt.dependent_name}, phone_no = '${dt.phone_no}', relation = '${dt.relation}', dob = '${dt.dob_dep}', modified_by = '${data.user}', modified_at = '${datetime}'`,
-        //   values = null,
-        //   whr = `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`,
-        //   flag = 1;
-        // var dep_dt = await db_Insert(table_name, fields, values, whr, flag);
+    for (let dt of data.depenFields) {
+      // var table_name = "md_dependent",
+      //   fields = `dependent_name = '${dt.dependent_name}, phone_no = '${dt.phone_no}', relation = '${dt.relation}', dob = '${dt.dob_dep}', modified_by = '${data.user}', modified_at = '${datetime}'`,
+      //   values = null,
+      //   whr = `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`,
+      //   flag = 1;
+      // var dep_dt = await db_Insert(table_name, fields, values, whr, flag);
 
-        var table_name = "md_dependent",
-          fields =
-            dt.sl_no > 0
-              ? `dependent_name = '${dt.dependent_name}' ${
-                  dt.phone_no ? `, phone_no = '${dt.phone_no}'` : ""
-                } ${ dt.relation ? `, relation = '${dt.relation}'` : ""} ${
-                  dt.dob_dep ? `, dob = '${dt.dob_dep}'` : ""
-                }, modified_by = '${data.user}', modified_at = '${datetime}'`
-              : `(form_no, sl_no, member_id, mem_type, dependent_name, relation ${
-                  dt.dob_dep ? ", dob" : ""
-                } ${dt.phone_no ? ", phone_no" : ""}, created_by, created_at)`,
-          values = `SELECT '${data.form_no}', count(sl_no)+1, '${
-            data.mem_id
-          }', '${data.mem_type}', '${dt.dependent_name}', ${dt.relation ? `, '${dt.relation}'` : ""} ${
-            dt.dob_dep ? `, '${dt.dob_dep}'` : ""
-          } ${dt.phone_no ? `, '${dt.phone_no}'` : ""}, '${
-            data.user
-          }', '${datetime}' from md_dependent WHERE form_no = '${
-            data.form_no
+      var table_name = "md_dependent",
+        fields =
+          dt.sl_no > 0
+            ? `dependent_name = '${dt.dependent_name}' ${dt.phone_no ? `, phone_no = '${dt.phone_no}'` : ""
+            } ${dt.relation ? `, relation = '${dt.relation}'` : ""} ${dt.dob_dep ? `, dob = '${dt.dob_dep}'` : ""
+            }, modified_by = '${data.user}', modified_at = '${datetime}'`
+            : `(form_no, sl_no, member_id, mem_type, dependent_name, relation ${dt.dob_dep ? ", dob" : ""
+            } ${dt.phone_no ? ", phone_no" : ""}, created_by, created_at)`,
+        values = `SELECT '${data.form_no}', count(sl_no)+1, '${data.mem_id
+          }', '${data.mem_type}', '${dt.dependent_name}', ${dt.relation ? `, '${dt.relation}'` : ""} ${dt.dob_dep ? `, '${dt.dob_dep}'` : ""
+          } ${dt.phone_no ? `, '${dt.phone_no}'` : ""}, '${data.user
+          }', '${datetime}' from md_dependent WHERE form_no = '${data.form_no
           }'`,
-          whr =
-            dt.sl_no > 0
-              ? `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`
-              : null,
-          flag = dt.sl_no > 0 ? 1 : 0;
-        var dep_dt = await db_Insert(
-          table_name,
-          fields,
-          values,
-          whr,
-          flag,
-          true
-        );
-      }
+        whr =
+          dt.sl_no > 0
+            ? `form_no = '${data.form_no}' AND sl_no = ${dt.sl_no}`
+            : null,
+        flag = dt.sl_no > 0 ? 1 : 0;
+      var dep_dt = await db_Insert(
+        table_name,
+        fields,
+        values,
+        whr,
+        flag,
+        true
+      );
     }
+  }
   res.send(res_dt);
 });
 
@@ -334,12 +315,12 @@ LEFT JOIN td_memb_subscription c
         FROM td_memb_subscription
         WHERE member_id = a.form_no AND trans_id < b.trans_id
     )`
-    whr = `a.approval_status IN('A','U') ${data.form_no ? `AND a.form_no IN (${data.form_no})` : ''} ${data.trn_id > 0 ? `AND a.trn_id = ${data.trn_id}` : ""}`,
+  whr = `a.approval_status IN('A','U') ${data.form_no ? `AND a.form_no IN (${data.form_no})` : ''} ${data.trn_id > 0 ? `AND a.trn_id = ${data.trn_id}` : ""}`,
     // order = `ORDER BY trn_dt, trn_id`;
     order = `ORDER BY a.trn_dt DESC`;
   var res_dt = await db_Select(select, table_name, whr, order);
   // console.log("Database result:", res_dt);
-    res.send(res_dt);
+  res.send(res_dt);
 });
 
 memberRouter.post("/insurance_dtls", async (req, res) => {
@@ -347,7 +328,7 @@ memberRouter.post("/insurance_dtls", async (req, res) => {
   // console.log(data, "log");
 
   var select =
-      "a.*,b.sl_no,b.ind_type,b.fin_year,b.particulars,b.amount,b.treatment_dtls,c.unit_name",
+    "a.*,b.sl_no,b.ind_type,b.fin_year,b.particulars,b.amount,b.treatment_dtls,c.unit_name",
     table_name =
       "td_stp_ins a LEFT JOIN td_stp_dtls b ON a.form_no = b.form_no LEFT JOIN md_unit c ON a.association = c.unit_id",
     whr = `a.member_id = '${data.mem_id}'`,
@@ -388,16 +369,16 @@ memberRouter.post("/insurance_dtls", async (req, res) => {
 
 memberRouter.post("/delete_depend", async (req, res) => {
   var data = req.body;
-  console.log(data,'log');
-  
+  console.log(data, 'log');
+
 
   let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-  
+
   var table_name = "md_dependent",
-  fields = `delete_flag = 'Y', deleted_by = '${data.user}', deleted_at = '${datetime}'`,
-  values = null,
-  whr = `member_id = '${data.member_id}' AND sl_no = '${data.sl_no}'`,
-  flag = 1;
+    fields = `delete_flag = 'Y', deleted_by = '${data.user}', deleted_at = '${datetime}'`,
+    values = null,
+    whr = `member_id = '${data.member_id}' AND sl_no = '${data.sl_no}'`,
+    flag = 1;
   var delete_dt = await db_Insert(table_name, fields, values, whr, flag);
   res.send(delete_dt)
 })
