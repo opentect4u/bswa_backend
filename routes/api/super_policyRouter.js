@@ -684,7 +684,7 @@ super_policyRouter.post("/fetch_stp_trans_dtls", async (req, res) => {
    var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.approval_status,b.premium_type,c.policy_amount",
    table_name = "td_transactions a LEFT JOIN td_stp_ins b ON a.form_no = b.form_no LEFT JOIN md_stp_premium_type c ON b.premium_type = c.premium_type AND a.premium_amt = c.premium_amt",
    whr = `a.form_no = '${data.form_no}'`,
-   order = null;
+   order = `ORDER BY a.trn_dt desc`;
    var fetch_stp_transaction = await db_Select(select,table_name,whr,order);
    res.send(fetch_stp_transaction)
    console.log(fetch_stp_transaction,'fetch');

@@ -300,77 +300,77 @@ upload_child_policyRouter.post('/upload_child_policy', async (req, res) => {
 });
 
 upload_child_policyRouter.post("/fetch_member_details_fr_child_policy", async (req, res) => {
-  try{
-   var data = req.body;
-  //  console.log(data,'datac');
-   
-   var select = "a.form_no,a.form_dt,a.flag,a.member_id,a.member_name,a.dob,a.gender,a.status,a.age,a.effective_date,a.policy_amount,a.premium_amount,a.approval_status,a.trns_type,b.phone_no",
-   table_name = "td_child_policy a LEFT JOIN md_member b ON a.member_id COLLATE utf8mb4_general_ci = b.member_id COLLATE utf8mb4_general_ci",
-   whr = `a.member_id = '${data.memb_id}'`,
-   order = null;
-   var memb_dtls_child_pol = await db_Select(select,table_name,whr,order);
-   res.send(memb_dtls_child_pol)
-  }catch(error){
+  try {
+    var data = req.body;
+    //  console.log(data,'datac');
+
+    var select = "a.form_no,a.form_dt,a.flag,a.member_id,a.member_name,a.dob,a.gender,a.status,a.age,a.effective_date,a.policy_amount,a.premium_amount,a.approval_status,a.trns_type,b.phone_no",
+      table_name = "td_child_policy a LEFT JOIN md_member b ON a.member_id COLLATE utf8mb4_general_ci = b.member_id COLLATE utf8mb4_general_ci",
+      whr = `a.member_id = '${data.memb_id}'`,
+      order = null;
+    var memb_dtls_child_pol = await db_Select(select, table_name, whr, order);
+    res.send(memb_dtls_child_pol)
+  } catch (error) {
     console.error('Error:', error);
     res.send(error);
   }
 });
 
 upload_child_policyRouter.post("/fetch_member_depend_details_fr_child_policy", async (req, res) => {
-  try{
-   var data = req.body;
-  //  console.log(data,'datac');
-   
-   var select = "form_no,member_id,dependent_name,dob,gender,status,age",
-   table_name = "td_child_policy_dependent",
-   whr = `member_id = '${data.memb_id}'`,
-   order = null;
-   var depend_dtls_child_pol = await db_Select(select,table_name,whr,order);
-   res.send(depend_dtls_child_pol)
-  }catch(error){
+  try {
+    var data = req.body;
+    //  console.log(data,'datac');
+
+    var select = "form_no,member_id,dependent_name,dob,gender,status,age",
+      table_name = "td_child_policy_dependent",
+      whr = `member_id = '${data.memb_id}'`,
+      order = null;
+    var depend_dtls_child_pol = await db_Select(select, table_name, whr, order);
+    res.send(depend_dtls_child_pol)
+  } catch (error) {
     console.error('Error:', error);
     res.send(error);
   }
 });
 
 upload_child_policyRouter.post("/fetch_trans_dtls", async (req, res) => {
-  try{
-   var data = req.body;
-  //  console.log(data,'datac');
-   
-  //  var select = "*",
-  //  table_name = "td_pg_transaction",
-  //  whr = `SUBSTRING_INDEX(udf4, '||', 1) = '${data.member_id}'`,
-  //  order = null;
-  //  var fetch_transaction = await db_Select(select,table_name,whr,order);
-  //  res.send(fetch_transaction)
+  try {
+    var data = req.body;
+    //  console.log(data,'datac');
 
-   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status,b.udf3",
-   table_name = "td_transactions a LEFT JOIN td_pg_transaction b ON a.form_no = SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) AND a.trn_id = b.mer_order_no AND DATE(a.trn_dt) = b.entry_dt",
-   whr = `b.trns_status = 'SUCCESS' AND SUBSTRING_INDEX(b.udf4, '||', 1) = '${data.member_id}'`,
-   order = null;
-   var fetch_transaction = await db_Select(select,table_name,whr,order);
-   res.send(fetch_transaction)
-   console.log(fetch_transaction,'fetch');
-   
-  }catch(error){
+    //  var select = "*",
+    //  table_name = "td_pg_transaction",
+    //  whr = `SUBSTRING_INDEX(udf4, '||', 1) = '${data.member_id}'`,
+    //  order = null;
+    //  var fetch_transaction = await db_Select(select,table_name,whr,order);
+    //  res.send(fetch_transaction)
+
+    var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status,b.udf3",
+      table_name = "td_transactions a LEFT JOIN td_pg_transaction b ON a.form_no = SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) AND a.trn_id = b.mer_order_no AND DATE(a.trn_dt) = b.entry_dt",
+      whr = `b.trns_status = 'SUCCESS' AND SUBSTRING_INDEX(b.udf4, '||', 1) = '${data.member_id}' AND SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) LIKE '%CP%'`,
+      order = null;
+    var fetch_transaction = await db_Select(select, table_name, whr, order);
+    res.send(fetch_transaction)
+    console.log(fetch_transaction, 'fetch');
+
+  } catch (error) {
     console.error('Error:', error);
     res.send(error);
   }
 });
 
 upload_child_policyRouter.post("/fetch_view_trans_dtls", async (req, res) => {
-  try{
-   var data = req.body;
-   console.log(data,'datac');
-   
-   var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status,b.udf3",
-   table_name = "td_transactions a LEFT JOIN td_pg_transaction b ON a.form_no = SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) AND a.trn_id = b.mer_order_no AND DATE(a.trn_dt) = b.entry_dt",
-   whr = `b.trns_status = 'SUCCESS' AND SUBSTRING_INDEX(b.udf4, '||', 1) = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
-   order = null;
-   var fetch_transaction_view = await db_Select(select,table_name,whr,order);
-   res.send(fetch_transaction_view)
-  }catch(error){
+  try {
+    var data = req.body;
+    console.log(data, 'datac');
+
+    var select = "a.form_no,a.trn_dt,a.trn_id,a.premium_amt,a.tot_amt,a.pay_mode,a.receipt_no,a.approval_status,b.udf3",
+      table_name = "td_transactions a LEFT JOIN td_pg_transaction b ON a.form_no = SUBSTRING_INDEX(SUBSTRING_INDEX(b.udf4, '||', 3), '||', -1) AND a.trn_id = b.mer_order_no AND DATE(a.trn_dt) = b.entry_dt",
+      whr = `b.trns_status = 'SUCCESS' AND SUBSTRING_INDEX(b.udf4, '||', 1) = '${data.member_id}' AND a.trn_id = '${data.trn_id}'`,
+      order = null;
+    var fetch_transaction_view = await db_Select(select, table_name, whr, order);
+    res.send(fetch_transaction_view)
+  } catch (error) {
     console.error('Error:', error);
     res.send(error);
   }
@@ -379,12 +379,12 @@ upload_child_policyRouter.post("/fetch_view_trans_dtls", async (req, res) => {
 // upload_child_policyRouter.post('/upload_child_policy', async (req, res) => {
 //   const data = req.body.data;
 //   console.log(data);
-  
+
 //   let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 //   let year = dateFormat(new Date(), "yyyy");
 //   let created_by = 'Sail'
 //   // console.log(data);
-  
+
 //    const no = await getMaxFormNo('C');
 //       let form_no = `C${year}${no.msg[0].max_form}`;
 
@@ -439,7 +439,7 @@ upload_child_policyRouter.post("/fetch_view_trans_dtls", async (req, res) => {
 //     flag = 0;
 //     var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 //     // }
-    
+
 //     res.json({ message: 'Data inserted successfully', inserted: res_dt });
 
 //   } catch (err) {
@@ -450,4 +450,4 @@ upload_child_policyRouter.post("/fetch_view_trans_dtls", async (req, res) => {
 
 
 
-module.exports = {upload_child_policyRouter}
+module.exports = { upload_child_policyRouter }
