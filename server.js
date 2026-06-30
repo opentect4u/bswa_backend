@@ -7,7 +7,7 @@ var app = express(),
   dotenv = require("dotenv"),
   cors = require("cors");
 
-dotenv.config({ path: `.env.prod` });
+dotenv.config({ path: `.env.test` });
 // require("dotenv").config({ path: `.env.${process.env.NODE_ENV || 'test'}` });
 // console.log("ENV CHECK:", process.env);
 // dotenv.config({ path: `.env.prod` });
