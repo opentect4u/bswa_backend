@@ -308,7 +308,7 @@ generalRouter.post("/check_member_id", async (req, res) => {
 
   var select = "member_id",
       table_name = "md_member",
-      whr = `member_id = '${data.member_id}'`,
+      whr = `member_id = '${data.member_id}' AND memb_status = 'A'`,
       order = null;
   const res_dt = await db_Select(select, table_name, whr, order);
 
@@ -318,6 +318,49 @@ generalRouter.post("/check_member_id", async (req, res) => {
       res.send({ suc: 0, msg: 'Invalid Member ID' });
   }
 });
+
+generalRouter.post("/check_dev_id_exist_both", async (req, res) => {
+  try{
+  var data = req.body;
+
+   // Validation
+   if (!data.user_id || data.user_id.trim() === '') {
+    return res.send({ suc: 0, msg: 'User ID is required' });
+    }
+
+  var select = "user_id",
+  table_name = "md_user",
+  whr = `user_id = '${data.user_id}'`,
+  order = null;
+  const res_dt = await db_Select(select, table_name, whr, order);
+
+  if(res_dt.suc > 0 && res_dt.msg.length > 0){
+    var select2 = "device_id,public_key",
+    table_name2 = "md_user",
+    whr2 = `user_id = '${data.user_id}'`,
+    order2 = null;
+    const user_dt = await db_Select(select2, table_name2, whr2, order2);
+
+    if (user_dt.suc > 0 && user_dt.msg.length > 0) {
+      const user = user_dt.msg[0];
+      const isDeviceNull = !user.device_id || user.device_id.trim() === '' || user.device_id === 'undefined' || user.device_id === 'null';
+      const isPubKeyNull = !user.public_key || user.public_key.trim() === '' || user.public_key === 'undefined' || user.public_key === 'null';
+
+      if (isDeviceNull || isPubKeyNull) {
+        res.send({ suc: 2, exists: false, msg: 'Device ID and Public Key not found' });
+      } else {
+        res.send({ suc: 1, exists: true, msg: 'Device ID and Public Key found' });
+      }
+    } else {
+      res.send({ suc: 0, msg: 'Failed to fetch device details' });
+    }
+  }else{
+    res.send({ suc: 0, msg: 'Invalid User ID' });
+  }
+  }catch(error){
+    res.send({ suc : 0, msg: "An error occurred while check device id exists or not" });
+  }
+})
 
 // SEND REGISTERED MOBILE NO FOR OTP
 generalRouter.post("/send_phone_no_fr_otp", async (req, res) => {

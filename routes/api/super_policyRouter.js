@@ -760,9 +760,9 @@ super_policyRouter.post("/check_min_no", async (req, res) => {
 
   var select = "val",
       table_name = `(
-      SELECT CAST(min_no AS CHAR) AS val FROM td_stp_ins
+      SELECT CAST(min_no AS CHAR) AS val FROM td_stp_ins WHERE form_status = 'A'
       UNION ALL
-      SELECT CAST(member_id AS CHAR) AS val FROM td_gen_ins
+      SELECT CAST(member_id AS CHAR) AS val FROM td_gen_ins WHERE form_status = 'A'
     ) t`,
       whr = `t.val='${value}'`,
       order = null;
