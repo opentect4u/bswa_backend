@@ -23,6 +23,7 @@ const {
   WIFE_ID,
   db_Insert,
 } = require("../../modules/MasterModule");
+const { user_data } = require("../../modules/LoginModule");
 const generalRouter = express.Router();
 
 generalRouter.post("/check_staff_no", async (req, res) => {
@@ -384,6 +385,31 @@ generalRouter.get("/show_data", async (req, res) => {
       order = null;
   const res_dt_show = await db_Select(select, table_name, whr, order);
   res.send(res_dt_show)
+});
+
+// insert public key and device id
+generalRouter.post("/update_dev_pub_key", async (req, res) => {
+  try{
+  var data = req.body;
+
+    if (!data.member_id || !data.device_id || !data.public_key) {
+      return res.send({
+        suc: 0,
+        msg: "member_id, device_id and public_key are required"
+      });
+    }
+
+  var update_fields = `device_id = '${data.device_id}', public_key = '${data.public_key}'`;
+  await db_Insert("md_user", update_fields, null, `user_id = '${data.member_id}'`, 1);
+
+  return res.send({
+      suc: 1,
+      msg: "Device ID and Public Key updated successfully"
+    });
+    
+  }catch(error){
+    res.send({ suc : 0, msg: "Error in while update device id and public key"})
+  }
 });
 
 // Start challenge endpoint

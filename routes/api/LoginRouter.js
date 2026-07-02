@@ -144,13 +144,13 @@ LoginRouter.post("/member_login", async (req, res) => {
        //  console.log(user,user);
 
        // UPDATE DEVICE ID AND PUBLIC KEY IF NULL
-       const isDeviceNull = !user.device_id || user.device_id.trim() === '' || user.device_id === 'undefined' || user.device_id === 'null';
-       const isPubKeyNull = !user.public_key || user.public_key.trim() === '' || user.public_key === 'undefined' || user.public_key === 'null';
+      //  const isDeviceNull = !user.device_id || user.device_id.trim() === '' || user.device_id === 'undefined' || user.device_id === 'null';
+      //  const isPubKeyNull = !user.public_key || user.public_key.trim() === '' || user.public_key === 'undefined' || user.public_key === 'null';
 
-       if ((isDeviceNull || isPubKeyNull) && data.device_id && data.public_key) {
-           var update_fields = `device_id = '${data.device_id}', public_key = '${data.public_key}'`;
-           await db_Insert("md_user", update_fields, null, `user_id = '${user.user_id}'`, 1);
-       }
+      //  if ((isDeviceNull || isPubKeyNull) && data.device_id && data.public_key) {
+      //      var update_fields = `device_id = '${data.device_id}', public_key = '${data.public_key}'`;
+      //      await db_Insert("md_user", update_fields, null, `user_id = '${user.user_id}'`, 1);
+      //  }
 
 
        // FINAL RESPONSE FORMAT
