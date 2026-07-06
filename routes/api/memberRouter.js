@@ -211,6 +211,18 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
       whr = `form_no = '${data.form_no}' AND sl_no = ${data.spouse_fr.sl_no}`,
       flag = 1;
     var spou_dt = await db_Insert(table_name, fields, values, whr, flag);
+  } else if (data.spouse_fr && data.spouse_fr.spou_name && data.spouse_fr.spou_name.trim() !== "") {
+    let relation = data.gen === "M" ? 3 : (data.gen === "F" ? 15 : 3); // 3 for Wife, 15 for Husband based on member's gender
+    var table_name = "md_dependent",
+        fields = `(form_no, sl_no, member_id, mem_type, dependent_name, relation, gurdian_name, min_no, memb_address, ps, city_town_dist ${data.spouse_fr.spou_dob && !isNaN(new Date(data.spouse_fr.spou_dob)) ? ", dob" : ""
+        } ${data.spouse_fr.spou_mobile_no ? ", phone_no" : ""} ${spuseFile_name ? ", memb_pic" : ""}, created_by, created_at)`,
+        values = `SELECT '${data.form_no}', coalesce(max(sl_no), 0) + 1, '${data.mem_id
+          }', '${data.mem_type}', '${data.spouse_fr.spou_name}', '${relation}', '${data.spouse_fr.spou_gurd_name || ""}', '${data.spouse_fr.spou_min_no || ""}', "${data.spouse_fr.spou_mem_addr || ""}", '${data.spouse_fr.spou_police_st || ""}', '${data.spouse_fr.spou_city || ""}' ${data.spouse_fr.spou_dob && !isNaN(new Date(data.spouse_fr.spou_dob)) ? `, '${dateFormat(new Date(data.spouse_fr.spou_dob), "yyyy-mm-dd")}'` : ""
+          } ${data.spouse_fr.spou_mobile_no ? `, '${data.spouse_fr.spou_mobile_no}'` : ""} ${spuseFile_name ? `, '${spuseFile_name}'` : ""}, '${data.user
+          }', '${datetime}' from md_dependent WHERE form_no = '${data.form_no}'`,
+        whr = null,
+        flag = 0;
+    var spou_dt = await db_Insert(table_name, fields, values, whr, flag, true);
   }
 
   if (Array.isArray(data.depenFields)) {
