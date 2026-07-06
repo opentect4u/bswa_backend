@@ -64,10 +64,11 @@ module.exports = {
   saveTrns: (data) => {
     return new Promise(async (resolve, reject) => {
       const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+      var sub_amt = data.sub_fee > 0 ? data.sub_fee : data.txnAmount;
       var table_name = "td_transactions",
         fields =
           "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
-        values = `('${data.udf6}', '${trn_dt}', '${data.merchantOrderNo}', '${data.txnAmount}', 0, 0, 0, 0, ${data.txnAmount}, 'O', '${data.getepayTxnId}', NULL, NULL, 75, '${data.udf5}', '${data.udf3}', '${trn_dt}')`,
+        values = `('${data.udf6}', '${trn_dt}', '${data.merchantOrderNo}', '${sub_amt}', 0, '${data.adm_fee || 0}', '${data.donation_fee || 0}', 0, '${data.txnAmount}', 'O', '${data.getepayTxnId}', NULL, NULL, 75, '${data.udf5}', '${data.udf3}', '${trn_dt}')`,
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -301,10 +302,11 @@ module.exports = {
     console.log(data,'online');
     
     return new Promise(async (resolve, reject) => {
+      var sub_amt = data.sub_fee > 0 ? data.sub_fee : data.txnAmount;
       var sub_upto = await generateNextSubDate(
         data.udf7,
         data.udf8,
-        data.txnAmount,
+        sub_amt,
         data.udf9
       );
       var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
@@ -351,7 +353,7 @@ module.exports = {
             fields =
               "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
             values = `('${data.udf4}', '${trn_dt}', '${
-              data.txnAmount
+              sub_amt
             }', '${dateFormat(
               sub_upto,
               "yyyy-mm-dd HH:MM:ss"

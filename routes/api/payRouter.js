@@ -46,7 +46,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 udf1: data.phone_no.toString(),
                 udf2: data.email_id ? data.email_id : '',
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}||${data.adm_fee || 0}||${data.donation_fee || 0}||${data.sub_fee || 0}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto || '',
@@ -134,7 +134,7 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
                 udf1: data.phone_no.toString(),
                 udf2: data.email_id ? data.email_id : '',
                 udf3: data.memb_name,
-                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}`,
+                udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}||${data.adm_fee || 0}||${data.donation_fee || 0}||${data.sub_fee || 0}`,
                 udf5: '',
                 udf6: '',
                 udf7: data.calc_upto || '',
@@ -369,6 +369,9 @@ payRouter.post('/success_payment_asso', async (req, res) => {
     res_dt.udf4 = data[0]
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
+    res_dt.adm_fee = data[5] || 0
+    res_dt.donation_fee = data[6] || 0
+    res_dt.sub_fee = data[7] || 0
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrns(res_dt);
         if(res_dt.udf5 != 'U'){
@@ -404,6 +407,9 @@ payRouter.post('/success_payment_asso_app', async (req, res) => {
     res_dt.udf4 = data[0]
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
+    res_dt.adm_fee = data[5] || 0
+    res_dt.donation_fee = data[6] || 0
+    res_dt.sub_fee = data[7] || 0
 
     if(res_dt.txnStatus == 'SUCCESS'){
         var save_dt = await saveTrns(res_dt);
