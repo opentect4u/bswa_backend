@@ -239,7 +239,7 @@ module.exports = {
   reject_dt: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-      var fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+      var fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}',min_no = CONCAT('R', min_no), phone_no = CONCAT('0', phone_no)`,
         table_name = "td_stp_ins",
         values = null,
         whr = `form_no = '${data.formNo}'`,
