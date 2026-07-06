@@ -49,8 +49,8 @@ memberRouter.post("/member_dtls", async (req, res) => {
     var select =
       "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no, b.relation_name",
       table_name = "md_dependent a, md_relationship b",
-      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${isAI ? "a.relation in (3, 15)"
-          : `a.intro_member_id is not null`
+      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${isAI ? "a.intro_member_id is not null"
+          : `a.relation in (3, 15)`
         } AND a.delete_flag = 'N'`,
       order = `order by sl_no LIMIT ${limit} OFFSET ${offset}`;
     var spou_dt = await db_Select(select, table_name, whr, order);
@@ -58,8 +58,8 @@ memberRouter.post("/member_dtls", async (req, res) => {
     var select =
       "a.form_no, a.sl_no, a.member_id, a.mem_type, a.dependent_dt, a.dependent_name, a.gurdian_name, a.relation, a.min_no, a.dob, a.blood_grp, a.memb_address, a.ps, a.city_town_dist, a.pin_no, a.phone_no, a.email_id, a.memb_pic, a.intro_member_id, a.dept_status, a.grp_status, a.grp_no, a.stp_status, a.stp_no,b.relation_name",
       table_name = "md_dependent a, md_relationship b",
-      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${isAI ? "a.relation not in (3, 15)"
-          : `a.intro_member_id is null`
+      whr = `a.relation = b.id AND a.form_no = '${data.form_no}' AND ${isAI ? "a.intro_member_id is null"
+          : `a.relation not in (3, 15)`
         } AND a.delete_flag = 'N'`,
       order = "order by sl_no";
     var dep_dt = await db_Select(select, table_name, whr, order);
@@ -190,8 +190,8 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
         } ${data.spouse_fr.spou_min_no
           ? `, min_no = '${data.spouse_fr.spou_min_no}'`
           : ""
-        } ${data.spouse_fr.spou_dob
-          ? `, dob = '${data.spouse_fr.spou_dob}'`
+        } ${data.spouse_fr.spou_dob && !isNaN(new Date(data.spouse_fr.spou_dob))
+          ? `, dob = '${dateFormat(new Date(data.spouse_fr.spou_dob), "yyyy-mm-dd")}'`
           : ""
         } ${data.spouse_fr.spou_mem_addr
           ? `, memb_address = "${data.spouse_fr.spou_mem_addr}"`
@@ -227,12 +227,12 @@ memberRouter.post("/update_member_dtls", async (req, res) => {
         fields =
           dt.sl_no > 0
             ? `dependent_name = '${dt.dependent_name}' ${dt.phone_no ? `, phone_no = '${dt.phone_no}'` : ""
-            } ${dt.relation ? `, relation = '${dt.relation}'` : ""} ${dt.dob_dep ? `, dob = '${dt.dob_dep}'` : ""
+            } ${dt.relation ? `, relation = '${dt.relation}'` : ""} ${dt.dob_dep && !isNaN(new Date(dt.dob_dep)) ? `, dob = '${dateFormat(new Date(dt.dob_dep), "yyyy-mm-dd")}'` : ""
             }, modified_by = '${data.user}', modified_at = '${datetime}'`
-            : `(form_no, sl_no, member_id, mem_type, dependent_name, relation ${dt.dob_dep ? ", dob" : ""
+            : `(form_no, sl_no, member_id, mem_type, dependent_name, relation ${dt.dob_dep && !isNaN(new Date(dt.dob_dep)) ? ", dob" : ""
             } ${dt.phone_no ? ", phone_no" : ""}, created_by, created_at)`,
         values = `SELECT '${data.form_no}', count(sl_no)+1, '${data.mem_id
-          }', '${data.mem_type}', '${dt.dependent_name}', ${dt.relation ? `, '${dt.relation}'` : ""} ${dt.dob_dep ? `, '${dt.dob_dep}'` : ""
+          }', '${data.mem_type}', '${dt.dependent_name}', ${dt.relation ? `'${dt.relation}'` : "NULL"} ${dt.dob_dep && !isNaN(new Date(dt.dob_dep)) ? `, '${dateFormat(new Date(dt.dob_dep), "yyyy-mm-dd")}'` : ""
           } ${dt.phone_no ? `, '${dt.phone_no}'` : ""}, '${data.user
           }', '${datetime}' from md_dependent WHERE form_no = '${data.form_no
           }'`,
