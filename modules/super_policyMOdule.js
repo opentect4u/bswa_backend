@@ -1,7 +1,7 @@
 var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs");
-  bcrypt = require("bcrypt");
+bcrypt = require("bcrypt");
 const { db_Select, db_Insert, formStatus, shortenURL } = require("./MasterModule");
 const { sendWappMsg } = require("./whatsappModule");
 const { sendSms } = require("./smsModule");
@@ -9,7 +9,7 @@ const { sendSms } = require("./smsModule");
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
     var select =
-        "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form",
+      "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(SUBSTRING(form_no, -6))+1, 6, '0'), '000001') max_form",
       table_name = "td_stp_ins",
       whr = `SUBSTRING(form_no, 1, ${flag.length}) = '${flag}'`,
       order = null;
@@ -25,19 +25,19 @@ const getMaxTrnId = () => {
     var now_year = dateFormat(new Date(), "yyyy");
     var now = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     var select =
-        "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
+      "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
       table_name = "td_generate_id",
       whr = `SUBSTRING(trn_id, 1, 4) = ${now_year}`,
       order = null;
-  
+
     var res_dt = await db_Select(select, table_name, whr, order);
 
     var max_value = res_dt.msg[0].max_trn_id;
     let fields = `(trn_date,trn_id)`;
-      values = `('${now}','${now_year+max_value}')`;
-      table_name = "td_generate_id";
+    values = `('${now}','${now_year + max_value}')`;
+    table_name = "td_generate_id";
 
-    var gen_id = await db_Insert('td_generate_id',fields, values, null, null);   
+    var gen_id = await db_Insert('td_generate_id', fields, values, null, null);
 
     resolve(res_dt);
   });
@@ -108,7 +108,7 @@ module.exports = {
   //   });
   // },
 
-    super_form_save: (data) => {
+  super_form_save: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
@@ -119,7 +119,7 @@ module.exports = {
 
       let userUpdateSuccess = false;
 
-       let table_name = "td_stp_ins";
+      let table_name = "td_stp_ins";
       fields = `(form_no,form_dt,policy_holder_type,member_id,association,memb_type,memb_oprn, memb_name,gender,dob,mem_address,phone_no,min_no,personel_no,memb_flag,dependent_name,spou_min_no,spou_dob,spou_phone,spou_gender,spou_address,dependent_flag,premium_type,form_status,created_by,created_at)`;
       values = `('${form_no}','${data.form_dt}',${data.policy_holder_type ? `'${data.policy_holder_type}'` : 'NULL'},'${data.policy_holder_type == 'M' ? `${data.member_id}` : `${data.min_no}`}',${data.unit ? `'${data.unit}'` : 'NULL'},${data.member_type ? `'${data.member_type}'` : 'NULL'},${data.memb_oprn ? `'${data.memb_oprn}'` : 'NULL'},${data.member ? `'${data.member}'` : 'NULL'},${data.gender ? `'${data.gender}'` : 'NULL'},${data.gen_dob ? `'${data.gen_dob}'` : 'NULL'},'${data.mem.split("'").join("\\'")}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},${data.min_no ? `'${data.min_no}'` : 'NULL'},${data.personal_no ? `'${data.personal_no}'` : 'NULL'},'Y','${data.spouse ? data.spouse : null}','${data.spouse_min_no ? data.spouse_min_no : null}',${data.spou_dob ? `'${data.spou_dob}'` : 'NULL'},'${data.spou_mobile ? data.spou_mobile : 0}',${data.spou_gender ? `'${data.spou_gender}'` : 'NULL'},'${data.spou_mem ? data.spou_mem.split("'").join("\\'") : null}','${data.memb_oprn == 'S' ? 'N' : 'Y'}','${data.premium_type}','P','${data.member}','${datetime}')`;
       whr = null;
@@ -144,66 +144,66 @@ module.exports = {
           stp_dt["policy_holder_type"] = `${data.policy_holder_type}`
         }
         // ✅ Additional insert to md_stp_login
-      // const stp_pwd = await bcrypt.hash(data.min_no, 10);
+        // const stp_pwd = await bcrypt.hash(data.min_no, 10);
 
-      // const stp_pwd = bcrypt.hashSync(data.min_no.toString(), 10);
+        // const stp_pwd = bcrypt.hashSync(data.min_no.toString(), 10);
 
-      // table_name = "md_stp_login";
-      // fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
-      // values = `('${data.policy_holder_type}','${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}','${form_no}','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'${stp_pwd}','I','${data.member}', '${datetime}')`;
-      // try {
-      //   await db_Insert(table_name, fields, values, whr, order);
-      // } catch (err) {
-      //   console.log("Error inserting to md_stp_login:", err);
-      // }
+        // table_name = "md_stp_login";
+        // fields = `(policy_holder_type,min_no,form_no,stp_memb_name,stp_memb_phone,password,stp_user_status,created_by,created_at)`;
+        // values = `('${data.policy_holder_type}','${data.memb_oprn == 'S' ? `S${data.min_no}` : `${data.min_no}`}','${form_no}','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'${stp_pwd}','I','${data.member}', '${datetime}')`;
+        // try {
+        //   await db_Insert(table_name, fields, values, whr, order);
+        // } catch (err) {
+        //   console.log("Error inserting to md_stp_login:", err);
+        // }
 
-      if(data.policy_holder_type == 'M'){
-      table_name = "md_user";
-      fields = `min_no = '${data.min_no}',stp_form_no = '${form_no}',stp_user_status = 'I',modified_by = '${data.member}',modified_at = '${datetime}'`;
-      values = null;
-      whr = `user_id = '${data.member_id}'`;
-      flag = 1;
-      }else {
-      table_name = "md_user";
-      fields = `(user_id,user_type,user_name,user_phone,user_status,min_no,stp_form_no,stp_user_status,created_by,created_at)`;
-      values = `('${data.min_no}','N','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'I','${data.min_no}','${form_no}','I','${data.member}','${datetime}')`;
-      whr = null;
-      flag = 0;
+        if (data.policy_holder_type == 'M') {
+          table_name = "md_user";
+          fields = `min_no = '${data.min_no}',stp_form_no = '${form_no}',stp_user_status = 'I',modified_by = '${data.member}',modified_at = '${datetime}'`;
+          values = null;
+          whr = `user_id = '${data.member_id}'`;
+          flag = 1;
+        } else {
+          table_name = "md_user";
+          fields = `(user_id,user_type,user_name,user_phone,user_status,min_no,stp_form_no,stp_user_status,created_by,created_at)`;
+          values = `('${data.min_no}','N','${data.member}',${data.phone_no ? `'${data.phone_no}'` : 'NULL'},'I','${data.min_no}','${form_no}','I','${data.member}','${datetime}')`;
+          whr = null;
+          flag = 0;
+        }
+        try {
+          let mdUserRes = await db_Insert(table_name, fields, values, whr, flag);
+
+          // mark success only if inserted/updated
+          if (mdUserRes.suc > 0) {
+            userUpdateSuccess = true;
+          }
+        } catch (err) {
+          console.log("Error inserting into md_user:", err);
+        }
       }
-      try{
-        let mdUserRes = await db_Insert(table_name, fields, values, whr, flag);
 
-        // mark success only if inserted/updated
-    if (mdUserRes.suc > 0) {
-        userUpdateSuccess = true;
-    }
-      } catch (err) {
-        console.log("Error inserting into md_user:", err);
-      }
-      }
-
-       // SEND SMS AFTER FORM SUBMIT //
-       if (userUpdateSuccess) {
-        try{
+      // SEND SMS AFTER FORM SUBMIT //
+      if (userUpdateSuccess) {
+        try {
           // ✅ Trim member name to 30 characters max
           let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
           const phone = data.phone_no;
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
+          // Send SMS
+          let smsRes = await sendSms(
+            phone,
             "FORM_SUBMISSION",
-           [
-           memb_name,
-           form_no
-           ]);
-         console.log("SMS Response:", smsRes);
-        }catch(err){
-          console.log("Error in sending SMS",err);
+            [
+              memb_name,
+              form_no
+            ]);
+          console.log("SMS Response:", smsRes);
+        } catch (err) {
+          console.log("Error in sending SMS", err);
         }
-        } else {
+      } else {
         console.log("SKIPPING SMS — md_user insert/update failed.");
-        }
+      }
 
       // END //
 
@@ -239,32 +239,32 @@ module.exports = {
   reject_dt: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-      var fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}',min_no = CONCAT('R', min_no), phone_no = CONCAT('0', phone_no)`,
+      var fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}',min_no = CONCAT('R', min_no), phone_no = CONCAT('00', phone_no), member_id = CONCAT('R', member_id)`,
         table_name = "td_stp_ins",
         values = null,
         whr = `form_no = '${data.formNo}'`,
         flag = 1;
       var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
 
-       // SEND SMS AFTER FORM REJECT //
-       try{
-          // ✅ Trim member name to 30 characters max
-          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-          const phone = data.phone_no;
-          const form_no = data.formNo;
+      // SEND SMS AFTER FORM REJECT //
+      try {
+        // ✅ Trim member name to 30 characters max
+        let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+        const phone = data.phone_no;
+        const form_no = data.formNo;
 
-           // Send SMS
-           let smsRes = await sendSms(
-           phone,
-            "FORM_REJECTION",
+        // Send SMS
+        let smsRes = await sendSms(
+          phone,
+          "FORM_REJECTION",
           [
-           memb_name,
-           form_no
-           ]);
-          console.log("SMS Response:", smsRes, phone);
-        }catch(err){
-          console.log("Error in sending SMS",err);
-        }
+            memb_name,
+            form_no
+          ]);
+        console.log("SMS Response:", smsRes, phone);
+      } catch (err) {
+        console.log("Error in sending SMS", err);
+      }
 
       // END //
 
@@ -375,7 +375,7 @@ module.exports = {
     });
   },
 
-   save_stp_data: (data) => {
+  save_stp_data: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
@@ -383,100 +383,100 @@ module.exports = {
       const no = await getMaxTrnId();
       let trn_id = `${year}${no.msg[0].max_trn_id}`;
       // console.log(trn_id,'trn');
-      
+
       let approveSuccess = false;
 
-        var table_name = "td_stp_ins",
+      var table_name = "td_stp_ins",
         fields = `form_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
         values = null,
         whr = `form_no = '${data.formNo}'`,
         flag = 1;
-        var trns_data = await db_Insert(table_name,fields,values,whr,flag);
-        trns_data["trn_id"] = trn_id;
+      var trns_data = await db_Insert(table_name, fields, values, whr, flag);
+      trns_data["trn_id"] = trn_id;
 
-        // if(trns_data.suc > 0){
-        // var table_name = "md_stp_login",
-        // fields = `stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
-        // values = null,
-        // whr = `form_no = '${data.formNo}'`,
-        // flag = 1;
-        // var trn_data = await db_Insert(table_name,fields,values,whr,flag);
-        // }
+      // if(trns_data.suc > 0){
+      // var table_name = "md_stp_login",
+      // fields = `stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+      // values = null,
+      // whr = `form_no = '${data.formNo}'`,
+      // flag = 1;
+      // var trn_data = await db_Insert(table_name,fields,values,whr,flag);
+      // }
 
-          if(trns_data.suc > 0){
+      if (trns_data.suc > 0) {
         var table_name = "md_user",
-        fields = `user_status = 'A',stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
-        values = null,
-        whr = `stp_form_no = '${data.formNo}'`,
-        flag = 1;
-        var trn_data = await db_Insert(table_name,fields,values,whr,flag);
+          fields = `user_status = 'A',stp_user_status = 'A',modified_by = '${data.user}',modified_at = '${datetime}'`,
+          values = null,
+          whr = `stp_form_no = '${data.formNo}'`,
+          flag = 1;
+        var trn_data = await db_Insert(table_name, fields, values, whr, flag);
 
-         if (trn_data.suc > 0) {
-           approveSuccess = true;
-             }
+        if (trn_data.suc > 0) {
+          approveSuccess = true;
         }
+      }
 
-         
-           // SEND SMS AFTER FORM APPROVED //
-           if(approveSuccess){
-           try{
-            // ✅ Trim member name to 30 characters max
-            let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-            let status_label = data.status === "A" ? "Approved" : "";
-            const phone = data.phone_no;
-            const form_no = data.formNo;
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
-           "ACCEPT_STP",
-           [
-            memb_name,
-            form_no,
-            status_label
-           ]);
-         console.log("SMS Response:", smsRes);
-        }catch(err){
-          console.log("Error in sending SMS",err);
+      // SEND SMS AFTER FORM APPROVED //
+      if (approveSuccess) {
+        try {
+          // ✅ Trim member name to 30 characters max
+          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+          let status_label = data.status === "A" ? "Approved" : "";
+          const phone = data.phone_no;
+          const form_no = data.formNo;
+
+          // Send SMS
+          let smsRes = await sendSms(
+            phone,
+            "ACCEPT_STP",
+            [
+              memb_name,
+              form_no,
+              status_label
+            ]);
+          console.log("SMS Response:", smsRes);
+        } catch (err) {
+          console.log("Error in sending SMS", err);
         }
-        } else {
+      } else {
         console.log("SKIPPING SMS");
-        }
+      }
       // END //
 
-        // try {
-        //   if (data.payment == "O") {
-        //     const encDtstp = encodeURIComponent(data.payEncDataSuper);
-        //     console.log(encDtstp,'uuu');
+      // try {
+      //   if (data.payment == "O") {
+      //     const encDtstp = encodeURIComponent(data.payEncDataSuper);
+      //     console.log(encDtstp,'uuu');
 
-        //     var select = "msg, domain",
-        //     table_name = "md_whatsapp_msg",
-        //     whr = `msg_for = 'Member Premium accept online'`,
-        //     order = null;
-        //     var msg_dt = await db_Select(select, table_name, whr, order);
-        //     var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
-        //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
+      //     var select = "msg, domain",
+      //     table_name = "md_whatsapp_msg",
+      //     whr = `msg_for = 'Member Premium accept online'`,
+      //     order = null;
+      //     var msg_dt = await db_Select(select, table_name, whr, order);
+      //     var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : "",
+      //     domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : "";
 
-        //     const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtstp}`;
-        //     console.log(longUrl, '----------------------');
-            
+      //     const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtstp}`;
+      //     console.log(longUrl, '----------------------');
 
-        //     // Shorten the URL
-        //     const shortUrl = await shortenURL(longUrl);
-        //     console.log(shortUrl);
-            
 
-        //     wpMsg = wpMsg
-        //       .replace("{user_name}", data.member)
-        //       .replace("{form_no}", data.formNo)
-        //       .replace("{pay_link}", shortUrl);
-        //     var wpRes = await sendWappMsg(data.phone_no, wpMsg);
-        //     console.log(wpRes,data.phone_no, wpMsg,'message');
-        //   }
-        // } catch (error) {
-        //   console.log(error);
-        // }
-        resolve(trn_data)
-      });
+      //     // Shorten the URL
+      //     const shortUrl = await shortenURL(longUrl);
+      //     console.log(shortUrl);
+
+
+      //     wpMsg = wpMsg
+      //       .replace("{user_name}", data.member)
+      //       .replace("{form_no}", data.formNo)
+      //       .replace("{pay_link}", shortUrl);
+      //     var wpRes = await sendWappMsg(data.phone_no, wpMsg);
+      //     console.log(wpRes,data.phone_no, wpMsg,'message');
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
+      resolve(trn_data)
+    });
   },
 };
