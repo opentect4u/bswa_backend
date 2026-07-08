@@ -217,7 +217,7 @@ super_policyRouter.get("/frm_list_policy", async (req, res) => {
     table_name = "td_stp_ins",
     whr = `form_status IN('P','R','A')`;
   // AND a.form_no = '${data.form_no}' OR b.memb_name = '${data.form_no}'`,
-  order = null;
+  order = `ORDER BY form_dt desc`;
   // var res_dt = await db_Select(select, table_name, whr, order);
   // } else {
   //   var select = "form_no,form_dt,member_id,memb_name",
