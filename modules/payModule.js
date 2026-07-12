@@ -1,5 +1,5 @@
-const {encryptEas} = require('../controller/encryptEas')
-const {decryptEas} = require('../controller/decryptEas')
+const { encryptEas } = require('../controller/encryptEas')
+const { decryptEas } = require('../controller/decryptEas')
 const fetch = require('node-fetch');
 const dateFormat = require('dateformat');
 const { db_Insert, getMaxTrnId, generateNextSubDate, postVoucher, getCurrFinYear,
@@ -64,7 +64,7 @@ module.exports = {
   saveTrns: (data) => {
     return new Promise(async (resolve, reject) => {
       const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-      var sub_amt = data.sub_fee > 0 ? data.sub_fee : data.txnAmount;
+      var sub_amt = Number(data.txnAmount) - Number(data.adm_fee || 0) - Number(data.donation_fee || 0);
       var table_name = "td_transactions",
         fields =
           "(form_no, trn_dt, trn_id, sub_amt, onetime_amt, adm_fee, donation, premium_amt, tot_amt, pay_mode, receipt_no, chq_no, chq_dt, chq_bank, approval_status, created_by, created_at)",
@@ -74,26 +74,26 @@ module.exports = {
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
       res_dt["trn_id"] = data.merchantOrderNo;
 
-       // SMS //
-     try {
-          let memb_name = data.udf3 ? (data.udf3.length > 30 ? data.udf3.substring(0, 27) + "..." : data.udf3) : "";
-            const phone = data.udf1;
-            const sub_amt = data.txnAmount;
-            const tnx_id = data.merchantOrderNo;
-            
-             let smsRes = await sendSms(
-           phone,
-           "APPROVE_TRANSACTION",
-           [
+      // SMS //
+      try {
+        let memb_name = data.udf3 ? (data.udf3.length > 30 ? data.udf3.substring(0, 27) + "..." : data.udf3) : "";
+        const phone = data.udf1;
+        const sub_amt = data.txnAmount;
+        const tnx_id = data.merchantOrderNo;
+
+        let smsRes = await sendSms(
+          phone,
+          "APPROVE_TRANSACTION",
+          [
             memb_name,
             sub_amt,
             tnx_id
-           ]);
-         console.log("SMS Response:", smsRes);
-        } catch (err) {
-          console.log(err);
-        }
-    //END //
+          ]);
+        console.log("SMS Response:", smsRes);
+      } catch (err) {
+        console.log(err);
+      }
+      //END //
       // console.log(res_dt, "res");
       // WHATSAPP MESSAGE //
       // try {
@@ -123,7 +123,7 @@ module.exports = {
   },
   // saveTrnsGmp: (data) => {
   //   console.log(data,'data');
-    
+
   //   return new Promise(async (resolve, reject) => {
   //     const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
@@ -215,8 +215,8 @@ module.exports = {
   // },
 
 
-    saveTrnsGmp: (data) => {
-    console.log(data,'online_stp');
+  saveTrnsGmp: (data) => {
+    console.log(data, 'online_stp');
 
     return new Promise(async (resolve, reject) => {
       var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
@@ -236,58 +236,58 @@ module.exports = {
       let voucher_res_child = null;
 
       const commonVoucherParams = [
-      FIN_YEAR_MASTER[curr_fin_year],
-      curr_fin_year,
-      1,
-      BRANCH_MASTER[1],
-      data.getepayTxnId,
-      dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-      TRANSFER_TYPE_MASTER['O'],
-      VOUCHER_MODE_MASTER['O'],
-      "85", // Debit account code
-      resolved_acc_cd_cr,
-      "DR",
-      data.txnAmount,
-      data.chq_no ? data.chq_no : "",
-      data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
-      flag_dtls === 'CP' ? `Being Children Policy premium received from Form No ${data.udf6}`
-      : `Being STP premium received from Form No ${data.udf6}`,
-      data.udf5,
-      data.udf3,
-      dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
-      data.udf3,
-      dateFormat(new Date(trn_dt), "yyyy-mm-dd")
-     ];
-     console.log(resolved_acc_cd_cr,'cdddd');
-     
+        FIN_YEAR_MASTER[curr_fin_year],
+        curr_fin_year,
+        1,
+        BRANCH_MASTER[1],
+        data.getepayTxnId,
+        dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+        TRANSFER_TYPE_MASTER['O'],
+        VOUCHER_MODE_MASTER['O'],
+        "85", // Debit account code
+        resolved_acc_cd_cr,
+        "DR",
+        data.txnAmount,
+        data.chq_no ? data.chq_no : "",
+        data.chq_dt > 0 ? dateFormat(new Date(data.chq_dt), "yyyy-mm-dd") : "",
+        flag_dtls === 'CP' ? `Being Children Policy premium received from Form No ${data.udf6}`
+          : `Being STP premium received from Form No ${data.udf6}`,
+        data.udf5,
+        data.udf3,
+        dateFormat(new Date(trn_dt), "yyyy-mm-dd"),
+        data.udf3,
+        dateFormat(new Date(trn_dt), "yyyy-mm-dd")
+      ];
+      console.log(resolved_acc_cd_cr, 'cdddd');
 
-     if (flag_dtls === 'CP') {
-     // Children Policy
-     voucher_res_child = await drVoucher_child(...commonVoucherParams);
-     } else {
-    // STP Policy
-     voucher_res_stp = await drVoucher_stp(...commonVoucherParams);
-     }
 
-     // Now handle success logic for either voucher
-     const voucher_res = voucher_res_stp || voucher_res_child;
+      if (flag_dtls === 'CP') {
+        // Children Policy
+        voucher_res_child = await drVoucher_child(...commonVoucherParams);
+      } else {
+        // STP Policy
+        voucher_res_stp = await drVoucher_stp(...commonVoucherParams);
+      }
+
+      // Now handle success logic for either voucher
+      const voucher_res = voucher_res_stp || voucher_res_child;
       console.log(voucher_res, 'Res in transaction');
 
-       if (voucher_res.suc > 0) {
+      if (voucher_res.suc > 0) {
         if (voucher_res.msg > 0) {
 
-      var table_name = "td_transactions",
-        fields =
-          data.up_flag > 0
-            ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
-            : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
-        values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
-        where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
-        flag = data.up_flag > 0 ? 1 : 0;
-      var trn_data = await db_Insert(table_name, fields, values, where, flag);
-      trn_data["trn_id"] = data.merchantOrderNo;
-      resolve(trn_data);
-       } else {
+          var table_name = "td_transactions",
+            fields =
+              data.up_flag > 0
+                ? `trn_dt = '${trn_dt}',premium_amt = '${data.txnAmount}', tot_amt = '${data.txnAmount}', pay_mode = 'O',receipt_no = '${data.getepayTxnId}',chq_bank = '16', approval_status='${data.udf5}',modified_by = '${data.udf3}',modified_at = '${trn_dt}'`
+                : `(form_no,trn_dt,trn_id,premium_amt,tot_amt,pay_mode,receipt_no,chq_no,chq_dt,chq_bank,approval_status,created_by,created_at)`,
+            values = `('${data.udf6}','${trn_dt}','${data.merchantOrderNo}','${data.txnAmount}','${data.txnAmount}','O','${data.getepayTxnId}',NULL,NULL,16,'${data.udf5}','${data.udf3}','${trn_dt}')`,
+            where = data.up_flag > 0 ? `trn_id = ${data.merchantOrderNo}` : null,
+            flag = data.up_flag > 0 ? 1 : 0;
+          var trn_data = await db_Insert(table_name, fields, values, where, flag);
+          trn_data["trn_id"] = data.merchantOrderNo;
+          resolve(trn_data);
+        } else {
           resolve({ suc: 0, msg: "Voucher Not Saved" });
         }
       } else {
@@ -299,10 +299,10 @@ module.exports = {
 
 
   saveSubs: (data) => {
-    console.log(data,'online');
-    
+    console.log(data, 'online');
+
     return new Promise(async (resolve, reject) => {
-      var sub_amt = data.sub_fee > 0 ? data.sub_fee : data.txnAmount;
+      var sub_amt = Number(data.txnAmount) - Number(data.adm_fee || 0) - Number(data.donation_fee || 0);
       var sub_upto = await generateNextSubDate(
         data.udf7,
         data.udf8,
@@ -343,7 +343,7 @@ module.exports = {
       );
 
       console.log(voucher_res, 'Res in transaction');
-      
+
 
       // var voucher_res = { suc: 1, msg: 1 };
 
@@ -352,38 +352,36 @@ module.exports = {
           var table_name = "td_memb_subscription",
             fields =
               "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
-            values = `('${data.udf4}', '${trn_dt}', '${
-              sub_amt
-            }', '${dateFormat(
-              sub_upto,
-              "yyyy-mm-dd HH:MM:ss"
-            )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${
-              data.merchantOrderNo
-            }', '${data.udf3}', '${trn_dt}')`,
+            values = `('${data.udf4}', '${trn_dt}', '${sub_amt
+              }', '${dateFormat(
+                sub_upto,
+                "yyyy-mm-dd HH:MM:ss"
+              )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${data.merchantOrderNo
+              }', '${data.udf3}', '${trn_dt}')`,
             whr = null,
             flag = 0;
           var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
           // SMS //
-     try {
-          let memb_name = data.udf3 ? (data.udf3.length > 30 ? data.udf3.substring(0, 27) + "..." : data.udf3) : "";
+          try {
+            let memb_name = data.udf3 ? (data.udf3.length > 30 ? data.udf3.substring(0, 27) + "..." : data.udf3) : "";
             const phone = data.udf1;
             const sub_amt = data.txnAmount;
             const tnx_id = data.merchantOrderNo;
 
-             let smsRes = await sendSms(
-           phone,
-           "APPROVE_TRANSACTION",
-           [
-            memb_name,
-            sub_amt,
-            tnx_id
-           ]);
-         console.log("SMS Response:", smsRes);
-        } catch (err) {
-          console.log(err);
-        }
-    //END //
+            let smsRes = await sendSms(
+              phone,
+              "APPROVE_TRANSACTION",
+              [
+                memb_name,
+                sub_amt,
+                tnx_id
+              ]);
+            console.log("SMS Response:", smsRes);
+          } catch (err) {
+            console.log(err);
+          }
+          //END //
 
           // WHATSAPP MESSAGE //
           // try {
@@ -421,10 +419,11 @@ module.exports = {
   },
   saveSubsGmp: (data) => {
     return new Promise(async (resolve, reject) => {
+      var sub_amt = Number(data.txnAmount) - Number(data.adm_fee || 0) - Number(data.donation_fee || 0);
       var sub_upto = await generateNextSubDate(
         data.udf7,
         data.udf8,
-        data.txnAmount,
+        sub_amt,
         data.udf9
       );
       var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
@@ -461,14 +460,12 @@ module.exports = {
           var table_name = "td_memb_subscription",
             fields =
               "(member_id, sub_dt, amount, subscription_upto, calc_amt, calc_upto, trans_id, created_by, created_at)",
-            values = `('${data.udf4}', '${trn_dt}', '${
-              data.txnAmount
-            }', '${dateFormat(
-              sub_upto,
-              "yyyy-mm-dd HH:MM:ss"
-            )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${
-              data.merchantOrderNo
-            }', '${data.udf3}', '${trn_dt}')`,
+            values = `('${data.udf4}', '${trn_dt}', '${sub_amt
+              }', '${dateFormat(
+                sub_upto,
+                "yyyy-mm-dd HH:MM:ss"
+              )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${data.merchantOrderNo
+              }', '${data.udf3}', '${trn_dt}')`,
             whr = null,
             flag = 0;
           var res_dt = await db_Insert(table_name, fields, values, whr, flag);
@@ -523,7 +520,7 @@ module.exports = {
 
   payRecordSave: (data) => {
     console.log(data);
-    
+
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var table_name = "td_pg_transaction",
@@ -533,10 +530,10 @@ module.exports = {
         whr = null,
         flag = 0;
       var res_dt = await db_Insert(table_name, fields, values, whr, flag);
-      console.log(res_dt,'res');
+      console.log(res_dt, 'res');
       resolve(res_dt);
-      console.log(res_dt,'res');
-      
+      console.log(res_dt, 'res');
+
     });
   }
 

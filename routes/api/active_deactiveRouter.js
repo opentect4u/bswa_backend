@@ -12,11 +12,17 @@ active_deactiveRouter.post("/fetch_active_deactive_memb_dtls", async (req, res) 
    const limit = parseInt(data.limit) || 10;
    const offset = (page - 1) * limit;
 
+   let whr = `memb_status = '${data.status}'`;
+   if (data.search && data.search.trim() !== '') {
+       let searchText = data.search.trim();
+       whr += ` AND (member_id LIKE '%${searchText}%' OR memb_name LIKE '%${searchText}%' OR phone_no LIKE '%${searchText}%')`;
+   }
+
    // Total Count
     const countRes = await db_Select(
       "COUNT(*) total",
       "md_member",
-      `memb_status = '${data.status}'`,
+      whr,
       null
     );
     const totalRecords = countRes && countRes.msg && countRes.msg.length > 0 ? countRes.msg[0].total
@@ -25,7 +31,6 @@ active_deactiveRouter.post("/fetch_active_deactive_memb_dtls", async (req, res) 
      // Paginated Data
    var select = "member_id,memb_name,phone_no,memb_status",
    table_name = "md_member",
-   whr = `memb_status = '${data.status}'`,
    order = `ORDER BY form_dt DESC LIMIT ${limit} OFFSET ${offset}`;
    var status_details = await db_Select(select,table_name,whr,order);
    res.send({

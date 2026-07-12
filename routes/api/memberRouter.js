@@ -395,4 +395,58 @@ memberRouter.post("/delete_depend", async (req, res) => {
   res.send(delete_dt)
 })
 
+memberRouter.post("/update_mobile_no", async (req, res) => {
+  var data = req.body;
+  try {
+    let updateRes = await db_Insert(
+      "td_stp_ins",
+      `phone_no = '${data.phone_no}'`,
+      null,
+      `form_no = '${data.form_no}'`,
+      1
+    );
+    res.send({ suc: 1, msg: "Mobile number updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.send({ suc: 0, msg: "Failed to update mobile number" });
+  }
+});
+
+memberRouter.post("/admin_update_mobile_no", async (req, res) => {
+  var data = req.body;
+  const { member_id, update_type, new_mobile_no } = data; // member_id acts as the generic identifier
+  
+  if (!member_id || !update_type || !new_mobile_no) {
+    return res.send({ suc: 0, msg: "Missing required fields" });
+  }
+
+  try {
+    if (update_type === 'STP') {
+      let stpData = await db_Select("policy_holder_type, member_id, min_no", "td_stp_ins", `member_id = '${member_id}' OR min_no = '${member_id}'`, null);
+      if (stpData && stpData.msg && stpData.msg.length > 0) {
+        let pType = stpData.msg[0].policy_holder_type;
+        let db_member_id = stpData.msg[0].member_id;
+        let db_min_no = stpData.msg[0].min_no;
+        
+        if (pType === 'M') {
+          await db_Insert("td_stp_ins", `phone_no = '${new_mobile_no}'`, null, `member_id = '${db_member_id}'`, 1);
+        } else {
+          await db_Insert("td_stp_ins", `phone_no = '${new_mobile_no}'`, null, `min_no = '${db_min_no}'`, 1);
+        }
+        res.send({ suc: 1, msg: "Mobile number updated successfully" });
+      } else {
+        res.send({ suc: 0, msg: "Record not found in Super Topup Policy" });
+      }
+    } else if (update_type === 'MEMBERSHIP') {
+      await db_Insert("md_member", `phone_no = '${new_mobile_no}'`, null, `member_id = '${member_id}'`, 1);
+      res.send({ suc: 1, msg: "Mobile number updated successfully" });
+    } else {
+      res.send({ suc: 0, msg: "Invalid update type selected" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.send({ suc: 0, msg: "Failed to update mobile number" });
+  }
+});
+
 module.exports = { memberRouter };
