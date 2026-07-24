@@ -18,7 +18,7 @@ var dateFormat = require("dateformat"),
   path = require("path"),
   fs = require("fs"),
   dotenv = require("dotenv");
-  bcrypt = require("bcrypt");
+bcrypt = require("bcrypt");
 const axios = require('axios');
 
 const { sendWappMsg, sendWappMediaMsg } = require("./whatsappModule");
@@ -40,9 +40,9 @@ async function shortenURL(longUrl) {
 const getMaxFormNo = (flag) => {
   return new Promise(async (resolve, reject) => {
     var select =
-        flag != "AI"
-          ? "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -6) as unsigned))+1, 6, '0'), '000001') max_form"
-          : "IF(MAX(SUBSTRING(form_no, -7)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -7) as unsigned))+1, 6, '0'), '000001') max_form",
+      flag != "AI"
+        ? "IF(MAX(SUBSTRING(form_no, -6)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -6) as unsigned))+1, 6, '0'), '000001') max_form"
+        : "IF(MAX(SUBSTRING(form_no, -7)) > 0, LPAD(MAX(cast(SUBSTRING(form_no, -7) as unsigned))+1, 6, '0'), '000001') max_form",
       table_name = "md_member",
       whr =
         flag != "AI"
@@ -57,9 +57,9 @@ const getMaxFormNo = (flag) => {
 const getMember = (flag) => {
   return new Promise(async (resolve, reject) => {
     var select =
-        flag != "AI"
-          ? "IF(MAX(CAST(SUBSTRING(member_id, 3) as unsigned)) > 0, MAX(cast(SUBSTRING(member_id, 3) as unsigned))+1, '1') member_id"
-          : "IF(MAX(CAST(SUBSTRING(member_id, 4) as unsigned)) > 0, MAX(cast(SUBSTRING(member_id, 4) as unsigned))+1, '1') member_id",
+      flag != "AI"
+        ? "IF(MAX(CAST(SUBSTRING(member_id, 3) as unsigned)) > 0, MAX(cast(SUBSTRING(member_id, 3) as unsigned))+1, '1') member_id"
+        : "IF(MAX(CAST(SUBSTRING(member_id, 4) as unsigned)) > 0, MAX(cast(SUBSTRING(member_id, 4) as unsigned))+1, '1') member_id",
       table_name = "md_member",
       whr =
         flag != "AI"
@@ -91,19 +91,19 @@ const getMaxTrnId = () => {
     var now_year = dateFormat(new Date(), "yyyy");
     var now = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     var select =
-        "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
+      "IF(MAX(SUBSTRING(trn_id, -6)) > 0, LPAD(MAX(SUBSTRING(trn_id, -6))+1, 6, '0'), '000001') max_trn_id",
       table_name = "td_generate_id",
       whr = `SUBSTRING(trn_id, 1, 4) = ${now_year}`,
       order = null;
-  
+
     var res_dt = await db_Select(select, table_name, whr, order);
 
     var max_value = res_dt.msg[0].max_trn_id;
     let fields = `(trn_date,trn_id)`;
-      values = `('${now}','${now_year+max_value}')`;
-      table_name = "td_generate_id";
+    values = `('${now}','${now_year + max_value}')`;
+    table_name = "td_generate_id";
 
-    var gen_id = await db_Insert('td_generate_id',fields, values, null, null);   
+    var gen_id = await db_Insert('td_generate_id', fields, values, null, null);
 
     resolve(res_dt);
   });
@@ -165,25 +165,25 @@ module.exports = {
       mem_dt["form_no"] = form_no;
       mem_dt["mem_type"] = data.flag;
 
-       // SEND SMS AFTER FORM SUBMIT //
- 
-        try{
-          // ✅ Trim member name to 30 characters max
-          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-          const phone = data.phone;
+      // SEND SMS AFTER FORM SUBMIT //
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
-           "FORM_SUBMISSION",
-           [
-           memb_name,
-           form_no
-           ]);
+      try {
+        // ✅ Trim member name to 30 characters max
+        let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+        const phone = data.phone;
+
+        // Send SMS
+        let smsRes = await sendSms(
+          phone,
+          "FORM_SUBMISSION",
+          [
+            memb_name,
+            form_no
+          ]);
         //  console.log("SMS Response:", smsRes);
-        }catch(err){
-          console.log("Error in sending SMS",err);
-        }
+      } catch (err) {
+        console.log("Error in sending SMS", err);
+      }
 
       // END //
 
@@ -234,7 +234,7 @@ module.exports = {
 
       var db_field_value = await generateDBValue({ data, flag: 0 });
       // console.log(db_field_value,'db');
-      
+
 
       var table_name = "md_dependent",
         fields = `(${db_field_value.fields})`,
@@ -344,7 +344,7 @@ module.exports = {
 
   reject_dt: (data) => {
     // console.log(data,'data');
-    
+
     return new Promise(async (resolve, reject) => {
 
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
@@ -355,7 +355,7 @@ module.exports = {
       //   return reject({ error: "Invalid phone number" });
       // }
 
-      var fields = `memb_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+      var fields = `memb_status = '${data.status}',resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',remarks = '${data.reject}',rejected_by = '${data.user}',rejected_dt = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}',phone_no = CONCAT(phone_no, '0'),staff_nos = CONCAT('00', staff_nos),pers_no = CONCAT('00', pers_no),min_no = CONCAT('R', min_no)`,
         table_name = "md_member",
         values = null,
         whr = `form_no = '${data.formNo}'`,
@@ -363,26 +363,26 @@ module.exports = {
       var mem_dt = await db_Insert(table_name, fields, values, whr, flag);
 
       // SEND SMS AFTER FORM REJECT //
-       try{
-          // ✅ Trim member name to 30 characters max
-          let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-          const phone = data.phone_no;
-          const form_no = data.formNo;
-          // console.log(phone,form_no,memb_name);
-          
+      try {
+        // ✅ Trim member name to 30 characters max
+        let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+        const phone = data.phone_no;
+        const form_no = data.formNo;
+        // console.log(phone,form_no,memb_name);
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
-           "FORM_REJECTION",
+
+        // Send SMS
+        let smsRes = await sendSms(
+          phone,
+          "FORM_REJECTION",
           [
-           memb_name,
-           form_no
-           ]);
-          console.log("SMS Response:", smsRes);
-        }catch(err){
-          console.log("Error in sending SMS",err);
-        }
+            memb_name,
+            form_no
+          ]);
+        console.log("SMS Response:", smsRes);
+      } catch (err) {
+        console.log("Error in sending SMS", err);
+      }
 
       // END //
 
@@ -411,10 +411,10 @@ module.exports = {
   },
 
   accept_dt_cash: (data) => {
-    console.log(data,'data');
+    console.log(data, 'data');
     console.log(data.payment != "O", data.payment);
-    
-    
+
+
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       let year = dateFormat(new Date(), "yyyy");
@@ -425,7 +425,7 @@ module.exports = {
       // console.log(trn_id, "pppp");
       // var tot_amt = data.admissionFee + data.donationFee + data.subscriptionFee;
 
-      if(data.payment != 'O'){
+      if (data.payment != 'O') {
         var table_name = "td_transactions",
           fields =
             data.trn_id > 0
@@ -440,26 +440,26 @@ module.exports = {
             values1 = null,
             whr1 = `form_no = '${data.formNo}'`,
             flag1 = 1;
-          var accept_dt = await db_Insert(table_name1,fields1,values1,whr1,flag1);
+          var accept_dt = await db_Insert(table_name1, fields1, values1, whr1, flag1);
           res_dt["trn_id"] = trn_id;
-  
+
           // SMS //
           try {
             if (data.payment == "C") {
-            // ✅ Trim member name to 30 characters max
-            let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-            const phone = data.phone_no;
-            const form_no = data.formNo;
+              // ✅ Trim member name to 30 characters max
+              let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+              const phone = data.phone_no;
+              const form_no = data.formNo;
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
-           "FORM_ACCEPT",
-           [
-            memb_name,
-            form_no
-           ]);
-         console.log("SMS Response:", smsRes);
+              // Send SMS
+              let smsRes = await sendSms(
+                phone,
+                "FORM_ACCEPT",
+                [
+                  memb_name,
+                  form_no
+                ]);
+              console.log("SMS Response:", smsRes);
               // var select = "msg, domain",
               //   table_name = "md_whatsapp_msg",
               //   whr = `msg_for = 'Accept'`,
@@ -477,18 +477,18 @@ module.exports = {
             console.log(err);
           }
           // END //
-  
+
           resolve(res_dt);
-        }else{
+        } else {
           resolve(res_dt)
         }
-      }else{
+      } else {
         //Convert milliseconds timestamp to MySQL DATETIME
         //  const expiryDateTime = new Date(data.expiryTimestamp).toLocaleString('sv-SE', { timeZone: 'Asia/Kolkata' }) // IST
         //  .replace('T', ' ');
         //  console.log(expiryDateTime,'oiu');
         // const expiryDateTime = new Date(data.expiryTimestamp).toISOString().slice(0, 19).replace('T', ' ');
-         
+
 
         // var table_name1 = "md_member",
         //   fields1 = `memb_status = '${data.status}', resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
@@ -503,8 +503,8 @@ module.exports = {
             const encDtgen = encodeURIComponent(data.payEncDataGen);
             // console.log(encDtgen,'uuu');
 
-          //   ⏳ Use expiryTimestamp from frontend (if provided)
-          //  const expiryParam = data.expiryTimestamp ? `&exp=${data.expiryTimestamp}` : "";
+            //   ⏳ Use expiryTimestamp from frontend (if provided)
+            //  const expiryParam = data.expiryTimestamp ? `&exp=${data.expiryTimestamp}` : "";
 
             // const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}${expiryParam}`;
             const longUrl = `${process.env.CLIENT_URL}/auth/payment_preview_page?enc_dt=${encDtgen}`;
@@ -512,34 +512,34 @@ module.exports = {
             // Shorten the URL
             const shortUrl = await shortenURL(longUrl);
             console.log(shortUrl);
-            
+
             // Remove https:// (and also http:// if needed)
             const shortUrlNoProtocol = shortUrl.replace(/^https?:\/\//, '');
             console.log("Short URL without protocol:", shortUrlNoProtocol);
 
-              var table_name1 = "md_member",
-          fields1 = `memb_status = '${data.status}', pay_status = 'P', payment_link = '${shortUrlNoProtocol}', link_expiry_time = '${dateFormat(new Date(data.expiryTimestamp), 'yyyy-mm-dd HH:MM:ss')}', resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
-          values1 = null,
-          whr1 = `form_no = '${data.formNo}'`,
-          flag1 = 1;
-        var res_dt = await db_Insert(table_name1,fields1,values1,whr1,flag1);
-        res_dt["trn_id"] = trn_id;
+            var table_name1 = "md_member",
+              fields1 = `memb_status = '${data.status}', pay_status = 'P', payment_link = '${shortUrlNoProtocol}', link_expiry_time = '${dateFormat(new Date(data.expiryTimestamp), 'yyyy-mm-dd HH:MM:ss')}', resolution_no ='${data.resolution_no}',resolution_dt = '${data.resolution_dt}',approve_by = '${data.user}',approve_at = '${datetime}',modified_by = '${data.user}',modified_at = '${datetime}'`,
+              values1 = null,
+              whr1 = `form_no = '${data.formNo}'`,
+              flag1 = 1;
+            var res_dt = await db_Insert(table_name1, fields1, values1, whr1, flag1);
+            res_dt["trn_id"] = trn_id;
 
-             // ✅ Trim member name to 30 characters max
+            // ✅ Trim member name to 30 characters max
             let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
             const phone = data.phone_no;
             const form_no = data.formNo;
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
-           "NEW_MEMBER_ACCEPT_ONLINE",
-           [
-            memb_name,
-            form_no,
-            shortUrlNoProtocol
-           ]);
-         console.log("SMS Response:", smsRes);
+            // Send SMS
+            let smsRes = await sendSms(
+              phone,
+              "NEW_MEMBER_ACCEPT_ONLINE",
+              [
+                memb_name,
+                form_no,
+                shortUrlNoProtocol
+              ]);
+            console.log("SMS Response:", smsRes);
 
             // var select = "msg, domain",
             //   table_name = "md_whatsapp_msg",
@@ -612,17 +612,17 @@ module.exports = {
         // SMS MESSAGE //
         try {
           let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-            const phone = data.phone_no;
-            const form_no = data.formNo;
+          const phone = data.phone_no;
+          const form_no = data.formNo;
 
-             let smsRes = await sendSms(
-           phone,
-           "FORM_ACCEPT",
-           [
-            memb_name,
-            form_no
-           ]);
-         console.log("SMS Response:", smsRes);
+          let smsRes = await sendSms(
+            phone,
+            "FORM_ACCEPT",
+            [
+              memb_name,
+              form_no
+            ]);
+          console.log("SMS Response:", smsRes);
         } catch (err) {
           console.log(err);
         }
@@ -667,22 +667,22 @@ module.exports = {
           flag1
         );
 
-      // WHATSAPP MESSAGE //
-      // try{
-      //   var select = "msg, domain",
-      //     table_name = "md_whatsapp_msg",
-      //     // whr = `msg_for = 'Accept'`,
-      //     whr = `msg_for = 'Member accept online'`,
-      //     order = null;
-      //   var msg_dt = await db_Select(select, table_name, whr, order);
-      //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
-      //   domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
-      //   wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{status}', formStatus[data.status])
-      //   var wpRes = await sendWappMsg(data.phone_no, wpMsg)
-      // }catch(err){
-      //   console.log(err);
-      // }
-      // END //
+        // WHATSAPP MESSAGE //
+        // try{
+        //   var select = "msg, domain",
+        //     table_name = "md_whatsapp_msg",
+        //     // whr = `msg_for = 'Accept'`,
+        //     whr = `msg_for = 'Member accept online'`,
+        //     order = null;
+        //   var msg_dt = await db_Select(select, table_name, whr, order);
+        //   var wpMsg = msg_dt.suc > 0 ? msg_dt.msg[0].msg : '',
+        //   domain = msg_dt.suc > 0 ? msg_dt.msg[0].domain : '';
+        //   wpMsg = wpMsg.replace('{user_name}', data.member).replace('{form_no}', data.formNo).replace('{status}', formStatus[data.status])
+        //   var wpRes = await sendWappMsg(data.phone_no, wpMsg)
+        // }catch(err){
+        //   console.log(err);
+        // }
+        // END //
 
         resolve(accept_dt);
       }
@@ -741,7 +741,7 @@ module.exports = {
         data.user,
         datetime
       );
-      console.log(voucher_res,'voucher_res');
+      console.log(voucher_res, 'voucher_res');
       var voucher_res = { suc: 1, msg: 1 };
 
       if (voucher_res.suc > 0) {
@@ -780,14 +780,12 @@ module.exports = {
             sub_upto.setMonth(sub_upto.getMonth() + tot_tenure - 1);
             var table_name = "td_memb_subscription",
               fields = `(member_id,sub_dt,amount,subscription_upto, calc_amt, calc_upto, trans_id,created_by,created_at)`,
-              values = `('${member_id}','${data.trn_dt}','${
-                data.sub_amt
-              }', '${dateFormat(
-                sub_upto,
-                "yyyy-mm-dd HH:MM:ss"
-              )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${
-                data.trn_id
-              }','${data.user}','${datetime}')`;
+              values = `('${member_id}','${data.trn_dt}','${data.sub_amt
+                }', '${dateFormat(
+                  sub_upto,
+                  "yyyy-mm-dd HH:MM:ss"
+                )}', 0, '${dateFormat(sub_upto, "yyyy-mm-dd HH:MM:ss")}', '${data.trn_id
+                }','${data.user}','${datetime}')`;
             (whr = null), (flag = 0);
             var res_dt = await db_Insert(table_name, fields, values, whr, flag);
 
@@ -833,27 +831,27 @@ module.exports = {
             approval_dt["mem_id"] = member_id;
 
             // SEND SMS AFTER FORM APPROVED //
- 
-           try{
-          // ✅ Trim member name to 30 characters max
-          // let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
-          const phone = data.phone_no;
-          // const url = "https://bspwa.in/#/auth/member_login";
 
-             // Send SMS
-           let smsRes = await sendSms(
-           phone,
-           "NEW_SUBSCRIPTION_FORM_APPROVED",
-           [
-            member_id
-            // pwd
-           ]);
-         console.log("SMS Response:", smsRes);
-        }catch(err){
-          console.log("Error in sending SMS",err);
-        }
+            try {
+              // ✅ Trim member name to 30 characters max
+              // let memb_name = data.member ? (data.member.length > 30 ? data.member.substring(0, 27) + "..." : data.member) : "";
+              const phone = data.phone_no;
+              // const url = "https://bspwa.in/#/auth/member_login";
 
-      // END //
+              // Send SMS
+              let smsRes = await sendSms(
+                phone,
+                "NEW_SUBSCRIPTION_FORM_APPROVED",
+                [
+                  member_id
+                  // pwd
+                ]);
+              console.log("SMS Response:", smsRes);
+            } catch (err) {
+              console.log("Error in sending SMS", err);
+            }
+
+            // END //
 
             // WHATSAPP MESSAGE //
             // try {
@@ -891,17 +889,17 @@ module.exports = {
     });
   },
 
-    pin_data: (data) => {
+  pin_data: (data) => {
     return new Promise(async (resolve, reject) => {
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var pin = bcrypt.hashSync(data.pin.toString(), 4);
-        var table_name = "md_user",
-            fields =`password = '${pin}',device_id = '${data.device_id}',public_key = '${data.public_key}',created_by = '${data.member_id}',created_at = '${datetime}'`,
-            values = null,
-            where = `user_id = '${data.member_id}'`,
-            flag = 1;
-        var res_dt = await db_Insert(table_name, fields, values, where, flag);
-        resolve(res_dt);
-      });
-    },
+      var table_name = "md_user",
+        fields = `password = '${pin}',device_id = '${data.device_id}',public_key = '${data.public_key}',created_by = '${data.member_id}',created_at = '${datetime}'`,
+        values = null,
+        where = `user_id = '${data.member_id}'`,
+        flag = 1;
+      var res_dt = await db_Insert(table_name, fields, values, where, flag);
+      resolve(res_dt);
+    });
+  },
 };
