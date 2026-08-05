@@ -165,7 +165,7 @@ reportRouter.get("/member_stp_trans_report", async (req, res) => {
   // console.log(data, 'data');
 
   let select = `a.trn_dt, a.trn_id, a.premium_amt, a.pay_mode, a.tot_amt, a.approval_status,
-    b.min_no, b.memb_name, b.gender, b.dob, b.memb_oprn, b.memb_oprn, c.financial_year, c.policy_amount`;
+    b.min_no, b.memb_name, b.gender, b.dob, b.phone_no, b.memb_oprn, b.memb_oprn, c.financial_year, c.policy_amount`;
 
   // Include spouse/dependent fields if D or A
   if (data.memb_oprn === 'D' || data.memb_oprn === 'A') {
