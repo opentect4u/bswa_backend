@@ -120,7 +120,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     try {
         data = JSON.parse(data)
         console.log(data, 'kili');
-        if (data.redirect_path == '/main/ins_dtls') {
+        if (data.redirect_path == '/main/ins_dtls' && data.redirect_path == '/main/stp_premium_payment') {
             return res.send({
                 suc: 0,
                 msg: "Payment is closed. Payment is not possible after 31.08.2026 12:00 AM."
@@ -214,7 +214,7 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
     try {
         data = JSON.parse(data)
         console.log(data, 'kili');
-        if (data.redirect_path == '/main/ins_dtls') {
+        if (data.redirect_path == '/main/ins_dtls' && data.redirect_path == '/main/stp_premium_payment') {
             return res.send({
                 suc: 0,
                 msg: "Payment is closed. Payment is not possible after 31.08.2026 12:00 AM."
