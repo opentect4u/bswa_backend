@@ -1,0 +1,18 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "main",
+    "mobile",
+    "subham"
+  ],
+  "parent": {
+    "main": null,
+    "mobile": "main",
+    "subham": "main"
+  },
+  "order": [
+    "main",
+    "mobile",
+    "subham"
+  ]
+}
