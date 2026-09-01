@@ -8,11 +8,99 @@ const dateFormat = require('dateformat');
 dotenv.config({ path: '.env.prod' });
 // console.log(process.env.PAY_GET_KEY,'oioi');
 
+// payRouter.post('/generate_pay_url', async (req, res) => {
+//     var encData = req.body.encData
+//     console.log(encData,'enc');
+//     // res.send('huegfegsfyg')
+
+//     const secretKey = process.env.secretKey;
+//     console.log(secretKey);
+//     // var rand_no = Math.floor(100000 + Math.random() * 900000)
+//     // var tnx_id = `BOSEC${rand_no}`
+//     var tnx_data = await getMaxTrnId();
+//     let year = dateFormat(new Date(), "yyyy");
+//     // if (tnx_data.suc > 0 && Array.isArray(tnx_data.msg) && tnx_data.msg.length > 0) {
+//     // var maxTrnId = tnx_data.msg[0].max_trn_id;
+//     // } else {
+//     // var maxTrnId = 0;
+//     // }
+//     // var tnx_id = `${year}${maxTrnId.toString().padStart(4, '0')}`;
+//     var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
+
+//     var data = CryptoJS.AES.decrypt(encData, secretKey).toString(CryptoJS.enc.Utf8);
+//     console.log("Decrypted data string:", data);
+//     try {
+//         data = JSON.parse(data)
+//         console.log(data,'kili');
+//         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
+//         tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
+//         console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
+
+//         if (data.memb_name != '' && data.amount > 0) {
+//             const reqData = {
+//                 mid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
+//                 amount: data.amount.toString(),
+//                 merchantTransactionId: tnx_id.toString(),
+//                 transactionDate: new Date().toISOString(),
+//                 terminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+//                 udf1: data.phone_no.toString(),
+//                 udf2: data.email_id ? data.email_id : '',
+//                 udf3: data.memb_name,
+//                 udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}||${data.adm_fee || 0}||${data.donation_fee || 0}||${data.sub_fee || 0}`,
+//                 udf5: '',
+//                 udf6: '',
+//                 udf7: data.calc_upto || '',
+//                 udf8: data.subs_type || '',
+//                 udf9: data.sub_fee ? data.sub_fee.toString() : '0',
+//                 // udf9: data.sub_fee !== undefined ? data.sub_fee.toString() : '',
+//                 udf10: data.redirect_path,
+//                 ru: paySocFlag ? `${process.env.BASE_URL}/${process.env.UAT_REDIRECT_URL}` : `${process.env.BASE_URL}/${process.env.ASSO_PAY_REDIRECT_URL}`,
+//                 callbackUrl: process.env.PAY_CALL_BACK_URL,
+//                 currency: "INR",
+//                 paymentMode: "ALL",
+//                 bankId: "",
+//                 txnType: "single",
+//                 productType: "IPG",
+//                 txnNote: "Test Txn",
+//                 vpa: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+//             };
+
+//             const config = {
+//                 GetepayMid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
+//                 GeepayTerminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+//                 GetepayKey: paySocFlag ? process.env.PAY_GET_KEY : process.env.ASSO_PAY_PROD_KEY,
+//                 GetepayIV: paySocFlag ? process.env.PAY_GET_IV : process.env.ASSO_PAY_PROD_IV,
+//                 GetepayUrl: paySocFlag ? process.env.PAY_GET_URL : process.env.ASSO_PAY_PROD_GET_URL,
+//             };
+//             // console.log(config,reqData,'poi');
+//             console.log("KEY:", process.env.PAY_GET_KEY);
+// // console.log("IV:", process.env.PAY_GET_IV);
+
+//             getepayPortal(reqData, config)
+//                 .then((paymentUrl) => {
+//                     console.log(paymentUrl, "Payment URL");
+//                     res.send({
+//                         suc: 1,
+//                         msg: "URL generated successfully.",
+//                         pay_url: paymentUrl
+//                     });
+//                 })
+//                 .catch((error) => {
+//                     console.error("Error:", error);
+//                     res.send({suc: 0, msg: error});
+//                 });
+//         }
+//     } catch (err) {
+//         console.log(err);
+//         res.send({ suc: 0, msg: err })
+//     }
+// });
+
 payRouter.post('/generate_pay_url', async (req, res) => {
     var encData = req.body.encData
-    console.log(encData,'enc');
+    console.log(encData, 'enc');
     // res.send('huegfegsfyg')
-    
+
     const secretKey = process.env.secretKey;
     console.log(secretKey);
     // var rand_no = Math.floor(100000 + Math.random() * 900000)
@@ -31,11 +119,17 @@ payRouter.post('/generate_pay_url', async (req, res) => {
     console.log("Decrypted data string:", data);
     try {
         data = JSON.parse(data)
-        console.log(data,'kili');
+        console.log(data, 'kili');
+        if (data.redirect_path == '/main/ins_dtls') {
+            return res.send({
+                suc: 0,
+                msg: "Payment is closed. Payment is not possible after 31.08.2026 12:00 AM."
+            });
+        }
         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
         tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
         console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
-        
+
         if (data.memb_name != '' && data.amount > 0) {
             const reqData = {
                 mid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
@@ -74,8 +168,8 @@ payRouter.post('/generate_pay_url', async (req, res) => {
             };
             // console.log(config,reqData,'poi');
             console.log("KEY:", process.env.PAY_GET_KEY);
-// console.log("IV:", process.env.PAY_GET_IV);
-            
+            // console.log("IV:", process.env.PAY_GET_IV);
+
             getepayPortal(reqData, config)
                 .then((paymentUrl) => {
                     console.log(paymentUrl, "Payment URL");
@@ -87,7 +181,7 @@ payRouter.post('/generate_pay_url', async (req, res) => {
                 })
                 .catch((error) => {
                     console.error("Error:", error);
-                    res.send({suc: 0, msg: error});
+                    res.send({ suc: 0, msg: error });
                 });
         }
     } catch (err) {
@@ -98,9 +192,9 @@ payRouter.post('/generate_pay_url', async (req, res) => {
 
 payRouter.post('/generate_pay_url_app', async (req, res) => {
     var encData = req.body.encData
-    console.log(encData,'enc_app');
+    console.log(encData, 'enc_app');
     // res.send('huegfegsfyg')
-    
+
     const secretKey = process.env.secretKey;
     console.log(secretKey);
     // var rand_no = Math.floor(100000 + Math.random() * 900000)
@@ -119,11 +213,17 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
     console.log("Decrypted data string:", data);
     try {
         data = JSON.parse(data)
-        console.log(data,'kili');
+        console.log(data, 'kili');
+        if (data.redirect_path == '/main/ins_dtls') {
+            return res.send({
+                suc: 0,
+                msg: "Payment is closed. Payment is not possible after 31.08.2026 12:00 AM."
+            });
+        }
         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
         tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
         console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
-        
+
         if (data.memb_name != '' && data.amount > 0) {
             const reqData = {
                 mid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
@@ -162,8 +262,8 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
             };
             // console.log(config,reqData,'poi');
             console.log("KEY:", process.env.PAY_GET_KEY);
-// console.log("IV:", process.env.PAY_GET_IV);
-            
+            // console.log("IV:", process.env.PAY_GET_IV);
+
             getepayPortal(reqData, config)
                 .then((paymentUrl) => {
                     console.log(paymentUrl, "Payment URL");
@@ -175,7 +275,7 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
                 })
                 .catch((error) => {
                     console.error("Error:", error);
-                    res.send({suc: 0, msg: error});
+                    res.send({ suc: 0, msg: error });
                 });
         }
     } catch (err) {
@@ -184,10 +284,98 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
     }
 });
 
+// payRouter.post('/generate_pay_url_app', async (req, res) => {
+//     var encData = req.body.encData
+//     console.log(encData,'enc_app');
+//     // res.send('huegfegsfyg')
+
+//     const secretKey = process.env.secretKey;
+//     console.log(secretKey);
+//     // var rand_no = Math.floor(100000 + Math.random() * 900000)
+//     // var tnx_id = `BOSEC${rand_no}`
+//     var tnx_data = await getMaxTrnId();
+//     let year = dateFormat(new Date(), "yyyy");
+//     // if (tnx_data.suc > 0 && Array.isArray(tnx_data.msg) && tnx_data.msg.length > 0) {
+//     // var maxTrnId = tnx_data.msg[0].max_trn_id;
+//     // } else {
+//     // var maxTrnId = 0;
+//     // }
+//     // var tnx_id = `${year}${maxTrnId.toString().padStart(4, '0')}`;
+//     var tnx_id = `${year}${tnx_data.suc > 0 ? tnx_data.msg[0].max_trn_id : 0}`;
+
+//     var data = CryptoJS.AES.decrypt(encData, secretKey).toString(CryptoJS.enc.Utf8);
+//     console.log("Decrypted data string:", data);
+//     try {
+//         data = JSON.parse(data)
+//         console.log(data,'kili');
+//         var paySocFlag = data.soc_flag ? data.soc_flag == 'T' ? true : false : false
+//         tnx_id = paySocFlag ? (data.trn_id > 0 ? data.trn_id : tnx_id) : tnx_id
+//         console.log(tnx_id, data.trn_id, paySocFlag, data.soc_flag, 'HEHEHEHEHEHEEHEHEHEHEHE');
+
+//         if (data.memb_name != '' && data.amount > 0) {
+//             const reqData = {
+//                 mid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
+//                 amount: data.amount.toString(),
+//                 merchantTransactionId: tnx_id.toString(),
+//                 transactionDate: new Date().toISOString(),
+//                 terminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+//                 udf1: data.phone_no.toString(),
+//                 udf2: data.email_id ? data.email_id : '',
+//                 udf3: data.memb_name,
+//                 udf4: `${data.member_id}||${data.approve_status}||${data.form_no}||${data.trn_id > 0 ? 1 : 0} || ${paySocFlag ? data.pay_flag : 'A'}||${data.adm_fee || 0}||${data.donation_fee || 0}||${data.sub_fee || 0}`,
+//                 udf5: '',
+//                 udf6: '',
+//                 udf7: data.calc_upto || '',
+//                 udf8: data.subs_type || '',
+//                 udf9: data.sub_fee ? data.sub_fee.toString() : '0',
+//                 // udf9: data.sub_fee !== undefined ? data.sub_fee.toString() : '',
+//                 udf10: data.redirect_path,
+//                 ru: paySocFlag ? `${process.env.BASE_URL}/${process.env.UAT_REDIRECT_URL_APP}` : `${process.env.BASE_URL}/${process.env.ASSO_PAY_REDIRECT_URL_APP}`,
+//                 callbackUrl: process.env.PAY_CALL_BACK_URL,
+//                 currency: "INR",
+//                 paymentMode: "ALL",
+//                 bankId: "",
+//                 txnType: "single",
+//                 productType: "IPG",
+//                 txnNote: "Test Txn",
+//                 vpa: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+//             };
+
+//             const config = {
+//                 GetepayMid: paySocFlag ? process.env.PAY_MERCHANT_ID : process.env.ASSO_PAY_PROD_MERCHANT_ID,
+//                 GeepayTerminalId: paySocFlag ? process.env.PAY_TERMINAL_ID : process.env.ASSO_PAY_PROD_TERMINAL_ID,
+//                 GetepayKey: paySocFlag ? process.env.PAY_GET_KEY : process.env.ASSO_PAY_PROD_KEY,
+//                 GetepayIV: paySocFlag ? process.env.PAY_GET_IV : process.env.ASSO_PAY_PROD_IV,
+//                 GetepayUrl: paySocFlag ? process.env.PAY_GET_URL : process.env.ASSO_PAY_PROD_GET_URL,
+//             };
+//             // console.log(config,reqData,'poi');
+//             console.log("KEY:", process.env.PAY_GET_KEY);
+// // console.log("IV:", process.env.PAY_GET_IV);
+
+//             getepayPortal(reqData, config)
+//                 .then((paymentUrl) => {
+//                     console.log(paymentUrl, "Payment URL");
+//                     res.send({
+//                         suc: 1,
+//                         msg: "URL generated successfully.",
+//                         pay_url: paymentUrl
+//                     });
+//                 })
+//                 .catch((error) => {
+//                     console.error("Error:", error);
+//                     res.send({suc: 0, msg: error});
+//                 });
+//         }
+//     } catch (err) {
+//         console.log(err);
+//         res.send({ suc: 0, msg: err })
+//     }
+// });
+
 // payRouter.post('/success_payment_gmp', async (req, res) => {
 //     const result = req.body.response;
 //     console.log(result);
-    
+
 //     var dataitems = decryptEas(
 //         result,
 //         process.env.PAY_GET_KEY,
@@ -198,7 +386,7 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
 //     var res_dt = JSON.parse(parsedData)
 //     var res_load = await payRecordSave(res_dt)
 //     console.log(res_dt,res_load,'test');
-    
+
 //     var data = res_dt.udf4.split('||')
 //     res_dt.udf4 = data[0]
 //     res_dt.udf5 = data[1]
@@ -236,10 +424,10 @@ payRouter.post('/generate_pay_url_app', async (req, res) => {
 payRouter.post('/success_payment_gmp', async (req, res) => {
     const result = req.body.response;
     console.log(result);
-    
+
     // let dataitems;
     // try{
-     dataitems = decryptEas(
+    dataitems = decryptEas(
         result,
         process.env.PAY_GET_KEY,
         process.env.PAY_GET_IV
@@ -248,44 +436,44 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     //   console.error("Decryption error:", err.message);
     //   return res.send({ suc: 0, msg: "Invalid or malformed encrypted response" });
     // }
-   
+
     const parsedData = JSON.parse(dataitems);
     console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
     var res_load = await payRecordSave(res_dt)
-    console.log(res_dt,res_load,'test');
-    
+    console.log(res_dt, res_load, 'test');
+
     var data = res_dt.udf4.split('||')
     res_dt.udf4 = data[0]
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     res_dt['up_flag'] = data[3]
     res_dt['direct_flag'] = data[4]
-    if(res_dt.txnStatus == 'SUCCESS'){
-        console.log(res_dt.txnStatus,'res_dt.txnStatus');
-        
+    if (res_dt.txnStatus == 'SUCCESS') {
+        console.log(res_dt.txnStatus, 'res_dt.txnStatus');
+
         var save_dt = await saveTrnsGmp(res_dt)
-        try{
-            if(res_dt.direct_flag == 'D'){
-          var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
-          res.send(mem_dt)
-          console.log('Update result:', mem_dt,data,formNo);
+        try {
+            if (res_dt.direct_flag == 'D') {
+                var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
+                res.send(mem_dt)
+                console.log('Update result:', mem_dt, data, formNo);
             }
-        }catch(err){
-            console.log(err);            
+        } catch (err) {
+            console.log(err);
         }
         // if(res_dt.udf5 != 'U'){
         //     var sub_res = await saveSubs(res_dt)
         // }
         var redirect_url_client =
-          data[0] != ""
-            ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
-            : `home/money_receipt_member/${save_dt.trn_id}`;
+            data[0] != ""
+                ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
+                : `home/money_receipt_member/${save_dt.trn_id}`;
 
         // console.log(`${process.env.CLIENT_URL}/${redirect_url_client}`);
         res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
         // res.redirect(`${process.env.CLIENT_URL}/${res_dt.udf10}`)
-    }else{
+    } else {
         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }
     // res.send(parsedData);
@@ -294,10 +482,10 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
 payRouter.post('/success_payment_gmp_app', async (req, res) => {
     const result = req.body.response;
     console.log(result);
-    
+
     // let dataitems;
     // try{
-     dataitems = decryptEas(
+    dataitems = decryptEas(
         result,
         process.env.PAY_GET_KEY,
         process.env.PAY_GET_IV
@@ -306,48 +494,48 @@ payRouter.post('/success_payment_gmp_app', async (req, res) => {
     //   console.error("Decryption error:", err.message);
     //   return res.send({ suc: 0, msg: "Invalid or malformed encrypted response" });
     // }
-   
+
     const parsedData = JSON.parse(dataitems);
     console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
     var res_load = await payRecordSave(res_dt)
-    console.log(res_dt,res_load,'test');
-    
+    console.log(res_dt, res_load, 'test');
+
     var data = res_dt.udf4.split('||')
     res_dt.udf4 = data[0]
     res_dt.udf5 = data[1]
     res_dt.udf6 = data[2]
     res_dt['up_flag'] = data[3]
     res_dt['direct_flag'] = data[4]
-    if(res_dt.txnStatus == 'SUCCESS'){
-        console.log(res_dt.txnStatus,'res_dt.txnStatus');
-        
-        var save_dt = await saveTrnsGmp(res_dt)
-        try{
-            if(res_dt.direct_flag == 'D'){
-          var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
-          res.send(mem_dt)
-          console.log('Update result:', mem_dt,data,formNo);
-            }
-        }catch(err){
-            console.log(err);            
-        }
-         // SEND SUCCESS DATA TO FRONTEND
-            return res.json({
-                status: "success",
-                message: "Payment processed successfully",
-                transaction: save_dt,
-                // subscription: sub_res,
-                payload: res_dt
-            });
+    if (res_dt.txnStatus == 'SUCCESS') {
+        console.log(res_dt.txnStatus, 'res_dt.txnStatus');
 
-    }else{
+        var save_dt = await saveTrnsGmp(res_dt)
+        try {
+            if (res_dt.direct_flag == 'D') {
+                var mem_dt = await db_Insert('td_gen_ins', `form_status = 'A'`, null, `form_no = '${data.formNo}'`, 1);
+                res.send(mem_dt)
+                console.log('Update result:', mem_dt, data, formNo);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+        // SEND SUCCESS DATA TO FRONTEND
+        return res.json({
+            status: "success",
+            message: "Payment processed successfully",
+            transaction: save_dt,
+            // subscription: sub_res,
+            payload: res_dt
+        });
+
+    } else {
         // SEND FAILURE DATA TO FRONTEND
-            return res.json({
-                status: "failed",
-                message: "Payment failed",
-                payload: res_dt
-            });
+        return res.json({
+            status: "failed",
+            message: "Payment failed",
+            payload: res_dt
+        });
 
         // res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }
@@ -372,18 +560,18 @@ payRouter.post('/success_payment_asso', async (req, res) => {
     res_dt.adm_fee = data[5] || 0
     res_dt.donation_fee = data[6] || 0
     res_dt.sub_fee = data[7] || 0
-    if(res_dt.txnStatus == 'SUCCESS'){
+    if (res_dt.txnStatus == 'SUCCESS') {
         var save_dt = await saveTrns(res_dt);
-        if(res_dt.udf5 != 'U'){
+        if (res_dt.udf5 != 'U') {
             var sub_res = await saveSubs(res_dt)
         }
         var redirect_url_client = data[0] != ''
-        ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
-        : `home/money_receipt_member/${save_dt.trn_id}`;
-        
+            ? `main/money_receipt_member/${data[0]}/${save_dt.trn_id}`
+            : `home/money_receipt_member/${save_dt.trn_id}`;
+
         // console.log(`${process.env.CLIENT_URL}/${redirect_url_client}`);
         res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
-    }else{
+    } else {
         res.redirect(`${process.env.CLIENT_URL}${res_dt.udf10}`)
     }
     // res.send(parsedData);
@@ -411,27 +599,27 @@ payRouter.post('/success_payment_asso_app', async (req, res) => {
     res_dt.donation_fee = data[6] || 0
     res_dt.sub_fee = data[7] || 0
 
-    if(res_dt.txnStatus == 'SUCCESS'){
+    if (res_dt.txnStatus == 'SUCCESS') {
         var save_dt = await saveTrns(res_dt);
-        if(res_dt.udf5 != 'U'){
+        if (res_dt.udf5 != 'U') {
             var sub_res = await saveSubs(res_dt)
         }
 
         // SEND SUCCESS DATA TO FRONTEND
-            return res.json({
-                status: "success",
-                message: "Payment processed successfully",
-                transaction: save_dt,
-                subscription: sub_res,
-                payload: res_dt
-            });
-    }else{
-         // SEND FAILURE DATA TO FRONTEND
-            return res.json({
-                status: "failed",
-                message: "Payment failed",
-                payload: res_dt
-            });
+        return res.json({
+            status: "success",
+            message: "Payment processed successfully",
+            transaction: save_dt,
+            subscription: sub_res,
+            payload: res_dt
+        });
+    } else {
+        // SEND FAILURE DATA TO FRONTEND
+        return res.json({
+            status: "failed",
+            message: "Payment failed",
+            payload: res_dt
+        });
     }
     // res.send(parsedData);
 });
