@@ -742,36 +742,28 @@ const drVoucher_gmp = (
 
 const generateNextSubDate = (calc_upto, sub_type, paid_month_amt, sub_fee) => {
   return new Promise((resolve, reject) => {
-    var sub_upto = new Date(calc_upto);
+    var sub_upto = (calc_upto && !isNaN(new Date(calc_upto).getTime())) ? new Date(calc_upto) : new Date();
     
     switch (sub_type) {
       case "Y":
-        sub_upto.setFullYear(sub_upto.getFullYear() + 1);
-        break;
       case "O":
-        sub_upto.setFullYear(sub_upto.getFullYear() + 1);
+        var tot_years = Number(sub_fee) > 0 ? Math.round(Number(paid_month_amt) / Number(sub_fee)) : 1;
+        if (tot_years <= 0) tot_years = 1;
+        sub_upto.setFullYear(sub_upto.getFullYear() + tot_years);
         break;
       case "M":
         var tot_tenure =
-          sub_fee > 0 ? (paid_month_amt / sub_fee) : 0;
-        var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
-        if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
-        if(sub_upto.getFullYear() != sub_year){
-          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
-        }else{
-          sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
-        }
-        
-        sub_upto = new Date(sub_year, sub_mon, 0)
-        // console.log(sub_upto);
-        
+          Number(sub_fee) > 0 ? Math.round(Number(paid_month_amt) / Number(sub_fee)) : 0;
+        if (tot_tenure <= 0) tot_tenure = 1;
+        sub_upto = new Date(sub_upto.getFullYear(), sub_upto.getMonth() + tot_tenure + 1, 0);
         break;
 
-        default:
-      var tot_tenure =
-        sub_fee > 0 ? paid_month_amt / sub_fee : 0;
-      sub_upto.setMonth(sub_upto.getMonth() + tot_tenure-1);
-      break;
+      default:
+        var tot_tenure =
+          Number(sub_fee) > 0 ? Math.round(Number(paid_month_amt) / Number(sub_fee)) : 0;
+        if (tot_tenure <= 0) tot_tenure = 1;
+        sub_upto = new Date(sub_upto.getFullYear(), sub_upto.getMonth() + tot_tenure + 1, 0);
+        break;
 
       // default:
       //   var tot_tenure =

@@ -136,36 +136,17 @@ SubsDepoRouter.post("/mem_subs_dtls_save", async (req, res) => {
   
   switch (data.sub_type) {
     case "Y":
-      sub_upto.setFullYear(sub_upto.getFullYear() + 1);
-      break;
     case "O":
-      sub_upto.setFullYear(sub_upto.getFullYear() + 1);
+      var tot_years = Number(data.sub_fee) > 0 ? Math.round(Number(data.paid_month_amt) / Number(data.sub_fee)) : 1;
+      if (tot_years <= 0) tot_years = 1;
+      sub_upto.setFullYear(sub_upto.getFullYear() + tot_years);
       break;
     case "M":
-      var tot_tenure =
-        data.sub_fee > 0 ? (data.paid_month_amt / data.sub_fee) : 0;
-      var sub_year = sub_upto.getFullYear(), sub_mon = sub_upto.getMonth()+1;
-      if(((sub_upto.getMonth()+1) + tot_tenure) > 12) sub_year = parseInt(sub_year) + 1;
-      if(sub_upto.getFullYear() != sub_year){
-        sub_mon = ((sub_upto.getMonth()+1) + tot_tenure) - 12;
-      }else{
-        sub_mon = ((sub_upto.getMonth()+1) + tot_tenure)
-      }
-      
-      sub_upto = new Date(sub_year, sub_mon, 0)
-      console.log(sub_upto);
-      
-
-      // console.log(sub_upto.getMonth()+1, tot_tenure, 'Calculation');
-      // sub_upto.setMonth(sub_upto.getMonth()+1 + tot_tenure);
-      // console.log(sub_upto);
-      
-      break;
-
     default:
       var tot_tenure =
-        data.sub_fee > 0 ? data.paid_month_amt / data.sub_fee : 0;
-      sub_upto.setMonth(sub_upto.getMonth() + tot_tenure-1);
+        Number(data.sub_fee) > 0 ? Math.round(Number(data.paid_month_amt) / Number(data.sub_fee)) : 0;
+      if (tot_tenure <= 0) tot_tenure = 1;
+      sub_upto = new Date(sub_upto.getFullYear(), sub_upto.getMonth() + tot_tenure + 1, 0);
       break;
   }
 
@@ -290,7 +271,15 @@ SubsDepoRouter.post("/mem_sub_tnx_save", async (req, res) => {
   var baseDate = data.cal_upto ? new Date(data.cal_upto) : new Date(trn_dt);
   
   var sub_upto = new Date(baseDate);
-  sub_upto.setMonth(sub_upto.getMonth() + tot_tenure);
+  if (data.sub_type === 'Y' || data.sub_type === 'O') {
+    var tot_years = Number(data.sub_fee) > 0 ? Math.round(Number(data.sub_amt) / Number(data.sub_fee)) : 1;
+    if (tot_years <= 0) tot_years = 1;
+    sub_upto.setFullYear(sub_upto.getFullYear() + tot_years);
+  } else {
+    var tot_tenure = Number(data.sub_fee) > 0 ? Math.round(Number(data.sub_amt) / Number(data.sub_fee)) : 0;
+    if (tot_tenure <= 0) tot_tenure = 1;
+    sub_upto = new Date(sub_upto.getFullYear(), sub_upto.getMonth() + tot_tenure + 1, 0);
+  }
 
 console.log(sub_upto, 'correct upto');
 
