@@ -3,7 +3,7 @@ const CryptoJS = require('crypto-js');
 dotenv = require("dotenv");
 const { getepayPortal, saveTrns, saveSubs, payRecordSave, saveTrnsGmp } = require('../../modules/payModule');
 const { decryptEas } = require('../../controller/decryptEas');
-const { getMaxTrnId, db_Insert } = require('../../modules/MasterModule');
+const { getMaxTrnId, db_Insert, db_Select } = require('../../modules/MasterModule');
 const dateFormat = require('dateformat');
 dotenv.config({ path: '.env.prod' });
 // console.log(process.env.PAY_GET_KEY,'oioi');
@@ -440,6 +440,21 @@ payRouter.post('/success_payment_gmp', async (req, res) => {
     const parsedData = JSON.parse(dataitems);
     console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
+
+    var check_txn = await db_Select('*', 'td_pg_transaction', `(mer_order_no = '${res_dt.merchantOrderNo}' OR pay_trns_id = '${res_dt.getepayTxnId}') AND trns_status = 'SUCCESS'`, null);
+    var check_td_txn = await db_Select('*', 'td_transactions', `(trn_id = '${res_dt.merchantOrderNo}' OR receipt_no = '${res_dt.getepayTxnId}') AND receipt_no IS NOT NULL AND receipt_no != '' AND receipt_no != '0'`, null);
+
+    if (res_dt.txnStatus == 'SUCCESS' && ((check_txn.suc > 0 && check_txn.msg.length > 0) || (check_td_txn.suc > 0 && check_td_txn.msg.length > 0))) {
+        console.log('Duplicate SUCCESS response received for transaction:', res_dt.merchantOrderNo);
+        var udata = res_dt.udf4 ? res_dt.udf4.split('||') : [];
+        var redirect_url_client =
+            udata[0] && udata[0] != ""
+                ? `main/money_receipt_member/${udata[0]}/${res_dt.merchantOrderNo}`
+                : `home/money_receipt_member/${res_dt.merchantOrderNo}`;
+
+        return res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+    }
+
     var res_load = await payRecordSave(res_dt)
     console.log(res_dt, res_load, 'test');
 
@@ -498,6 +513,20 @@ payRouter.post('/success_payment_gmp_app', async (req, res) => {
     const parsedData = JSON.parse(dataitems);
     console.log("data UAT", parsedData);
     var res_dt = JSON.parse(parsedData)
+
+    var check_txn = await db_Select('*', 'td_pg_transaction', `(mer_order_no = '${res_dt.merchantOrderNo}' OR pay_trns_id = '${res_dt.getepayTxnId}') AND trns_status = 'SUCCESS'`, null);
+    var check_td_txn = await db_Select('*', 'td_transactions', `(trn_id = '${res_dt.merchantOrderNo}' OR receipt_no = '${res_dt.getepayTxnId}') AND receipt_no IS NOT NULL AND receipt_no != '' AND receipt_no != '0'`, null);
+
+    if (res_dt.txnStatus == 'SUCCESS' && ((check_txn.suc > 0 && check_txn.msg.length > 0) || (check_td_txn.suc > 0 && check_td_txn.msg.length > 0))) {
+        console.log('Duplicate SUCCESS response received for transaction:', res_dt.merchantOrderNo);
+        return res.json({
+            status: "success",
+            message: "Payment processed successfully",
+            transaction: { trn_id: res_dt.merchantOrderNo },
+            payload: res_dt
+        });
+    }
+
     var res_load = await payRecordSave(res_dt)
     console.log(res_dt, res_load, 'test');
 
@@ -552,6 +581,20 @@ payRouter.post('/success_payment_asso', async (req, res) => {
     const parsedData = JSON.parse(dataitems);
     console.log("data", parsedData);
     var res_dt = JSON.parse(parsedData)
+
+    var check_txn = await db_Select('*', 'td_pg_transaction', `(mer_order_no = '${res_dt.merchantOrderNo}' OR pay_trns_id = '${res_dt.getepayTxnId}') AND trns_status = 'SUCCESS'`, null);
+    var check_td_txn = await db_Select('*', 'td_transactions', `(trn_id = '${res_dt.merchantOrderNo}' OR receipt_no = '${res_dt.getepayTxnId}') AND receipt_no IS NOT NULL AND receipt_no != '' AND receipt_no != '0'`, null);
+
+    if (res_dt.txnStatus == 'SUCCESS' && ((check_txn.suc > 0 && check_txn.msg.length > 0) || (check_td_txn.suc > 0 && check_td_txn.msg.length > 0))) {
+        console.log('Duplicate SUCCESS response received for transaction:', res_dt.merchantOrderNo);
+        var udata = res_dt.udf4 ? res_dt.udf4.split('||') : [];
+        var redirect_url_client = udata[0] && udata[0] != ''
+            ? `main/money_receipt_member/${udata[0]}/${res_dt.merchantOrderNo}`
+            : `home/money_receipt_member/${res_dt.merchantOrderNo}`;
+
+        return res.redirect(`${process.env.CLIENT_URL}/${redirect_url_client}`);
+    }
+
     var res_load = await payRecordSave(res_dt)
     var data = res_dt.udf4.split('||')
     res_dt.udf4 = data[0]
@@ -589,6 +632,20 @@ payRouter.post('/success_payment_asso_app', async (req, res) => {
     const parsedData = JSON.parse(dataitems);
     console.log("data", parsedData);
     var res_dt = JSON.parse(parsedData)
+
+    var check_txn = await db_Select('*', 'td_pg_transaction', `(mer_order_no = '${res_dt.merchantOrderNo}' OR pay_trns_id = '${res_dt.getepayTxnId}') AND trns_status = 'SUCCESS'`, null);
+    var check_td_txn = await db_Select('*', 'td_transactions', `(trn_id = '${res_dt.merchantOrderNo}' OR receipt_no = '${res_dt.getepayTxnId}') AND receipt_no IS NOT NULL AND receipt_no != '' AND receipt_no != '0'`, null);
+
+    if (res_dt.txnStatus == 'SUCCESS' && ((check_txn.suc > 0 && check_txn.msg.length > 0) || (check_td_txn.suc > 0 && check_td_txn.msg.length > 0))) {
+        console.log('Duplicate SUCCESS response received for transaction:', res_dt.merchantOrderNo);
+        return res.json({
+            status: "success",
+            message: "Payment processed successfully",
+            transaction: { trn_id: res_dt.merchantOrderNo },
+            subscription: { suc: 1, msg: "Already saved" },
+            payload: res_dt
+        });
+    }
 
     var res_load = await payRecordSave(res_dt)
     var data = res_dt.udf4.split('||')

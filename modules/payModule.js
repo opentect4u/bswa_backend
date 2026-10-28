@@ -63,6 +63,12 @@ module.exports = {
   },
   saveTrns: (data) => {
     return new Promise(async (resolve, reject) => {
+      var check_trn = await db_Select('trn_id', 'td_transactions', `(trn_id = '${data.merchantOrderNo}' OR receipt_no = '${data.getepayTxnId}') AND receipt_no IS NOT NULL AND receipt_no != '' AND receipt_no != '0'`, null);
+      if (check_trn.suc > 0 && check_trn.msg.length > 0) {
+        console.log('Transaction already exists in td_transactions:', data.merchantOrderNo);
+        return resolve({ suc: 1, msg: "Already saved", trn_id: data.merchantOrderNo });
+      }
+
       const trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var sub_amt = Number(data.txnAmount) - Number(data.adm_fee || 0) - Number(data.donation_fee || 0);
       var table_name = "td_transactions",
@@ -219,6 +225,12 @@ module.exports = {
     console.log(data, 'online_stp');
 
     return new Promise(async (resolve, reject) => {
+      var check_td = await db_Select('trn_id', 'td_transactions', `(trn_id = '${data.merchantOrderNo}' OR receipt_no = '${data.getepayTxnId}') AND receipt_no IS NOT NULL AND receipt_no != '' AND receipt_no != '0'`, null);
+      if (check_td.suc > 0 && check_td.msg.length > 0) {
+        console.log('Transaction already exists in td_transactions:', data.merchantOrderNo);
+        return resolve({ suc: 1, msg: "Already saved", trn_id: data.merchantOrderNo });
+      }
+
       var trn_dt = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var finres = await getCurrFinYear();
       var curr_fin_year = finres.curr_fin_year;
@@ -302,6 +314,12 @@ module.exports = {
     console.log(data, 'online');
 
     return new Promise(async (resolve, reject) => {
+      var check_sub = await db_Select('trans_id', 'td_memb_subscription', `trans_id = '${data.merchantOrderNo}'`, null);
+      if (check_sub.suc > 0 && check_sub.msg.length > 0) {
+        console.log('Subscription already exists in td_memb_subscription for transaction:', data.merchantOrderNo);
+        return resolve({ suc: 1, msg: "Already saved", trans_id: data.merchantOrderNo });
+      }
+
       var sub_amt = Number(data.txnAmount) - Number(data.adm_fee || 0) - Number(data.donation_fee || 0);
       var sub_upto = await generateNextSubDate(
         data.udf7,
@@ -522,6 +540,12 @@ module.exports = {
     console.log(data);
 
     return new Promise(async (resolve, reject) => {
+      var check_txn = await db_Select('pay_trns_id', 'td_pg_transaction', `(mer_order_no = '${data.merchantOrderNo}' OR pay_trns_id = '${data.getepayTxnId}') AND trns_status = 'SUCCESS'`, null);
+      if (data.txnStatus == 'SUCCESS' && check_txn.suc > 0 && check_txn.msg.length > 0) {
+        console.log('Transaction already exists in td_pg_transaction with SUCCESS');
+        return resolve({ suc: 1, msg: "Already exists", duplicate: true });
+      }
+
       let datetime = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
       var table_name = "td_pg_transaction",
         fields =
